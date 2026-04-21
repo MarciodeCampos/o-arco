@@ -1,0 +1,21 @@
+{
+  "name": "O VERBO — O Arco",
+  "short_name": "O ARCO",
+  "description": "A obra musical de O VERBO. Um arco bíblico de 100 músicas — da Glória Incriada ao Ômega.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#050508",
+  "theme_color": "#050508",
+  "icons": [
+    {
+      "src": "https://cdn2.suno.ai/image_eabc356f-3c75-4cff-a4ac-b6f78a422eed.jpeg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["music", "entertainment"],
+  "lang": "pt-BR",
+  "dir": "ltr"
+}
