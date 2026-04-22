@@ -1,0 +1,3751 @@
+{
+  "meta": {
+    "title": "O VERBO — O Arco",
+    "subtitle": "Uma obra musical bíblica de 100 músicas",
+    "persona": "THE VERB",
+    "author": "Marcio de Campos",
+    "url": "https://triadic.life",
+    "github": "https://github.com/MarciodeCampos/o-arco",
+    "created": "2026-04-03",
+    "note": "Criado na Sexta-Feira Santa de 2026",
+    "total_songs": 100,
+    "total_versions": 206,
+    "total_arcs": 10,
+    "navigation": {
+      "by_number": "triadic.life/#001 through #100",
+      "by_arc": "triadic.life/#arc=1 through #arc=10",
+      "by_search": "Use 'index_ref' and 'books' fields to navigate by biblical reference"
+    }
+  },
+  "arcs": [
+    {
+      "num": 1,
+      "name": "A Glória Incriada",
+      "songs": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "count": 10
+    },
+    {
+      "num": 2,
+      "name": "A Lei e a Aliança",
+      "songs": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "count": 10
+    },
+    {
+      "num": 3,
+      "name": "O Reino e o Sacerdócio",
+      "songs": [
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30
+      ],
+      "count": 10
+    },
+    {
+      "num": 4,
+      "name": "A Profecia e o Exílio",
+      "songs": [
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40
+      ],
+      "count": 10
+    },
+    {
+      "num": 5,
+      "name": "O Retorno e a Restauração",
+      "songs": [
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50
+      ],
+      "count": 10
+    },
+    {
+      "num": 6,
+      "name": "A Noite e a Vigília",
+      "songs": [
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60
+      ],
+      "count": 10
+    },
+    {
+      "num": 7,
+      "name": "A Encarnação e o Conflito",
+      "songs": [
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70
+      ],
+      "count": 10
+    },
+    {
+      "num": 8,
+      "name": "A Paixão e a Cruz",
+      "songs": [
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80
+      ],
+      "count": 10
+    },
+    {
+      "num": 9,
+      "name": "A Ressurreição e o Mandato",
+      "songs": [
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90
+      ],
+      "count": 10
+    },
+    {
+      "num": 10,
+      "name": "O Apocalipse e o Ômega",
+      "songs": [
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100
+      ],
+      "count": 10
+    }
+  ],
+  "songs": [
+    {
+      "num": 1,
+      "id_padded": "◈001",
+      "title": "A Glória Incriada",
+      "arc_num": 1,
+      "arc_name": "A Glória Incriada",
+      "index_ref": "Jó 38 | Romanos 11:36",
+      "books": [
+        "Jó 38",
+        "Romanos 11:36"
+      ],
+      "caption": "A fundação inegociável da Criação. Som brutal que exalta a glória divina que já pairava intocável antes que a matéria existisse.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "eabc356f-3c75-4cff-a4ac-b6f78a422eed",
+          "audio_url": "https://cdn1.suno.ai/eabc356f-3c75-4cff-a4ac-b6f78a422eed.mp3",
+          "image_url": "https://cdn2.suno.ai/video_gen_b9872295-3229-432e-ae69-940d4381be30_video_upload_b9872295-3229-432e-ae69-940d4381be30_cover_snapshot_0s_1776805648_image.jpeg",
+          "url": "https://suno.com/song/eabc356f-3c75-4cff-a4ac-b6f78a422eed",
+          "play_count": 26,
+          "duration_s": 237
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "593eef77-e576-4794-9fa8-67b2ade8d653",
+          "audio_url": "https://cdn1.suno.ai/593eef77-e576-4794-9fa8-67b2ade8d653.mp3",
+          "image_url": "https://cdn2.suno.ai/video_gen_4758d877-2401-4f3a-a363-345e13bcb717_video_upload_4758d877-2401-4f3a-a363-345e13bcb717_cover_snapshot_0s_1776805252_image.jpeg",
+          "url": "https://suno.com/song/593eef77-e576-4794-9fa8-67b2ade8d653",
+          "play_count": 135,
+          "duration_s": 235
+        }
+      ]
+    },
+    {
+      "num": 2,
+      "id_padded": "◈002",
+      "title": "O Decreto Fixo",
+      "arc_num": 1,
+      "arc_name": "A Glória Incriada",
+      "index_ref": "Isaías 40:12 | Provérbios 8:27-29",
+      "books": [
+        "Isaías 40:12",
+        "Provérbios 8:27"
+      ],
+      "caption": "Nada opera fora do olhar dEle. O controle absoluto e blindado do soberano, governando na imutabilidade do Seu conselho eterno.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "8d4a1865-a45c-45ff-a938-ecab51f9ab7d",
+          "audio_url": "https://cdn1.suno.ai/8d4a1865-a45c-45ff-a938-ecab51f9ab7d.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_8d4a1865-a45c-45ff-a938-ecab51f9ab7d.jpeg",
+          "url": "https://suno.com/song/8d4a1865-a45c-45ff-a938-ecab51f9ab7d",
+          "play_count": 62,
+          "duration_s": 253
+        },
+        {
+          "version": 2,
+          "batch": 0,
+          "id": "c3327c24-6a31-4a36-99d9-1760a26fff68",
+          "audio_url": "https://cdn1.suno.ai/c3327c24-6a31-4a36-99d9-1760a26fff68.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_c3327c24-6a31-4a36-99d9-1760a26fff68.jpeg",
+          "url": "https://suno.com/song/c3327c24-6a31-4a36-99d9-1760a26fff68",
+          "play_count": 7,
+          "duration_s": 269
+        },
+        {
+          "version": 3,
+          "batch": 1,
+          "id": "6aec6529-fb23-4b08-a5f3-b5b9969311c8",
+          "audio_url": "https://cdn1.suno.ai/6aec6529-fb23-4b08-a5f3-b5b9969311c8.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_6aec6529-fb23-4b08-a5f3-b5b9969311c8.jpeg",
+          "url": "https://suno.com/song/6aec6529-fb23-4b08-a5f3-b5b9969311c8",
+          "play_count": 140,
+          "duration_s": 231
+        },
+        {
+          "version": 4,
+          "batch": 1,
+          "id": "321a72e1-c1f2-4fa2-9eda-5f64ee5b59d2",
+          "audio_url": "https://cdn1.suno.ai/321a72e1-c1f2-4fa2-9eda-5f64ee5b59d2.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_321a72e1-c1f2-4fa2-9eda-5f64ee5b59d2.jpeg",
+          "url": "https://suno.com/song/321a72e1-c1f2-4fa2-9eda-5f64ee5b59d2",
+          "play_count": 7,
+          "duration_s": 263
+        }
+      ]
+    },
+    {
+      "num": 3,
+      "id_padded": "◈003",
+      "title": "Antes Que os Montes Nascessem",
+      "arc_num": 1,
+      "arc_name": "A Glória Incriada",
+      "index_ref": "",
+      "books": [],
+      "caption": "Uma composição forjada em ecos irredutíveis. O Altíssimo governando soberano em um trono de majestade muito anterior ao próprio conceito de tempo.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "2e38a520-e7b4-4391-a13d-5772e2ee65a9",
+          "audio_url": "https://cdn1.suno.ai/2e38a520-e7b4-4391-a13d-5772e2ee65a9.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_2e38a520-e7b4-4391-a13d-5772e2ee65a9.jpeg",
+          "url": "https://suno.com/song/2e38a520-e7b4-4391-a13d-5772e2ee65a9",
+          "play_count": 6,
+          "duration_s": 280
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "2fafdd28-1f99-4730-854d-823598aa4e8d",
+          "audio_url": "https://cdn1.suno.ai/2fafdd28-1f99-4730-854d-823598aa4e8d.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_2fafdd28-1f99-4730-854d-823598aa4e8d.jpeg",
+          "url": "https://suno.com/song/2fafdd28-1f99-4730-854d-823598aa4e8d",
+          "play_count": 6,
+          "duration_s": 277
+        }
+      ]
+    },
+    {
+      "num": 4,
+      "id_padded": "◈004",
+      "title": "O Construtor de Órion",
+      "arc_num": 1,
+      "arc_name": "A Glória Incriada",
+      "index_ref": "Amós 5:8 | Jó 9:9-10",
+      "books": [
+        "Amós 5:8",
+        "Jó 9:9"
+      ],
+      "caption": "A força pura e magnética Daquele que tece astros no escuro e formata constelações colossais com a ponta dos Seus dedos.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "e2075239-009e-43ce-9990-07b25a7f0052",
+          "audio_url": "https://cdn1.suno.ai/e2075239-009e-43ce-9990-07b25a7f0052.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_e2075239-009e-43ce-9990-07b25a7f0052.jpeg",
+          "url": "https://suno.com/song/e2075239-009e-43ce-9990-07b25a7f0052",
+          "play_count": 6,
+          "duration_s": 242
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "42383fbd-8735-4382-877c-826dafaf67c9",
+          "audio_url": "https://cdn1.suno.ai/42383fbd-8735-4382-877c-826dafaf67c9.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_42383fbd-8735-4382-877c-826dafaf67c9.jpeg",
+          "url": "https://suno.com/song/42383fbd-8735-4382-877c-826dafaf67c9",
+          "play_count": 4,
+          "duration_s": 228
+        }
+      ]
+    },
+    {
+      "num": 5,
+      "id_padded": "◈005",
+      "title": "A Mente Inalcançável",
+      "arc_num": 1,
+      "arc_name": "A Glória Incriada",
+      "index_ref": "Isaías 55:8-9 | Romanos 11:33",
+      "books": [
+        "Isaías 55:8",
+        "Romanos 11:33"
+      ],
+      "caption": "Esmagando qualquer antropocentrismo cristão. A sapiência de Deus é um oceano profundo que filosofia humana nenhuma consegue secar.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "3484e1b8-516b-444d-aee8-7accce2541f6",
+          "audio_url": "https://cdn1.suno.ai/3484e1b8-516b-444d-aee8-7accce2541f6.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_3484e1b8-516b-444d-aee8-7accce2541f6.jpeg",
+          "url": "https://suno.com/song/3484e1b8-516b-444d-aee8-7accce2541f6",
+          "play_count": 6,
+          "duration_s": 253
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "f5394450-de70-4f4c-80cd-fc64dc610948",
+          "audio_url": "https://cdn1.suno.ai/f5394450-de70-4f4c-80cd-fc64dc610948.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_f5394450-de70-4f4c-80cd-fc64dc610948.jpeg",
+          "url": "https://suno.com/song/f5394450-de70-4f4c-80cd-fc64dc610948",
+          "play_count": 8,
+          "duration_s": 248
+        }
+      ]
+    },
+    {
+      "num": 6,
+      "id_padded": "◈006",
+      "title": "O Criador Que Não Tem Fome",
+      "arc_num": 1,
+      "arc_name": "A Glória Incriada",
+      "index_ref": "Atos 17:24-25 | Salmo 50:12",
+      "books": [
+        "Atos 17:24",
+        "Salmo 50:12"
+      ],
+      "caption": "Ele não precisa de nada fora de Si. A asseidade implacável do Criador, que não depende de nossas ofertas e ritos limitados.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "52043b31-e9ba-43cc-99d8-2b1ee2fdfb66",
+          "audio_url": "https://cdn1.suno.ai/52043b31-e9ba-43cc-99d8-2b1ee2fdfb66.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_52043b31-e9ba-43cc-99d8-2b1ee2fdfb66.jpeg",
+          "url": "https://suno.com/song/52043b31-e9ba-43cc-99d8-2b1ee2fdfb66",
+          "play_count": 7,
+          "duration_s": 258
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "d70b97de-29e5-4ffb-89b6-26184e8e927b",
+          "audio_url": "https://cdn1.suno.ai/d70b97de-29e5-4ffb-89b6-26184e8e927b.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_d70b97de-29e5-4ffb-89b6-26184e8e927b.jpeg",
+          "url": "https://suno.com/song/d70b97de-29e5-4ffb-89b6-26184e8e927b",
+          "play_count": 4,
+          "duration_s": 264
+        }
+      ]
+    },
+    {
+      "num": 7,
+      "id_padded": "◈007",
+      "title": "A Luz Inacessível",
+      "arc_num": 1,
+      "arc_name": "A Glória Incriada",
+      "index_ref": "1 Timóteo 6:16 | Hebreus 12:29",
+      "books": [
+        "Timóteo 6:16",
+        "Hebreus 12:29"
+      ],
+      "caption": "Reverência estrita ao Rei imortal. Uma atmosfera densa e letal cimentada na santidade da luz inextinguível do Senhor.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "ba7d99f7-f670-41ed-979d-54e5e02b8f0f",
+          "audio_url": "https://cdn1.suno.ai/ba7d99f7-f670-41ed-979d-54e5e02b8f0f.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_ba7d99f7-f670-41ed-979d-54e5e02b8f0f.jpeg",
+          "url": "https://suno.com/song/ba7d99f7-f670-41ed-979d-54e5e02b8f0f",
+          "play_count": 2,
+          "duration_s": 268
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "be000e37-4b65-494d-b163-f8d1302c57b7",
+          "audio_url": "https://cdn1.suno.ai/be000e37-4b65-494d-b163-f8d1302c57b7.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_be000e37-4b65-494d-b163-f8d1302c57b7.jpeg",
+          "url": "https://suno.com/song/be000e37-4b65-494d-b163-f8d1302c57b7",
+          "play_count": 3,
+          "duration_s": 282
+        }
+      ]
+    },
+    {
+      "num": 8,
+      "id_padded": "◈008",
+      "title": "Não Há Ponto Cego",
+      "arc_num": 1,
+      "arc_name": "A Glória Incriada",
+      "index_ref": "Salmo 139:7-12 | Provérbios 15:3",
+      "books": [
+        "Salmo 139:7",
+        "Provérbios 15:3"
+      ],
+      "caption": "A onisciência cortante, pesada. Não há sombra nem esconderijo no universo capaz de escapar de olhos que mapeiam o abismo.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "3d9c0981-a254-4ea6-8e9d-4605ca31dac4",
+          "audio_url": "https://cdn1.suno.ai/3d9c0981-a254-4ea6-8e9d-4605ca31dac4.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_3d9c0981-a254-4ea6-8e9d-4605ca31dac4.jpeg",
+          "url": "https://suno.com/song/3d9c0981-a254-4ea6-8e9d-4605ca31dac4",
+          "play_count": 3,
+          "duration_s": 295
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "17e873d2-1949-44b1-a7ea-f8ff11fc333a",
+          "audio_url": "https://cdn1.suno.ai/17e873d2-1949-44b1-a7ea-f8ff11fc333a.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_17e873d2-1949-44b1-a7ea-f8ff11fc333a.jpeg",
+          "url": "https://suno.com/song/17e873d2-1949-44b1-a7ea-f8ff11fc333a",
+          "play_count": 3,
+          "duration_s": 282
+        }
+      ]
+    },
+    {
+      "num": 9,
+      "id_padded": "◈009",
+      "title": "Tudo Subsiste n'Ele",
+      "arc_num": 1,
+      "arc_name": "A Glória Incriada",
+      "index_ref": "Colossenses 1:17 | Hebreus 1:3",
+      "books": [
+        "Colossenses 1:17",
+        "Hebreus 1:3"
+      ],
+      "caption": "A gravidade irrefreável do Cristo. O universo não colapsou ainda, pois o próprio Verbo usa Sua voz para manter todas as coisas no eixo.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "de96ea34-9fd6-4885-b7c5-b0ebdb6b7827",
+          "audio_url": "https://cdn1.suno.ai/de96ea34-9fd6-4885-b7c5-b0ebdb6b7827.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_de96ea34-9fd6-4885-b7c5-b0ebdb6b7827.jpeg",
+          "url": "https://suno.com/song/de96ea34-9fd6-4885-b7c5-b0ebdb6b7827",
+          "play_count": 2,
+          "duration_s": 264
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "b1237163-abc7-483f-9c30-cd25272a02ca",
+          "audio_url": "https://cdn1.suno.ai/b1237163-abc7-483f-9c30-cd25272a02ca.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_b1237163-abc7-483f-9c30-cd25272a02ca.jpeg",
+          "url": "https://suno.com/song/b1237163-abc7-483f-9c30-cd25272a02ca",
+          "play_count": 4,
+          "duration_s": 259
+        }
+      ]
+    },
+    {
+      "num": 10,
+      "id_padded": "◈010",
+      "title": "O Cântico Ininterrupto",
+      "arc_num": 1,
+      "arc_name": "A Glória Incriada",
+      "index_ref": "Apocalipse 4:8-11 | Isaías 6:3",
+      "books": [
+        "Apocalipse 4:8",
+        "Isaías 6:3"
+      ],
+      "caption": "O zumbido perpétuo da adoração celeste, vibrando e glorificando essa soberania em loop absoluto, sem se importar com a aprovação humana.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "8389b70c-ab87-484e-bddf-d76620c2cb31",
+          "audio_url": "https://cdn1.suno.ai/8389b70c-ab87-484e-bddf-d76620c2cb31.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_8389b70c-ab87-484e-bddf-d76620c2cb31.jpeg",
+          "url": "https://suno.com/song/8389b70c-ab87-484e-bddf-d76620c2cb31",
+          "play_count": 1,
+          "duration_s": 288
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "fa3359d5-5dec-450a-be90-d6b1f9d1d1e6",
+          "audio_url": "https://cdn1.suno.ai/fa3359d5-5dec-450a-be90-d6b1f9d1d1e6.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_fa3359d5-5dec-450a-be90-d6b1f9d1d1e6.jpeg",
+          "url": "https://suno.com/song/fa3359d5-5dec-450a-be90-d6b1f9d1d1e6",
+          "play_count": 36,
+          "duration_s": 308
+        }
+      ]
+    },
+    {
+      "num": 11,
+      "id_padded": "◈011",
+      "title": "O Fio Implacável",
+      "arc_num": 2,
+      "arc_name": "A Lei e a Aliança",
+      "index_ref": "Hebreus 4:12 | Mateus 10:34",
+      "books": [
+        "Hebreus 4:12",
+        "Mateus 10:34"
+      ],
+      "caption": "O início do desmembramento. A verdadeira Palavra agindo como serra sobre o mercado de iniquidade na Igreja moderna e definindo pólos opostos.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "be5a8a54-27ef-49ac-9d7f-2fba21ebcbe5",
+          "audio_url": "https://cdn1.suno.ai/be5a8a54-27ef-49ac-9d7f-2fba21ebcbe5.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_be5a8a54-27ef-49ac-9d7f-2fba21ebcbe5.jpeg",
+          "url": "https://suno.com/song/be5a8a54-27ef-49ac-9d7f-2fba21ebcbe5",
+          "play_count": 9,
+          "duration_s": 259
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "6fe94de9-7220-488e-9f84-7f232481a96c",
+          "audio_url": "https://cdn1.suno.ai/6fe94de9-7220-488e-9f84-7f232481a96c.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_6fe94de9-7220-488e-9f84-7f232481a96c.jpeg",
+          "url": "https://suno.com/song/6fe94de9-7220-488e-9f84-7f232481a96c",
+          "play_count": 4,
+          "duration_s": 222
+        }
+      ]
+    },
+    {
+      "num": 12,
+      "id_padded": "◈012",
+      "title": "O Fim da Mistura",
+      "arc_num": 2,
+      "arc_name": "A Lei e a Aliança",
+      "index_ref": "Mateus 13:30 | Malaquias 3:18",
+      "books": [
+        "Mateus 13:30",
+        "Malaquias 3:18"
+      ],
+      "caption": "Lâmina sem dó contra o falso avivamento morno e as misturas antibíblicas na fé moderna. A exigência de devoção exclusiva.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "09d5a402-7601-459b-8523-38ed485969d0",
+          "audio_url": "https://cdn1.suno.ai/09d5a402-7601-459b-8523-38ed485969d0.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_09d5a402-7601-459b-8523-38ed485969d0.jpeg",
+          "url": "https://suno.com/song/09d5a402-7601-459b-8523-38ed485969d0",
+          "play_count": 7,
+          "duration_s": 277
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "2ad74bd7-4188-467c-8cbe-fc22389f2f65",
+          "audio_url": "https://cdn1.suno.ai/2ad74bd7-4188-467c-8cbe-fc22389f2f65.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_2ad74bd7-4188-467c-8cbe-fc22389f2f65.jpeg",
+          "url": "https://suno.com/song/2ad74bd7-4188-467c-8cbe-fc22389f2f65",
+          "play_count": 3,
+          "duration_s": 309
+        }
+      ]
+    },
+    {
+      "num": 13,
+      "id_padded": "◈013",
+      "title": "A Larga Estrada de Ossos",
+      "arc_num": 2,
+      "arc_name": "A Lei e a Aliança",
+      "index_ref": "Mateus 7:13-14 | Lucas 13:24",
+      "books": [
+        "Mateus 7:13",
+        "Lucas 13:24"
+      ],
+      "caption": "Uma jornada rítmica pesada mapeando o caminho dos fariseus de gravata e estandartes manchados. Pavimentado por aqueles que amaram a idolatria.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "e01827df-e58a-4058-b3b8-f8e9e95ef1a5",
+          "audio_url": "https://cdn1.suno.ai/e01827df-e58a-4058-b3b8-f8e9e95ef1a5.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_e01827df-e58a-4058-b3b8-f8e9e95ef1a5.jpeg",
+          "url": "https://suno.com/song/e01827df-e58a-4058-b3b8-f8e9e95ef1a5",
+          "play_count": 5,
+          "duration_s": 273
+        },
+        {
+          "version": 2,
+          "batch": 0,
+          "id": "65cd81c6-09e4-429f-9d04-e51daf4de4d4",
+          "audio_url": "https://cdn1.suno.ai/65cd81c6-09e4-429f-9d04-e51daf4de4d4.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_65cd81c6-09e4-429f-9d04-e51daf4de4d4.jpeg",
+          "url": "https://suno.com/song/65cd81c6-09e4-429f-9d04-e51daf4de4d4",
+          "play_count": 3,
+          "duration_s": 259
+        },
+        {
+          "version": 3,
+          "batch": 1,
+          "id": "e67ec194-3453-4386-879f-acdbe5a47302",
+          "audio_url": "https://cdn1.suno.ai/e67ec194-3453-4386-879f-acdbe5a47302.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_e67ec194-3453-4386-879f-acdbe5a47302.jpeg",
+          "url": "https://suno.com/song/e67ec194-3453-4386-879f-acdbe5a47302",
+          "play_count": 6,
+          "duration_s": 270
+        },
+        {
+          "version": 4,
+          "batch": 1,
+          "id": "da24d4af-4cbe-4e8f-8b98-f96883467614",
+          "audio_url": "https://cdn1.suno.ai/da24d4af-4cbe-4e8f-8b98-f96883467614.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_da24d4af-4cbe-4e8f-8b98-f96883467614.jpeg",
+          "url": "https://suno.com/song/da24d4af-4cbe-4e8f-8b98-f96883467614",
+          "play_count": 3,
+          "duration_s": 298
+        }
+      ]
+    },
+    {
+      "num": 14,
+      "id_padded": "◈014",
+      "title": "Inimizade com a Fonte",
+      "arc_num": 2,
+      "arc_name": "A Lei e a Aliança",
+      "index_ref": "Tiago 4:4 | 1 João 2:15-17",
+      "books": [
+        "Tiago 4:4",
+        "João 2:15"
+      ],
+      "caption": "O atrito inevitável: quem assina o acordo pacífico com os discursos desta geração se transforma ativamente num profanador da verdadeira Fonte viva.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "db1d21fb-8121-4e8c-a0dc-8e7a4e737df4",
+          "audio_url": "https://cdn1.suno.ai/db1d21fb-8121-4e8c-a0dc-8e7a4e737df4.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_db1d21fb-8121-4e8c-a0dc-8e7a4e737df4.jpeg",
+          "url": "https://suno.com/song/db1d21fb-8121-4e8c-a0dc-8e7a4e737df4",
+          "play_count": 3,
+          "duration_s": 323
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "22b47cba-9374-47a4-a453-9323efdb4c06",
+          "audio_url": "https://cdn1.suno.ai/22b47cba-9374-47a4-a453-9323efdb4c06.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_22b47cba-9374-47a4-a453-9323efdb4c06.jpeg",
+          "url": "https://suno.com/song/22b47cba-9374-47a4-a453-9323efdb4c06",
+          "play_count": 3,
+          "duration_s": 304
+        }
+      ]
+    },
+    {
+      "num": 15,
+      "id_padded": "◈015",
+      "title": "A Cisão Inegociável",
+      "arc_num": 2,
+      "arc_name": "A Lei e a Aliança",
+      "index_ref": "2 Coríntios 6:14-15 | 1 Coríntios 10:21",
+      "books": [
+        "Coríntios 6:14",
+        "Coríntios 10:21"
+      ],
+      "caption": "O muro levantado cortando raízes de falsidade dentro da igreja carnal. A Palavra não vem somar, vem causar o pior tipo de fratura.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "3c649bd0-d32b-442b-af14-b144c8782928",
+          "audio_url": "https://cdn1.suno.ai/3c649bd0-d32b-442b-af14-b144c8782928.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_3c649bd0-d32b-442b-af14-b144c8782928.jpeg",
+          "url": "https://suno.com/song/3c649bd0-d32b-442b-af14-b144c8782928",
+          "play_count": 2,
+          "duration_s": 292
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "3ac78f98-9dd6-4efd-9692-c0b60e0bdb5d",
+          "audio_url": "https://cdn1.suno.ai/3ac78f98-9dd6-4efd-9692-c0b60e0bdb5d.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_3ac78f98-9dd6-4efd-9692-c0b60e0bdb5d.jpeg",
+          "url": "https://suno.com/song/3ac78f98-9dd6-4efd-9692-c0b60e0bdb5d",
+          "play_count": 3,
+          "duration_s": 286
+        }
+      ]
+    },
+    {
+      "num": 16,
+      "id_padded": "◈016",
+      "title": "A Ruína Sobre a Areia",
+      "arc_num": 2,
+      "arc_name": "A Lei e a Aliança",
+      "index_ref": "Mateus 7:24-27 | 1 Coríntios 3:11-13",
+      "books": [
+        "Mateus 7:24",
+        "Coríntios 3:11"
+      ],
+      "caption": "O barulho do colapso no dia final. A destruição total de todo o ministério construído através de aparências plásticas sem alicerce de obediência sólida.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "d5aedd7f-966c-49d3-858b-d0ec22fafcd8",
+          "audio_url": "https://cdn1.suno.ai/d5aedd7f-966c-49d3-858b-d0ec22fafcd8.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_d5aedd7f-966c-49d3-858b-d0ec22fafcd8.jpeg",
+          "url": "https://suno.com/song/d5aedd7f-966c-49d3-858b-d0ec22fafcd8",
+          "play_count": 5,
+          "duration_s": 276
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "b31e6b01-52a6-4d7a-a23b-a30432b95b24",
+          "audio_url": "https://cdn1.suno.ai/b31e6b01-52a6-4d7a-a23b-a30432b95b24.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_b31e6b01-52a6-4d7a-a23b-a30432b95b24.jpeg",
+          "url": "https://suno.com/song/b31e6b01-52a6-4d7a-a23b-a30432b95b24",
+          "play_count": 12,
+          "duration_s": 283
+        }
+      ]
+    },
+    {
+      "num": 17,
+      "id_padded": "◈017",
+      "title": "Lobos de Lã Branca",
+      "arc_num": 2,
+      "arc_name": "A Lei e a Aliança",
+      "index_ref": "Mateus 7:15-20 | Judas 1:12-13",
+      "books": [
+        "Mateus 7:15",
+        "Judas 1:12"
+      ],
+      "caption": "Mercenários disfarçados diante dos tribunais do Verbo. A falsa docilidade da ovelha se esfacelando perante O Fogo Incorruptível.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "2252e4d4-009e-4e87-b6f6-87d80a05f7c9",
+          "audio_url": "https://cdn1.suno.ai/2252e4d4-009e-4e87-b6f6-87d80a05f7c9.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_2252e4d4-009e-4e87-b6f6-87d80a05f7c9.jpeg",
+          "url": "https://suno.com/song/2252e4d4-009e-4e87-b6f6-87d80a05f7c9",
+          "play_count": 3,
+          "duration_s": 297
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "810a88ee-4640-47c7-a97d-897024048425",
+          "audio_url": "https://cdn1.suno.ai/810a88ee-4640-47c7-a97d-897024048425.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_810a88ee-4640-47c7-a97d-897024048425.jpeg",
+          "url": "https://suno.com/song/810a88ee-4640-47c7-a97d-897024048425",
+          "play_count": 3,
+          "duration_s": 254
+        }
+      ]
+    },
+    {
+      "num": 18,
+      "id_padded": "◈018",
+      "title": "Fogo Estranho no Altar",
+      "arc_num": 2,
+      "arc_name": "A Lei e a Aliança",
+      "index_ref": "Mateus 7:15-20 | Judas 1:12-13",
+      "books": [
+        "Mateus 7:15",
+        "Judas 1:12"
+      ],
+      "caption": "Não crie seus rituais estéticos e desculpas místicas para maquiar o pecado. Uma nota dura sobre oferecer a Deus rascunhos de soberba disfarçados de unção.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "88390254-dc63-457a-a4f0-a19ebfbbe3fd",
+          "audio_url": "https://cdn1.suno.ai/88390254-dc63-457a-a4f0-a19ebfbbe3fd.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_88390254-dc63-457a-a4f0-a19ebfbbe3fd.jpeg",
+          "url": "https://suno.com/song/88390254-dc63-457a-a4f0-a19ebfbbe3fd",
+          "play_count": 8,
+          "duration_s": 282
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "c25c4687-16a1-4b4f-81d0-dc8914fcca9a",
+          "audio_url": "https://cdn1.suno.ai/c25c4687-16a1-4b4f-81d0-dc8914fcca9a.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_c25c4687-16a1-4b4f-81d0-dc8914fcca9a.jpeg",
+          "url": "https://suno.com/song/c25c4687-16a1-4b4f-81d0-dc8914fcca9a",
+          "play_count": 3,
+          "duration_s": 237
+        }
+      ]
+    },
+    {
+      "num": 19,
+      "id_padded": "◈019",
+      "title": "Tinta Branca Sobre Ossos",
+      "arc_num": 2,
+      "arc_name": "A Lei e a Aliança",
+      "index_ref": "Mateus 23:25-28 | Lucas 12:1",
+      "books": [
+        "Mateus 23:25",
+        "Lucas 12:1"
+      ],
+      "caption": "Ataque limpo ao fermento sepulcral da liderança religiosa de hoje: muita estética do lado de fora e cadáveres trancados lá dentro.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "d90e32b6-8b94-4c0d-9b1b-a37e54b62e6f",
+          "audio_url": "https://cdn1.suno.ai/d90e32b6-8b94-4c0d-9b1b-a37e54b62e6f.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_d90e32b6-8b94-4c0d-9b1b-a37e54b62e6f.jpeg",
+          "url": "https://suno.com/song/d90e32b6-8b94-4c0d-9b1b-a37e54b62e6f",
+          "play_count": 3,
+          "duration_s": 261
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "7c08a815-3ad8-4182-9e62-de0286bf1b64",
+          "audio_url": "https://cdn1.suno.ai/7c08a815-3ad8-4182-9e62-de0286bf1b64.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_7c08a815-3ad8-4182-9e62-de0286bf1b64.jpeg",
+          "url": "https://suno.com/song/7c08a815-3ad8-4182-9e62-de0286bf1b64",
+          "play_count": 2,
+          "duration_s": 297
+        }
+      ]
+    },
+    {
+      "num": 20,
+      "id_padded": "◈020",
+      "title": "Nunca Vos Conheci",
+      "arc_num": 2,
+      "arc_name": "A Lei e a Aliança",
+      "index_ref": "Mateus 7:21-23 | Lucas 13:25-27",
+      "books": [
+        "Mateus 7:21",
+        "Lucas 13:25"
+      ],
+      "caption": "A sentença horripilante, direta de Mateus 7. Operou milagres? Encheu igrejas? Realizou shows? Não importa, você não possuía essência divina.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "c98fae41-7662-4aa2-8e92-0b6458584a24",
+          "audio_url": "https://cdn1.suno.ai/c98fae41-7662-4aa2-8e92-0b6458584a24.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_c98fae41-7662-4aa2-8e92-0b6458584a24.jpeg",
+          "url": "https://suno.com/song/c98fae41-7662-4aa2-8e92-0b6458584a24",
+          "play_count": 2,
+          "duration_s": 332
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "98c42edf-63e7-4a58-a1e0-fa4c2d066808",
+          "audio_url": "https://cdn1.suno.ai/98c42edf-63e7-4a58-a1e0-fa4c2d066808.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_98c42edf-63e7-4a58-a1e0-fa4c2d066808.jpeg",
+          "url": "https://suno.com/song/98c42edf-63e7-4a58-a1e0-fa4c2d066808",
+          "play_count": 5,
+          "duration_s": 337
+        }
+      ]
+    },
+    {
+      "num": 21,
+      "id_padded": "◈021",
+      "title": "O Motor Enganoso",
+      "arc_num": 3,
+      "arc_name": "O Reino e o Sacerdócio",
+      "index_ref": "Jeremias 17:9 | Provérbios 28:26",
+      "books": [
+        "Jeremias 17:9",
+        "Provérbios 28:26"
+      ],
+      "caption": "O coração humano mente. Uma denúncia crua contra a falácia moderna de \"seguir o próprio coração\". (Jeremias 17:9)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "4a096768-2650-4002-95d8-086303ee010a",
+          "audio_url": "https://cdn1.suno.ai/4a096768-2650-4002-95d8-086303ee010a.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_4a096768-2650-4002-95d8-086303ee010a.jpeg",
+          "url": "https://suno.com/song/4a096768-2650-4002-95d8-086303ee010a",
+          "play_count": 3,
+          "duration_s": 279
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "b33ba150-3f06-4ad1-b67d-6ddccbbc1157",
+          "audio_url": "https://cdn1.suno.ai/b33ba150-3f06-4ad1-b67d-6ddccbbc1157.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_b33ba150-3f06-4ad1-b67d-6ddccbbc1157.jpeg",
+          "url": "https://suno.com/song/b33ba150-3f06-4ad1-b67d-6ddccbbc1157",
+          "play_count": 5,
+          "duration_s": 295
+        }
+      ]
+    },
+    {
+      "num": 22,
+      "id_padded": "◈022",
+      "title": "Ídolos no Quarto Escuro",
+      "arc_num": 3,
+      "arc_name": "O Reino e o Sacerdócio",
+      "index_ref": "Ezequiel 14:3 | 1 João 5:21",
+      "books": [
+        "Ezequiel 14:3",
+        "João 5:21"
+      ],
+      "caption": "Aqueles altares que você ergue quando a porta fecha. O raio-X de Deus não ignora seus deuses de estimação. (Ezequiel 14)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "5c9b4063-8647-4ff1-84d4-742707afc22d",
+          "audio_url": "https://cdn1.suno.ai/5c9b4063-8647-4ff1-84d4-742707afc22d.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_5c9b4063-8647-4ff1-84d4-742707afc22d.jpeg",
+          "url": "https://suno.com/song/5c9b4063-8647-4ff1-84d4-742707afc22d",
+          "play_count": 2,
+          "duration_s": 266
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "508283f4-60ea-4470-9b60-8058682400e1",
+          "audio_url": "https://cdn1.suno.ai/508283f4-60ea-4470-9b60-8058682400e1.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_508283f4-60ea-4470-9b60-8058682400e1.jpeg",
+          "url": "https://suno.com/song/508283f4-60ea-4470-9b60-8058682400e1",
+          "play_count": 1,
+          "duration_s": 256
+        }
+      ]
+    },
+    {
+      "num": 23,
+      "id_padded": "◈023",
+      "title": "Pedra Esmagada",
+      "arc_num": 3,
+      "arc_name": "O Reino e o Sacerdócio",
+      "index_ref": "Salmo 51:17 | Tiago 4:6",
+      "books": [
+        "Salmo 51:17",
+        "Tiago 4:6"
+      ],
+      "caption": "O clamor de um espírito moído. Não há perdão real sem a brita do arrependimento genuíno pesando sobre o orgulho. (Salmo 51)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "08666f28-1fa5-41e6-9156-14cbe58a024d",
+          "audio_url": "https://cdn1.suno.ai/08666f28-1fa5-41e6-9156-14cbe58a024d.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_08666f28-1fa5-41e6-9156-14cbe58a024d.jpeg",
+          "url": "https://suno.com/song/08666f28-1fa5-41e6-9156-14cbe58a024d",
+          "play_count": 2,
+          "duration_s": 288
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "a4847d06-f752-404c-b1d5-cf4b3e0ecdf8",
+          "audio_url": "https://cdn1.suno.ai/a4847d06-f752-404c-b1d5-cf4b3e0ecdf8.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_a4847d06-f752-404c-b1d5-cf4b3e0ecdf8.jpeg",
+          "url": "https://suno.com/song/a4847d06-f752-404c-b1d5-cf4b3e0ecdf8",
+          "play_count": 1,
+          "duration_s": 280
+        }
+      ]
+    },
+    {
+      "num": 24,
+      "id_padded": "◈024",
+      "title": "O Túmulo do Segredo",
+      "arc_num": 3,
+      "arc_name": "O Reino e o Sacerdócio",
+      "index_ref": "Provérbios 28:13 | Lucas 12:2-3",
+      "books": [
+        "Provérbios 28:13",
+        "Lucas 12:2"
+      ],
+      "caption": "Você tenta enterrar na areia o que os céus já estão assistindo. O fim absoluto dos cadáveres que escondemos debaixo do tapete. (Lucas 12)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "83434315-0d41-43e0-839f-dbf6cb8d16d2",
+          "audio_url": "https://cdn1.suno.ai/83434315-0d41-43e0-839f-dbf6cb8d16d2.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_83434315-0d41-43e0-839f-dbf6cb8d16d2.jpeg",
+          "url": "https://suno.com/song/83434315-0d41-43e0-839f-dbf6cb8d16d2",
+          "play_count": 1,
+          "duration_s": 306
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "2c4f14f9-cebc-4ea5-8a3a-1b89a264bd01",
+          "audio_url": "https://cdn1.suno.ai/2c4f14f9-cebc-4ea5-8a3a-1b89a264bd01.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_2c4f14f9-cebc-4ea5-8a3a-1b89a264bd01.jpeg",
+          "url": "https://suno.com/song/2c4f14f9-cebc-4ea5-8a3a-1b89a264bd01",
+          "play_count": 2,
+          "duration_s": 304
+        }
+      ]
+    },
+    {
+      "num": 25,
+      "id_padded": "◈025",
+      "title": "Arrancando a Pedra",
+      "arc_num": 3,
+      "arc_name": "O Reino e o Sacerdócio",
+      "index_ref": "Ezequiel 36:26 | Salmo 119:32",
+      "books": [
+        "Ezequiel 36:26",
+        "Salmo 119:32"
+      ],
+      "caption": "A cirurgia drástica do Espírito Santo. Retirando o coração de granito para que a régua de Deus seja impressa na carne. (Ezequiel 36)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "4dcd7063-d14b-441d-95ee-ac4a4ea2fbeb",
+          "audio_url": "https://cdn1.suno.ai/4dcd7063-d14b-441d-95ee-ac4a4ea2fbeb.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_4dcd7063-d14b-441d-95ee-ac4a4ea2fbeb.jpeg",
+          "url": "https://suno.com/song/4dcd7063-d14b-441d-95ee-ac4a4ea2fbeb",
+          "play_count": 0,
+          "duration_s": 282
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "b0d32a54-c244-400a-b388-406e08401931",
+          "audio_url": "https://cdn1.suno.ai/b0d32a54-c244-400a-b388-406e08401931.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_b0d32a54-c244-400a-b388-406e08401931.jpeg",
+          "url": "https://suno.com/song/b0d32a54-c244-400a-b388-406e08401931",
+          "play_count": 0,
+          "duration_s": 308
+        }
+      ]
+    },
+    {
+      "num": 26,
+      "id_padded": "◈026",
+      "title": "Rasguem o Peito",
+      "arc_num": 3,
+      "arc_name": "O Reino e o Sacerdócio",
+      "index_ref": "Joel 2:13 | Isaías 58",
+      "books": [
+        "Joel 2:13",
+        "Isaías 58"
+      ],
+      "caption": "Roupas rasgadas não impressionam os céus. Um chamado brutal e sonoro ao arrependimento que afeta a estrutura. (Joel 2:13)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "3be9d0c4-4a6c-4913-852a-38d085eeb3f5",
+          "audio_url": "https://cdn1.suno.ai/3be9d0c4-4a6c-4913-852a-38d085eeb3f5.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_3be9d0c4-4a6c-4913-852a-38d085eeb3f5.jpeg",
+          "url": "https://suno.com/song/3be9d0c4-4a6c-4913-852a-38d085eeb3f5",
+          "play_count": 2,
+          "duration_s": 275
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "bc83afd8-f40d-4e3c-b79f-5e0e4ef6d1fe",
+          "audio_url": "https://cdn1.suno.ai/bc83afd8-f40d-4e3c-b79f-5e0e4ef6d1fe.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_bc83afd8-f40d-4e3c-b79f-5e0e4ef6d1fe.jpeg",
+          "url": "https://suno.com/song/bc83afd8-f40d-4e3c-b79f-5e0e4ef6d1fe",
+          "play_count": 2,
+          "duration_s": 301
+        }
+      ]
+    },
+    {
+      "num": 27,
+      "id_padded": "◈027",
+      "title": "Carvão em Brasa",
+      "arc_num": 3,
+      "arc_name": "O Reino e o Sacerdócio",
+      "index_ref": "Isaías 6:5 | Hebreus 12:29",
+      "books": [
+        "Isaías 6:5",
+        "Hebreus 12:29"
+      ],
+      "caption": "A santidade implacável que queima a impureza humana. O carvão vivo do altar purificando os lábios no fogo do temor. (Isaías 6)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "f01d1939-4151-434e-bc79-b074160703a9",
+          "audio_url": "https://cdn1.suno.ai/f01d1939-4151-434e-bc79-b074160703a9.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_f01d1939-4151-434e-bc79-b074160703a9.jpeg",
+          "url": "https://suno.com/song/f01d1939-4151-434e-bc79-b074160703a9",
+          "play_count": 1,
+          "duration_s": 259
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "d09441d2-a99b-467c-b139-e27e3b709c43",
+          "audio_url": "https://cdn1.suno.ai/d09441d2-a99b-467c-b139-e27e3b709c43.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_d09441d2-a99b-467c-b139-e27e3b709c43.jpeg",
+          "url": "https://suno.com/song/d09441d2-a99b-467c-b139-e27e3b709c43",
+          "play_count": 1,
+          "duration_s": 261
+        }
+      ]
+    },
+    {
+      "num": 28,
+      "id_padded": "◈028",
+      "title": "A Oficina Oculta",
+      "arc_num": 3,
+      "arc_name": "O Reino e o Sacerdócio",
+      "index_ref": "Mateus 15:19 | Jeremias 4:14",
+      "books": [
+        "Mateus 15:19",
+        "Jeremias 4:14"
+      ],
+      "caption": "De onde nascem as suas traições reais? Um mergulho sombrio dentro da fábrica escondida dentro da mente do homem. (Mateus 15)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "22100b4f-4be3-4fd0-9868-4dcfc6b8d282",
+          "audio_url": "https://cdn1.suno.ai/22100b4f-4be3-4fd0-9868-4dcfc6b8d282.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_22100b4f-4be3-4fd0-9868-4dcfc6b8d282.jpeg",
+          "url": "https://suno.com/song/22100b4f-4be3-4fd0-9868-4dcfc6b8d282",
+          "play_count": 2,
+          "duration_s": 299
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "5d5102a6-1464-4087-b10d-533229894f49",
+          "audio_url": "https://cdn1.suno.ai/5d5102a6-1464-4087-b10d-533229894f49.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_5d5102a6-1464-4087-b10d-533229894f49.jpeg",
+          "url": "https://suno.com/song/5d5102a6-1464-4087-b10d-533229894f49",
+          "play_count": 1,
+          "duration_s": 290
+        }
+      ]
+    },
+    {
+      "num": 29,
+      "id_padded": "◈029",
+      "title": "A Espada de Dois Fios",
+      "arc_num": 3,
+      "arc_name": "O Reino e o Sacerdócio",
+      "index_ref": "Hebreus 4:12-13 | Provérbios 20:27",
+      "books": [
+        "Hebreus 4:12",
+        "Provérbios 20:27"
+      ],
+      "caption": "Não há escapatória ou escudo. A Palavra como uma lâmina cirúrgica que entra rasgando até a divisão entre alma e espírito. (Hebreus 4)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "b96ecae6-97f3-4811-a3d2-5315529d1864",
+          "audio_url": "https://cdn1.suno.ai/b96ecae6-97f3-4811-a3d2-5315529d1864.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_b96ecae6-97f3-4811-a3d2-5315529d1864.jpeg",
+          "url": "https://suno.com/song/b96ecae6-97f3-4811-a3d2-5315529d1864",
+          "play_count": 1,
+          "duration_s": 292
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "bdde244d-011e-496d-b1e7-2e92e6a4bcb9",
+          "audio_url": "https://cdn1.suno.ai/bdde244d-011e-496d-b1e7-2e92e6a4bcb9.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_bdde244d-011e-496d-b1e7-2e92e6a4bcb9.jpeg",
+          "url": "https://suno.com/song/bdde244d-011e-496d-b1e7-2e92e6a4bcb9",
+          "play_count": 1,
+          "duration_s": 257
+        }
+      ]
+    },
+    {
+      "num": 30,
+      "id_padded": "◈030",
+      "title": "Olhos no Chão",
+      "arc_num": 3,
+      "arc_name": "O Reino e o Sacerdócio",
+      "index_ref": "Lucas 18:13 | Salmo 34:18",
+      "books": [
+        "Lucas 18:13",
+        "Salmo 34:18"
+      ],
+      "caption": "",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "fc81530c-fc2c-4f20-8726-0369db87f6fe",
+          "audio_url": "https://cdn1.suno.ai/fc81530c-fc2c-4f20-8726-0369db87f6fe.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_fc81530c-fc2c-4f20-8726-0369db87f6fe.jpeg",
+          "url": "https://suno.com/song/fc81530c-fc2c-4f20-8726-0369db87f6fe",
+          "play_count": 3,
+          "duration_s": 294
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "651443c3-4a01-4b72-ba90-74ec1b756b79",
+          "audio_url": "https://cdn1.suno.ai/651443c3-4a01-4b72-ba90-74ec1b756b79.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_651443c3-4a01-4b72-ba90-74ec1b756b79.jpeg",
+          "url": "https://suno.com/song/651443c3-4a01-4b72-ba90-74ec1b756b79",
+          "play_count": 4,
+          "duration_s": 281
+        }
+      ]
+    },
+    {
+      "num": 31,
+      "id_padded": "◈031",
+      "title": "O Beijo em Mamom",
+      "arc_num": 4,
+      "arc_name": "A Profecia e o Exílio",
+      "index_ref": "Mateus 6:24 | 1 Reis 18:21",
+      "books": [
+        "Mateus 6:24",
+        "Reis 18:21"
+      ],
+      "caption": "",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "26f1b8b7-bb22-40cc-a388-2ec73c42f94f",
+          "audio_url": "https://cdn1.suno.ai/26f1b8b7-bb22-40cc-a388-2ec73c42f94f.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_26f1b8b7-bb22-40cc-a388-2ec73c42f94f.jpeg",
+          "url": "https://suno.com/song/26f1b8b7-bb22-40cc-a388-2ec73c42f94f",
+          "play_count": 12,
+          "duration_s": 242
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "7be40848-48b1-468c-9ce4-84a8a0c9a805",
+          "audio_url": "https://cdn1.suno.ai/7be40848-48b1-468c-9ce4-84a8a0c9a805.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_7be40848-48b1-468c-9ce4-84a8a0c9a805.jpeg",
+          "url": "https://suno.com/song/7be40848-48b1-468c-9ce4-84a8a0c9a805",
+          "play_count": 5,
+          "duration_s": 293
+        }
+      ]
+    },
+    {
+      "num": 32,
+      "id_padded": "◈032",
+      "title": "Morfina no Altar",
+      "arc_num": 4,
+      "arc_name": "A Profecia e o Exílio",
+      "index_ref": "Jeremias 6:14 | 2 Timóteo 4:3",
+      "books": [
+        "Jeremias 6:14",
+        "Timóteo 4:3"
+      ],
+      "caption": "",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "b80cf08b-e8ba-4b5d-a544-c0e1bccf8076",
+          "audio_url": "https://cdn1.suno.ai/b80cf08b-e8ba-4b5d-a544-c0e1bccf8076.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_b80cf08b-e8ba-4b5d-a544-c0e1bccf8076.jpeg",
+          "url": "https://suno.com/song/b80cf08b-e8ba-4b5d-a544-c0e1bccf8076",
+          "play_count": 1,
+          "duration_s": 298
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "358f4b57-74e5-4c9e-b466-608b3af4b8c8",
+          "audio_url": "https://cdn1.suno.ai/358f4b57-74e5-4c9e-b466-608b3af4b8c8.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_358f4b57-74e5-4c9e-b466-608b3af4b8c8.jpeg",
+          "url": "https://suno.com/song/358f4b57-74e5-4c9e-b466-608b3af4b8c8",
+          "play_count": 2,
+          "duration_s": 257
+        }
+      ]
+    },
+    {
+      "num": 33,
+      "id_padded": "◈033",
+      "title": "Cego Guiando Cego",
+      "arc_num": 4,
+      "arc_name": "A Profecia e o Exílio",
+      "index_ref": "Mateus 15:14 | Apocalipse 3:1",
+      "books": [
+        "Mateus 15:14",
+        "Apocalipse 3:1"
+      ],
+      "caption": "A tragedia de quem, estando cego por sua soberba, ainda assim conduz outros para o mesmo abismo que o espera.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "028aaefd-a5a1-4c7c-ab80-9a573d55341f",
+          "audio_url": "https://cdn1.suno.ai/028aaefd-a5a1-4c7c-ab80-9a573d55341f.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_028aaefd-a5a1-4c7c-ab80-9a573d55341f.jpeg",
+          "url": "https://suno.com/song/028aaefd-a5a1-4c7c-ab80-9a573d55341f",
+          "play_count": 3,
+          "duration_s": 271
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "419c8eba-fd5e-4639-a50b-37115f868f95",
+          "audio_url": "https://cdn1.suno.ai/419c8eba-fd5e-4639-a50b-37115f868f95.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_419c8eba-fd5e-4639-a50b-37115f868f95.jpeg",
+          "url": "https://suno.com/song/419c8eba-fd5e-4639-a50b-37115f868f95",
+          "play_count": 3,
+          "duration_s": 278
+        }
+      ]
+    },
+    {
+      "num": 34,
+      "id_padded": "◈034",
+      "title": "A Mentira Íntima",
+      "arc_num": 4,
+      "arc_name": "A Profecia e o Exílio",
+      "index_ref": "1 João 2:4 | Judas 1:4",
+      "books": [
+        "João 2:4",
+        "Judas 1:4"
+      ],
+      "caption": "O segredo podre guardado no fundo do peito, a mentira que voce conta a si mesmo enquanto finge santidade na calcada.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "40c7bfff-cc36-4691-9a54-d05f4bd58b8f",
+          "audio_url": "https://cdn1.suno.ai/40c7bfff-cc36-4691-9a54-d05f4bd58b8f.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_40c7bfff-cc36-4691-9a54-d05f4bd58b8f.jpeg",
+          "url": "https://suno.com/song/40c7bfff-cc36-4691-9a54-d05f4bd58b8f",
+          "play_count": 2,
+          "duration_s": 247
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "52b707ac-3aea-42e1-91bd-8a9abaf5fb94",
+          "audio_url": "https://cdn1.suno.ai/52b707ac-3aea-42e1-91bd-8a9abaf5fb94.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_52b707ac-3aea-42e1-91bd-8a9abaf5fb94.jpeg",
+          "url": "https://suno.com/song/52b707ac-3aea-42e1-91bd-8a9abaf5fb94",
+          "play_count": 3,
+          "duration_s": 244
+        }
+      ]
+    },
+    {
+      "num": 35,
+      "id_padded": "◈035",
+      "title": "A Fé dos Demônios",
+      "arc_num": 4,
+      "arc_name": "A Profecia e o Exílio",
+      "index_ref": "Tiago 2:17-19 | Mateus 7:21",
+      "books": [
+        "Tiago 2:17",
+        "Mateus 7:21"
+      ],
+      "caption": "A fe que ate os demonios possuem: crer intelectualmente, mas nunca se dobrar diante do trono do Altissimo.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "4234ad5b-c616-4e8d-912b-3d5a4b7bb023",
+          "audio_url": "https://cdn1.suno.ai/4234ad5b-c616-4e8d-912b-3d5a4b7bb023.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_4234ad5b-c616-4e8d-912b-3d5a4b7bb023.jpeg",
+          "url": "https://suno.com/song/4234ad5b-c616-4e8d-912b-3d5a4b7bb023",
+          "play_count": 4,
+          "duration_s": 252
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "2c70f063-eb0f-47a1-b576-189a9b47efe5",
+          "audio_url": "https://cdn1.suno.ai/2c70f063-eb0f-47a1-b576-189a9b47efe5.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_2c70f063-eb0f-47a1-b576-189a9b47efe5.jpeg",
+          "url": "https://suno.com/song/2c70f063-eb0f-47a1-b576-189a9b47efe5",
+          "play_count": 1,
+          "duration_s": 269
+        }
+      ]
+    },
+    {
+      "num": 36,
+      "id_padded": "◈036",
+      "title": "Mercenários do Pão",
+      "arc_num": 4,
+      "arc_name": "A Profecia e o Exílio",
+      "index_ref": "João 6:26 | João 6:66",
+      "books": [
+        "João 6:26",
+        "João 6:66"
+      ],
+      "caption": "A vergonha cinica de pastores que venderam o Evangelho Eterno por moedas de entretenimento e o pao que apodrece.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "42e2b50b-8b76-46de-9156-8e7a2f366194",
+          "audio_url": "https://cdn1.suno.ai/42e2b50b-8b76-46de-9156-8e7a2f366194.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_42e2b50b-8b76-46de-9156-8e7a2f366194.jpeg",
+          "url": "https://suno.com/song/42e2b50b-8b76-46de-9156-8e7a2f366194",
+          "play_count": 2,
+          "duration_s": 265
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "5a38c1db-15c7-49a1-b4aa-21c8e589bfe7",
+          "audio_url": "https://cdn1.suno.ai/5a38c1db-15c7-49a1-b4aa-21c8e589bfe7.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_5a38c1db-15c7-49a1-b4aa-21c8e589bfe7.jpeg",
+          "url": "https://suno.com/song/5a38c1db-15c7-49a1-b4aa-21c8e589bfe7",
+          "play_count": 1,
+          "duration_s": 259
+        }
+      ]
+    },
+    {
+      "num": 37,
+      "id_padded": "◈037",
+      "title": "O Aplauso de Poeira",
+      "arc_num": 4,
+      "arc_name": "A Profecia e o Exílio",
+      "index_ref": "João 12:43 | Mateus 6:2",
+      "books": [
+        "João 12:43",
+        "Mateus 6:2"
+      ],
+      "caption": "A futilidade insana e descartavel de preferir os holofotes e a gloria dos homens muito acima da aprovacao de Deus.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "5b898434-f629-4791-862d-82f2192ac044",
+          "audio_url": "https://cdn1.suno.ai/5b898434-f629-4791-862d-82f2192ac044.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_5b898434-f629-4791-862d-82f2192ac044.jpeg",
+          "url": "https://suno.com/song/5b898434-f629-4791-862d-82f2192ac044",
+          "play_count": 2,
+          "duration_s": 286
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "a8db7a11-9632-4f97-bb25-a74a7f344506",
+          "audio_url": "https://cdn1.suno.ai/a8db7a11-9632-4f97-bb25-a74a7f344506.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_a8db7a11-9632-4f97-bb25-a74a7f344506.jpeg",
+          "url": "https://suno.com/song/a8db7a11-9632-4f97-bb25-a74a7f344506",
+          "play_count": 2,
+          "duration_s": 246
+        }
+      ]
+    },
+    {
+      "num": 38,
+      "id_padded": "◈038",
+      "title": "O Contrato do Louco",
+      "arc_num": 4,
+      "arc_name": "A Profecia e o Exílio",
+      "index_ref": "Lucas 12:20 | Tiago 4:14",
+      "books": [
+        "Lucas 12:20",
+        "Tiago 4:14"
+      ],
+      "caption": "A ironia tragica de amontoar conforto e celeiros na terra, ignorando que os ceus pedirao sua alma esta mesma noite.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "8f90c633-0162-43da-8412-1e672db6a990",
+          "audio_url": "https://cdn1.suno.ai/8f90c633-0162-43da-8412-1e672db6a990.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_8f90c633-0162-43da-8412-1e672db6a990.jpeg",
+          "url": "https://suno.com/song/8f90c633-0162-43da-8412-1e672db6a990",
+          "play_count": 2,
+          "duration_s": 255
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "e1d2c7e0-7d8c-4ec7-937d-b8cb12d7200d",
+          "audio_url": "https://cdn1.suno.ai/e1d2c7e0-7d8c-4ec7-937d-b8cb12d7200d.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_e1d2c7e0-7d8c-4ec7-937d-b8cb12d7200d.jpeg",
+          "url": "https://suno.com/song/e1d2c7e0-7d8c-4ec7-937d-b8cb12d7200d",
+          "play_count": 1,
+          "duration_s": 242
+        }
+      ]
+    },
+    {
+      "num": 39,
+      "id_padded": "◈039",
+      "title": "A Avenida Espaçosa",
+      "arc_num": 4,
+      "arc_name": "A Profecia e o Exílio",
+      "index_ref": "Mateus 7:13 | Lucas 13:24",
+      "books": [
+        "Mateus 7:13",
+        "Lucas 13:24"
+      ],
+      "caption": "O trafego intenso dos religiosos e justos aos proprios olhos, marchando juntos e confortaveis na rodovia direta para o abismo.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "6532d845-7d90-43e2-b508-88fed159914a",
+          "audio_url": "https://cdn1.suno.ai/6532d845-7d90-43e2-b508-88fed159914a.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_6532d845-7d90-43e2-b508-88fed159914a.jpeg",
+          "url": "https://suno.com/song/6532d845-7d90-43e2-b508-88fed159914a",
+          "play_count": 1,
+          "duration_s": 253
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "d6d0688e-e0b5-413e-869b-1225bba0ecb0",
+          "audio_url": "https://cdn1.suno.ai/d6d0688e-e0b5-413e-869b-1225bba0ecb0.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_d6d0688e-e0b5-413e-869b-1225bba0ecb0.jpeg",
+          "url": "https://suno.com/song/d6d0688e-e0b5-413e-869b-1225bba0ecb0",
+          "play_count": 1,
+          "duration_s": 239
+        }
+      ]
+    },
+    {
+      "num": 40,
+      "id_padded": "◈040",
+      "title": "A Operação do Erro",
+      "arc_num": 4,
+      "arc_name": "A Profecia e o Exílio",
+      "index_ref": "2 Tessalonicenses 2:11 | Provérbios 14:12",
+      "books": [
+        "Tessalonicenses 2:11",
+        "Provérbios 14:12"
+      ],
+      "caption": "O peso assustador do ju",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "8c21a243-e4dd-4ba5-ab64-d771fb5f1e27",
+          "audio_url": "https://cdn1.suno.ai/8c21a243-e4dd-4ba5-ab64-d771fb5f1e27.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_8c21a243-e4dd-4ba5-ab64-d771fb5f1e27.jpeg",
+          "url": "https://suno.com/song/8c21a243-e4dd-4ba5-ab64-d771fb5f1e27",
+          "play_count": 1,
+          "duration_s": 275
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "508b48e0-8d02-4f5e-859e-c037b665c7d0",
+          "audio_url": "https://cdn1.suno.ai/508b48e0-8d02-4f5e-859e-c037b665c7d0.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_508b48e0-8d02-4f5e-859e-c037b665c7d0.jpeg",
+          "url": "https://suno.com/song/508b48e0-8d02-4f5e-859e-c037b665c7d0",
+          "play_count": 1,
+          "duration_s": 305
+        }
+      ]
+    },
+    {
+      "num": 41,
+      "id_padded": "◈041",
+      "title": "O Prumo nas Ruínas",
+      "arc_num": 5,
+      "arc_name": "O Retorno e a Restauração",
+      "index_ref": "Amós 7:7-8 | Neemias 2:13-17",
+      "books": [
+        "Amós 7:7",
+        "Neemias 2:13"
+      ],
+      "caption": "A régua incorruptível e o prumo de alvenaria inegociável descendo sobre os escombros de uma geração. (Amós 7)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "eaa96d4a-b0fd-4b3a-b0c7-95872176a5f4",
+          "audio_url": "https://cdn1.suno.ai/eaa96d4a-b0fd-4b3a-b0c7-95872176a5f4.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_eaa96d4a-b0fd-4b3a-b0c7-95872176a5f4.jpeg",
+          "url": "https://suno.com/song/eaa96d4a-b0fd-4b3a-b0c7-95872176a5f4",
+          "play_count": 6,
+          "duration_s": 279
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "fbbe0058-23d3-43c0-9d7c-a8dbe7da99cb",
+          "audio_url": "https://cdn1.suno.ai/fbbe0058-23d3-43c0-9d7c-a8dbe7da99cb.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_fbbe0058-23d3-43c0-9d7c-a8dbe7da99cb.jpeg",
+          "url": "https://suno.com/song/fbbe0058-23d3-43c0-9d7c-a8dbe7da99cb",
+          "play_count": 2,
+          "duration_s": 230
+        }
+      ]
+    },
+    {
+      "num": 42,
+      "id_padded": "◈042",
+      "title": "A Rocha de Escândalo",
+      "arc_num": 5,
+      "arc_name": "O Retorno e a Restauração",
+      "index_ref": "1 Pedro 2:7-8 | Lucas 20:18",
+      "books": [
+        "Pedro 2:7",
+        "Lucas 20:18"
+      ],
+      "caption": "O choque inescapável: ou você edifica sua vida sobre Ele, ou Ele despenca sobre você e o esmaga em pó. (Lucas 20)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "dfb0ddeb-538a-4737-9741-4a75f4588330",
+          "audio_url": "https://cdn1.suno.ai/dfb0ddeb-538a-4737-9741-4a75f4588330.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_dfb0ddeb-538a-4737-9741-4a75f4588330.jpeg",
+          "url": "https://suno.com/song/dfb0ddeb-538a-4737-9741-4a75f4588330",
+          "play_count": 1,
+          "duration_s": 313
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "f6b7df9f-3e51-4be0-9d45-2fadd3a43f3b",
+          "audio_url": "https://cdn1.suno.ai/f6b7df9f-3e51-4be0-9d45-2fadd3a43f3b.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_f6b7df9f-3e51-4be0-9d45-2fadd3a43f3b.jpeg",
+          "url": "https://suno.com/song/f6b7df9f-3e51-4be0-9d45-2fadd3a43f3b",
+          "play_count": 1,
+          "duration_s": 313
+        }
+      ]
+    },
+    {
+      "num": 43,
+      "id_padded": "◈043",
+      "title": "A Espada e a Argamassa",
+      "arc_num": 5,
+      "arc_name": "O Retorno e a Restauração",
+      "index_ref": "Neemias 4:17-18 | Efésios 6:17",
+      "books": [
+        "Neemias 4:17",
+        "Efésios 6:17"
+      ],
+      "caption": "Em uma mão a espada pesada para repelir o engano, na outra a ferramenta constante para refazer muros. (Neemias 4)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "e019d01a-0612-406d-939f-56a060818f81",
+          "audio_url": "https://cdn1.suno.ai/e019d01a-0612-406d-939f-56a060818f81.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_e019d01a-0612-406d-939f-56a060818f81.jpeg",
+          "url": "https://suno.com/song/e019d01a-0612-406d-939f-56a060818f81",
+          "play_count": 3,
+          "duration_s": 242
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "b852076b-6c07-43e9-971e-ab4efdee666c",
+          "audio_url": "https://cdn1.suno.ai/b852076b-6c07-43e9-971e-ab4efdee666c.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_b852076b-6c07-43e9-971e-ab4efdee666c.jpeg",
+          "url": "https://suno.com/song/b852076b-6c07-43e9-971e-ab4efdee666c",
+          "play_count": 2,
+          "duration_s": 266
+        }
+      ]
+    },
+    {
+      "num": 44,
+      "id_padded": "◈044",
+      "title": "As Portas Estreitas",
+      "arc_num": 5,
+      "arc_name": "O Retorno e a Restauração",
+      "index_ref": "Neemias 7:3 | Mateus 7:13-14",
+      "books": [
+        "Neemias 7:3",
+        "Mateus 7:13"
+      ],
+      "caption": "Não existe Reino sem catracas estreitas. Uma barreira letal contra o desfile espaçoso de um mundo cego. (Mateus 7)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "10acc81a-870a-45d6-9728-6a4451ae0cc2",
+          "audio_url": "https://cdn1.suno.ai/10acc81a-870a-45d6-9728-6a4451ae0cc2.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_10acc81a-870a-45d6-9728-6a4451ae0cc2.jpeg",
+          "url": "https://suno.com/song/10acc81a-870a-45d6-9728-6a4451ae0cc2",
+          "play_count": 1,
+          "duration_s": 253
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "8863afaa-187c-4674-9287-9e8aae9e7272",
+          "audio_url": "https://cdn1.suno.ai/8863afaa-187c-4674-9287-9e8aae9e7272.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_8863afaa-187c-4674-9287-9e8aae9e7272.jpeg",
+          "url": "https://suno.com/song/8863afaa-187c-4674-9287-9e8aae9e7272",
+          "play_count": 0,
+          "duration_s": 284
+        }
+      ]
+    },
+    {
+      "num": 45,
+      "id_padded": "◈045",
+      "title": "Altar de Pedras Inteiras",
+      "arc_num": 5,
+      "arc_name": "O Retorno e a Restauração",
+      "index_ref": "Deuteronômio 27:6 | Esdras 3:2",
+      "books": [
+        "Deuteronômio 27:6",
+        "Esdras 3:2"
+      ],
+      "caption": "O altar aceito que exige obediência rústica, rejeitando terminantemente a lapidação vaidosa pelo nosso esforço humano. (Esdras 3)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "a3ceaea6-bd40-4899-b60d-b60e428caac2",
+          "audio_url": "https://cdn1.suno.ai/a3ceaea6-bd40-4899-b60d-b60e428caac2.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_a3ceaea6-bd40-4899-b60d-b60e428caac2.jpeg",
+          "url": "https://suno.com/song/a3ceaea6-bd40-4899-b60d-b60e428caac2",
+          "play_count": 3,
+          "duration_s": 310
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "c07ccba5-db36-4fc5-85db-11c9e7699c34",
+          "audio_url": "https://cdn1.suno.ai/c07ccba5-db36-4fc5-85db-11c9e7699c34.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_c07ccba5-db36-4fc5-85db-11c9e7699c34.jpeg",
+          "url": "https://suno.com/song/c07ccba5-db36-4fc5-85db-11c9e7699c34",
+          "play_count": 0,
+          "duration_s": 284
+        }
+      ]
+    },
+    {
+      "num": 46,
+      "id_padded": "◈046",
+      "title": "O Pergaminho Desenterrado",
+      "arc_num": 5,
+      "arc_name": "O Retorno e a Restauração",
+      "index_ref": "Neemias 8:8-9 | 2 Reis 22:11",
+      "books": [
+        "Neemias 8:8",
+        "Reis 22:11"
+      ],
+      "caption": "O choro cortante e o pacto urgente ao ouvir as exigências exatas do Códice após décadas enterrados. (Neemias 8)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "aada769a-4e5b-4e3b-b803-caa748126871",
+          "audio_url": "https://cdn1.suno.ai/aada769a-4e5b-4e3b-b803-caa748126871.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_aada769a-4e5b-4e3b-b803-caa748126871.jpeg",
+          "url": "https://suno.com/song/aada769a-4e5b-4e3b-b803-caa748126871",
+          "play_count": 1,
+          "duration_s": 311
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "e938a0b2-558d-4fd9-9585-214108c6786b",
+          "audio_url": "https://cdn1.suno.ai/e938a0b2-558d-4fd9-9585-214108c6786b.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_e938a0b2-558d-4fd9-9585-214108c6786b.jpeg",
+          "url": "https://suno.com/song/e938a0b2-558d-4fd9-9585-214108c6786b",
+          "play_count": 1,
+          "duration_s": 288
+        }
+      ]
+    },
+    {
+      "num": 47,
+      "id_padded": "◈047",
+      "title": "A Expulsão do Misto",
+      "arc_num": 5,
+      "arc_name": "O Retorno e a Restauração",
+      "index_ref": "Neemias 13:25 | 2 Coríntios 6:14",
+      "books": [
+        "Neemias 13:25",
+        "Coríntios 6:14"
+      ],
+      "caption": "A força profética incisiva de retirar maus costumes mercadológicos pondo as coisas seculares na rua. (Neemias 13)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "fbd62fa0-ddb9-4ce9-bf3b-1d26a778042d",
+          "audio_url": "https://cdn1.suno.ai/fbd62fa0-ddb9-4ce9-bf3b-1d26a778042d.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_fbd62fa0-ddb9-4ce9-bf3b-1d26a778042d.jpeg",
+          "url": "https://suno.com/song/fbd62fa0-ddb9-4ce9-bf3b-1d26a778042d",
+          "play_count": 0,
+          "duration_s": 305
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "07f66f35-61dd-4e39-82d2-438a9836987f",
+          "audio_url": "https://cdn1.suno.ai/07f66f35-61dd-4e39-82d2-438a9836987f.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_07f66f35-61dd-4e39-82d2-438a9836987f.jpeg",
+          "url": "https://suno.com/song/07f66f35-61dd-4e39-82d2-438a9836987f",
+          "play_count": 0,
+          "duration_s": 283
+        }
+      ]
+    },
+    {
+      "num": 48,
+      "id_padded": "◈048",
+      "title": "O Pão da Recusa",
+      "arc_num": 5,
+      "arc_name": "O Retorno e a Restauração",
+      "index_ref": "Neemias 5:14-15 | Salmo 141:4",
+      "books": [
+        "Neemias 5:14",
+        "Salmo 141:4"
+      ],
+      "caption": "A marcha subversiva constante, de rejeitar banquetes impuros oferecidos pela elite dominante. (Neemias 5)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "65c2b873-7f0c-4c64-95f2-92e4c90e70d1",
+          "audio_url": "https://cdn1.suno.ai/65c2b873-7f0c-4c64-95f2-92e4c90e70d1.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_65c2b873-7f0c-4c64-95f2-92e4c90e70d1.jpeg",
+          "url": "https://suno.com/song/65c2b873-7f0c-4c64-95f2-92e4c90e70d1",
+          "play_count": 0,
+          "duration_s": 310
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "ec26e396-c85e-47e6-9614-2d15e2347856",
+          "audio_url": "https://cdn1.suno.ai/ec26e396-c85e-47e6-9614-2d15e2347856.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_ec26e396-c85e-47e6-9614-2d15e2347856.jpeg",
+          "url": "https://suno.com/song/ec26e396-c85e-47e6-9614-2d15e2347856",
+          "play_count": 2,
+          "duration_s": 282
+        }
+      ]
+    },
+    {
+      "num": 49,
+      "id_padded": "◈049",
+      "title": "Caminhando Sobre o Muro",
+      "arc_num": 5,
+      "arc_name": "O Retorno e a Restauração",
+      "index_ref": "Neemias 12:31 | Salmo 48:12",
+      "books": [
+        "Neemias 12:31",
+        "Salmo 48:12"
+      ],
+      "caption": "Cerimônia agressiva cimentada. Defesas inegociáveis sólidas debaixo do sol onde lobos morrem antes do portão. (Neemias 12)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "9a99c918-85fb-4a6a-9f86-822331ab5879",
+          "audio_url": "https://cdn1.suno.ai/9a99c918-85fb-4a6a-9f86-822331ab5879.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_9a99c918-85fb-4a6a-9f86-822331ab5879.jpeg",
+          "url": "https://suno.com/song/9a99c918-85fb-4a6a-9f86-822331ab5879",
+          "play_count": 1,
+          "duration_s": 262
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "42bfed0c-7bd9-41ea-82f8-3141938320e8",
+          "audio_url": "https://cdn1.suno.ai/42bfed0c-7bd9-41ea-82f8-3141938320e8.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_42bfed0c-7bd9-41ea-82f8-3141938320e8.jpeg",
+          "url": "https://suno.com/song/42bfed0c-7bd9-41ea-82f8-3141938320e8",
+          "play_count": 1,
+          "duration_s": 285
+        }
+      ]
+    },
+    {
+      "num": 50,
+      "id_padded": "◈050",
+      "title": "O Selo da Aliança",
+      "arc_num": 5,
+      "arc_name": "O Retorno e a Restauração",
+      "index_ref": "Neemias 9:38 | Ageu 2:9",
+      "books": [
+        "Neemias 9:38",
+        "Ageu 2:9"
+      ],
+      "caption": "Assinatura irrevogável e blindada batida com os líderes frente à rocha num pátio isolado contra covardias. (Neemias 9)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "57a50985-9e21-453c-b2c4-1b5a89a3a169",
+          "audio_url": "https://cdn1.suno.ai/57a50985-9e21-453c-b2c4-1b5a89a3a169.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_57a50985-9e21-453c-b2c4-1b5a89a3a169.jpeg",
+          "url": "https://suno.com/song/57a50985-9e21-453c-b2c4-1b5a89a3a169",
+          "play_count": 1,
+          "duration_s": 304
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "7c7ff8ad-013a-4fac-8d62-d865d805da83",
+          "audio_url": "https://cdn1.suno.ai/7c7ff8ad-013a-4fac-8d62-d865d805da83.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_7c7ff8ad-013a-4fac-8d62-d865d805da83.jpeg",
+          "url": "https://suno.com/song/7c7ff8ad-013a-4fac-8d62-d865d805da83",
+          "play_count": 1,
+          "duration_s": 272
+        }
+      ]
+    },
+    {
+      "num": 51,
+      "id_padded": "◈051",
+      "title": "A Sangria do Óleo",
+      "arc_num": 6,
+      "arc_name": "A Noite e a Vigília",
+      "index_ref": "Mateus 25:8-9 | Apocalipse 3:18",
+      "books": [
+        "Mateus 25:8",
+        "Apocalipse 3:18"
+      ],
+      "caption": "Um alerta fúnebre às 2 da manhã! Denunciando hostes que exibem lâmpadas secas operando na brasa morta.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "b4dd4cef-44a7-410e-99d7-949232922e06",
+          "audio_url": "https://cdn1.suno.ai/b4dd4cef-44a7-410e-99d7-949232922e06.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_b4dd4cef-44a7-410e-99d7-949232922e06.jpeg",
+          "url": "https://suno.com/song/b4dd4cef-44a7-410e-99d7-949232922e06",
+          "play_count": 10,
+          "duration_s": 300
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "8c4cfefc-c7f8-4c76-afbf-7715b1019c16",
+          "audio_url": "https://cdn1.suno.ai/8c4cfefc-c7f8-4c76-afbf-7715b1019c16.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_8c4cfefc-c7f8-4c76-afbf-7715b1019c16.jpeg",
+          "url": "https://suno.com/song/8c4cfefc-c7f8-4c76-afbf-7715b1019c16",
+          "play_count": 29,
+          "duration_s": 358
+        }
+      ]
+    },
+    {
+      "num": 52,
+      "id_padded": "◈052",
+      "title": "O Peso do Sentinela",
+      "arc_num": 6,
+      "arc_name": "A Noite e a Vigília",
+      "index_ref": "Isaías 21:11-12 | Ezequiel 33:2",
+      "books": [
+        "Isaías 21:11",
+        "Ezequiel 33:2"
+      ],
+      "caption": "A solitude cruel do vigia insone de Ezequiel avistando no escuro os tentáculos de juízo inalcançáveis da punição. (Eq 33)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "b061f225-86f9-4aac-9949-8c5d16181374",
+          "audio_url": "https://cdn1.suno.ai/b061f225-86f9-4aac-9949-8c5d16181374.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_b061f225-86f9-4aac-9949-8c5d16181374.jpeg",
+          "url": "https://suno.com/song/b061f225-86f9-4aac-9949-8c5d16181374",
+          "play_count": 6,
+          "duration_s": 276
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "7b5b1ec8-77da-4781-876b-0500ddee0d03",
+          "audio_url": "https://cdn1.suno.ai/7b5b1ec8-77da-4781-876b-0500ddee0d03.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_7b5b1ec8-77da-4781-876b-0500ddee0d03.jpeg",
+          "url": "https://suno.com/song/7b5b1ec8-77da-4781-876b-0500ddee0d03",
+          "play_count": 3,
+          "duration_s": 293
+        }
+      ]
+    },
+    {
+      "num": 53,
+      "id_padded": "◈053",
+      "title": "Uma Hora no Frio",
+      "arc_num": 6,
+      "arc_name": "A Noite e a Vigília",
+      "index_ref": "Mateus 26:40 | 1 Pedro 5:8",
+      "books": [
+        "Mateus 26:40",
+        "Pedro 5:8"
+      ],
+      "caption": "Um vexame colossal. Apimentada traição silenciosa do cansaço na noite do julgamento sem tréguas do Getsemani.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "b1e2b558-5416-4faa-9d08-2e9fc9ea8a69",
+          "audio_url": "https://cdn1.suno.ai/b1e2b558-5416-4faa-9d08-2e9fc9ea8a69.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_b1e2b558-5416-4faa-9d08-2e9fc9ea8a69.jpeg",
+          "url": "https://suno.com/song/b1e2b558-5416-4faa-9d08-2e9fc9ea8a69",
+          "play_count": 7,
+          "duration_s": 322
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "3fb075f6-7d23-4278-afc3-b44a848a289b",
+          "audio_url": "https://cdn1.suno.ai/3fb075f6-7d23-4278-afc3-b44a848a289b.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_3fb075f6-7d23-4278-afc3-b44a848a289b.jpeg",
+          "url": "https://suno.com/song/3fb075f6-7d23-4278-afc3-b44a848a289b",
+          "play_count": 0,
+          "duration_s": 282
+        }
+      ]
+    },
+    {
+      "num": 54,
+      "id_padded": "◈054",
+      "title": "O Som Desse Gemido",
+      "arc_num": 6,
+      "arc_name": "A Noite e a Vigília",
+      "index_ref": "Romanos 8:26 | Salmo 42:7",
+      "books": [
+        "Romanos 8:26",
+        "Salmo 42:7"
+      ],
+      "caption": "Pressão cósmica por uma redenção pesada enclausurada. A agonia vibrante quebrando alicerces de fora para dentro. (Rm 8)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "f2189baf-a3b8-4c1b-b43f-b8d9f6533ee5",
+          "audio_url": "https://cdn1.suno.ai/f2189baf-a3b8-4c1b-b43f-b8d9f6533ee5.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_f2189baf-a3b8-4c1b-b43f-b8d9f6533ee5.jpeg",
+          "url": "https://suno.com/song/f2189baf-a3b8-4c1b-b43f-b8d9f6533ee5",
+          "play_count": 0,
+          "duration_s": 329
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "129bf2ee-e38e-4ae3-af7c-ee1204913fd0",
+          "audio_url": "https://cdn1.suno.ai/129bf2ee-e38e-4ae3-af7c-ee1204913fd0.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_129bf2ee-e38e-4ae3-af7c-ee1204913fd0.jpeg",
+          "url": "https://suno.com/song/129bf2ee-e38e-4ae3-af7c-ee1204913fd0",
+          "play_count": 1,
+          "duration_s": 297
+        }
+      ]
+    },
+    {
+      "num": 55,
+      "id_padded": "◈055",
+      "title": "A Lenha da Meia-Noite",
+      "arc_num": 6,
+      "arc_name": "A Noite e a Vigília",
+      "index_ref": "Levítico 6:13 | Salmo 119:62",
+      "books": [
+        "Levítico 6:13",
+        "Salmo 119:62"
+      ],
+      "caption": "Uma ignição persistente do Cordeiro forçando artilharias a atear brasas contínuas frente às intempéries gélidas de apostasias. (Lv 6)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "1ddb055b-6597-4700-b332-e9c5bc7152fa",
+          "audio_url": "https://cdn1.suno.ai/1ddb055b-6597-4700-b332-e9c5bc7152fa.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_1ddb055b-6597-4700-b332-e9c5bc7152fa.jpeg",
+          "url": "https://suno.com/song/1ddb055b-6597-4700-b332-e9c5bc7152fa",
+          "play_count": 1,
+          "duration_s": 317
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "53232a13-b039-4f63-8055-2da533b87e52",
+          "audio_url": "https://cdn1.suno.ai/53232a13-b039-4f63-8055-2da533b87e52.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_53232a13-b039-4f63-8055-2da533b87e52.jpeg",
+          "url": "https://suno.com/song/53232a13-b039-4f63-8055-2da533b87e52",
+          "play_count": 1,
+          "duration_s": 313
+        }
+      ]
+    },
+    {
+      "num": 56,
+      "id_padded": "◈056",
+      "title": "Desperta dos Cadáveres",
+      "arc_num": 6,
+      "arc_name": "A Noite e a Vigília",
+      "index_ref": "Efésios 5:14 | 1 Tessalonicenses 5:6",
+      "books": [
+        "Efésios 5:14",
+        "Tessalonicenses 5:6"
+      ],
+      "caption": "Um apito de base. Desperta, rasga atadura fúnebre de frouxidão letal pois A Luz vai chocar o seu rosto de imediato! (Ef 5)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "1abddb6e-fbe1-4b45-b4ec-f81ca9922cbe",
+          "audio_url": "https://cdn1.suno.ai/1abddb6e-fbe1-4b45-b4ec-f81ca9922cbe.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_1abddb6e-fbe1-4b45-b4ec-f81ca9922cbe.jpeg",
+          "url": "https://suno.com/song/1abddb6e-fbe1-4b45-b4ec-f81ca9922cbe",
+          "play_count": 1,
+          "duration_s": 283
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "819f401f-2c0f-4ba6-a9a2-299dbb046786",
+          "audio_url": "https://cdn1.suno.ai/819f401f-2c0f-4ba6-a9a2-299dbb046786.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_819f401f-2c0f-4ba6-a9a2-299dbb046786.jpeg",
+          "url": "https://suno.com/song/819f401f-2c0f-4ba6-a9a2-299dbb046786",
+          "play_count": 2,
+          "duration_s": 303
+        }
+      ]
+    },
+    {
+      "num": 57,
+      "id_padded": "◈057",
+      "title": "A Quarta Vigília",
+      "arc_num": 6,
+      "arc_name": "A Noite e a Vigília",
+      "index_ref": "Mateus 14:25 | Marcos 6:48",
+      "books": [
+        "Mateus 14:25",
+        "Marcos 6:48"
+      ],
+      "caption": "Um apito de base. Desperta, rasga atadura fúnebre de frouxidão letal pois A Luz vai chocar o seu rosto de imediato! (Ef 5)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "d38fd7a0-b7bc-41be-8d05-5ca0fccc042a",
+          "audio_url": "https://cdn1.suno.ai/d38fd7a0-b7bc-41be-8d05-5ca0fccc042a.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_d38fd7a0-b7bc-41be-8d05-5ca0fccc042a.jpeg",
+          "url": "https://suno.com/song/d38fd7a0-b7bc-41be-8d05-5ca0fccc042a",
+          "play_count": 1,
+          "duration_s": 322
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "224c9b66-17b8-4d10-bf9d-95f67d871478",
+          "audio_url": "https://cdn1.suno.ai/224c9b66-17b8-4d10-bf9d-95f67d871478.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_224c9b66-17b8-4d10-bf9d-95f67d871478.jpeg",
+          "url": "https://suno.com/song/224c9b66-17b8-4d10-bf9d-95f67d871478",
+          "play_count": 2,
+          "duration_s": 303
+        }
+      ]
+    },
+    {
+      "num": 58,
+      "id_padded": "◈058",
+      "title": "Mais Que Os Guardas",
+      "arc_num": 6,
+      "arc_name": "A Noite e a Vigília",
+      "index_ref": "Salmo 130:6 | 2 Pedro 1:19",
+      "books": [
+        "Salmo 130:6",
+        "Pedro 1:19"
+      ],
+      "caption": "Pulsação no deserto. Mais profunda agonizante urgência sem margens pela resposta da torre cravando vigílias pesadas.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "6b8cafb3-076b-4c99-993d-09f38ab6b7e7",
+          "audio_url": "https://cdn1.suno.ai/6b8cafb3-076b-4c99-993d-09f38ab6b7e7.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_6b8cafb3-076b-4c99-993d-09f38ab6b7e7.jpeg",
+          "url": "https://suno.com/song/6b8cafb3-076b-4c99-993d-09f38ab6b7e7",
+          "play_count": 2,
+          "duration_s": 295
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "c00f4b31-e57f-4915-941c-3423db203d15",
+          "audio_url": "https://cdn1.suno.ai/c00f4b31-e57f-4915-941c-3423db203d15.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_c00f4b31-e57f-4915-941c-3423db203d15.jpeg",
+          "url": "https://suno.com/song/c00f4b31-e57f-4915-941c-3423db203d15",
+          "play_count": 3,
+          "duration_s": 293
+        }
+      ]
+    },
+    {
+      "num": 59,
+      "id_padded": "◈059",
+      "title": "A Nudez da Sombra",
+      "arc_num": 6,
+      "arc_name": "A Noite e a Vigília",
+      "index_ref": "Apocalipse 16:15 | Apocalipse 3:3",
+      "books": [
+        "Apocalipse 16:15",
+        "Apocalipse 3:3"
+      ],
+      "caption": "Alarme e exposição sumária varrendo armários da vergonha em meio à farsa moral escancarada pelos raios solares! (Ap 16)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "92f9db76-c196-4834-9c33-ece4f5760b45",
+          "audio_url": "https://cdn1.suno.ai/92f9db76-c196-4834-9c33-ece4f5760b45.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_92f9db76-c196-4834-9c33-ece4f5760b45.jpeg",
+          "url": "https://suno.com/song/92f9db76-c196-4834-9c33-ece4f5760b45",
+          "play_count": 2,
+          "duration_s": 281
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "99fd1509-756a-4617-9174-9432436492b6",
+          "audio_url": "https://cdn1.suno.ai/99fd1509-756a-4617-9174-9432436492b6.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_99fd1509-756a-4617-9174-9432436492b6.jpeg",
+          "url": "https://suno.com/song/99fd1509-756a-4617-9174-9432436492b6",
+          "play_count": 5,
+          "duration_s": 294
+        }
+      ]
+    },
+    {
+      "num": 60,
+      "id_padded": "◈060",
+      "title": "O Fim da Penumbra",
+      "arc_num": 6,
+      "arc_name": "A Noite e a Vigília",
+      "index_ref": "Romanos 13:12 | Malaquias 4:2",
+      "books": [
+        "Romanos 13:12",
+        "Malaquias 4:2"
+      ],
+      "caption": "O fogo devastador nas planícies varrendo desculpas. Estrela da Manhã exterminando as desculpas soterradas noturnas. (Ml 4)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "10575bfe-81e0-4bc5-8f72-e7931d15685b",
+          "audio_url": "https://cdn1.suno.ai/10575bfe-81e0-4bc5-8f72-e7931d15685b.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_10575bfe-81e0-4bc5-8f72-e7931d15685b.jpeg",
+          "url": "https://suno.com/song/10575bfe-81e0-4bc5-8f72-e7931d15685b",
+          "play_count": 6,
+          "duration_s": 351
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "36990169-5295-450e-b518-1188849139f3",
+          "audio_url": "https://cdn1.suno.ai/36990169-5295-450e-b518-1188849139f3.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_36990169-5295-450e-b518-1188849139f3.jpeg",
+          "url": "https://suno.com/song/36990169-5295-450e-b518-1188849139f3",
+          "play_count": 4,
+          "duration_s": 334
+        }
+      ]
+    },
+    {
+      "num": 61,
+      "id_padded": "◈061",
+      "title": "O Esmagamento do Verbo",
+      "arc_num": 7,
+      "arc_name": "A Encarnação e o Conflito",
+      "index_ref": "João 1:14 | Filipenses 2:7",
+      "books": [
+        "João 1:14",
+        "Filipenses 2:7"
+      ],
+      "caption": "Submissão material humilhante - infinito aceitando fronteiras de DNA ósseo calçando esmagadora escuridão de pó! (Fl 2)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "e0b6f2dc-f5c6-4377-9cf7-1b457b2c8626",
+          "audio_url": "https://cdn1.suno.ai/e0b6f2dc-f5c6-4377-9cf7-1b457b2c8626.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_e0b6f2dc-f5c6-4377-9cf7-1b457b2c8626.jpeg",
+          "url": "https://suno.com/song/e0b6f2dc-f5c6-4377-9cf7-1b457b2c8626",
+          "play_count": 18,
+          "duration_s": 232
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "05d0c009-2992-4cab-8f63-3ecb4e82269c",
+          "audio_url": "https://cdn1.suno.ai/05d0c009-2992-4cab-8f63-3ecb4e82269c.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_05d0c009-2992-4cab-8f63-3ecb4e82269c.jpeg",
+          "url": "https://suno.com/song/05d0c009-2992-4cab-8f63-3ecb4e82269c",
+          "play_count": 6,
+          "duration_s": 220
+        }
+      ]
+    },
+    {
+      "num": 62,
+      "id_padded": "◈062",
+      "title": "A Caça do Dragão",
+      "arc_num": 7,
+      "arc_name": "A Encarnação e o Conflito",
+      "index_ref": "Mateus 2:16 | Apocalipse 12:4",
+      "books": [
+        "Mateus 2:16",
+        "Apocalipse 12:4"
+      ],
+      "caption": "",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "17d750f2-7d7c-4df5-9036-c733609885d5",
+          "audio_url": "https://cdn1.suno.ai/17d750f2-7d7c-4df5-9036-c733609885d5.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_17d750f2-7d7c-4df5-9036-c733609885d5.jpeg",
+          "url": "https://suno.com/song/17d750f2-7d7c-4df5-9036-c733609885d5",
+          "play_count": 4,
+          "duration_s": 242
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "1b517952-c7de-4c66-b00f-7ac327398808",
+          "audio_url": "https://cdn1.suno.ai/1b517952-c7de-4c66-b00f-7ac327398808.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_1b517952-c7de-4c66-b00f-7ac327398808.jpeg",
+          "url": "https://suno.com/song/1b517952-c7de-4c66-b00f-7ac327398808",
+          "play_count": 4,
+          "duration_s": 237
+        }
+      ]
+    },
+    {
+      "num": 63,
+      "id_padded": "◈063",
+      "title": "Quarenta Dias de Poeira",
+      "arc_num": 7,
+      "arc_name": "A Encarnação e o Conflito",
+      "index_ref": "Mateus 4:1 | Hebreus 4:15",
+      "books": [
+        "Mateus 4:1",
+        "Hebreus 4:15"
+      ],
+      "caption": "Confrontação frontal acústica sem suprimentos - a física sagrada aniquiladora de Deuteronômio expelida no árido abismo silvado da Serpente. (Mt 4)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "26d1a162-13fc-4c18-9a58-3d7b54a983b9",
+          "audio_url": "https://cdn1.suno.ai/26d1a162-13fc-4c18-9a58-3d7b54a983b9.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_26d1a162-13fc-4c18-9a58-3d7b54a983b9.jpeg",
+          "url": "https://suno.com/song/26d1a162-13fc-4c18-9a58-3d7b54a983b9",
+          "play_count": 4,
+          "duration_s": 281
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "e2e5ec54-1972-439c-91aa-fc9ddf256fb8",
+          "audio_url": "https://cdn1.suno.ai/e2e5ec54-1972-439c-91aa-fc9ddf256fb8.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_e2e5ec54-1972-439c-91aa-fc9ddf256fb8.jpeg",
+          "url": "https://suno.com/song/e2e5ec54-1972-439c-91aa-fc9ddf256fb8",
+          "play_count": 4,
+          "duration_s": 319
+        }
+      ]
+    },
+    {
+      "num": 64,
+      "id_padded": "◈064",
+      "title": "O Chicote de Cordas",
+      "arc_num": 7,
+      "arc_name": "A Encarnação e o Conflito",
+      "index_ref": "João 2:15 | Lucas 19:45",
+      "books": [
+        "João 2:15",
+        "Lucas 19:45"
+      ],
+      "caption": "Justificativa física explosiva de chicotes sem cordas estourando vitrines e moedas impuras do comércio de palanque fiduciário letal! (Jo 2)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "7cbc01a9-2c46-4233-96ee-84f72d9cd9ad",
+          "audio_url": "https://cdn1.suno.ai/7cbc01a9-2c46-4233-96ee-84f72d9cd9ad.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_7cbc01a9-2c46-4233-96ee-84f72d9cd9ad.jpeg",
+          "url": "https://suno.com/song/7cbc01a9-2c46-4233-96ee-84f72d9cd9ad",
+          "play_count": 4,
+          "duration_s": 216
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "67193fe7-0a46-4fab-8550-eee46631139a",
+          "audio_url": "https://cdn1.suno.ai/67193fe7-0a46-4fab-8550-eee46631139a.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_67193fe7-0a46-4fab-8550-eee46631139a.jpeg",
+          "url": "https://suno.com/song/67193fe7-0a46-4fab-8550-eee46631139a",
+          "play_count": 3,
+          "duration_s": 212
+        }
+      ]
+    },
+    {
+      "num": 65,
+      "id_padded": "◈065",
+      "title": "Raça de Víboras",
+      "arc_num": 7,
+      "arc_name": "A Encarnação e o Conflito",
+      "index_ref": "Mateus 23:33 | Lucas 3:7",
+      "books": [
+        "Mateus 23:33",
+        "Lucas 3:7"
+      ],
+      "caption": "Intolerância retórica do Batista engolindo serpentes covardadas e castas seculares purificados imundos perante as margens d´água de Juízo! (Mt 23)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "32bc2b4b-d442-4df2-814b-d5ce9c8317be",
+          "audio_url": "https://cdn1.suno.ai/32bc2b4b-d442-4df2-814b-d5ce9c8317be.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_32bc2b4b-d442-4df2-814b-d5ce9c8317be.jpeg",
+          "url": "https://suno.com/song/32bc2b4b-d442-4df2-814b-d5ce9c8317be",
+          "play_count": 2,
+          "duration_s": 256
+        },
+        {
+          "version": 2,
+          "batch": 0,
+          "id": "739aa1ec-c31b-4084-9b4a-0bf3073faab2",
+          "audio_url": "https://cdn1.suno.ai/739aa1ec-c31b-4084-9b4a-0bf3073faab2.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_739aa1ec-c31b-4084-9b4a-0bf3073faab2.jpeg",
+          "url": "https://suno.com/song/739aa1ec-c31b-4084-9b4a-0bf3073faab2",
+          "play_count": 1,
+          "duration_s": 242
+        },
+        {
+          "version": 3,
+          "batch": 1,
+          "id": "a89505f9-156a-404a-8b4b-bf5ffab22850",
+          "audio_url": "https://cdn1.suno.ai/a89505f9-156a-404a-8b4b-bf5ffab22850.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_a89505f9-156a-404a-8b4b-bf5ffab22850.jpeg",
+          "url": "https://suno.com/song/a89505f9-156a-404a-8b4b-bf5ffab22850",
+          "play_count": 2,
+          "duration_s": 257
+        },
+        {
+          "version": 4,
+          "batch": 1,
+          "id": "61d9db03-eedf-4354-9e53-feb061f2303c",
+          "audio_url": "https://cdn1.suno.ai/61d9db03-eedf-4354-9e53-feb061f2303c.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_61d9db03-eedf-4354-9e53-feb061f2303c.jpeg",
+          "url": "https://suno.com/song/61d9db03-eedf-4354-9e53-feb061f2303c",
+          "play_count": 0,
+          "duration_s": 241
+        }
+      ]
+    },
+    {
+      "num": 66,
+      "id_padded": "◈066",
+      "title": "O Discurso Insuportável",
+      "arc_num": 7,
+      "arc_name": "A Encarnação e o Conflito",
+      "index_ref": "João 6:60 | Mateus 10:34",
+      "books": [
+        "João 6:60",
+        "Mateus 10:34"
+      ],
+      "caption": "Série de isolamentos sem refugo cimentando exigências canibais cruas que enxotaram curiosos à mercê fútil do milagre isolando corações pesados. (Jo 6)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "57286379-59e6-4d2c-b1ee-f1c6359d615b",
+          "audio_url": "https://cdn1.suno.ai/57286379-59e6-4d2c-b1ee-f1c6359d615b.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_57286379-59e6-4d2c-b1ee-f1c6359d615b.jpeg",
+          "url": "https://suno.com/song/57286379-59e6-4d2c-b1ee-f1c6359d615b",
+          "play_count": 0,
+          "duration_s": 250
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "27446331-48a0-4b7c-a5fc-c780673186b3",
+          "audio_url": "https://cdn1.suno.ai/27446331-48a0-4b7c-a5fc-c780673186b3.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_27446331-48a0-4b7c-a5fc-c780673186b3.jpeg",
+          "url": "https://suno.com/song/27446331-48a0-4b7c-a5fc-c780673186b3",
+          "play_count": 0,
+          "duration_s": 307
+        }
+      ]
+    },
+    {
+      "num": 67,
+      "id_padded": "◈067",
+      "title": "O Lodo nos Olhos",
+      "arc_num": 7,
+      "arc_name": "A Encarnação e o Conflito",
+      "index_ref": "João 9:6 | Marcos 8:23",
+      "books": [
+        "João 9:6",
+        "Marcos 8:23"
+      ],
+      "caption": "Enredo químico divino utilizando pó e materialismo cru derrubando catedráticos engessados numa piscina de autoridade estonteante esmagadora. (Jo 9)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "2138db5f-deed-44e3-9d7f-d24e01fa1d04",
+          "audio_url": "https://cdn1.suno.ai/2138db5f-deed-44e3-9d7f-d24e01fa1d04.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_2138db5f-deed-44e3-9d7f-d24e01fa1d04.jpeg",
+          "url": "https://suno.com/song/2138db5f-deed-44e3-9d7f-d24e01fa1d04",
+          "play_count": 0,
+          "duration_s": 233
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "0fc5a5a5-10ba-42c9-ad5e-e1623bedacc9",
+          "audio_url": "https://cdn1.suno.ai/0fc5a5a5-10ba-42c9-ad5e-e1623bedacc9.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_0fc5a5a5-10ba-42c9-ad5e-e1623bedacc9.jpeg",
+          "url": "https://suno.com/song/0fc5a5a5-10ba-42c9-ad5e-e1623bedacc9",
+          "play_count": 3,
+          "duration_s": 250
+        }
+      ]
+    },
+    {
+      "num": 68,
+      "id_padded": "◈068",
+      "title": "O Cheiro de Lázaro",
+      "arc_num": 7,
+      "arc_name": "A Encarnação e o Conflito",
+      "index_ref": "João 11:39 | João 11:43",
+      "books": [
+        "João 11:39",
+        "João 11:43"
+      ],
+      "caption": "Som da Garganta eterna ecoando em rocha dura com autoridade predatória sugando carne putrefata numa inversão temporal mortal! (Jo 11)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "c35d59ea-ec5b-4ae5-9fa9-b827061a72d3",
+          "audio_url": "https://cdn1.suno.ai/c35d59ea-ec5b-4ae5-9fa9-b827061a72d3.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_c35d59ea-ec5b-4ae5-9fa9-b827061a72d3.jpeg",
+          "url": "https://suno.com/song/c35d59ea-ec5b-4ae5-9fa9-b827061a72d3",
+          "play_count": 2,
+          "duration_s": 293
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "12f4847c-1c2e-4b49-a955-32b3941a7ba9",
+          "audio_url": "https://cdn1.suno.ai/12f4847c-1c2e-4b49-a955-32b3941a7ba9.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_12f4847c-1c2e-4b49-a955-32b3941a7ba9.jpeg",
+          "url": "https://suno.com/song/12f4847c-1c2e-4b49-a955-32b3941a7ba9",
+          "play_count": 1,
+          "duration_s": 479
+        }
+      ]
+    },
+    {
+      "num": 69,
+      "id_padded": "◈069",
+      "title": "O Banquete Fúnebre",
+      "arc_num": 7,
+      "arc_name": "A Encarnação e o Conflito",
+      "index_ref": "Mateus 26:26-28 | 1 Coríntios 11:24",
+      "books": [
+        "Mateus 26:26",
+        "Coríntios 11:24"
+      ],
+      "caption": "Cálice ferroso pesado entoando sacrifícios táticos. Sentença fúnebre impulsionada ao máximo frente dores caladas no silêncio do cômodo noturno fúnebre. (Mt 26)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "b7cc4a2f-685f-45fe-949e-0cbeda79ba37",
+          "audio_url": "https://cdn1.suno.ai/b7cc4a2f-685f-45fe-949e-0cbeda79ba37.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_b7cc4a2f-685f-45fe-949e-0cbeda79ba37.jpeg",
+          "url": "https://suno.com/song/b7cc4a2f-685f-45fe-949e-0cbeda79ba37",
+          "play_count": 2,
+          "duration_s": 281
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "e4cc1507-7b7c-4022-a057-32dcf18b0ff9",
+          "audio_url": "https://cdn1.suno.ai/e4cc1507-7b7c-4022-a057-32dcf18b0ff9.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_e4cc1507-7b7c-4022-a057-32dcf18b0ff9.jpeg",
+          "url": "https://suno.com/song/e4cc1507-7b7c-4022-a057-32dcf18b0ff9",
+          "play_count": 3,
+          "duration_s": 291
+        }
+      ]
+    },
+    {
+      "num": 70,
+      "id_padded": "◈070",
+      "title": "O Beijo no Escuro",
+      "arc_num": 7,
+      "arc_name": "A Encarnação e o Conflito",
+      "index_ref": "Lucas 22:47-48 | Mateus 26:49",
+      "books": [
+        "Lucas 22:47",
+        "Mateus 26:49"
+      ],
+      "caption": "Estampido mercenário podre selando de maneira infeliz nas bochechas trêmulas uma barganha estéril maldita desgraçada covarde na noite fria insana! (Lc 22)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "a3701491-468e-45b0-9aa7-23c4185d3415",
+          "audio_url": "https://cdn1.suno.ai/a3701491-468e-45b0-9aa7-23c4185d3415.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_a3701491-468e-45b0-9aa7-23c4185d3415.jpeg",
+          "url": "https://suno.com/song/a3701491-468e-45b0-9aa7-23c4185d3415",
+          "play_count": 5,
+          "duration_s": 278
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "0606b811-f5e6-402d-a400-dbc6bff0aba6",
+          "audio_url": "https://cdn1.suno.ai/0606b811-f5e6-402d-a400-dbc6bff0aba6.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_0606b811-f5e6-402d-a400-dbc6bff0aba6.jpeg",
+          "url": "https://suno.com/song/0606b811-f5e6-402d-a400-dbc6bff0aba6",
+          "play_count": 6,
+          "duration_s": 305
+        }
+      ]
+    },
+    {
+      "num": 71,
+      "id_padded": "◈071",
+      "title": "O Tribunal do Mofador",
+      "arc_num": 8,
+      "arc_name": "A Paixão e a Cruz",
+      "index_ref": "Lucas 23:11 | Mateus 26:67",
+      "books": [
+        "Lucas 23:11",
+        "Mateus 26:67"
+      ],
+      "caption": "A farsa trágica civil escarnecendo a pureza infalível divina sem imaginar as labaredas que lhes encará eternos consumindo seu sorriso letal perverso insensível.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "7d066595-af21-467b-9930-c846e87fa254",
+          "audio_url": "https://cdn1.suno.ai/7d066595-af21-467b-9930-c846e87fa254.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_7d066595-af21-467b-9930-c846e87fa254.jpeg",
+          "url": "https://suno.com/song/7d066595-af21-467b-9930-c846e87fa254",
+          "play_count": 8,
+          "duration_s": 245
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "182ed357-5944-464c-916c-4e264cf6a300",
+          "audio_url": "https://cdn1.suno.ai/182ed357-5944-464c-916c-4e264cf6a300.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_182ed357-5944-464c-916c-4e264cf6a300.jpeg",
+          "url": "https://suno.com/song/182ed357-5944-464c-916c-4e264cf6a300",
+          "play_count": 20,
+          "duration_s": 242
+        }
+      ]
+    },
+    {
+      "num": 72,
+      "id_padded": "◈072",
+      "title": "O Som do Azorrague",
+      "arc_num": 8,
+      "arc_name": "A Paixão e a Cruz",
+      "index_ref": "Isaías 53:5 | Mateus 27:26",
+      "books": [
+        "Isaías 53:5",
+        "Mateus 27:26"
+      ],
+      "caption": "Dilaceração biológica expiatória esmagando as feras do abismo pelas contagens irrefreáveis romanas pagadoras em moeda sônica e sanguinolenta na pior madrugada e aurora de dores sem volta.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "f0cbb7ce-88b5-47ee-8f42-85feecde93ee",
+          "audio_url": "https://cdn1.suno.ai/f0cbb7ce-88b5-47ee-8f42-85feecde93ee.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_f0cbb7ce-88b5-47ee-8f42-85feecde93ee.jpeg",
+          "url": "https://suno.com/song/f0cbb7ce-88b5-47ee-8f42-85feecde93ee",
+          "play_count": 4,
+          "duration_s": 302
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "90e9f60b-b876-4233-b25a-974fd5345ca5",
+          "audio_url": "https://cdn1.suno.ai/90e9f60b-b876-4233-b25a-974fd5345ca5.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_90e9f60b-b876-4233-b25a-974fd5345ca5.jpeg",
+          "url": "https://suno.com/song/90e9f60b-b876-4233-b25a-974fd5345ca5",
+          "play_count": 2,
+          "duration_s": 312
+        }
+      ]
+    },
+    {
+      "num": 73,
+      "id_padded": "◈073",
+      "title": "A Coroa Seca",
+      "arc_num": 8,
+      "arc_name": "A Paixão e a Cruz",
+      "index_ref": "Marcos 15:17 | Gênesis 3:18",
+      "books": [
+        "Marcos 15:17",
+        "Gênesis 3:18"
+      ],
+      "caption": "Remontagem drástica dolorida de Éden na Coroa amaldiçoada fixada brutalmente perfurando A cabeça Real pra secar culpas seculares que o cosmo pedia sangue expurgo sem pausa irrefreável insana.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "2ca03197-e670-4715-b366-095736c560db",
+          "audio_url": "https://cdn1.suno.ai/2ca03197-e670-4715-b366-095736c560db.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_2ca03197-e670-4715-b366-095736c560db.jpeg",
+          "url": "https://suno.com/song/2ca03197-e670-4715-b366-095736c560db",
+          "play_count": 0,
+          "duration_s": 288
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "7927d622-76bd-4213-9546-b3141db4148f",
+          "audio_url": "https://cdn1.suno.ai/7927d622-76bd-4213-9546-b3141db4148f.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_7927d622-76bd-4213-9546-b3141db4148f.jpeg",
+          "url": "https://suno.com/song/7927d622-76bd-4213-9546-b3141db4148f",
+          "play_count": 1,
+          "duration_s": 261
+        }
+      ]
+    },
+    {
+      "num": 74,
+      "id_padded": "◈074",
+      "title": "O Madeiro nas Costas",
+      "arc_num": 8,
+      "arc_name": "A Paixão e a Cruz",
+      "index_ref": "João 19:17 | Lucas 23:26",
+      "books": [
+        "João 19:17",
+        "Lucas 23:26"
+      ],
+      "caption": "Lascas agressivas torturando no lombo fraturado um peso esmagador na Vencedora Escoria pelas vielas ignorantes e alheias rumo ao genocídio puramente estritamente amargo atroz imutável trágico.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "9708c539-f6cf-406f-b923-57e3337917ea",
+          "audio_url": "https://cdn1.suno.ai/9708c539-f6cf-406f-b923-57e3337917ea.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_9708c539-f6cf-406f-b923-57e3337917ea.jpeg",
+          "url": "https://suno.com/song/9708c539-f6cf-406f-b923-57e3337917ea",
+          "play_count": 2,
+          "duration_s": 249
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "a496bf92-fb90-468d-ba90-bd16d885eab2",
+          "audio_url": "https://cdn1.suno.ai/a496bf92-fb90-468d-ba90-bd16d885eab2.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_a496bf92-fb90-468d-ba90-bd16d885eab2.jpeg",
+          "url": "https://suno.com/song/a496bf92-fb90-468d-ba90-bd16d885eab2",
+          "play_count": 2,
+          "duration_s": 243
+        }
+      ]
+    },
+    {
+      "num": 75,
+      "id_padded": "◈075",
+      "title": "Os Pregos em Sião",
+      "arc_num": 8,
+      "arc_name": "A Paixão e a Cruz",
+      "index_ref": "Salmo 22:16 | Lucas 23:33",
+      "books": [
+        "Salmo 22:16",
+        "Lucas 23:33"
+      ],
+      "caption": "Vigas manchadas de crueldade em triturações estelares cravadas sem anestesia biológica e compaixão expiando de cara sem arrego as covardias impuras escuras inescrupulosas insaciáveis malditas caídas impiedosamente! (Sl 22)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "5c21959c-27bb-498a-b70f-09190a842019",
+          "audio_url": "https://cdn1.suno.ai/5c21959c-27bb-498a-b70f-09190a842019.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_5c21959c-27bb-498a-b70f-09190a842019.jpeg",
+          "url": "https://suno.com/song/5c21959c-27bb-498a-b70f-09190a842019",
+          "play_count": 1,
+          "duration_s": 327
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "4c515c90-96f9-4c5a-82da-2a137fa75b84",
+          "audio_url": "https://cdn1.suno.ai/4c515c90-96f9-4c5a-82da-2a137fa75b84.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_4c515c90-96f9-4c5a-82da-2a137fa75b84.jpeg",
+          "url": "https://suno.com/song/4c515c90-96f9-4c5a-82da-2a137fa75b84",
+          "play_count": 1,
+          "duration_s": 341
+        }
+      ]
+    },
+    {
+      "num": 76,
+      "id_padded": "◈076",
+      "title": "As Três Horas de Trevas",
+      "arc_num": 8,
+      "arc_name": "A Paixão e a Cruz",
+      "index_ref": "Mateus 27:45 | Amós 8:9",
+      "books": [
+        "Mateus 27:45",
+        "Amós 8:9"
+      ],
+      "caption": "Espectro sideral travado enclausurando o tempo ao meio dia com densidão apavorada perante ira do Supremo esmagando O Filho em ira incalculável desoladora estraçalhante atordoado sem resgate. (Mt 27)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "4066404e-8b51-4104-a118-2dcc78de116c",
+          "audio_url": "https://cdn1.suno.ai/4066404e-8b51-4104-a118-2dcc78de116c.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_4066404e-8b51-4104-a118-2dcc78de116c.jpeg",
+          "url": "https://suno.com/song/4066404e-8b51-4104-a118-2dcc78de116c",
+          "play_count": 2,
+          "duration_s": 317
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "9985b8a8-8de9-4f9d-a960-4b1adf93bd01",
+          "audio_url": "https://cdn1.suno.ai/9985b8a8-8de9-4f9d-a960-4b1adf93bd01.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_9985b8a8-8de9-4f9d-a960-4b1adf93bd01.jpeg",
+          "url": "https://suno.com/song/9985b8a8-8de9-4f9d-a960-4b1adf93bd01",
+          "play_count": 1,
+          "duration_s": 326
+        }
+      ]
+    },
+    {
+      "num": 77,
+      "id_padded": "◈077",
+      "title": "O Cálice de Vinagre",
+      "arc_num": 8,
+      "arc_name": "A Paixão e a Cruz",
+      "index_ref": "João 19:28 | Salmo 69:21",
+      "books": [
+        "João 19:28",
+        "Salmo 69:21"
+      ],
+      "caption": "Ácido efervescente perverso descendo nas castidades orais infinitas ferindo no âmago divino por deboches fúteis descarados que corrompem a tolerância com desdém macabro de insolentes cruéis. (Jo 19)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "d115bc9e-2ded-4144-bdb9-1ba5ac3c68a4",
+          "audio_url": "https://cdn1.suno.ai/d115bc9e-2ded-4144-bdb9-1ba5ac3c68a4.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_d115bc9e-2ded-4144-bdb9-1ba5ac3c68a4.jpeg",
+          "url": "https://suno.com/song/d115bc9e-2ded-4144-bdb9-1ba5ac3c68a4",
+          "play_count": 1,
+          "duration_s": 416
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "970e7747-e784-4b5e-a343-dc7ee844c3a1",
+          "audio_url": "https://cdn1.suno.ai/970e7747-e784-4b5e-a343-dc7ee844c3a1.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_970e7747-e784-4b5e-a343-dc7ee844c3a1.jpeg",
+          "url": "https://suno.com/song/970e7747-e784-4b5e-a343-dc7ee844c3a1",
+          "play_count": 0,
+          "duration_s": 406
+        }
+      ]
+    },
+    {
+      "num": 78,
+      "id_padded": "◈078",
+      "title": "O Grito da Fenda",
+      "arc_num": 8,
+      "arc_name": "A Paixão e a Cruz",
+      "index_ref": "Mateus 27:50-51 | Hebreus 10:20",
+      "books": [
+        "Mateus 27:50",
+        "Hebreus 10:20"
+      ],
+      "caption": "TETELESTAI - Frequência ensurdecedora final de brado colapsador das pedras fundamentais cravando acessos perpétuos aos fieis com Seu sacrifício extirpante glorioso e amargo esticado nas horas finais! (Heb 10)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "bacce345-c128-41cd-aaed-cb3a57b29874",
+          "audio_url": "https://cdn1.suno.ai/bacce345-c128-41cd-aaed-cb3a57b29874.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_bacce345-c128-41cd-aaed-cb3a57b29874.jpeg",
+          "url": "https://suno.com/song/bacce345-c128-41cd-aaed-cb3a57b29874",
+          "play_count": 1,
+          "duration_s": 388
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "ec93fb07-fba1-4321-a7e5-883a2e266f38",
+          "audio_url": "https://cdn1.suno.ai/ec93fb07-fba1-4321-a7e5-883a2e266f38.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_ec93fb07-fba1-4321-a7e5-883a2e266f38.jpeg",
+          "url": "https://suno.com/song/ec93fb07-fba1-4321-a7e5-883a2e266f38",
+          "play_count": 1,
+          "duration_s": 454
+        }
+      ]
+    },
+    {
+      "num": 79,
+      "id_padded": "◈079",
+      "title": "A Lança de Roma",
+      "arc_num": 8,
+      "arc_name": "A Paixão e a Cruz",
+      "index_ref": "João 19:34 | Zacarias 12:10",
+      "books": [
+        "João 19:34",
+        "Zacarias 12:10"
+      ],
+      "caption": "Punção biológica trágica da pleura calando discursos fraudulentos teológicos com atestações cirúrgicas puras irrevogáveis selando Óbito irremediável contusivo irrefutável estupefato em chumbo derretido na lança fria romana. (Zc 12)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "effc21f2-dd39-43fa-980b-a6f13f1e14c5",
+          "audio_url": "https://cdn1.suno.ai/effc21f2-dd39-43fa-980b-a6f13f1e14c5.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_effc21f2-dd39-43fa-980b-a6f13f1e14c5.jpeg",
+          "url": "https://suno.com/song/effc21f2-dd39-43fa-980b-a6f13f1e14c5",
+          "play_count": 1,
+          "duration_s": 200
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "10e2e11d-7968-4873-a988-6698e971a245",
+          "audio_url": "https://cdn1.suno.ai/10e2e11d-7968-4873-a988-6698e971a245.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_10e2e11d-7968-4873-a988-6698e971a245.jpeg",
+          "url": "https://suno.com/song/10e2e11d-7968-4873-a988-6698e971a245",
+          "play_count": 1,
+          "duration_s": 251
+        }
+      ]
+    },
+    {
+      "num": 80,
+      "id_padded": "◈080",
+      "title": "A Tumba de Pedra",
+      "arc_num": 8,
+      "arc_name": "A Paixão e a Cruz",
+      "index_ref": "Mateus 27:60 | Isaías 53:9",
+      "books": [
+        "Mateus 27:60",
+        "Isaías 53:9"
+      ],
+      "caption": "Confinamento rochoso escuro opressor tentando trancar Autoridade Ilimitada com dezenas de medíocres covardes frente à estática calmaria mortal expectante da maior detonação milagrosa invicta universal das galáxias eternas intocáveis inegociáveis. (Is 53)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "a08b01fb-fa97-463d-b99d-a4c91cfe5d8a",
+          "audio_url": "https://cdn1.suno.ai/a08b01fb-fa97-463d-b99d-a4c91cfe5d8a.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_a08b01fb-fa97-463d-b99d-a4c91cfe5d8a.jpeg",
+          "url": "https://suno.com/song/a08b01fb-fa97-463d-b99d-a4c91cfe5d8a",
+          "play_count": 4,
+          "duration_s": 272
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "3341a72f-25d3-49b1-8587-6ed7504c6663",
+          "audio_url": "https://cdn1.suno.ai/3341a72f-25d3-49b1-8587-6ed7504c6663.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_3341a72f-25d3-49b1-8587-6ed7504c6663.jpeg",
+          "url": "https://suno.com/song/3341a72f-25d3-49b1-8587-6ed7504c6663",
+          "play_count": 2,
+          "duration_s": 275
+        }
+      ]
+    },
+    {
+      "num": 81,
+      "id_padded": "◈081",
+      "title": "O Relâmpago nas Pedras",
+      "arc_num": 9,
+      "arc_name": "A Ressurreição e o Mandato",
+      "index_ref": "Mateus 28:2 | Salmo 104:4",
+      "books": [
+        "Mateus 28:2",
+        "Salmo 104:4"
+      ],
+      "caption": "Injeção vulcânica triturando teologias da Morte frente guardas aterrados pela Luz esmagadora absoluta atirando covardes sem luta! (Mt 28)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "d90ec8c7-ca21-4940-9151-adec2c14095a",
+          "audio_url": "https://cdn1.suno.ai/d90ec8c7-ca21-4940-9151-adec2c14095a.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_d90ec8c7-ca21-4940-9151-adec2c14095a.jpeg",
+          "url": "https://suno.com/song/d90ec8c7-ca21-4940-9151-adec2c14095a",
+          "play_count": 32,
+          "duration_s": 227
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "1672fbf5-3ee2-462b-b266-b818a0995ab6",
+          "audio_url": "https://cdn1.suno.ai/1672fbf5-3ee2-462b-b266-b818a0995ab6.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_1672fbf5-3ee2-462b-b266-b818a0995ab6.jpeg",
+          "url": "https://suno.com/song/1672fbf5-3ee2-462b-b266-b818a0995ab6",
+          "play_count": 12,
+          "duration_s": 241
+        }
+      ]
+    },
+    {
+      "num": 82,
+      "id_padded": "◈082",
+      "title": "Os Lençóis Vazios",
+      "arc_num": 9,
+      "arc_name": "A Ressurreição e o Mandato",
+      "index_ref": "João 20:6 | Oseias 13:14",
+      "books": [
+        "João 20:6",
+        "Oseias 13:14"
+      ],
+      "caption": "Espaço temporal biológico vago atestando corpos impenetráveis calados através da abolição física evaporando domos fúnebres de mentira impune na Historia escura apagada pra sempre perante A Tumba aberta! (Jo 20)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "efa76de3-7a62-4222-803d-c16ba45aee04",
+          "audio_url": "https://cdn1.suno.ai/efa76de3-7a62-4222-803d-c16ba45aee04.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_efa76de3-7a62-4222-803d-c16ba45aee04.jpeg",
+          "url": "https://suno.com/song/efa76de3-7a62-4222-803d-c16ba45aee04",
+          "play_count": 8,
+          "duration_s": 245
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "51ba0508-5759-4f03-b229-258d2358c63d",
+          "audio_url": "https://cdn1.suno.ai/51ba0508-5759-4f03-b229-258d2358c63d.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_51ba0508-5759-4f03-b229-258d2358c63d.jpeg",
+          "url": "https://suno.com/song/51ba0508-5759-4f03-b229-258d2358c63d",
+          "play_count": 4,
+          "duration_s": 244
+        }
+      ]
+    },
+    {
+      "num": 83,
+      "id_padded": "◈083",
+      "title": "O Jardineiro de Fogo",
+      "arc_num": 9,
+      "arc_name": "A Ressurreição e o Mandato",
+      "index_ref": "João 20:15 | Cânticos 8:6",
+      "books": [
+        "João 20:15",
+        "Cânticos 8:6"
+      ],
+      "caption": "Exumação esmagada calada diante consolação incandescente rasgando a névoa letífera batizando dor atroz em alvorada colossal revelatória estilhaçada e curada! (Jo 20)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "6391942f-2b0b-46d2-91ee-972135cbaab5",
+          "audio_url": "https://cdn1.suno.ai/6391942f-2b0b-46d2-91ee-972135cbaab5.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_6391942f-2b0b-46d2-91ee-972135cbaab5.jpeg",
+          "url": "https://suno.com/song/6391942f-2b0b-46d2-91ee-972135cbaab5",
+          "play_count": 7,
+          "duration_s": 300
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "255a825c-c21b-4ad7-b412-ab123814e9cf",
+          "audio_url": "https://cdn1.suno.ai/255a825c-c21b-4ad7-b412-ab123814e9cf.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_255a825c-c21b-4ad7-b412-ab123814e9cf.jpeg",
+          "url": "https://suno.com/song/255a825c-c21b-4ad7-b412-ab123814e9cf",
+          "play_count": 6,
+          "duration_s": 348
+        }
+      ]
+    },
+    {
+      "num": 84,
+      "id_padded": "◈084",
+      "title": "A Ferida Aberta",
+      "arc_num": 9,
+      "arc_name": "A Ressurreição e o Mandato",
+      "index_ref": "João 20:25 | Zacarias 13:6",
+      "books": [
+        "João 20:25",
+        "Zacarias 13:6"
+      ],
+      "caption": "Geometrias expostas abertas de estigmas puras cravando ceticismos rasos rumo ao subjugo absoluto num joelho incondicional triturador da falácia racional rala. (Zc 13)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "2788c175-e981-4887-9652-61cba87e546a",
+          "audio_url": "https://cdn1.suno.ai/2788c175-e981-4887-9652-61cba87e546a.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_2788c175-e981-4887-9652-61cba87e546a.jpeg",
+          "url": "https://suno.com/song/2788c175-e981-4887-9652-61cba87e546a",
+          "play_count": 4,
+          "duration_s": 298
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "2e34dbca-67e6-4a76-bb98-6a97b101fd47",
+          "audio_url": "https://cdn1.suno.ai/2e34dbca-67e6-4a76-bb98-6a97b101fd47.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_2e34dbca-67e6-4a76-bb98-6a97b101fd47.jpeg",
+          "url": "https://suno.com/song/2e34dbca-67e6-4a76-bb98-6a97b101fd47",
+          "play_count": 1,
+          "duration_s": 311
+        }
+      ]
+    },
+    {
+      "num": 85,
+      "id_padded": "◈085",
+      "title": "O Fogo de Carvão",
+      "arc_num": 9,
+      "arc_name": "A Ressurreição e o Mandato",
+      "index_ref": "João 21:9 | Miqueias 7:18",
+      "books": [
+        "João 21:9",
+        "Miqueias 7:18"
+      ],
+      "caption": "Perdão frontal de chamas calando oceanos escuros rasgando de maneira atroz antigas covardias no porto purificado irrevogável cravando amor impenitente nas areias. (Jo 21)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "0c11ffb5-543b-4e9c-8053-544865a386ab",
+          "audio_url": "https://cdn1.suno.ai/0c11ffb5-543b-4e9c-8053-544865a386ab.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_0c11ffb5-543b-4e9c-8053-544865a386ab.jpeg",
+          "url": "https://suno.com/song/0c11ffb5-543b-4e9c-8053-544865a386ab",
+          "play_count": 1,
+          "duration_s": 425
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "1a32644f-337d-45ad-b78b-7a989457f374",
+          "audio_url": "https://cdn1.suno.ai/1a32644f-337d-45ad-b78b-7a989457f374.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_1a32644f-337d-45ad-b78b-7a989457f374.jpeg",
+          "url": "https://suno.com/song/1a32644f-337d-45ad-b78b-7a989457f374",
+          "play_count": 2,
+          "duration_s": 423
+        }
+      ]
+    },
+    {
+      "num": 86,
+      "id_padded": "◈086",
+      "title": "A Estrada de Emaús",
+      "arc_num": 9,
+      "arc_name": "A Ressurreição e o Mandato",
+      "index_ref": "Lucas 24:32 | Jeremias 20:9",
+      "books": [
+        "Lucas 24:32",
+        "Jeremias 20:9"
+      ],
+      "caption": "Mente e escuridão cognitiva acesas violentamente ao rasgão de presença dimensional imponente silenciando falácias dissecando o pacto que evapora sumariamente. (Lc 24)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "1fc55892-5545-4fbc-8abb-0a925b2bb546",
+          "audio_url": "https://cdn1.suno.ai/1fc55892-5545-4fbc-8abb-0a925b2bb546.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_1fc55892-5545-4fbc-8abb-0a925b2bb546.jpeg",
+          "url": "https://suno.com/song/1fc55892-5545-4fbc-8abb-0a925b2bb546",
+          "play_count": 16,
+          "duration_s": 272
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "6ea52859-2bb2-428c-8ede-ff9b500bc210",
+          "audio_url": "https://cdn1.suno.ai/6ea52859-2bb2-428c-8ede-ff9b500bc210.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_6ea52859-2bb2-428c-8ede-ff9b500bc210.jpeg",
+          "url": "https://suno.com/song/6ea52859-2bb2-428c-8ede-ff9b500bc210",
+          "play_count": 14,
+          "duration_s": 277
+        }
+      ]
+    },
+    {
+      "num": 87,
+      "id_padded": "◈087",
+      "title": "As Provas Infalíveis",
+      "arc_num": 9,
+      "arc_name": "A Ressurreição e o Mandato",
+      "index_ref": "Atos 1:3 | 1 João 1:1",
+      "books": [
+        "Atos 1:3",
+        "João 1:1"
+      ],
+      "caption": "Testemunhas frontais e exames corporais não alucinativos tangibilizando Sua deidade inquestionável na praça histórica pública frente multidões em provas pesadas biológicas invictas em domínios impessoais e cruéis ateístas medíocres abafados de voz e alma silenciada estanque.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "bff1e7aa-f9fd-4876-8235-5330ea2c3081",
+          "audio_url": "https://cdn1.suno.ai/bff1e7aa-f9fd-4876-8235-5330ea2c3081.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_bff1e7aa-f9fd-4876-8235-5330ea2c3081.jpeg",
+          "url": "https://suno.com/song/bff1e7aa-f9fd-4876-8235-5330ea2c3081",
+          "play_count": 18,
+          "duration_s": 237
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "f9a0f968-cc55-4931-afcb-314065e3a3f2",
+          "audio_url": "https://cdn1.suno.ai/f9a0f968-cc55-4931-afcb-314065e3a3f2.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_f9a0f968-cc55-4931-afcb-314065e3a3f2.jpeg",
+          "url": "https://suno.com/song/f9a0f968-cc55-4931-afcb-314065e3a3f2",
+          "play_count": 14,
+          "duration_s": 248
+        }
+      ]
+    },
+    {
+      "num": 88,
+      "id_padded": "◈088",
+      "title": "O Grande Mandato",
+      "arc_num": 9,
+      "arc_name": "A Ressurreição e o Mandato",
+      "index_ref": "Mateus 28:18-19 | Salmo 2:8",
+      "books": [
+        "Mateus 28:18",
+        "Salmo 2:8"
+      ],
+      "caption": "Mandamento impositivo colonizador e conquistador bélico: dominem geografias afogando apostasias submetendo rebelados em ensino puro estrito e severo incondicional mundial com a Milícia Soberana Atemporal insuperável perante Sua batuta de Trono inabalável sem concorrências na terra. (Mt 28)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "db240610-9ea7-49d2-a7a5-72bc89e3827a",
+          "audio_url": "https://cdn1.suno.ai/db240610-9ea7-49d2-a7a5-72bc89e3827a.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_db240610-9ea7-49d2-a7a5-72bc89e3827a.jpeg",
+          "url": "https://suno.com/song/db240610-9ea7-49d2-a7a5-72bc89e3827a",
+          "play_count": 2,
+          "duration_s": 206
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "caa7056b-cfbc-435e-9c1e-bce8bde1f64b",
+          "audio_url": "https://cdn1.suno.ai/caa7056b-cfbc-435e-9c1e-bce8bde1f64b.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_caa7056b-cfbc-435e-9c1e-bce8bde1f64b.jpeg",
+          "url": "https://suno.com/song/caa7056b-cfbc-435e-9c1e-bce8bde1f64b",
+          "play_count": 4,
+          "duration_s": 233
+        }
+      ]
+    },
+    {
+      "num": 89,
+      "id_padded": "◈089",
+      "title": "Gravidade Zero",
+      "arc_num": 9,
+      "arc_name": "A Ressurreição e o Mandato",
+      "index_ref": "Atos 1:9 | Daniel 7:13",
+      "books": [
+        "Atos 1:9",
+        "Daniel 7:13"
+      ],
+      "caption": "Invasão ascendente varrendo atmosfera e atritos gravitacionais suprimindo em majestade avassaladora a expectante legião frente O Vácuo que em breve promete expurgo impiedoso vingativo com brado retumbante letal inquestionável indomável inaudito.",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "3aa1cb84-99f0-429a-96e3-ef433da4f037",
+          "audio_url": "https://cdn1.suno.ai/3aa1cb84-99f0-429a-96e3-ef433da4f037.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_3aa1cb84-99f0-429a-96e3-ef433da4f037.jpeg",
+          "url": "https://suno.com/song/3aa1cb84-99f0-429a-96e3-ef433da4f037",
+          "play_count": 20,
+          "duration_s": 273
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "f029957b-6745-4354-ad7b-c030fffb44f1",
+          "audio_url": "https://cdn1.suno.ai/f029957b-6745-4354-ad7b-c030fffb44f1.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_f029957b-6745-4354-ad7b-c030fffb44f1.jpeg",
+          "url": "https://suno.com/song/f029957b-6745-4354-ad7b-c030fffb44f1",
+          "play_count": 40,
+          "duration_s": 282
+        }
+      ]
+    },
+    {
+      "num": 90,
+      "id_padded": "◈090",
+      "title": "O Trono da Destra",
+      "arc_num": 9,
+      "arc_name": "A Ressurreição e o Mandato",
+      "index_ref": "Hebreus 1:3 | Salmo 110:1",
+      "books": [
+        "Hebreus 1:3",
+        "Salmo 110:1"
+      ],
+      "caption": "Posse total imponente coroada em chamas sobre eixo temporal à margem direita inquestionável incontornável com Destra inabalável aguardando sem perturbações as colisões do destino galáctico supremo perenal letal incondicional esmagador eternamente perpétuo irreversível na Trindade indissociável (Hb 1).",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "c1399362-e926-4f3b-8fc7-3e7e2bac675c",
+          "audio_url": "https://cdn1.suno.ai/c1399362-e926-4f3b-8fc7-3e7e2bac675c.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_c1399362-e926-4f3b-8fc7-3e7e2bac675c.jpeg",
+          "url": "https://suno.com/song/c1399362-e926-4f3b-8fc7-3e7e2bac675c",
+          "play_count": 2,
+          "duration_s": 323
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "e4728b3f-0e9a-4b0f-893d-8645352bdebf",
+          "audio_url": "https://cdn1.suno.ai/e4728b3f-0e9a-4b0f-893d-8645352bdebf.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_e4728b3f-0e9a-4b0f-893d-8645352bdebf.jpeg",
+          "url": "https://suno.com/song/e4728b3f-0e9a-4b0f-893d-8645352bdebf",
+          "play_count": 3,
+          "duration_s": 350
+        }
+      ]
+    },
+    {
+      "num": 91,
+      "id_padded": "◈091",
+      "title": "Os Quatro Cavaleiros",
+      "arc_num": 10,
+      "arc_name": "O Apocalipse e o Ômega",
+      "index_ref": "Apocalipse 6:1-8 | Zacarias 6:1",
+      "books": [
+        "Apocalipse 6:1",
+        "Zacarias 6:1"
+      ],
+      "caption": "Incursões devastadoras desprendendo horrores selares batendo letalmente colapsadas sobre multidões escravizadas em falsas esperanças trituradas por ruídos bélicos impiedosos da aniquilação soberana inquebrantável esmagando apostatas infalivelmente cruamente. (Ap 6)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "714ea1cf-a8f9-4da1-8dd3-a81dcc2535db",
+          "audio_url": "https://cdn1.suno.ai/714ea1cf-a8f9-4da1-8dd3-a81dcc2535db.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_714ea1cf-a8f9-4da1-8dd3-a81dcc2535db.jpeg",
+          "url": "https://suno.com/song/714ea1cf-a8f9-4da1-8dd3-a81dcc2535db",
+          "play_count": 87,
+          "duration_s": 222
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "6010433b-0b28-48b3-9aed-2f1d2fc9440a",
+          "audio_url": "https://cdn1.suno.ai/6010433b-0b28-48b3-9aed-2f1d2fc9440a.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_6010433b-0b28-48b3-9aed-2f1d2fc9440a.jpeg",
+          "url": "https://suno.com/song/6010433b-0b28-48b3-9aed-2f1d2fc9440a",
+          "play_count": 40,
+          "duration_s": 210
+        }
+      ]
+    },
+    {
+      "num": 92,
+      "id_padded": "◈092",
+      "title": "A Marca da Fera",
+      "arc_num": 10,
+      "arc_name": "O Apocalipse e o Ômega",
+      "index_ref": "Apocalipse 13:16-18 | Daniel 7:25",
+      "books": [
+        "Apocalipse 13:16",
+        "Daniel 7:25"
+      ],
+      "caption": "Marca do terror diabólico cerceando massas esfoladas de forma incontornável em purificações cruéis sangrentas enquanto expõe abertamente faturas mercenárias rumo castigo irrefutável imperdoável condenatório isolando a corja inescrupulosamente inútil para condenação! (Ap 13)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "e11916b1-056e-422f-aac7-ba8a0e825f57",
+          "audio_url": "https://cdn1.suno.ai/e11916b1-056e-422f-aac7-ba8a0e825f57.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_e11916b1-056e-422f-aac7-ba8a0e825f57.jpeg",
+          "url": "https://suno.com/song/e11916b1-056e-422f-aac7-ba8a0e825f57",
+          "play_count": 45,
+          "duration_s": 245
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "f5c0b1b4-1e8c-48b3-8093-0134e816bb47",
+          "audio_url": "https://cdn1.suno.ai/f5c0b1b4-1e8c-48b3-8093-0134e816bb47.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_f5c0b1b4-1e8c-48b3-8093-0134e816bb47.jpeg",
+          "url": "https://suno.com/song/f5c0b1b4-1e8c-48b3-8093-0134e816bb47",
+          "play_count": 23,
+          "duration_s": 238
+        }
+      ]
+    },
+    {
+      "num": 93,
+      "id_padded": "◈093",
+      "title": "As Taças da Ira",
+      "arc_num": 10,
+      "arc_name": "O Apocalipse e o Ômega",
+      "index_ref": "Apocalipse 16:1-2 | Isaías 51:17",
+      "books": [
+        "Apocalipse 16:1",
+        "Isaías 51:17"
+      ],
+      "caption": "Vinganças colossais ensolaradas e oceânicas desabadas varrendo insultos seculares incandescendo punições exatas proporcionais nas caras zombeteiras aniquilando desculpas patéticas frente Odres da santidade extirpadores puros divinos. (Ap 16)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "778eb4f8-69d2-434c-84c6-eb0b3650c98e",
+          "audio_url": "https://cdn1.suno.ai/778eb4f8-69d2-434c-84c6-eb0b3650c98e.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_778eb4f8-69d2-434c-84c6-eb0b3650c98e.jpeg",
+          "url": "https://suno.com/song/778eb4f8-69d2-434c-84c6-eb0b3650c98e",
+          "play_count": 10,
+          "duration_s": 269
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "e8492ed0-1c89-4410-b7ad-8fecb7d9deb1",
+          "audio_url": "https://cdn1.suno.ai/e8492ed0-1c89-4410-b7ad-8fecb7d9deb1.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_e8492ed0-1c89-4410-b7ad-8fecb7d9deb1.jpeg",
+          "url": "https://suno.com/song/e8492ed0-1c89-4410-b7ad-8fecb7d9deb1",
+          "play_count": 6,
+          "duration_s": 342
+        }
+      ]
+    },
+    {
+      "num": 94,
+      "id_padded": "◈094",
+      "title": "A Fenda nos Céus",
+      "arc_num": 10,
+      "arc_name": "O Apocalipse e o Ômega",
+      "index_ref": "Apocalipse 19:11-13 | Mateus 24:30",
+      "books": [
+        "Apocalipse 19:11",
+        "Mateus 24:30"
+      ],
+      "caption": "Descida bélica colossal esmagadora nos cósmicos cavalos rasgados da orla abissal colidindo armiações e matando impiedades na espada sanguinária gloriosa perante Comandante Indômito Implacável Soberano vingador. (Ap 19)!!!",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "c5d94010-d368-4da9-bd11-d5b1494477c1",
+          "audio_url": "https://cdn1.suno.ai/c5d94010-d368-4da9-bd11-d5b1494477c1.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_c5d94010-d368-4da9-bd11-d5b1494477c1.jpeg",
+          "url": "https://suno.com/song/c5d94010-d368-4da9-bd11-d5b1494477c1",
+          "play_count": 10,
+          "duration_s": 242
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "1c1d3d0b-9101-4708-843d-b68e4beeee1b",
+          "audio_url": "https://cdn1.suno.ai/1c1d3d0b-9101-4708-843d-b68e4beeee1b.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_1c1d3d0b-9101-4708-843d-b68e4beeee1b.jpeg",
+          "url": "https://suno.com/song/1c1d3d0b-9101-4708-843d-b68e4beeee1b",
+          "play_count": 7,
+          "duration_s": 259
+        }
+      ]
+    },
+    {
+      "num": 95,
+      "id_padded": "◈095",
+      "title": "O Som da Última Trombeta",
+      "arc_num": 10,
+      "arc_name": "O Apocalipse e o Ômega",
+      "index_ref": "1 Coríntios 15:52 | 1 Tessalonicenses 4:16",
+      "books": [
+        "Coríntios 15:52",
+        "Tessalonicenses 4:16"
+      ],
+      "caption": "Ruído estridente cósmico convocatório obliterador engolindo a gravidade suprimindo mortalidades estancadas por milissegundos avassaladores atirando os puros indissociáveis a glórias invisíveis atemporais irretocáveis blindadas invictas sem danos de horror perante clarões estúpidos infernais calados. (1 Cor 15)!!!",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "03f93c56-e7c3-485a-a7fa-c681f297eda2",
+          "audio_url": "https://cdn1.suno.ai/03f93c56-e7c3-485a-a7fa-c681f297eda2.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_03f93c56-e7c3-485a-a7fa-c681f297eda2.jpeg",
+          "url": "https://suno.com/song/03f93c56-e7c3-485a-a7fa-c681f297eda2",
+          "play_count": 6,
+          "duration_s": 251
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "7c53dbcc-903a-43fc-b556-e02c02c73f96",
+          "audio_url": "https://cdn1.suno.ai/7c53dbcc-903a-43fc-b556-e02c02c73f96.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_7c53dbcc-903a-43fc-b556-e02c02c73f96.jpeg",
+          "url": "https://suno.com/song/7c53dbcc-903a-43fc-b556-e02c02c73f96",
+          "play_count": 4,
+          "duration_s": 246
+        }
+      ]
+    },
+    {
+      "num": 96,
+      "id_padded": "◈096",
+      "title": "O Milênio de Ferro",
+      "arc_num": 10,
+      "arc_name": "O Apocalipse e o Ômega",
+      "index_ref": "Apocalipse 20:4-6 | Isaías 11:6",
+      "books": [
+        "Apocalipse 20:4",
+        "Isaías 11:6"
+      ],
+      "caption": "Confinamento cativeiro sem chaves cravando ferrolhos eternos no engodo demoníaco varrendo com Pastoreio Férreo puro severo toda crosta extirpada em justiça sem corrupções irrefreável majestosamente dominada ditada por Filhos Soberanos sob A Presença letal esmagadora infalível. (Ap 20)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "fa67604d-d1f8-4896-a4bf-5bc6c7b69ccb",
+          "audio_url": "https://cdn1.suno.ai/fa67604d-d1f8-4896-a4bf-5bc6c7b69ccb.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_fa67604d-d1f8-4896-a4bf-5bc6c7b69ccb.jpeg",
+          "url": "https://suno.com/song/fa67604d-d1f8-4896-a4bf-5bc6c7b69ccb",
+          "play_count": 6,
+          "duration_s": 243
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "037bac36-f587-437e-a8eb-c4afda71eecc",
+          "audio_url": "https://cdn1.suno.ai/037bac36-f587-437e-a8eb-c4afda71eecc.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_037bac36-f587-437e-a8eb-c4afda71eecc.jpeg",
+          "url": "https://suno.com/song/037bac36-f587-437e-a8eb-c4afda71eecc",
+          "play_count": 5,
+          "duration_s": 244
+        }
+      ]
+    },
+    {
+      "num": 97,
+      "id_padded": "◈097",
+      "title": "O Grande Trono Branco",
+      "arc_num": 10,
+      "arc_name": "O Apocalipse e o Ômega",
+      "index_ref": "Apocalipse 20:11-15 | Daniel 7:9",
+      "books": [
+        "Apocalipse 20:11",
+        "Daniel 7:9"
+      ],
+      "caption": "Instância final suprema do Tribunal esquadrinhador desintegrador de justificativas em clareira assustadoramente pura perante um Livro em chama inalterável isolando todos veredictos iníquos indomáveis rasgando condenações em omissões purgadas de modo impenitente definitivo irreciclável trágico justíssimo!! (Ap 20)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "2119468f-3404-4c74-b6d4-4a41043777c5",
+          "audio_url": "https://cdn1.suno.ai/2119468f-3404-4c74-b6d4-4a41043777c5.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_2119468f-3404-4c74-b6d4-4a41043777c5.jpeg",
+          "url": "https://suno.com/song/2119468f-3404-4c74-b6d4-4a41043777c5",
+          "play_count": 7,
+          "duration_s": 244
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "ff4de86d-1177-46e7-9bdc-9b5f880f7517",
+          "audio_url": "https://cdn1.suno.ai/ff4de86d-1177-46e7-9bdc-9b5f880f7517.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_ff4de86d-1177-46e7-9bdc-9b5f880f7517.jpeg",
+          "url": "https://suno.com/song/ff4de86d-1177-46e7-9bdc-9b5f880f7517",
+          "play_count": 7,
+          "duration_s": 234
+        }
+      ]
+    },
+    {
+      "num": 98,
+      "id_padded": "◈098",
+      "title": "O Lago de Fogo",
+      "arc_num": 10,
+      "arc_name": "O Apocalipse e o Ômega",
+      "index_ref": "Apocalipse 20:10-15 | Mateus 25:41",
+      "books": [
+        "Apocalipse 20:10",
+        "Mateus 25:41"
+      ],
+      "caption": "",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "a77bccc8-4129-4d8a-a9aa-6b8df634050a",
+          "audio_url": "https://cdn1.suno.ai/a77bccc8-4129-4d8a-a9aa-6b8df634050a.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_a77bccc8-4129-4d8a-a9aa-6b8df634050a.jpeg",
+          "url": "https://suno.com/song/a77bccc8-4129-4d8a-a9aa-6b8df634050a",
+          "play_count": 5,
+          "duration_s": 286
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "ef11096a-7354-4592-8f2c-b638e648793b",
+          "audio_url": "https://cdn1.suno.ai/ef11096a-7354-4592-8f2c-b638e648793b.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_ef11096a-7354-4592-8f2c-b638e648793b.jpeg",
+          "url": "https://suno.com/song/ef11096a-7354-4592-8f2c-b638e648793b",
+          "play_count": 5,
+          "duration_s": 308
+        }
+      ]
+    },
+    {
+      "num": 99,
+      "id_padded": "◈099",
+      "title": "A Cidade Cúbica",
+      "arc_num": 10,
+      "arc_name": "O Apocalipse e o Ômega",
+      "index_ref": "Apocalipse 21:1-4 | Isaías 65:17",
+      "books": [
+        "Apocalipse 21:1",
+        "Isaías 65:17"
+      ],
+      "caption": "Cristal puríssimo cúbico ancorando vida curativa sobre ecossistemas libertos. Esquadrinhando um cosmos sem horrores e dor biológica aniquilando o sangue com águas celestiais abrigando incorruptíveis pra sempre iluminados na face cega esmagadora letal e divina sem sol ininterruptamente radiante soberana e cimentada inabalavelmente. (Ap 21)",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "d1b72c4b-4473-469a-a05b-5a8be278fbf3",
+          "audio_url": "https://cdn1.suno.ai/d1b72c4b-4473-469a-a05b-5a8be278fbf3.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_d1b72c4b-4473-469a-a05b-5a8be278fbf3.jpeg",
+          "url": "https://suno.com/song/d1b72c4b-4473-469a-a05b-5a8be278fbf3",
+          "play_count": 10,
+          "duration_s": 342
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "1e368d87-1116-49c6-a2e4-5196d8ce64c6",
+          "audio_url": "https://cdn1.suno.ai/1e368d87-1116-49c6-a2e4-5196d8ce64c6.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_1e368d87-1116-49c6-a2e4-5196d8ce64c6.jpeg",
+          "url": "https://suno.com/song/1e368d87-1116-49c6-a2e4-5196d8ce64c6",
+          "play_count": 26,
+          "duration_s": 309
+        }
+      ]
+    },
+    {
+      "num": 100,
+      "id_padded": "◈100",
+      "title": "O Ômega",
+      "arc_num": 10,
+      "arc_name": "O Apocalipse e o Ômega",
+      "index_ref": "Apocalipse 22:13-21 | Isaías 9:7",
+      "books": [
+        "Apocalipse 22:13",
+        "Isaías 9:7"
+      ],
+      "caption": "FUNDAMENTAÇÃO LETAL ÓMEGA: O looping infinito das extremidades colapsadas cravando perenidade, regozijo insaciável glorioso majestoso invicto sob Comando Ofertante Perfeito Incansável imutável incontestável intocável impiedoso cravado para a eternidade de eras caladas por pura Glória pesada do CRIADOR Soberano imbatível irrefreável insondável TOTAL!!! MARANATA FINAL!!!",
+      "versions": [
+        {
+          "version": 1,
+          "batch": 0,
+          "id": "fcdeb132-8fda-48cf-a92f-a7338ec3a6c1",
+          "audio_url": "https://cdn1.suno.ai/fcdeb132-8fda-48cf-a92f-a7338ec3a6c1.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_fcdeb132-8fda-48cf-a92f-a7338ec3a6c1.jpeg",
+          "url": "https://suno.com/song/fcdeb132-8fda-48cf-a92f-a7338ec3a6c1",
+          "play_count": 28,
+          "duration_s": 304
+        },
+        {
+          "version": 2,
+          "batch": 1,
+          "id": "5d699caa-1179-41d1-8fdc-07b67c3ad1eb",
+          "audio_url": "https://cdn1.suno.ai/5d699caa-1179-41d1-8fdc-07b67c3ad1eb.mp3",
+          "image_url": "https://cdn2.suno.ai/image_large_5d699caa-1179-41d1-8fdc-07b67c3ad1eb.jpeg",
+          "url": "https://suno.com/song/5d699caa-1179-41d1-8fdc-07b67c3ad1eb",
+          "play_count": 284,
+          "duration_s": 324
+        }
+      ]
+    }
+  ]
+}
