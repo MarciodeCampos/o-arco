@@ -20,7 +20,7 @@
   "arcs": [
     {
       "num": 1,
-      "name": "",
+      "name": "A Glória Incriada",
       "songs": [
         1,
         2,
@@ -37,7 +37,7 @@
     },
     {
       "num": 2,
-      "name": "",
+      "name": "A Lei e a Aliança",
       "songs": [
         11,
         12,
@@ -54,7 +54,7 @@
     },
     {
       "num": 3,
-      "name": "",
+      "name": "O Reino e o Sacerdócio",
       "songs": [
         21,
         22,
@@ -71,7 +71,7 @@
     },
     {
       "num": 4,
-      "name": "",
+      "name": "A Profecia e o Exílio",
       "songs": [
         31,
         32,
@@ -88,7 +88,7 @@
     },
     {
       "num": 5,
-      "name": "",
+      "name": "O Retorno e a Restauração",
       "songs": [
         41,
         42,
@@ -105,7 +105,7 @@
     },
     {
       "num": 6,
-      "name": "",
+      "name": "A Noite e a Vigília",
       "songs": [
         51,
         52,
@@ -122,7 +122,7 @@
     },
     {
       "num": 7,
-      "name": "",
+      "name": "A Encarnação e o Conflito",
       "songs": [
         61,
         62,
@@ -139,7 +139,7 @@
     },
     {
       "num": 8,
-      "name": "",
+      "name": "A Paixão e a Cruz",
       "songs": [
         71,
         72,
@@ -156,7 +156,7 @@
     },
     {
       "num": 9,
-      "name": "",
+      "name": "A Ressurreição e o Mandato",
       "songs": [
         81,
         82,
@@ -173,7 +173,7 @@
     },
     {
       "num": 10,
-      "name": "",
+      "name": "O Apocalipse e o Ômega",
       "songs": [
         91,
         92,
@@ -195,7 +195,7 @@
       "id_padded": "◈001",
       "title": "A Glória Incriada",
       "arc_num": 1,
-      "arc_name": "",
+      "arc_name": "A Glória Incriada",
       "index_ref": "Jó 38 | Romanos 11:36",
       "books": [
         "Jó 38",
@@ -230,7 +230,7 @@
       "id_padded": "◈002",
       "title": "O Decreto Fixo",
       "arc_num": 1,
-      "arc_name": "",
+      "arc_name": "A Glória Incriada",
       "index_ref": "Isaías 40:12 | Provérbios 8:27-29",
       "books": [
         "Isaías 40:12",
@@ -285,7 +285,7 @@
       "id_padded": "◈003",
       "title": "Antes Que os Montes Nascessem",
       "arc_num": 1,
-      "arc_name": "",
+      "arc_name": "A Glória Incriada",
       "index_ref": "",
       "books": [],
       "caption": "Uma composição forjada em ecos irredutíveis. O Altíssimo governando soberano em um trono de majestade muito anterior ao próprio conceito de tempo.",
@@ -317,7 +317,7 @@
       "id_padded": "◈004",
       "title": "O Construtor de Órion",
       "arc_num": 1,
-      "arc_name": "",
+      "arc_name": "A Glória Incriada",
       "index_ref": "Amós 5:8 | Jó 9:9-10",
       "books": [
         "Amós 5:8",
@@ -352,7 +352,7 @@
       "id_padded": "◈005",
       "title": "A Mente Inalcançável",
       "arc_num": 1,
-      "arc_name": "",
+      "arc_name": "A Glória Incriada",
       "index_ref": "Isaías 55:8-9 | Romanos 11:33",
       "books": [
         "Isaías 55:8",
@@ -387,7 +387,7 @@
       "id_padded": "◈006",
       "title": "O Criador Que Não Tem Fome",
       "arc_num": 1,
-      "arc_name": "",
+      "arc_name": "A Glória Incriada",
       "index_ref": "Atos 17:24-25 | Salmo 50:12",
       "books": [
         "Atos 17:24",
@@ -422,7 +422,7 @@
       "id_padded": "◈007",
       "title": "A Luz Inacessível",
       "arc_num": 1,
-      "arc_name": "",
+      "arc_name": "A Glória Incriada",
       "index_ref": "1 Timóteo 6:16 | Hebreus 12:29",
       "books": [
         "Timóteo 6:16",
@@ -457,7 +457,7 @@
       "id_padded": "◈008",
       "title": "Não Há Ponto Cego",
       "arc_num": 1,
-      "arc_name": "",
+      "arc_name": "A Glória Incriada",
       "index_ref": "Salmo 139:7-12 | Provérbios 15:3",
       "books": [
         "Salmo 139:7",
@@ -492,7 +492,7 @@
       "id_padded": "◈009",
       "title": "Tudo Subsiste n'Ele",
       "arc_num": 1,
-      "arc_name": "",
+      "arc_name": "A Glória Incriada",
       "index_ref": "Colossenses 1:17 | Hebreus 1:3",
       "books": [
         "Colossenses 1:17",
@@ -527,7 +527,7 @@
       "id_padded": "◈010",
       "title": "O Cântico Ininterrupto",
       "arc_num": 1,
-      "arc_name": "",
+      "arc_name": "A Glória Incriada",
       "index_ref": "Apocalipse 4:8-11 | Isaías 6:3",
       "books": [
         "Apocalipse 4:8",
@@ -562,7 +562,7 @@
       "id_padded": "◈011",
       "title": "O Fio Implacável",
       "arc_num": 2,
-      "arc_name": "",
+      "arc_name": "A Lei e a Aliança",
       "index_ref": "Hebreus 4:12 | Mateus 10:34",
       "books": [
         "Hebreus 4:12",
@@ -597,7 +597,7 @@
       "id_padded": "◈012",
       "title": "O Fim da Mistura",
       "arc_num": 2,
-      "arc_name": "",
+      "arc_name": "A Lei e a Aliança",
       "index_ref": "Mateus 13:30 | Malaquias 3:18",
       "books": [
         "Mateus 13:30",
@@ -632,7 +632,7 @@
       "id_padded": "◈013",
       "title": "A Larga Estrada de Ossos",
       "arc_num": 2,
-      "arc_name": "",
+      "arc_name": "A Lei e a Aliança",
       "index_ref": "Mateus 7:13-14 | Lucas 13:24",
       "books": [
         "Mateus 7:13",
@@ -687,7 +687,7 @@
       "id_padded": "◈014",
       "title": "Inimizade com a Fonte",
       "arc_num": 2,
-      "arc_name": "",
+      "arc_name": "A Lei e a Aliança",
       "index_ref": "Tiago 4:4 | 1 João 2:15-17",
       "books": [
         "Tiago 4:4",
@@ -722,7 +722,7 @@
       "id_padded": "◈015",
       "title": "A Cisão Inegociável",
       "arc_num": 2,
-      "arc_name": "",
+      "arc_name": "A Lei e a Aliança",
       "index_ref": "2 Coríntios 6:14-15 | 1 Coríntios 10:21",
       "books": [
         "Coríntios 6:14",
@@ -757,7 +757,7 @@
       "id_padded": "◈016",
       "title": "A Ruína Sobre a Areia",
       "arc_num": 2,
-      "arc_name": "",
+      "arc_name": "A Lei e a Aliança",
       "index_ref": "Mateus 7:24-27 | 1 Coríntios 3:11-13",
       "books": [
         "Mateus 7:24",
@@ -792,7 +792,7 @@
       "id_padded": "◈017",
       "title": "Lobos de Lã Branca",
       "arc_num": 2,
-      "arc_name": "",
+      "arc_name": "A Lei e a Aliança",
       "index_ref": "Mateus 7:15-20 | Judas 1:12-13",
       "books": [
         "Mateus 7:15",
@@ -827,7 +827,7 @@
       "id_padded": "◈018",
       "title": "Fogo Estranho no Altar",
       "arc_num": 2,
-      "arc_name": "",
+      "arc_name": "A Lei e a Aliança",
       "index_ref": "Mateus 7:15-20 | Judas 1:12-13",
       "books": [
         "Mateus 7:15",
@@ -862,7 +862,7 @@
       "id_padded": "◈019",
       "title": "Tinta Branca Sobre Ossos",
       "arc_num": 2,
-      "arc_name": "",
+      "arc_name": "A Lei e a Aliança",
       "index_ref": "Mateus 23:25-28 | Lucas 12:1",
       "books": [
         "Mateus 23:25",
@@ -897,7 +897,7 @@
       "id_padded": "◈020",
       "title": "Nunca Vos Conheci",
       "arc_num": 2,
-      "arc_name": "",
+      "arc_name": "A Lei e a Aliança",
       "index_ref": "Mateus 7:21-23 | Lucas 13:25-27",
       "books": [
         "Mateus 7:21",
@@ -932,7 +932,7 @@
       "id_padded": "◈021",
       "title": "O Motor Enganoso",
       "arc_num": 3,
-      "arc_name": "",
+      "arc_name": "O Reino e o Sacerdócio",
       "index_ref": "Jeremias 17:9 | Provérbios 28:26",
       "books": [
         "Jeremias 17:9",
@@ -967,7 +967,7 @@
       "id_padded": "◈022",
       "title": "Ídolos no Quarto Escuro",
       "arc_num": 3,
-      "arc_name": "",
+      "arc_name": "O Reino e o Sacerdócio",
       "index_ref": "Ezequiel 14:3 | 1 João 5:21",
       "books": [
         "Ezequiel 14:3",
@@ -1002,7 +1002,7 @@
       "id_padded": "◈023",
       "title": "Pedra Esmagada",
       "arc_num": 3,
-      "arc_name": "",
+      "arc_name": "O Reino e o Sacerdócio",
       "index_ref": "Salmo 51:17 | Tiago 4:6",
       "books": [
         "Salmo 51:17",
@@ -1037,7 +1037,7 @@
       "id_padded": "◈024",
       "title": "O Túmulo do Segredo",
       "arc_num": 3,
-      "arc_name": "",
+      "arc_name": "O Reino e o Sacerdócio",
       "index_ref": "Provérbios 28:13 | Lucas 12:2-3",
       "books": [
         "Provérbios 28:13",
@@ -1072,7 +1072,7 @@
       "id_padded": "◈025",
       "title": "Arrancando a Pedra",
       "arc_num": 3,
-      "arc_name": "",
+      "arc_name": "O Reino e o Sacerdócio",
       "index_ref": "Ezequiel 36:26 | Salmo 119:32",
       "books": [
         "Ezequiel 36:26",
@@ -1107,7 +1107,7 @@
       "id_padded": "◈026",
       "title": "Rasguem o Peito",
       "arc_num": 3,
-      "arc_name": "",
+      "arc_name": "O Reino e o Sacerdócio",
       "index_ref": "Joel 2:13 | Isaías 58",
       "books": [
         "Joel 2:13",
@@ -1142,7 +1142,7 @@
       "id_padded": "◈027",
       "title": "Carvão em Brasa",
       "arc_num": 3,
-      "arc_name": "",
+      "arc_name": "O Reino e o Sacerdócio",
       "index_ref": "Isaías 6:5 | Hebreus 12:29",
       "books": [
         "Isaías 6:5",
@@ -1177,7 +1177,7 @@
       "id_padded": "◈028",
       "title": "A Oficina Oculta",
       "arc_num": 3,
-      "arc_name": "",
+      "arc_name": "O Reino e o Sacerdócio",
       "index_ref": "Mateus 15:19 | Jeremias 4:14",
       "books": [
         "Mateus 15:19",
@@ -1212,7 +1212,7 @@
       "id_padded": "◈029",
       "title": "A Espada de Dois Fios",
       "arc_num": 3,
-      "arc_name": "",
+      "arc_name": "O Reino e o Sacerdócio",
       "index_ref": "Hebreus 4:12-13 | Provérbios 20:27",
       "books": [
         "Hebreus 4:12",
@@ -1247,7 +1247,7 @@
       "id_padded": "◈030",
       "title": "Olhos no Chão",
       "arc_num": 3,
-      "arc_name": "",
+      "arc_name": "O Reino e o Sacerdócio",
       "index_ref": "Lucas 18:13 | Salmo 34:18",
       "books": [
         "Lucas 18:13",
@@ -1282,7 +1282,7 @@
       "id_padded": "◈031",
       "title": "O Beijo em Mamom",
       "arc_num": 4,
-      "arc_name": "",
+      "arc_name": "A Profecia e o Exílio",
       "index_ref": "Mateus 6:24 | 1 Reis 18:21",
       "books": [
         "Mateus 6:24",
@@ -1317,7 +1317,7 @@
       "id_padded": "◈032",
       "title": "Morfina no Altar",
       "arc_num": 4,
-      "arc_name": "",
+      "arc_name": "A Profecia e o Exílio",
       "index_ref": "Jeremias 6:14 | 2 Timóteo 4:3",
       "books": [
         "Jeremias 6:14",
@@ -1352,7 +1352,7 @@
       "id_padded": "◈033",
       "title": "Cego Guiando Cego",
       "arc_num": 4,
-      "arc_name": "",
+      "arc_name": "A Profecia e o Exílio",
       "index_ref": "Mateus 15:14 | Apocalipse 3:1",
       "books": [
         "Mateus 15:14",
@@ -1387,7 +1387,7 @@
       "id_padded": "◈034",
       "title": "A Mentira Íntima",
       "arc_num": 4,
-      "arc_name": "",
+      "arc_name": "A Profecia e o Exílio",
       "index_ref": "1 João 2:4 | Judas 1:4",
       "books": [
         "João 2:4",
@@ -1422,7 +1422,7 @@
       "id_padded": "◈035",
       "title": "A Fé dos Demônios",
       "arc_num": 4,
-      "arc_name": "",
+      "arc_name": "A Profecia e o Exílio",
       "index_ref": "Tiago 2:17-19 | Mateus 7:21",
       "books": [
         "Tiago 2:17",
@@ -1457,7 +1457,7 @@
       "id_padded": "◈036",
       "title": "Mercenários do Pão",
       "arc_num": 4,
-      "arc_name": "",
+      "arc_name": "A Profecia e o Exílio",
       "index_ref": "João 6:26 | João 6:66",
       "books": [
         "João 6:26",
@@ -1492,7 +1492,7 @@
       "id_padded": "◈037",
       "title": "O Aplauso de Poeira",
       "arc_num": 4,
-      "arc_name": "",
+      "arc_name": "A Profecia e o Exílio",
       "index_ref": "João 12:43 | Mateus 6:2",
       "books": [
         "João 12:43",
@@ -1527,7 +1527,7 @@
       "id_padded": "◈038",
       "title": "O Contrato do Louco",
       "arc_num": 4,
-      "arc_name": "",
+      "arc_name": "A Profecia e o Exílio",
       "index_ref": "Lucas 12:20 | Tiago 4:14",
       "books": [
         "Lucas 12:20",
@@ -1562,7 +1562,7 @@
       "id_padded": "◈039",
       "title": "A Avenida Espaçosa",
       "arc_num": 4,
-      "arc_name": "",
+      "arc_name": "A Profecia e o Exílio",
       "index_ref": "Mateus 7:13 | Lucas 13:24",
       "books": [
         "Mateus 7:13",
@@ -1597,7 +1597,7 @@
       "id_padded": "◈040",
       "title": "A Operação do Erro",
       "arc_num": 4,
-      "arc_name": "",
+      "arc_name": "A Profecia e o Exílio",
       "index_ref": "2 Tessalonicenses 2:11 | Provérbios 14:12",
       "books": [
         "Tessalonicenses 2:11",
@@ -1632,7 +1632,7 @@
       "id_padded": "◈041",
       "title": "O Prumo nas Ruínas",
       "arc_num": 5,
-      "arc_name": "",
+      "arc_name": "O Retorno e a Restauração",
       "index_ref": "Amós 7:7-8 | Neemias 2:13-17",
       "books": [
         "Amós 7:7",
@@ -1667,7 +1667,7 @@
       "id_padded": "◈042",
       "title": "A Rocha de Escândalo",
       "arc_num": 5,
-      "arc_name": "",
+      "arc_name": "O Retorno e a Restauração",
       "index_ref": "1 Pedro 2:7-8 | Lucas 20:18",
       "books": [
         "Pedro 2:7",
@@ -1702,7 +1702,7 @@
       "id_padded": "◈043",
       "title": "A Espada e a Argamassa",
       "arc_num": 5,
-      "arc_name": "",
+      "arc_name": "O Retorno e a Restauração",
       "index_ref": "Neemias 4:17-18 | Efésios 6:17",
       "books": [
         "Neemias 4:17",
@@ -1737,7 +1737,7 @@
       "id_padded": "◈044",
       "title": "As Portas Estreitas",
       "arc_num": 5,
-      "arc_name": "",
+      "arc_name": "O Retorno e a Restauração",
       "index_ref": "Neemias 7:3 | Mateus 7:13-14",
       "books": [
         "Neemias 7:3",
@@ -1772,7 +1772,7 @@
       "id_padded": "◈045",
       "title": "Altar de Pedras Inteiras",
       "arc_num": 5,
-      "arc_name": "",
+      "arc_name": "O Retorno e a Restauração",
       "index_ref": "Deuteronômio 27:6 | Esdras 3:2",
       "books": [
         "Deuteronômio 27:6",
@@ -1807,7 +1807,7 @@
       "id_padded": "◈046",
       "title": "O Pergaminho Desenterrado",
       "arc_num": 5,
-      "arc_name": "",
+      "arc_name": "O Retorno e a Restauração",
       "index_ref": "Neemias 8:8-9 | 2 Reis 22:11",
       "books": [
         "Neemias 8:8",
@@ -1842,7 +1842,7 @@
       "id_padded": "◈047",
       "title": "A Expulsão do Misto",
       "arc_num": 5,
-      "arc_name": "",
+      "arc_name": "O Retorno e a Restauração",
       "index_ref": "Neemias 13:25 | 2 Coríntios 6:14",
       "books": [
         "Neemias 13:25",
@@ -1877,7 +1877,7 @@
       "id_padded": "◈048",
       "title": "O Pão da Recusa",
       "arc_num": 5,
-      "arc_name": "",
+      "arc_name": "O Retorno e a Restauração",
       "index_ref": "Neemias 5:14-15 | Salmo 141:4",
       "books": [
         "Neemias 5:14",
@@ -1912,7 +1912,7 @@
       "id_padded": "◈049",
       "title": "Caminhando Sobre o Muro",
       "arc_num": 5,
-      "arc_name": "",
+      "arc_name": "O Retorno e a Restauração",
       "index_ref": "Neemias 12:31 | Salmo 48:12",
       "books": [
         "Neemias 12:31",
@@ -1947,7 +1947,7 @@
       "id_padded": "◈050",
       "title": "O Selo da Aliança",
       "arc_num": 5,
-      "arc_name": "",
+      "arc_name": "O Retorno e a Restauração",
       "index_ref": "Neemias 9:38 | Ageu 2:9",
       "books": [
         "Neemias 9:38",
@@ -1982,7 +1982,7 @@
       "id_padded": "◈051",
       "title": "A Sangria do Óleo",
       "arc_num": 6,
-      "arc_name": "",
+      "arc_name": "A Noite e a Vigília",
       "index_ref": "Mateus 25:8-9 | Apocalipse 3:18",
       "books": [
         "Mateus 25:8",
@@ -2017,7 +2017,7 @@
       "id_padded": "◈052",
       "title": "O Peso do Sentinela",
       "arc_num": 6,
-      "arc_name": "",
+      "arc_name": "A Noite e a Vigília",
       "index_ref": "Isaías 21:11-12 | Ezequiel 33:2",
       "books": [
         "Isaías 21:11",
@@ -2052,7 +2052,7 @@
       "id_padded": "◈053",
       "title": "Uma Hora no Frio",
       "arc_num": 6,
-      "arc_name": "",
+      "arc_name": "A Noite e a Vigília",
       "index_ref": "Mateus 26:40 | 1 Pedro 5:8",
       "books": [
         "Mateus 26:40",
@@ -2087,7 +2087,7 @@
       "id_padded": "◈054",
       "title": "O Som Desse Gemido",
       "arc_num": 6,
-      "arc_name": "",
+      "arc_name": "A Noite e a Vigília",
       "index_ref": "Romanos 8:26 | Salmo 42:7",
       "books": [
         "Romanos 8:26",
@@ -2122,7 +2122,7 @@
       "id_padded": "◈055",
       "title": "A Lenha da Meia-Noite",
       "arc_num": 6,
-      "arc_name": "",
+      "arc_name": "A Noite e a Vigília",
       "index_ref": "Levítico 6:13 | Salmo 119:62",
       "books": [
         "Levítico 6:13",
@@ -2157,7 +2157,7 @@
       "id_padded": "◈056",
       "title": "Desperta dos Cadáveres",
       "arc_num": 6,
-      "arc_name": "",
+      "arc_name": "A Noite e a Vigília",
       "index_ref": "Efésios 5:14 | 1 Tessalonicenses 5:6",
       "books": [
         "Efésios 5:14",
@@ -2192,7 +2192,7 @@
       "id_padded": "◈057",
       "title": "A Quarta Vigília",
       "arc_num": 6,
-      "arc_name": "",
+      "arc_name": "A Noite e a Vigília",
       "index_ref": "Mateus 14:25 | Marcos 6:48",
       "books": [
         "Mateus 14:25",
@@ -2227,7 +2227,7 @@
       "id_padded": "◈058",
       "title": "Mais Que Os Guardas",
       "arc_num": 6,
-      "arc_name": "",
+      "arc_name": "A Noite e a Vigília",
       "index_ref": "Salmo 130:6 | 2 Pedro 1:19",
       "books": [
         "Salmo 130:6",
@@ -2262,7 +2262,7 @@
       "id_padded": "◈059",
       "title": "A Nudez da Sombra",
       "arc_num": 6,
-      "arc_name": "",
+      "arc_name": "A Noite e a Vigília",
       "index_ref": "Apocalipse 16:15 | Apocalipse 3:3",
       "books": [
         "Apocalipse 16:15",
@@ -2297,7 +2297,7 @@
       "id_padded": "◈060",
       "title": "O Fim da Penumbra",
       "arc_num": 6,
-      "arc_name": "",
+      "arc_name": "A Noite e a Vigília",
       "index_ref": "Romanos 13:12 | Malaquias 4:2",
       "books": [
         "Romanos 13:12",
@@ -2332,7 +2332,7 @@
       "id_padded": "◈061",
       "title": "O Esmagamento do Verbo",
       "arc_num": 7,
-      "arc_name": "",
+      "arc_name": "A Encarnação e o Conflito",
       "index_ref": "João 1:14 | Filipenses 2:7",
       "books": [
         "João 1:14",
@@ -2367,7 +2367,7 @@
       "id_padded": "◈062",
       "title": "A Caça do Dragão",
       "arc_num": 7,
-      "arc_name": "",
+      "arc_name": "A Encarnação e o Conflito",
       "index_ref": "Mateus 2:16 | Apocalipse 12:4",
       "books": [
         "Mateus 2:16",
@@ -2402,7 +2402,7 @@
       "id_padded": "◈063",
       "title": "Quarenta Dias de Poeira",
       "arc_num": 7,
-      "arc_name": "",
+      "arc_name": "A Encarnação e o Conflito",
       "index_ref": "Mateus 4:1 | Hebreus 4:15",
       "books": [
         "Mateus 4:1",
@@ -2437,7 +2437,7 @@
       "id_padded": "◈064",
       "title": "O Chicote de Cordas",
       "arc_num": 7,
-      "arc_name": "",
+      "arc_name": "A Encarnação e o Conflito",
       "index_ref": "João 2:15 | Lucas 19:45",
       "books": [
         "João 2:15",
@@ -2472,7 +2472,7 @@
       "id_padded": "◈065",
       "title": "Raça de Víboras",
       "arc_num": 7,
-      "arc_name": "",
+      "arc_name": "A Encarnação e o Conflito",
       "index_ref": "Mateus 23:33 | Lucas 3:7",
       "books": [
         "Mateus 23:33",
@@ -2527,7 +2527,7 @@
       "id_padded": "◈066",
       "title": "O Discurso Insuportável",
       "arc_num": 7,
-      "arc_name": "",
+      "arc_name": "A Encarnação e o Conflito",
       "index_ref": "João 6:60 | Mateus 10:34",
       "books": [
         "João 6:60",
@@ -2562,7 +2562,7 @@
       "id_padded": "◈067",
       "title": "O Lodo nos Olhos",
       "arc_num": 7,
-      "arc_name": "",
+      "arc_name": "A Encarnação e o Conflito",
       "index_ref": "João 9:6 | Marcos 8:23",
       "books": [
         "João 9:6",
@@ -2597,7 +2597,7 @@
       "id_padded": "◈068",
       "title": "O Cheiro de Lázaro",
       "arc_num": 7,
-      "arc_name": "",
+      "arc_name": "A Encarnação e o Conflito",
       "index_ref": "João 11:39 | João 11:43",
       "books": [
         "João 11:39",
@@ -2632,7 +2632,7 @@
       "id_padded": "◈069",
       "title": "O Banquete Fúnebre",
       "arc_num": 7,
-      "arc_name": "",
+      "arc_name": "A Encarnação e o Conflito",
       "index_ref": "Mateus 26:26-28 | 1 Coríntios 11:24",
       "books": [
         "Mateus 26:26",
@@ -2667,7 +2667,7 @@
       "id_padded": "◈070",
       "title": "O Beijo no Escuro",
       "arc_num": 7,
-      "arc_name": "",
+      "arc_name": "A Encarnação e o Conflito",
       "index_ref": "Lucas 22:47-48 | Mateus 26:49",
       "books": [
         "Lucas 22:47",
@@ -2702,7 +2702,7 @@
       "id_padded": "◈071",
       "title": "O Tribunal do Mofador",
       "arc_num": 8,
-      "arc_name": "",
+      "arc_name": "A Paixão e a Cruz",
       "index_ref": "Lucas 23:11 | Mateus 26:67",
       "books": [
         "Lucas 23:11",
@@ -2737,7 +2737,7 @@
       "id_padded": "◈072",
       "title": "O Som do Azorrague",
       "arc_num": 8,
-      "arc_name": "",
+      "arc_name": "A Paixão e a Cruz",
       "index_ref": "Isaías 53:5 | Mateus 27:26",
       "books": [
         "Isaías 53:5",
@@ -2772,7 +2772,7 @@
       "id_padded": "◈073",
       "title": "A Coroa Seca",
       "arc_num": 8,
-      "arc_name": "",
+      "arc_name": "A Paixão e a Cruz",
       "index_ref": "Marcos 15:17 | Gênesis 3:18",
       "books": [
         "Marcos 15:17",
@@ -2807,7 +2807,7 @@
       "id_padded": "◈074",
       "title": "O Madeiro nas Costas",
       "arc_num": 8,
-      "arc_name": "",
+      "arc_name": "A Paixão e a Cruz",
       "index_ref": "João 19:17 | Lucas 23:26",
       "books": [
         "João 19:17",
@@ -2842,7 +2842,7 @@
       "id_padded": "◈075",
       "title": "Os Pregos em Sião",
       "arc_num": 8,
-      "arc_name": "",
+      "arc_name": "A Paixão e a Cruz",
       "index_ref": "Salmo 22:16 | Lucas 23:33",
       "books": [
         "Salmo 22:16",
@@ -2877,7 +2877,7 @@
       "id_padded": "◈076",
       "title": "As Três Horas de Trevas",
       "arc_num": 8,
-      "arc_name": "",
+      "arc_name": "A Paixão e a Cruz",
       "index_ref": "Mateus 27:45 | Amós 8:9",
       "books": [
         "Mateus 27:45",
@@ -2912,7 +2912,7 @@
       "id_padded": "◈077",
       "title": "O Cálice de Vinagre",
       "arc_num": 8,
-      "arc_name": "",
+      "arc_name": "A Paixão e a Cruz",
       "index_ref": "João 19:28 | Salmo 69:21",
       "books": [
         "João 19:28",
@@ -2947,7 +2947,7 @@
       "id_padded": "◈078",
       "title": "O Grito da Fenda",
       "arc_num": 8,
-      "arc_name": "",
+      "arc_name": "A Paixão e a Cruz",
       "index_ref": "Mateus 27:50-51 | Hebreus 10:20",
       "books": [
         "Mateus 27:50",
@@ -2982,7 +2982,7 @@
       "id_padded": "◈079",
       "title": "A Lança de Roma",
       "arc_num": 8,
-      "arc_name": "",
+      "arc_name": "A Paixão e a Cruz",
       "index_ref": "João 19:34 | Zacarias 12:10",
       "books": [
         "João 19:34",
@@ -3017,7 +3017,7 @@
       "id_padded": "◈080",
       "title": "A Tumba de Pedra",
       "arc_num": 8,
-      "arc_name": "",
+      "arc_name": "A Paixão e a Cruz",
       "index_ref": "Mateus 27:60 | Isaías 53:9",
       "books": [
         "Mateus 27:60",
@@ -3052,7 +3052,7 @@
       "id_padded": "◈081",
       "title": "O Relâmpago nas Pedras",
       "arc_num": 9,
-      "arc_name": "",
+      "arc_name": "A Ressurreição e o Mandato",
       "index_ref": "Mateus 28:2 | Salmo 104:4",
       "books": [
         "Mateus 28:2",
@@ -3087,7 +3087,7 @@
       "id_padded": "◈082",
       "title": "Os Lençóis Vazios",
       "arc_num": 9,
-      "arc_name": "",
+      "arc_name": "A Ressurreição e o Mandato",
       "index_ref": "João 20:6 | Oseias 13:14",
       "books": [
         "João 20:6",
@@ -3122,7 +3122,7 @@
       "id_padded": "◈083",
       "title": "O Jardineiro de Fogo",
       "arc_num": 9,
-      "arc_name": "",
+      "arc_name": "A Ressurreição e o Mandato",
       "index_ref": "João 20:15 | Cânticos 8:6",
       "books": [
         "João 20:15",
@@ -3157,7 +3157,7 @@
       "id_padded": "◈084",
       "title": "A Ferida Aberta",
       "arc_num": 9,
-      "arc_name": "",
+      "arc_name": "A Ressurreição e o Mandato",
       "index_ref": "João 20:25 | Zacarias 13:6",
       "books": [
         "João 20:25",
@@ -3192,7 +3192,7 @@
       "id_padded": "◈085",
       "title": "O Fogo de Carvão",
       "arc_num": 9,
-      "arc_name": "",
+      "arc_name": "A Ressurreição e o Mandato",
       "index_ref": "João 21:9 | Miqueias 7:18",
       "books": [
         "João 21:9",
@@ -3227,7 +3227,7 @@
       "id_padded": "◈086",
       "title": "A Estrada de Emaús",
       "arc_num": 9,
-      "arc_name": "",
+      "arc_name": "A Ressurreição e o Mandato",
       "index_ref": "Lucas 24:32 | Jeremias 20:9",
       "books": [
         "Lucas 24:32",
@@ -3262,7 +3262,7 @@
       "id_padded": "◈087",
       "title": "As Provas Infalíveis",
       "arc_num": 9,
-      "arc_name": "",
+      "arc_name": "A Ressurreição e o Mandato",
       "index_ref": "Atos 1:3 | 1 João 1:1",
       "books": [
         "Atos 1:3",
@@ -3297,7 +3297,7 @@
       "id_padded": "◈088",
       "title": "O Grande Mandato",
       "arc_num": 9,
-      "arc_name": "",
+      "arc_name": "A Ressurreição e o Mandato",
       "index_ref": "Mateus 28:18-19 | Salmo 2:8",
       "books": [
         "Mateus 28:18",
@@ -3332,7 +3332,7 @@
       "id_padded": "◈089",
       "title": "Gravidade Zero",
       "arc_num": 9,
-      "arc_name": "",
+      "arc_name": "A Ressurreição e o Mandato",
       "index_ref": "Atos 1:9 | Daniel 7:13",
       "books": [
         "Atos 1:9",
@@ -3367,7 +3367,7 @@
       "id_padded": "◈090",
       "title": "O Trono da Destra",
       "arc_num": 9,
-      "arc_name": "",
+      "arc_name": "A Ressurreição e o Mandato",
       "index_ref": "Hebreus 1:3 | Salmo 110:1",
       "books": [
         "Hebreus 1:3",
@@ -3402,7 +3402,7 @@
       "id_padded": "◈091",
       "title": "Os Quatro Cavaleiros",
       "arc_num": 10,
-      "arc_name": "",
+      "arc_name": "O Apocalipse e o Ômega",
       "index_ref": "Apocalipse 6:1-8 | Zacarias 6:1",
       "books": [
         "Apocalipse 6:1",
@@ -3437,7 +3437,7 @@
       "id_padded": "◈092",
       "title": "A Marca da Fera",
       "arc_num": 10,
-      "arc_name": "",
+      "arc_name": "O Apocalipse e o Ômega",
       "index_ref": "Apocalipse 13:16-18 | Daniel 7:25",
       "books": [
         "Apocalipse 13:16",
@@ -3472,7 +3472,7 @@
       "id_padded": "◈093",
       "title": "As Taças da Ira",
       "arc_num": 10,
-      "arc_name": "",
+      "arc_name": "O Apocalipse e o Ômega",
       "index_ref": "Apocalipse 16:1-2 | Isaías 51:17",
       "books": [
         "Apocalipse 16:1",
@@ -3507,7 +3507,7 @@
       "id_padded": "◈094",
       "title": "A Fenda nos Céus",
       "arc_num": 10,
-      "arc_name": "",
+      "arc_name": "O Apocalipse e o Ômega",
       "index_ref": "Apocalipse 19:11-13 | Mateus 24:30",
       "books": [
         "Apocalipse 19:11",
@@ -3542,7 +3542,7 @@
       "id_padded": "◈095",
       "title": "O Som da Última Trombeta",
       "arc_num": 10,
-      "arc_name": "",
+      "arc_name": "O Apocalipse e o Ômega",
       "index_ref": "1 Coríntios 15:52 | 1 Tessalonicenses 4:16",
       "books": [
         "Coríntios 15:52",
@@ -3577,7 +3577,7 @@
       "id_padded": "◈096",
       "title": "O Milênio de Ferro",
       "arc_num": 10,
-      "arc_name": "",
+      "arc_name": "O Apocalipse e o Ômega",
       "index_ref": "Apocalipse 20:4-6 | Isaías 11:6",
       "books": [
         "Apocalipse 20:4",
@@ -3612,7 +3612,7 @@
       "id_padded": "◈097",
       "title": "O Grande Trono Branco",
       "arc_num": 10,
-      "arc_name": "",
+      "arc_name": "O Apocalipse e o Ômega",
       "index_ref": "Apocalipse 20:11-15 | Daniel 7:9",
       "books": [
         "Apocalipse 20:11",
@@ -3647,7 +3647,7 @@
       "id_padded": "◈098",
       "title": "O Lago de Fogo",
       "arc_num": 10,
-      "arc_name": "",
+      "arc_name": "O Apocalipse e o Ômega",
       "index_ref": "Apocalipse 20:10-15 | Mateus 25:41",
       "books": [
         "Apocalipse 20:10",
@@ -3682,7 +3682,7 @@
       "id_padded": "◈099",
       "title": "A Cidade Cúbica",
       "arc_num": 10,
-      "arc_name": "",
+      "arc_name": "O Apocalipse e o Ômega",
       "index_ref": "Apocalipse 21:1-4 | Isaías 65:17",
       "books": [
         "Apocalipse 21:1",
@@ -3717,7 +3717,7 @@
       "id_padded": "◈100",
       "title": "O Ômega",
       "arc_num": 10,
-      "arc_name": "",
+      "arc_name": "O Apocalipse e o Ômega",
       "index_ref": "Apocalipse 22:13-21 | Isaías 9:7",
       "books": [
         "Apocalipse 22:13",
