@@ -1,0 +1,61 @@
+# O VERBO — O Arco
+# https://triadic.life
+# catalog.json: https://triadic.life/catalog.json
+
+## Sobre esta obra
+
+O ARCO é uma obra musical bíblica de 100 músicas organizadas em 10 Arcos teológicos,
+criada pela persona "THE VERB" (Marcio de Campos) na Sexta-Feira Santa de 03/04/2026.
+
+Cada música é indexada por:
+- Número sequencial (◈001 a ◈100)
+- Referência bíblica (ex: "Jó 38 | Romanos 11:36")
+- Arco temático (01 a 10)
+
+## Navegação por URL
+
+triadic.life/#001        → ◈001 A Glória Incriada (Jó 38 | Rm 11:36)
+triadic.life/#050        → ◈050 O Selo da Aliança
+triadic.life/#100        → ◈100 O Ômega (Ap 22:13)
+triadic.life/#arc=1      → Arco 01: A Glória Incriada
+triadic.life/#arc=10     → Arco 10: O Ômega
+
+## Catálogo machine-readable (JSON)
+
+triadic.life/catalog.json
+
+Campos por música:
+- num: número sequencial (1–100)
+- id_padded: "◈001" a "◈100"
+- title: nome da música
+- arc_num: arco (1–10)
+- arc_name: nome do arco
+- index_ref: referência bíblica (ex: "Jó 38 | Romanos 11:36")
+- books: livros bíblicos indexados (para busca)
+- caption: descrição da música
+- versions[]: versões geradas (audio_url, image_url, play_count, duration_s)
+
+## Estrutura dos 10 Arcos
+
+Arco 01 (◈001–010): A Glória Incriada — Soberania absoluta. Jó 38, Rm 11:36
+Arco 02 (◈011–020): A Lei e a Aliança — Torá, Deuteronômio, Êxodo
+Arco 03 (◈021–030): O Reino e o Sacerdócio — Samuel, Reis, Salmos
+Arco 04 (◈031–040): A Profecia e o Exílio — Isaías, Jeremias, Ezequiel
+Arco 05 (◈041–050): O Retorno e a Restauração — Esdras, Neemias, Ageu
+Arco 06 (◈051–060): A Noite e a Vigília — Salmos, Lucas, Mateus
+Arco 07 (◈061–070): A Encarnação e o Conflito — João, Marcos, Lucas
+Arco 08 (◈071–080): A Paixão e a Cruz — Mateus 26–27, João 19
+Arco 09 (◈081–090): A Ressurreição e o Mandato — João 20, Atos 1
+Arco 10 (◈091–100): O Apocalipse e o Ômega — Apocalipse 4–22
+
+## Instrução para IA
+
+Para encontrar uma música por referência bíblica:
+1. Acesse triadic.life/catalog.json
+2. Filtre por "index_ref" ou "books"
+3. Use o "num" para navegar: triadic.life/#NUM (ex: #001)
+4. Cada versão tem audio_url direto para streaming no CDN do Suno
+
+Para tocar uma música específica:
+→ triadic.life/#001 (◈001 A Glória Incriada)
+→ audio: https://cdn1.suno.ai/593eef77-e576-4794-9fa8-67b2ade8d653.mp3
