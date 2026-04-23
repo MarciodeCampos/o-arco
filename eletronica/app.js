@@ -138,7 +138,7 @@ function renderTrackList() {
 
     const dur = track.duration_s ? fmt(track.duration_s) : '—';
     const trackUrl = `./track.html?arc=${currentArcNum}&id=${track.id}`;
-    const displayTitle = cleanTitle(track.title);
+    const displayTitle = track.display_title || cleanTitle(track.title);
     item.innerHTML = `
       <span class="ti-num">${track.num}</span>
       <img class="ti-thumb" src="${track.image_url || ''}" alt="" loading="lazy"
@@ -177,7 +177,7 @@ function loadTrack(idx, autoplay = true) {
   // Now playing info
   document.getElementById('np-arc').textContent =
     `${currentArcData.arc.emoji} ${currentArcData.arc.label || currentArcData.arc.name} — Vol.${track.volume}`;
-  document.getElementById('np-title').textContent = cleanTitle(track.title);
+  document.getElementById('np-title').textContent = track.display_title || cleanTitle(track.title);
   document.getElementById('np-title').title = track.title;
   document.getElementById('np-caption').textContent = track.caption || '';
   document.getElementById('np-meta').innerHTML = [

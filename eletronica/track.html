@@ -283,7 +283,7 @@ function render(arcData, track) {
   const arc = arcData.arc;
   const dur = track.duration_s ? fmt(track.duration_s) : '—';
   const pageUrl = location.href;
-  const displayTitle = cleanTitle(track.title);
+  const displayTitle = track.display_title || cleanTitle(track.title);
 
   // ── OG / meta tags ──────────────────────────────────────────────
   document.getElementById('page-title').textContent = `${displayTitle} — M4RC10 | triadic.life`;
