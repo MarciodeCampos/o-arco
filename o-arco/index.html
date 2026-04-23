@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050508">
+<meta name="description" content="O VERBO — O Arco. 100 músicas bíblicas em 10 Arcos. Da Glória Incriada ao Ômega.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="O ARCO">
+<link rel="manifest" href="manifest.json">
+<link rel="alternate" type="application/json" href="catalog.json" title="O VERBO Catalog">
+<title>O VERBO — O Arco | triadic.life</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#c9a84c;--gold-light:#e8c97a;--gold-dim:#7a5f2a;--ink:#050508;--ink2:#0a0a10;--ink3:#12121a;--surface:#1a1a25;--surface2:#22222f;--border:rgba(201,168,76,0.15);--text:#e8e8f0;--text-dim:#8888a0;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;background:var(--ink);color:var(--text);font-family:'Inter',sans-serif;overflow:hidden;}
+
+/* SPLASH */
+#splash{position:fixed;inset:0;z-index:1000;background:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;transition:opacity 0.8s,visibility 0.8s;}
+#splash.hidden{opacity:0;visibility:hidden;pointer-events:none;}
+.splash-sym{font-size:72px;color:var(--gold);animation:pulse 2s ease-in-out infinite;}
+.splash-title{font-family:'Cinzel',serif;font-size:clamp(24px,5vw,48px);font-weight:900;color:var(--gold);letter-spacing:0.15em;}
+.splash-sub{font-family:'Cinzel',serif;font-size:clamp(11px,2vw,16px);color:var(--gold-dim);letter-spacing:0.4em;}
+.splash-dots{display:flex;gap:6px;}
+.splash-dots span{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:bounce 1.2s ease-in-out infinite;}
+.splash-dots span:nth-child(2){animation-delay:.2s;}
+.splash-dots span:nth-child(3){animation-delay:.4s;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.7;transform:scale(.95);}}
+@keyframes bounce{0%,80%,100%{transform:scale(.6);opacity:.4;}40%{transform:scale(1);opacity:1;}}
+
+/* SCREENS */
+#app{display:flex;flex-direction:column;height:100%;overflow:hidden;}
+.screen{display:none;flex-direction:column;height:100%;overflow:hidden;}
+.screen.active{display:flex;}
+
+/* TOP BAR */
+.topbar{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--ink2);flex-shrink:0;}
+.topbar-logo{font-family:'Cinzel',serif;font-weight:900;font-size:15px;color:var(--gold);letter-spacing:.1em;cursor:pointer;}
+.topbar-crumb{color:var(--gold-dim);font-size:12px;}
+.topbar-right{margin-left:auto;display:flex;gap:8px;align-items:center;}
+.btn-icon{background:none;border:1px solid var(--border);border-radius:6px;color:var(--text-dim);padding:5px 10px;font-size:12px;cursor:pointer;transition:all .2s;}
+.btn-icon:hover{border-color:var(--gold);color:var(--gold);}
+
+/* SCREEN 1 — ARC GRID */
+#screen-arcs .arc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;padding:20px;overflow-y:auto;flex:1;}
+.arc-card{border-radius:12px;overflow:hidden;cursor:pointer;position:relative;aspect-ratio:1/1;background:var(--surface);transition:transform .2s,box-shadow .2s;}
+.arc-card:hover{transform:scale(1.03);box-shadow:0 8px 32px rgba(0,0,0,.6);}
+.arc-card-img{width:100%;height:100%;object-fit:cover;display:block;}
+.arc-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(5,5,8,.95) 40%,transparent 80%);}
+.arc-card-body{position:absolute;bottom:0;left:0;right:0;padding:16px;}
+.arc-card-num{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.3em;color:var(--gold);margin-bottom:4px;}
+.arc-card-name{font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:#fff;line-height:1.2;}
+.arc-card-count{font-size:10px;color:var(--text-dim);margin-top:4px;}
+.arc-card-bar{position:absolute;top:0;left:0;right:0;height:3px;}
+
+/* SCREEN 2 — ARC TRACKLIST */
+#screen-arc .arc-hero{flex-shrink:0;position:relative;height:220px;overflow:hidden;}
+#screen-arc .arc-hero-img{width:100%;height:100%;object-fit:cover;}
+#screen-arc .arc-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,var(--ink) 0%,transparent 60%);}
+#screen-arc .arc-hero-body{position:absolute;bottom:0;left:0;right:0;padding:20px;}
+#arc-num-badge{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.35em;margin-bottom:6px;}
+#arc-title-h{font-family:'Cinzel',serif;font-size:clamp(20px,4vw,32px);font-weight:900;color:#fff;}
+#arc-desc-p{font-size:12px;color:var(--text-dim);margin-top:6px;line-height:1.6;max-width:600px;}
+#screen-arc .tracklist{overflow-y:auto;flex:1;padding:8px 0;}
+.track-item{display:flex;align-items:center;gap:12px;padding:10px 16px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.04);transition:background .15s;}
+.track-item:hover{background:var(--surface);}
+.track-item.active{background:var(--surface2);}
+.track-num{font-family:'Cinzel',serif;font-size:11px;color:var(--gold);width:36px;flex-shrink:0;text-align:center;}
+.track-thumb{width:44px;height:44px;border-radius:6px;object-fit:cover;flex-shrink:0;background:var(--surface);}
+.track-info{flex:1;min-width:0;}
+.track-name{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.track-ref{font-size:11px;color:var(--text-dim);margin-top:2px;}
+.track-vers{font-size:10px;color:var(--gold-dim);flex-shrink:0;}
+.arc-nav-row{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--border);flex-shrink:0;}
+.arc-nav-btn{flex:1;padding:10px;border-radius:8px;border:1px solid var(--border);background:none;color:var(--text-dim);font-size:12px;cursor:pointer;transition:all .2s;font-family:'Cinzel',serif;letter-spacing:.05em;}
+.arc-nav-btn:hover:not(:disabled){border-color:var(--gold);color:var(--gold);}
+.arc-nav-btn:disabled{opacity:.3;cursor:default;}
+
+/* SCREEN 3 — PLAYER */
+#screen-player{position:relative;}
+#song-cover-bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:blur(40px) brightness(.25);z-index:0;}
+#screen-player .player-inner{position:relative;z-index:1;display:flex;flex-direction:column;height:100%;overflow:hidden;}
+#song-cover-img{width:min(260px,70vw);height:min(260px,70vw);border-radius:12px;object-fit:cover;box-shadow:0 16px 48px rgba(0,0,0,.7);margin:0 auto 20px;display:block;}
+.player-meta{text-align:center;padding:0 20px;flex-shrink:0;}
+#player-arc-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.3em;color:var(--gold);margin-bottom:6px;}
+#player-title{font-family:'Cinzel',serif;font-size:clamp(16px,3.5vw,24px);font-weight:700;color:#fff;line-height:1.2;}
+#player-ref{font-size:11px;color:var(--text-dim);margin-top:4px;}
+#player-caption{font-size:11px;color:var(--text-dim);margin-top:8px;line-height:1.6;max-width:500px;margin-left:auto;margin-right:auto;}
+.player-scroll{overflow-y:auto;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:16px 16px 0;}
+#ver-switcher{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:12px;}
+.ver-btn{padding:4px 12px;border-radius:20px;border:1px solid var(--border);background:none;color:var(--text-dim);font-size:11px;cursor:pointer;transition:all .15s;}
+.ver-btn.active{background:var(--gold);color:var(--ink);border-color:var(--gold);}
+#audio-controls{padding:16px 20px;flex-shrink:0;}
+#progress-wrap{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+.t-label{font-size:11px;color:var(--text-dim);width:36px;text-align:center;}
+#progress-bar{flex:1;height:4px;background:var(--surface2);border-radius:2px;cursor:pointer;position:relative;}
+#progress-fill{height:100%;background:var(--gold);border-radius:2px;width:0%;transition:width .2s linear;}
+.ctrl-row{display:flex;align-items:center;justify-content:center;gap:12px;}
+.ctrl-btn{background:none;border:none;color:var(--text-dim);font-size:20px;cursor:pointer;padding:8px;border-radius:8px;transition:color .2s;}
+.ctrl-btn:hover{color:var(--gold);}
+.ctrl-btn.primary{font-size:28px;color:var(--gold);}
+#vol-wrap{display:flex;align-items:center;gap:8px;justify-content:center;padding-bottom:8px;}
+#vol-icon{font-size:14px;color:var(--text-dim);}
+#vol-slider{width:100px;accent-color:var(--gold);}
+
+/* LANG TOGGLE */
+.lang-toggle{display:flex;border:1px solid var(--border);border-radius:6px;overflow:hidden;}
+.lang-btn{padding:4px 10px;font-size:11px;background:none;border:none;color:var(--text-dim);cursor:pointer;transition:all .15s;font-family:'Cinzel',serif;letter-spacing:.05em;}
+.lang-btn.active{background:var(--gold);color:var(--ink);}
+
+/* RESPONSIVE */
+@media(min-width:600px){#screen-arcs .arc-grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));}}
+@media(min-width:900px){#screen-arcs .arc-grid{grid-template-columns:repeat(5,1fr);}}
+</style>
+</head>
+<body>
+
+<div id="splash">
+  <div class="splash-sym">◈</div>
+  <div class="splash-title">O VERBO</div>
+  <div class="splash-sub">O ARCO</div>
+  <div class="splash-dots"><span></span><span></span><span></span></div>
+</div>
+
+<div id="app">
+
+  <!-- SCREEN 1: ARC GRID -->
+  <div id="screen-arcs" class="screen">
+    <div class="topbar">
+      <span class="topbar-logo">◈ O VERBO</span>
+      <span class="topbar-crumb" style="color:var(--gold-dim)">O ARCO</span>
+      <div class="topbar-right">
+        <a class="btn-icon" href="catalog.json" target="_blank">{JSON}</a>
+        <a class="btn-icon" href="llms.txt" target="_blank">LLMs</a>
+      </div>
+    </div>
+    <div class="arc-grid" id="arc-grid"></div>
+  </div>
+
+  <!-- SCREEN 2: TRACKLIST -->
+  <div id="screen-arc" class="screen">
+    <div class="topbar">
+      <button class="btn-icon" onclick="showScreen('arcs')">← Arcos</button>
+      <span class="topbar-crumb" id="topbar-arc-name"></span>
+      <div class="topbar-right">
+        <span id="topbar-arc-progress" style="font-size:11px;color:var(--text-dim);"></span>
+        <div class="lang-toggle" id="lang-toggle-arc">
+          <button class="lang-btn active" id="lang-pt-arc" onclick="setLang('pt')">PT</button>
+          <button class="lang-btn" id="lang-en-arc" onclick="setLang('en')">EN</button>
+        </div>
+      </div>
+    </div>
+    <div class="arc-hero">
+      <img id="arc-hero-img" class="arc-hero-img" src="" alt="">
+      <div class="arc-hero-overlay"></div>
+      <div class="arc-hero-body">
+        <div id="arc-num-badge"></div>
+        <div id="arc-title-h"></div>
+        <div id="arc-desc-p"></div>
+      </div>
+    </div>
+    <div class="tracklist" id="tracklist"></div>
+    <div class="arc-nav-row">
+      <button class="arc-nav-btn" id="btn-prev-arc" onclick="navigateArc(-1)">← Arco Anterior</button>
+      <button class="arc-nav-btn" id="btn-next-arc" onclick="navigateArc(1)">Próximo Arco →</button>
+    </div>
+  </div>
+
+  <!-- SCREEN 3: PLAYER -->
+  <div id="screen-player" class="screen">
+    <div id="song-cover-bg"></div>
+    <div class="player-inner">
+      <div class="topbar" style="background:transparent;border-color:rgba(201,168,76,.1)">
+        <button class="btn-icon" onclick="backToTracklist()">← Tracklist</button>
+        <span class="topbar-crumb" id="player-topbar-arc"></span>
+        <div class="topbar-right">
+          <div class="lang-toggle">
+            <button class="lang-btn active" id="lang-pt-player" onclick="setLang('pt')">PT</button>
+            <button class="lang-btn" id="lang-en-player" onclick="setLang('en')">EN</button>
+          </div>
+          <button class="btn-icon" id="btn-prev-song" onclick="prevSong()">⏮</button>
+          <button class="btn-icon" id="btn-next-song" onclick="nextSong()">⏭</button>
+        </div>
+      </div>
+      <div class="player-scroll">
+        <img id="song-cover-img" src="" alt="Capa">
+        <div class="player-meta">
+          <div id="player-arc-label"></div>
+          <div id="player-title"></div>
+          <div id="player-ref"></div>
+          <div id="player-caption"></div>
+        </div>
+        <div id="ver-switcher"></div>
+      </div>
+      <div id="audio-controls">
+        <div id="progress-wrap">
+          <span class="t-label" id="t-cur">0:00</span>
+          <div id="progress-bar"><div id="progress-fill"></div></div>
+          <span class="t-label" id="t-end">0:00</span>
+        </div>
+        <div class="ctrl-row">
+          <button class="ctrl-btn" onclick="skip(-15)" title="-15s">↺15</button>
+          <button class="ctrl-btn" onclick="prevSong()" title="Anterior">⏮</button>
+          <button class="ctrl-btn primary" id="btn-play" onclick="togglePlay()">▶</button>
+          <button class="ctrl-btn" onclick="nextSong()" title="Próxima">⏭</button>
+          <button class="ctrl-btn" onclick="skip(15)" title="+15s">↻15</button>
+        </div>
+        <div id="vol-wrap">
+          <span id="vol-icon">🔊</span>
+          <input type="range" id="vol-slider" min="0" max="1" step="0.02" value="0.85">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<audio id="audio-el" preload="auto"></audio>
+
+<script>
+// ─── State ───────────────────────────────────────────────
+let arcsIndex = [];      // arcs.json — lightweight index
+let currentArcData = null; // full arc data from arcXX.json
+let currentArcNum = 1;
+let currentSongIdx = 0;  // index in currentArcData.songs
+let currentVerIdx = 0;
+let isPlaying = false;
+let currentLang = 'pt';  // 'pt' or 'en'
+
+// ─── Language toggle ─────────────────────────────────────
+function setLang(lang){
+  currentLang = lang;
+  // update all toggle buttons
+  ['arc','player'].forEach(ctx=>{
+    const pt=document.getElementById('lang-pt-'+ctx);
+    const en=document.getElementById('lang-en-'+ctx);
+    if(pt&&en){pt.classList.toggle('active',lang==='pt');en.classList.toggle('active',lang==='en');}
+  });
+  // re-render current views
+  if(currentArcData) renderTracklist();
+  if(document.getElementById('screen-player').classList.contains('active')) renderPlayer();
+}
+function getSong(song){
+  // returns {title, versions} respecting currentLang
+  const hasEN = song.title_en && song.versions_en && song.versions_en.length>0;
+  if(currentLang==='en' && hasEN) return {title:song.title_en, versions:song.versions_en};
+  return {title:song.title, versions:song.versions};
+}
+
+const audio = document.getElementById('audio-el');
+
+// ─── Utils ───────────────────────────────────────────────
+function fmt(s){s=Math.floor(s||0);return `${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`;}
+function arcFile(n){return `arc${String(n).padStart(2,'0')}.json`;}
+
+// ─── Screen management ───────────────────────────────────
+function showScreen(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+name).classList.add('active');
+}
+
+// ─── Boot ────────────────────────────────────────────────
+async function boot(){
+  try {
+    const r = await fetch('arcs.json');
+    arcsIndex = await r.json();
+    buildArcGrid();
+    parseHash();
+    document.getElementById('splash').classList.add('hidden');
+    showScreen('arcs');
+  } catch(e){
+    document.getElementById('splash').innerHTML='<div style="color:#c44;font-family:Cinzel,serif;padding:20px;text-align:center">Erro ao carregar catálogo</div>';
+  }
+}
+
+// ─── SCREEN 1: Arc Grid ──────────────────────────────────
+function buildArcGrid(){
+  const grid = document.getElementById('arc-grid');
+  grid.innerHTML = arcsIndex.map(arc => `
+    <div class="arc-card" onclick="openArc(${arc.num})" title="${arc.description}">
+      <img class="arc-card-img" src="${arc.cover_image}" alt="${arc.name}" loading="lazy" onerror="this.style.background='#1a1a25';this.removeAttribute('src')">
+      <div class="arc-card-overlay"></div>
+      <div class="arc-card-bar" style="background:${arc.color}"></div>
+      <div class="arc-card-body">
+        <div class="arc-card-num" style="color:${arc.color}">ARCO ${String(arc.num).padStart(2,'0')}</div>
+        <div class="arc-card-name">${arc.name}</div>
+        <div class="arc-card-count">${arc.song_count} músicas</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ─── SCREEN 2: Tracklist ─────────────────────────────────
+async function openArc(num){
+  currentArcNum = num;
+  try {
+    const r = await fetch(arcFile(num));
+    currentArcData = await r.json();
+    renderTracklist();
+    showScreen('arc');
+    window.location.hash = 'arc='+num;
+  } catch(e){ alert('Erro ao carregar arco '+num); }
+}
+
+function renderTracklist(){
+  const arc = currentArcData;
+  const arcMeta = arcsIndex.find(a=>a.num===arc.num)||{};
+
+  document.getElementById('topbar-arc-name').textContent = arc.name;
+  document.getElementById('topbar-arc-progress').textContent = `${arc.num}/10`;
+  document.getElementById('arc-hero-img').src = arc.cover_image||'';
+  document.getElementById('arc-num-badge').innerHTML = `<span style="color:${arc.color||'var(--gold)'};font-size:10px;letter-spacing:.3em;font-family:Cinzel,serif;">ARCO ${String(arc.num).padStart(2,'0')}</span>`;
+  document.getElementById('arc-title-h').textContent = arc.name;
+  document.getElementById('arc-desc-p').textContent = arc.description||'';
+
+  document.getElementById('btn-prev-arc').disabled = arc.num <= 1;
+  document.getElementById('btn-next-arc').disabled = arc.num >= 10;
+
+  const tl = document.getElementById('tracklist');
+  tl.innerHTML = arc.songs.map((song,idx) => {
+    const {title,versions} = getSong(song);
+    const ver = versions&&versions[0]||{};
+    const hasEN = !!(song.title_en && song.versions_en && song.versions_en.length);
+    return `<div class="track-item" id="track-${song.num}" onclick="openSong(${idx})">
+      <div class="track-num">◈${String(song.num).padStart(3,'0')}</div>
+      <img class="track-thumb" src="${ver.image_url||''}" alt="" loading="lazy" onerror="this.style.background='#1a1a25';this.removeAttribute('src')">
+      <div class="track-info">
+        <div class="track-name">${title}</div>
+        <div class="track-ref">${song.index_ref||''}</div>
+      </div>
+      <div style="display:flex;gap:4px;align-items:center;flex-shrink:0">
+        ${hasEN?'<span style="font-size:9px;color:var(--gold-dim);border:1px solid var(--gold-dim);border-radius:3px;padding:1px 4px;">EN</span>':''}
+        ${versions&&versions.length>1?`<div class="track-vers">${versions.length}v</div>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function navigateArc(dir){
+  const next = currentArcNum + dir;
+  if(next>=1&&next<=10) openArc(next);
+}
+
+// ─── SCREEN 3: Player ────────────────────────────────────
+function openSong(idx){
+  currentSongIdx = idx;
+  currentVerIdx = 0;
+  renderPlayer();
+  showScreen('player');
+}
+
+function renderPlayer(){
+  const song = currentArcData.songs[currentSongIdx];
+  const arc = currentArcData;
+  const {title, versions} = getSong(song);
+  // clamp verIdx to valid range for current lang's versions
+  if(currentVerIdx >= versions.length) currentVerIdx = 0;
+  const ver = versions[currentVerIdx]||versions[0];
+
+  document.getElementById('song-cover-bg').style.backgroundImage=`url(${ver.image_url||''})`;
+  document.getElementById('song-cover-img').src=ver.image_url||'';
+  document.getElementById('player-arc-label').textContent=`ARCO ${String(arc.num).padStart(2,'0')} — ${arc.name}`;
+  document.getElementById('player-topbar-arc').textContent=`${String(arc.num).padStart(2,'0')} — ${arc.name}`;
+  document.getElementById('player-title').textContent=title;
+  document.getElementById('player-ref').textContent=song.index_ref||'';
+  document.getElementById('player-caption').textContent=song.caption||'';
+
+  // version switcher
+  const vs=document.getElementById('ver-switcher');
+  if(versions.length>1){
+    vs.innerHTML=versions.map((v,i)=>`<button class="ver-btn${i===currentVerIdx?' active':''}" onclick="switchVer(${i})">V${i+1}${v.play_count?` · ${v.play_count}▶`:''}</button>`).join('');
+  } else { vs.innerHTML=''; }
+
+  // highlight tracklist
+  document.querySelectorAll('.track-item').forEach(el=>el.classList.remove('active'));
+  const ti=document.getElementById('track-'+song.num);
+  if(ti)ti.classList.add('active');
+
+  // nav buttons
+  document.getElementById('btn-prev-song').disabled = currentSongIdx<=0;
+  document.getElementById('btn-next-song').disabled = currentSongIdx>=currentArcData.songs.length-1;
+
+  loadAudio(ver.audio_url);
+}
+
+function switchVer(i){
+  currentVerIdx=i;
+  renderPlayer();
+}
+
+function loadAudio(url){
+  audio.src=url;
+  audio.volume=parseFloat(document.getElementById('vol-slider').value)||0.85;
+  audio.play().then(()=>{isPlaying=true;updatePlayBtn();}).catch(()=>{isPlaying=false;updatePlayBtn();});
+}
+
+function togglePlay(){
+  if(isPlaying){audio.pause();isPlaying=false;}
+  else{audio.play();isPlaying=true;}
+  updatePlayBtn();
+}
+
+function updatePlayBtn(){
+  document.getElementById('btn-play').textContent=isPlaying?'⏸':'▶';
+}
+
+function skip(s){audio.currentTime=Math.max(0,Math.min(audio.duration||0,audio.currentTime+s));}
+
+function prevSong(){
+  if(currentSongIdx>0){currentSongIdx--;currentVerIdx=0;renderPlayer();}
+}
+function nextSong(){
+  if(currentSongIdx<currentArcData.songs.length-1){currentSongIdx++;currentVerIdx=0;renderPlayer();}
+  else if(currentArcNum<10){openArc(currentArcNum+1).then(()=>openSong(0));}
+}
+
+function backToTracklist(){
+  audio.pause();isPlaying=false;
+  showScreen('arc');
+}
+
+// ─── Audio events ─────────────────────────────────────────
+audio.addEventListener('timeupdate',()=>{
+  const d=audio.duration||0,c=audio.currentTime||0;
+  document.getElementById('progress-fill').style.width=d?(c/d*100)+'%':'0%';
+  document.getElementById('t-cur').textContent=fmt(c);
+  document.getElementById('t-end').textContent=fmt(d);
+});
+audio.addEventListener('ended',()=>{isPlaying=false;updatePlayBtn();nextSong();});
+audio.addEventListener('play',()=>{isPlaying=true;updatePlayBtn();});
+audio.addEventListener('pause',()=>{isPlaying=false;updatePlayBtn();});
+
+document.getElementById('progress-bar').addEventListener('click',e=>{
+  if(!audio.duration)return;
+  const r=e.currentTarget.getBoundingClientRect();
+  audio.currentTime=((e.clientX-r.left)/r.width)*audio.duration;
+});
+
+document.getElementById('vol-slider').addEventListener('input',e=>{audio.volume=parseFloat(e.target.value);});
+
+// ─── Hash routing ─────────────────────────────────────────
+function parseHash(){
+  const h=location.hash.replace('#','').trim();
+  if(!h)return;
+  const m=h.match(/^arc=(\d+)$/i);
+  if(m){openArc(+m[1]);return;}
+  const n=parseInt(h,10);
+  if(n>=1&&n<=100){
+    const arcNum=Math.ceil(n/10);
+    openArc(arcNum).then(()=>{
+      const idx=currentArcData.songs.findIndex(s=>s.num===n);
+      if(idx>=0)openSong(idx);
+    });
+  }
+}
+
+window.addEventListener('popstate',()=>parseHash());
+
+// ─── Start ────────────────────────────────────────────────
+window.addEventListener('load',boot);
+
+// ─── Service Worker ───────────────────────────────────────
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js');
+</script>
+</body>
+</html>
