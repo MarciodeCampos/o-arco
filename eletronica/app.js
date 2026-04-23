@@ -22,6 +22,24 @@ const playPulse= document.getElementById('play-pulse');
 // ── Format helpers ──────────────────────────────────────────────
 const fmt = s => `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
 
+// ── Clean title — remove technical suffixes from Suno titles ────
+function cleanTitle(raw) {
+  let t = (raw || '').trim();
+  // Remove surrounding brackets [TITLE ...] → keep inner before first —
+  t = t.replace(/^\[(.+?)\]$/, '$1');
+  // Remove everything after em dash (—) separator
+  t = t.replace(/\s*[\u2014\u2013].*$/, '');
+  // Remove everything after pipe (|)
+  t = t.replace(/\s*\|.*$/, '');
+  // Remove trailing parenthetical (Remastered), (3D ...), (v5) etc.
+  t = t.replace(/\s*\([^)]*\)\s*(v\d+)?\s*$/, '');
+  // Remove trailing version tags like v5, v3
+  t = t.replace(/\s+v\d+\s*$/, '');
+  // Remove trailing comma-separated technical descriptions
+  t = t.replace(/,.*$/, '');
+  return t.trim() || raw;
+}
+
 // ── Load catalog index ──────────────────────────────────────────
 async function loadIndex() {
   const res = await fetch(`${BASE}/index.json`);
@@ -120,16 +138,17 @@ function renderTrackList() {
 
     const dur = track.duration_s ? fmt(track.duration_s) : '—';
     const trackUrl = `./track.html?arc=${currentArcNum}&id=${track.id}`;
+    const displayTitle = cleanTitle(track.title);
     item.innerHTML = `
       <span class="ti-num">${track.num}</span>
       <img class="ti-thumb" src="${track.image_url || ''}" alt="" loading="lazy"
            onerror="this.style.background='rgba(255,255,255,0.05)'"/>
-      <div class="ti-info">
-        <div class="ti-title">${escHtml(track.title)}</div>
+      <div class="ti-info" title="${escHtml(track.title)}">
+        <div class="ti-title">${escHtml(displayTitle)}</div>
         <div class="ti-dur">${dur}</div>
       </div>
       <a class="ti-link" href="${trackUrl}" target="_blank"
-         title="Página da música" onclick="event.stopPropagation()">↗</a>
+         title="${escHtml(track.title)}" onclick="event.stopPropagation()">↗</a>
     `;
     item.addEventListener('click', () => loadTrack(i));
     list.appendChild(item);
@@ -158,7 +177,8 @@ function loadTrack(idx, autoplay = true) {
   // Now playing info
   document.getElementById('np-arc').textContent =
     `${currentArcData.arc.emoji} ${currentArcData.arc.label || currentArcData.arc.name} — Vol.${track.volume}`;
-  document.getElementById('np-title').textContent = track.title;
+  document.getElementById('np-title').textContent = cleanTitle(track.title);
+  document.getElementById('np-title').title = track.title;
   document.getElementById('np-caption').textContent = track.caption || '';
   document.getElementById('np-meta').innerHTML = [
     track.model   ? `<span>${track.model}</span>`   : '',

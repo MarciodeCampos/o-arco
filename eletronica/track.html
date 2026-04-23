@@ -241,6 +241,18 @@ const audio = document.getElementById('audio');
 let isPlaying = false;
 const fmt = s => `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
 
+// ── Clean title — strip Suno technical suffixes ──────────────────
+function cleanTitle(raw) {
+  let t = (raw || '').trim();
+  t = t.replace(/^\[(.+?)\]$/, '$1');
+  t = t.replace(/\s*[\u2014\u2013].*$/, '');
+  t = t.replace(/\s*\|.*$/, '');
+  t = t.replace(/\s*\([^)]*\)\s*(v\d+)?\s*$/, '');
+  t = t.replace(/\s+v\d+\s*$/, '');
+  t = t.replace(/,.*$/, '');
+  return t.trim() || raw;
+}
+
 // ── Parse URL params ─────────────────────────────────────────────
 const params = new URLSearchParams(location.search);
 const arcNum = parseInt(params.get('arc'), 10);
@@ -271,10 +283,11 @@ function render(arcData, track) {
   const arc = arcData.arc;
   const dur = track.duration_s ? fmt(track.duration_s) : '—';
   const pageUrl = location.href;
+  const displayTitle = cleanTitle(track.title);
 
   // ── OG / meta tags ──────────────────────────────────────────────
-  document.getElementById('page-title').textContent = `${track.title} — M4RC10 | triadic.life`;
-  document.getElementById('og-title').content = track.title;
+  document.getElementById('page-title').textContent = `${displayTitle} — M4RC10 | triadic.life`;
+  document.getElementById('og-title').content = displayTitle;
   document.getElementById('og-desc').content = `${arc.label || arc.name} · ${dur} · @m4arc10c4mp0s`;
   document.getElementById('og-image').content = track.image_url || '';
   document.getElementById('og-url').content = pageUrl;
@@ -321,7 +334,7 @@ function render(arcData, track) {
       </div>
       <div class="track-info">
         <div class="track-genre">${arc.emoji} ${arc.label || arc.name}</div>
-        <div class="track-title">${escHtml(track.title)}</div>
+        <div class="track-title" title="${escHtml(track.title)}">${escHtml(displayTitle)}</div>
         <div class="track-meta">
           ${track.duration_s ? `<span>⏱ ${dur}</span>` : ''}
           ${track.play_count > 0 ? `<span>▶ ${track.play_count} plays</span>` : ''}
