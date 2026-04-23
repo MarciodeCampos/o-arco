@@ -119,6 +119,7 @@ function renderTrackList() {
     item.dataset.idx = i;
 
     const dur = track.duration_s ? fmt(track.duration_s) : '—';
+    const trackUrl = `./track.html?arc=${currentArcNum}&id=${track.id}`;
     item.innerHTML = `
       <span class="ti-num">${track.num}</span>
       <img class="ti-thumb" src="${track.image_url || ''}" alt="" loading="lazy"
@@ -127,6 +128,8 @@ function renderTrackList() {
         <div class="ti-title">${escHtml(track.title)}</div>
         <div class="ti-dur">${dur}</div>
       </div>
+      <a class="ti-link" href="${trackUrl}" target="_blank"
+         title="Página da música" onclick="event.stopPropagation()">↗</a>
     `;
     item.addEventListener('click', () => loadTrack(i));
     list.appendChild(item);

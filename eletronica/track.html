@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#08080f">
+<!-- OG tags — preenchidas via JS após carregar os dados -->
+<meta property="og:type" content="music.song">
+<meta property="og:site_name" content="triadic.life">
+<meta id="og-title" property="og:title" content="M4RC10 — Eletrônica">
+<meta id="og-desc" property="og:description" content="Música eletrônica autoral de @m4arc10c4mp0s">
+<meta id="og-image" property="og:image" content="">
+<meta id="og-url" property="og:url" content="">
+<meta name="twitter:card" content="summary_large_image">
+<title id="page-title">M4RC10 — Eletrônica | triadic.life</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #08080f;
+  --bg2: #0f0f1a;
+  --surface: #14141f;
+  --surface2: #1c1c2a;
+  --border: rgba(255,255,255,0.07);
+  --accent: #00ffcc;
+  --accent2: #7700ff;
+  --text: #e8e8f0;
+  --muted: #666680;
+  --gold: #c9a84c;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { min-height:100%; background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; }
+
+/* ── ambient bg ── */
+.ambient {
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-size:cover; background-position:center;
+  filter:blur(80px) brightness(0.12) saturate(1.5);
+  transition: background-image 0.8s;
+}
+
+.page { position:relative; z-index:1; min-height:100vh; display:flex; flex-direction:column; }
+
+/* ── header ── */
+.top-bar {
+  display:flex; align-items:center; gap:12px;
+  padding:14px 20px; border-bottom:1px solid var(--border);
+  background:rgba(8,8,15,0.85); backdrop-filter:blur(20px);
+  position:sticky; top:0; z-index:10;
+}
+.back-link {
+  color:var(--muted); text-decoration:none; font-size:12px;
+  font-family:'JetBrains Mono',monospace; letter-spacing:0.05em;
+  transition:color .2s;
+}
+.back-link:hover { color:var(--accent); }
+.logo {
+  display:flex; align-items:center; gap:8px; margin-left:auto;
+  font-family:'JetBrains Mono',monospace; font-size:12px;
+}
+.logo-icon { color:var(--accent); font-size:16px; }
+.logo-text { color:var(--text); font-weight:600; }
+.logo-sub { color:var(--muted); }
+
+/* ── hero ── */
+.hero {
+  display:flex; flex-direction:column; align-items:center;
+  padding:48px 20px 32px; gap:24px;
+}
+.cover-wrap {
+  position:relative; width:min(280px,70vw); height:min(280px,70vw);
+  border-radius:16px; overflow:hidden;
+  box-shadow:0 24px 80px rgba(0,0,0,0.8);
+}
+.cover-img {
+  width:100%; height:100%; object-fit:cover; display:block;
+  background:var(--surface2);
+}
+.cover-glow {
+  position:absolute; inset:-2px;
+  border-radius:18px; z-index:-1;
+  background:var(--accent); opacity:0; filter:blur(20px);
+  transition:opacity .4s;
+}
+.cover-wrap.playing .cover-glow { opacity:0.3; }
+
+.track-info { text-align:center; max-width:560px; }
+.track-genre {
+  font-family:'JetBrains Mono',monospace; font-size:10px;
+  color:var(--accent); letter-spacing:0.3em; text-transform:uppercase;
+  margin-bottom:10px;
+}
+.track-title {
+  font-size:clamp(18px,4vw,28px); font-weight:700;
+  line-height:1.25; margin-bottom:12px;
+}
+.track-meta {
+  display:flex; gap:12px; justify-content:center; flex-wrap:wrap;
+  font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted);
+}
+.track-meta span {
+  display:flex; align-items:center; gap:4px;
+  padding:3px 10px; border:1px solid var(--border);
+  border-radius:20px; background:var(--surface);
+}
+
+/* ── player controls ── */
+.player-section {
+  display:flex; flex-direction:column; align-items:center;
+  gap:16px; padding:0 20px 32px;
+}
+.progress-wrap {
+  display:flex; align-items:center; gap:10px;
+  width:100%; max-width:480px;
+}
+.time { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); width:36px; }
+.time:last-child { text-align:right; }
+.progress-bar {
+  flex:1; height:4px; background:var(--surface2);
+  border-radius:2px; cursor:pointer; position:relative;
+}
+.progress-fill {
+  height:100%; border-radius:2px; width:0%;
+  background:linear-gradient(to right, var(--accent2), var(--accent));
+  transition:width .2s linear;
+}
+.controls { display:flex; align-items:center; gap:16px; }
+.ctrl-btn {
+  background:none; border:1px solid var(--border); border-radius:50%;
+  color:var(--muted); font-size:18px; width:44px; height:44px;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; transition:all .2s;
+}
+.ctrl-btn:hover { border-color:var(--accent); color:var(--accent); }
+.ctrl-btn.primary {
+  width:56px; height:56px; font-size:22px;
+  border-color:var(--accent); color:var(--accent);
+  box-shadow:0 0 20px rgba(0,255,204,0.2);
+}
+.ctrl-btn.primary:hover { background:rgba(0,255,204,0.1); }
+.vol-row { display:flex; align-items:center; gap:10px; }
+.vol-row span { color:var(--muted); font-size:14px; }
+input[type=range] { accent-color:var(--accent); width:100px; }
+
+/* ── platforms section ── */
+.section {
+  width:100%; max-width:560px; margin:0 auto;
+  padding:0 20px 40px;
+}
+.section-title {
+  font-family:'JetBrains Mono',monospace; font-size:10px;
+  color:var(--muted); letter-spacing:0.25em; text-transform:uppercase;
+  margin-bottom:14px; padding-bottom:10px;
+  border-bottom:1px solid var(--border);
+}
+.platforms { display:flex; flex-wrap:wrap; gap:10px; }
+.platform-btn {
+  display:flex; align-items:center; gap:8px;
+  padding:10px 16px; border-radius:10px;
+  border:1px solid var(--border); background:var(--surface);
+  color:var(--text); text-decoration:none; font-size:13px;
+  cursor:pointer; transition:all .2s; font-family:inherit;
+}
+.platform-btn:hover { border-color:var(--accent); color:var(--accent); }
+.platform-btn .icon { font-size:16px; }
+/* Suno toggle — oculto por padrão */
+.suno-gate { position:relative; }
+.suno-hidden .suno-link-row { display:none; }
+.reveal-btn {
+  display:flex; align-items:center; gap:8px;
+  padding:10px 16px; border-radius:10px;
+  border:1px solid var(--border); background:var(--surface);
+  color:var(--muted); font-size:12px; cursor:pointer;
+  transition:all .2s; font-family:'JetBrains Mono',monospace;
+  letter-spacing:0.05em;
+}
+.reveal-btn:hover { border-color:var(--gold); color:var(--gold); }
+.suno-link-row { display:flex; gap:8px; align-items:center; }
+.suno-link {
+  display:flex; align-items:center; gap:8px;
+  padding:10px 16px; border-radius:10px;
+  border:1px solid rgba(255,193,7,0.3); background:rgba(255,193,7,0.05);
+  color:var(--gold); text-decoration:none; font-size:13px;
+  transition:all .2s;
+}
+.suno-link:hover { background:rgba(255,193,7,0.1); }
+.hide-btn {
+  background:none; border:none; color:var(--muted);
+  cursor:pointer; font-size:16px; padding:4px 8px;
+  transition:color .2s;
+}
+.hide-btn:hover { color:var(--text); }
+
+/* ── share row ── */
+.share-row { display:flex; gap:10px; flex-wrap:wrap; }
+.share-btn {
+  display:flex; align-items:center; gap:8px;
+  padding:10px 16px; border-radius:10px;
+  border:1px solid var(--border); background:var(--surface);
+  color:var(--muted); font-size:12px; cursor:pointer;
+  transition:all .2s; font-family:'JetBrains Mono',monospace;
+}
+.share-btn:hover { border-color:var(--accent); color:var(--accent); }
+.share-btn.copied { border-color:var(--accent); color:var(--accent); }
+
+/* ── error / loading ── */
+.loading { text-align:center; padding:80px 20px; color:var(--muted); font-family:'JetBrains Mono',monospace; }
+.error { text-align:center; padding:80px 20px; color:#ff4466; font-family:'JetBrains Mono',monospace; }
+
+/* ── responsive ── */
+@media(min-width:640px) {
+  .hero { flex-direction:row; align-items:flex-start; padding:48px 40px 32px; }
+  .track-info { text-align:left; }
+  .track-meta { justify-content:flex-start; }
+}
+</style>
+</head>
+<body>
+
+<div class="ambient" id="ambient"></div>
+
+<div class="page">
+  <div class="top-bar">
+    <a class="back-link" href="/eletronica/" id="back-link">← player</a>
+    <div class="logo">
+      <span class="logo-icon">⚡</span>
+      <span class="logo-text">M4RC10</span>
+      <span class="logo-sub">@m4arc10c4mp0s</span>
+    </div>
+  </div>
+
+  <div id="content">
+    <div class="loading">⚡ carregando...</div>
+  </div>
+</div>
+
+<audio id="audio" crossorigin="anonymous" preload="metadata"></audio>
+
+<script>
+const audio = document.getElementById('audio');
+let isPlaying = false;
+const fmt = s => `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
+
+// ── Parse URL params ─────────────────────────────────────────────
+const params = new URLSearchParams(location.search);
+const arcNum = parseInt(params.get('arc'), 10);
+const songId = params.get('id');
+
+if (!arcNum || !songId) {
+  document.getElementById('content').innerHTML =
+    '<div class="error">Parâmetros inválidos.<br><a href="/eletronica/" style="color:#00ffcc">← Voltar</a></div>';
+} else {
+  loadTrackPage();
+}
+
+async function loadTrackPage() {
+  try {
+    const res = await fetch(`./catalog/arc_${arcNum}.json`);
+    if (!res.ok) throw new Error('arc not found');
+    const arcData = await res.json();
+    const track = arcData.songs.find(s => s.id === songId);
+    if (!track) throw new Error('song not found');
+    render(arcData, track);
+  } catch(e) {
+    document.getElementById('content').innerHTML =
+      `<div class="error">Música não encontrada.<br><a href="/eletronica/" style="color:#00ffcc">← Voltar ao player</a></div>`;
+  }
+}
+
+function render(arcData, track) {
+  const arc = arcData.arc;
+  const dur = track.duration_s ? fmt(track.duration_s) : '—';
+  const pageUrl = location.href;
+
+  // ── OG / meta tags ──────────────────────────────────────────────
+  document.getElementById('page-title').textContent = `${track.title} — M4RC10 | triadic.life`;
+  document.getElementById('og-title').content = track.title;
+  document.getElementById('og-desc').content = `${arc.label || arc.name} · ${dur} · @m4arc10c4mp0s`;
+  document.getElementById('og-image').content = track.image_url || '';
+  document.getElementById('og-url').content = pageUrl;
+
+  // ── Ambient bg ──────────────────────────────────────────────────
+  document.getElementById('ambient').style.backgroundImage = `url(${track.image_url || ''})`;
+
+  // ── Back link ── vai direto para o arc certo no player
+  document.getElementById('back-link').href = `/eletronica/#arc=${arcNum}`;
+
+  // ── Plataformas disponíveis ──────────────────────────────────────
+  const platforms = track.platforms || {};
+  const hasSuno   = !!track.id;
+  const sunoUrl   = `https://suno.com/song/${track.id}`;
+
+  const platformsHtml = `
+    <div class="platforms">
+      <!-- Suno — gated -->
+      <div class="suno-gate suno-hidden">
+        <button class="reveal-btn" id="btn-reveal-suno" onclick="revealSuno()">
+          🎵 Ver link Suno
+        </button>
+        <div class="suno-link-row">
+          <a class="suno-link" href="${sunoUrl}" target="_blank" rel="noopener">
+            🎵 Abrir no Suno ↗
+          </a>
+          <button class="hide-btn" onclick="hideSuno()" title="Ocultar">✕</button>
+        </div>
+      </div>
+      <!-- Spotify — futuro -->
+      ${platforms.spotify ? `<a class="platform-btn" href="${platforms.spotify}" target="_blank"><span class="icon">🎧</span> Spotify</a>` : ''}
+      ${platforms.youtube ? `<a class="platform-btn" href="${platforms.youtube}" target="_blank"><span class="icon">▶</span> YouTube</a>` : ''}
+      ${platforms.apple  ? `<a class="platform-btn" href="${platforms.apple}"   target="_blank"><span class="icon">🍎</span> Apple Music</a>` : ''}
+    </div>`;
+
+  // ── HTML principal ───────────────────────────────────────────────
+  document.getElementById('content').innerHTML = `
+    <div class="hero">
+      <div class="cover-wrap" id="cover-wrap">
+        <img class="cover-img" id="cover-img"
+             src="${track.image_url || ''}" alt="${escHtml(track.title)}"
+             onerror="this.style.background='#1c1c2a'">
+        <div class="cover-glow"></div>
+      </div>
+      <div class="track-info">
+        <div class="track-genre">${arc.emoji} ${arc.label || arc.name}</div>
+        <div class="track-title">${escHtml(track.title)}</div>
+        <div class="track-meta">
+          ${track.duration_s ? `<span>⏱ ${dur}</span>` : ''}
+          ${track.play_count > 0 ? `<span>▶ ${track.play_count} plays</span>` : ''}
+          ${track.score ? `<span>★ ${track.score}</span>` : ''}
+          ${track.model ? `<span>🤖 ${track.model}</span>` : ''}
+        </div>
+      </div>
+    </div>
+
+    <div class="player-section">
+      <div class="progress-wrap">
+        <span class="time" id="t-cur">0:00</span>
+        <div class="progress-bar" id="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <span class="time" id="t-dur">0:00</span>
+      </div>
+      <div class="controls">
+        <button class="ctrl-btn primary" id="btn-play" title="Play">▶</button>
+      </div>
+      <div class="vol-row">
+        <span>🔊</span>
+        <input type="range" id="vol" min="0" max="1" step="0.02" value="0.85">
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Disponível em</div>
+      ${platformsHtml}
+    </div>
+
+    <div class="section">
+      <div class="section-title">Compartilhar</div>
+      <div class="share-row">
+        <button class="share-btn" id="btn-copy" onclick="copyLink()">🔗 Copiar link</button>
+        <a class="share-btn" href="https://wa.me/?text=${encodeURIComponent(track.title + ' — ' + pageUrl)}" target="_blank">💬 WhatsApp</a>
+        <a class="share-btn" href="https://twitter.com/intent/tweet?text=${encodeURIComponent(track.title)}&url=${encodeURIComponent(pageUrl)}" target="_blank">𝕏 Twitter</a>
+      </div>
+    </div>
+  `;
+
+  // ── Audio ────────────────────────────────────────────────────────
+  audio.src = track.audio_url;
+  audio.volume = 0.85;
+  audio.load();
+
+  // ── Bind controls ────────────────────────────────────────────────
+  document.getElementById('btn-play').addEventListener('click', togglePlay);
+  document.getElementById('progress-bar').addEventListener('click', seek);
+  document.getElementById('vol').addEventListener('input', e => { audio.volume = e.target.value; });
+
+  audio.addEventListener('timeupdate', () => {
+    if (!audio.duration) return;
+    document.getElementById('progress-fill').style.width = (audio.currentTime / audio.duration * 100) + '%';
+    document.getElementById('t-cur').textContent = fmt(audio.currentTime);
+  });
+  audio.addEventListener('loadedmetadata', () => {
+    document.getElementById('t-dur').textContent = fmt(audio.duration);
+  });
+  audio.addEventListener('play',  () => setPlaying(true));
+  audio.addEventListener('pause', () => setPlaying(false));
+  audio.addEventListener('ended', () => setPlaying(false));
+}
+
+// ── Playback ─────────────────────────────────────────────────────
+function togglePlay() {
+  if (!audio.src) return;
+  if (isPlaying) audio.pause(); else audio.play();
+}
+function setPlaying(state) {
+  isPlaying = state;
+  const btn = document.getElementById('btn-play');
+  if (btn) btn.textContent = state ? '⏸' : '▶';
+  const cw = document.getElementById('cover-wrap');
+  if (cw) cw.classList.toggle('playing', state);
+}
+function seek(e) {
+  if (!audio.duration) return;
+  const r = e.currentTarget.getBoundingClientRect();
+  audio.currentTime = ((e.clientX - r.left) / r.width) * audio.duration;
+}
+
+// ── Suno gate ────────────────────────────────────────────────────
+function revealSuno() {
+  document.querySelector('.suno-gate').classList.remove('suno-hidden');
+}
+function hideSuno() {
+  document.querySelector('.suno-gate').classList.add('suno-hidden');
+}
+
+// ── Share ─────────────────────────────────────────────────────────
+function copyLink() {
+  navigator.clipboard.writeText(location.href).then(() => {
+    const btn = document.getElementById('btn-copy');
+    btn.textContent = '✓ Copiado!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '🔗 Copiar link'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function escHtml(s) {
+  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>
