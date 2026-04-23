@@ -105,6 +105,11 @@ html,body{height:100%;background:var(--ink);color:var(--text);font-family:'Inter
 #vol-icon{font-size:14px;color:var(--text-dim);}
 #vol-slider{width:100px;accent-color:var(--gold);}
 
+/* LANG TOGGLE */
+.lang-toggle{display:flex;border:1px solid var(--border);border-radius:6px;overflow:hidden;}
+.lang-btn{padding:4px 10px;font-size:11px;background:none;border:none;color:var(--text-dim);cursor:pointer;transition:all .15s;font-family:'Cinzel',serif;letter-spacing:.05em;}
+.lang-btn.active{background:var(--gold);color:var(--ink);}
+
 /* RESPONSIVE */
 @media(min-width:600px){#screen-arcs .arc-grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));}}
 @media(min-width:900px){#screen-arcs .arc-grid{grid-template-columns:repeat(5,1fr);}}
@@ -141,6 +146,10 @@ html,body{height:100%;background:var(--ink);color:var(--text);font-family:'Inter
       <span class="topbar-crumb" id="topbar-arc-name"></span>
       <div class="topbar-right">
         <span id="topbar-arc-progress" style="font-size:11px;color:var(--text-dim);"></span>
+        <div class="lang-toggle" id="lang-toggle-arc">
+          <button class="lang-btn active" id="lang-pt-arc" onclick="setLang('pt')">PT</button>
+          <button class="lang-btn" id="lang-en-arc" onclick="setLang('en')">EN</button>
+        </div>
       </div>
     </div>
     <div class="arc-hero">
@@ -167,6 +176,10 @@ html,body{height:100%;background:var(--ink);color:var(--text);font-family:'Inter
         <button class="btn-icon" onclick="backToTracklist()">← Tracklist</button>
         <span class="topbar-crumb" id="player-topbar-arc"></span>
         <div class="topbar-right">
+          <div class="lang-toggle">
+            <button class="lang-btn active" id="lang-pt-player" onclick="setLang('pt')">PT</button>
+            <button class="lang-btn" id="lang-en-player" onclick="setLang('en')">EN</button>
+          </div>
           <button class="btn-icon" id="btn-prev-song" onclick="prevSong()">⏮</button>
           <button class="btn-icon" id="btn-next-song" onclick="nextSong()">⏭</button>
         </div>
@@ -214,6 +227,27 @@ let currentArcNum = 1;
 let currentSongIdx = 0;  // index in currentArcData.songs
 let currentVerIdx = 0;
 let isPlaying = false;
+let currentLang = 'pt';  // 'pt' or 'en'
+
+// ─── Language toggle ─────────────────────────────────────
+function setLang(lang){
+  currentLang = lang;
+  // update all toggle buttons
+  ['arc','player'].forEach(ctx=>{
+    const pt=document.getElementById('lang-pt-'+ctx);
+    const en=document.getElementById('lang-en-'+ctx);
+    if(pt&&en){pt.classList.toggle('active',lang==='pt');en.classList.toggle('active',lang==='en');}
+  });
+  // re-render current views
+  if(currentArcData) renderTracklist();
+  if(document.getElementById('screen-player').classList.contains('active')) renderPlayer();
+}
+function getSong(song){
+  // returns {title, versions} respecting currentLang
+  const hasEN = song.title_en && song.versions_en && song.versions_en.length>0;
+  if(currentLang==='en' && hasEN) return {title:song.title_en, versions:song.versions_en};
+  return {title:song.title, versions:song.versions};
+}
 
 const audio = document.getElementById('audio-el');
 
@@ -286,15 +320,20 @@ function renderTracklist(){
 
   const tl = document.getElementById('tracklist');
   tl.innerHTML = arc.songs.map((song,idx) => {
-    const ver = song.versions&&song.versions[0]||{};
+    const {title,versions} = getSong(song);
+    const ver = versions&&versions[0]||{};
+    const hasEN = !!(song.title_en && song.versions_en && song.versions_en.length);
     return `<div class="track-item" id="track-${song.num}" onclick="openSong(${idx})">
       <div class="track-num">◈${String(song.num).padStart(3,'0')}</div>
       <img class="track-thumb" src="${ver.image_url||''}" alt="" loading="lazy" onerror="this.style.background='#1a1a25';this.removeAttribute('src')">
       <div class="track-info">
-        <div class="track-name">${song.title}</div>
+        <div class="track-name">${title}</div>
         <div class="track-ref">${song.index_ref||''}</div>
       </div>
-      ${song.versions&&song.versions.length>1?`<div class="track-vers">${song.versions.length}v</div>`:''}
+      <div style="display:flex;gap:4px;align-items:center;flex-shrink:0">
+        ${hasEN?'<span style="font-size:9px;color:var(--gold-dim);border:1px solid var(--gold-dim);border-radius:3px;padding:1px 4px;">EN</span>':''}
+        ${versions&&versions.length>1?`<div class="track-vers">${versions.length}v</div>`:''}
+      </div>
     </div>`;
   }).join('');
 }
@@ -315,20 +354,23 @@ function openSong(idx){
 function renderPlayer(){
   const song = currentArcData.songs[currentSongIdx];
   const arc = currentArcData;
-  const ver = song.versions[currentVerIdx]||song.versions[0];
+  const {title, versions} = getSong(song);
+  // clamp verIdx to valid range for current lang's versions
+  if(currentVerIdx >= versions.length) currentVerIdx = 0;
+  const ver = versions[currentVerIdx]||versions[0];
 
   document.getElementById('song-cover-bg').style.backgroundImage=`url(${ver.image_url||''})`;
   document.getElementById('song-cover-img').src=ver.image_url||'';
   document.getElementById('player-arc-label').textContent=`ARCO ${String(arc.num).padStart(2,'0')} — ${arc.name}`;
   document.getElementById('player-topbar-arc').textContent=`${String(arc.num).padStart(2,'0')} — ${arc.name}`;
-  document.getElementById('player-title').textContent=song.title;
+  document.getElementById('player-title').textContent=title;
   document.getElementById('player-ref').textContent=song.index_ref||'';
   document.getElementById('player-caption').textContent=song.caption||'';
 
   // version switcher
   const vs=document.getElementById('ver-switcher');
-  if(song.versions.length>1){
-    vs.innerHTML=song.versions.map((v,i)=>`<button class="ver-btn${i===currentVerIdx?' active':''}" onclick="switchVer(${i})">V${i+1}${v.play_count?` · ${v.play_count}▶`:''}</button>`).join('');
+  if(versions.length>1){
+    vs.innerHTML=versions.map((v,i)=>`<button class="ver-btn${i===currentVerIdx?' active':''}" onclick="switchVer(${i})">V${i+1}${v.play_count?` · ${v.play_count}▶`:''}</button>`).join('');
   } else { vs.innerHTML=''; }
 
   // highlight tracklist
