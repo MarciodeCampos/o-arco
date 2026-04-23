@@ -97,6 +97,10 @@ function selectVolume(vol) {
   // Filter songs for this volume
   playlist = currentArcData.songs.filter(s => s.volume === vol);
   renderTrackList();
+
+  // Pre-select first track (show info + cover) but don't autoplay
+  // Mobile browsers block autoplay — user must tap Play
+  if (playlist.length > 0) loadTrack(0, false);
 }
 
 // ── Render track list ───────────────────────────────────────────
@@ -130,7 +134,7 @@ function renderTrackList() {
 }
 
 // ── Load + play track ───────────────────────────────────────────
-function loadTrack(idx) {
+function loadTrack(idx, autoplay = true) {
   currentIdx = idx;
   const track = playlist[idx];
   if (!track) return;
@@ -160,12 +164,21 @@ function loadTrack(idx) {
     track.score ? `<span>★ ${track.score}</span>` : '',
   ].join('');
 
-  // Audio
+  // Audio — sempre carrega, só toca se autoplay=true
   audio.src = track.audio_url;
   audio.load();
-  audio.play().then(() => {
-    setPlaying(true);
-  }).catch(e => console.warn('Autoplay blocked:', e));
+
+  if (autoplay) {
+    audio.play().then(() => {
+      setPlaying(true);
+    }).catch(e => {
+      // Mobile bloqueou autoplay — usuário precisa tocar em Play
+      console.warn('Autoplay bloqueado (mobile):', e);
+      setPlaying(false);
+    });
+  } else {
+    setPlaying(false);
+  }
 }
 
 // ── Playback state ──────────────────────────────────────────────
