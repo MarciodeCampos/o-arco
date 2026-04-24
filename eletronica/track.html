@@ -239,6 +239,8 @@ input[type=range] { accent-color:var(--accent); width:100px; }
 <script>
 const audio = document.getElementById('audio');
 let isPlaying = false;
+let currentArcData = null;
+let currentSongIdx = 0;
 const fmt = s => `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
 
 // ── Clean title — strip Suno technical suffixes ──────────────────
@@ -269,17 +271,35 @@ async function loadTrackPage() {
   try {
     const res = await fetch(`./catalog/arc_${arcNum}.json`);
     if (!res.ok) throw new Error('arc not found');
-    const arcData = await res.json();
-    const track = arcData.songs.find(s => s.id === songId);
-    if (!track) throw new Error('song not found');
-    render(arcData, track);
+    currentArcData = await res.json();
+    currentSongIdx = currentArcData.songs.findIndex(s => s.id === songId);
+    if (currentSongIdx < 0) throw new Error('song not found');
+    render(currentArcData, currentArcData.songs[currentSongIdx]);
   } catch(e) {
     document.getElementById('content').innerHTML =
       `<div class="error">Música não encontrada.<br><a href="/eletronica/" style="color:#00ffcc">← Voltar ao player</a></div>`;
   }
 }
 
+function goToSong(idx) {
+  if (!currentArcData) return;
+  const songs = currentArcData.songs;
+  if (idx < 0 || idx >= songs.length) return;
+  currentSongIdx = idx;
+  const s = songs[idx];
+  // Update URL without reload
+  const newUrl = `./track.html?arc=${arcNum}&id=${s.id}`;
+  history.pushState({}, '', newUrl);
+  audio.pause();
+  renderTrack(currentArcData, s);
+  audio.play().catch(() => {});
+}
+
 function render(arcData, track) {
+  renderTrack(arcData, track);
+}
+
+function renderTrack(arcData, track) {
   const arc = arcData.arc;
   const dur = track.duration_s ? fmt(track.duration_s) : '—';
   const pageUrl = location.href;
@@ -353,7 +373,9 @@ function render(arcData, track) {
         <span class="time" id="t-dur">0:00</span>
       </div>
       <div class="controls">
+        <button class="ctrl-btn" id="btn-prev" title="Anterior" onclick="goToSong(currentSongIdx-1)">⏮</button>
         <button class="ctrl-btn primary" id="btn-play" title="Play">▶</button>
+        <button class="ctrl-btn" id="btn-next" title="Próxima" onclick="goToSong(currentSongIdx+1)">⏭</button>
       </div>
       <div class="vol-row">
         <span>🔊</span>
@@ -396,7 +418,13 @@ function render(arcData, track) {
   });
   audio.addEventListener('play',  () => setPlaying(true));
   audio.addEventListener('pause', () => setPlaying(false));
-  audio.addEventListener('ended', () => setPlaying(false));
+  audio.addEventListener('ended', () => {
+    setPlaying(false);
+    // Auto-avança para próxima
+    if (currentSongIdx < currentArcData.songs.length - 1) {
+      goToSong(currentSongIdx + 1);
+    }
+  });
 }
 
 // ── Playback ─────────────────────────────────────────────────────
