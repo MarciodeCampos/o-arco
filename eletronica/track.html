@@ -191,6 +191,22 @@ input[type=range] { accent-color:var(--accent); width:100px; }
 }
 .hide-btn:hover { color:var(--text); }
 
+/* ── TikTok CTA ── */
+.tiktok-cta {
+  display:flex; align-items:center; gap:12px;
+  padding:14px 18px; border-radius:12px;
+  background:linear-gradient(135deg, rgba(0,0,0,0.6), rgba(254,44,85,0.15));
+  border:1px solid rgba(254,44,85,0.3);
+  text-decoration:none;
+  transition:all .2s;
+}
+.tiktok-cta:hover { border-color:rgba(254,44,85,0.6); background:rgba(254,44,85,0.12); }
+.tiktok-icon { font-size:22px; flex-shrink:0; }
+.tiktok-info { flex:1; }
+.tiktok-handle { font-size:13px; font-weight:600; color:#fff; }
+.tiktok-stat { font-size:11px; color:rgba(254,44,85,0.9); font-family:'JetBrains Mono',monospace; }
+.tiktok-arrow { color:var(--muted); font-size:14px; }
+
 /* ── share row ── */
 .share-row { display:flex; gap:10px; flex-wrap:wrap; }
 .share-btn {
@@ -444,6 +460,20 @@ function renderTrack(arcData, track) {
     <div class="section">
       <div class="section-title">Disponível em</div>
       ${platformsHtml}
+    </div>
+
+    <div class="section">
+      <div class="section-title">Siga o artista</div>
+      <a class="tiktok-cta"
+         href="${platforms.tiktok || 'https://www.tiktok.com/@marciocamposmusic'}"
+         target="_blank" rel="noopener">
+        <span class="tiktok-icon">🎵</span>
+        <div class="tiktok-info">
+          <div class="tiktok-handle">@marciocamposmusic</div>
+          <div class="tiktok-stat">+100k views &middot; TikTok</div>
+        </div>
+        <span class="tiktok-arrow">↗</span>
+      </a>
     </div>
 
     <div class="section">
