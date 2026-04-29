@@ -301,6 +301,8 @@ const chatRef = query(ref(db, 'chats/' + radioId + '/msgs'), limitToLast(100));
 onValue(chatRef, snap => {
   const msgs = [];
   snap.forEach(child => msgs.push(child.val()));
+  window._lastMsgs = msgs;
+  window._renderMsgs = renderMsgs;
   renderMsgs(msgs);
 });
 
@@ -458,6 +460,10 @@ document.querySelectorAll('.tab').forEach(btn=>{
     document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
     this.classList.add('on');
     document.getElementById(this.dataset.pane).classList.add('on');
+    // Re-render chat quando aba abre
+    if(this.dataset.pane === 'p-chat' && window._lastMsgs){
+      window._renderMsgs(window._lastMsgs);
+    }
   });
 });
 </script>
