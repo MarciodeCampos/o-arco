@@ -86,6 +86,20 @@ input[type=range].vol::-webkit-slider-thumb{-webkit-appearance:none;width:14px;h
   #chat-send{flex:2;justify-content:center;padding:12px 0}
   #chat-send,#mic-btn{border-radius:8px!important}
 }
+
+/* AUTH */
+.auth-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,.04);border-radius:10px;margin-bottom:12px;flex-wrap:wrap}
+.auth-avatar{width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid #7c6ef7;flex-shrink:0}
+.auth-avatar-anon{width:32px;height:32px;border-radius:50%;background:rgba(124,110,247,.2);border:2px solid rgba(124,110,247,.4);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.auth-name{flex:1;font-size:.88rem;color:#e2e8f0;font-weight:600}
+.badge-verified{font-size:.68rem;background:rgba(76,175,80,.15);color:#4CAF50;border:1px solid rgba(76,175,80,.4);border-radius:20px;padding:2px 7px;margin-left:4px}
+.badge-anon{font-size:.68rem;background:rgba(255,255,255,.08);color:#94a3b8;border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:2px 7px;margin-left:4px}
+.btn-google{display:flex;align-items:center;gap:7px;background:#fff;color:#333;border:none;border-radius:8px;padding:7px 14px;cursor:pointer;font-size:.82rem;font-weight:700;font-family:inherit;transition:opacity .2s}
+.btn-google:hover{opacity:.88}
+.btn-google img{width:16px;height:16px}
+.btn-logout{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:#94a3b8;border-radius:8px;padding:6px 12px;cursor:pointer;font-size:.78rem;font-family:inherit;transition:all .2s}
+.btn-logout:hover{border-color:#ef5350;color:#ef5350}
+.bubble-avatar{width:22px;height:22px;border-radius:50%;object-fit:cover;flex-shrink:0;vertical-align:middle;margin-right:4px}
 </style>
 </head>
 <body>
@@ -146,9 +160,23 @@ input[type=range].vol::-webkit-slider-thumb{-webkit-appearance:none;width:14px;h
         <strong style="font-size:1.1rem">💬 Bate-Papo ao Vivo</strong>
         <span style="font-size:.8rem;color:#4CAF50"><span class="live-dot"></span>Tempo real</span>
       </div>
-      <div class="chat-nick">
+      <!-- Auth bar -->
+      <div class="auth-bar" id="auth-bar">
+        <div class="auth-avatar-anon" id="auth-avatar-wrap">👤</div>
+        <div>
+          <span class="auth-name" id="auth-display-name">Entrando...</span>
+          <span id="auth-badge" class="badge-anon">anônimo</span>
+        </div>
+        <button class="btn-google" id="btn-google-login" onclick="loginGoogle()" style="margin-left:auto;display:none">
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="G">
+          Entrar com Google
+        </button>
+        <button class="btn-logout" id="btn-logout" onclick="logoutUser()" style="display:none">Sair</button>
+      </div>
+      <!-- Apelido (so para anonimos) -->
+      <div class="chat-nick" id="nick-row">
         <label>🎙️ Apelido:</label>
-        <input id="chat-nick" type="text" maxlength="30" placeholder="Seu nome...">
+        <input id="chat-nick" type="text" maxlength="30" placeholder="Seu apelido...">
       </div>
       <div id="chat-msgs"><div class="empty-chat">📻 Seja o primeiro a comentar!</div></div>
       <div class="chat-input-row">
@@ -173,6 +201,7 @@ input[type=range].vol::-webkit-slider-thumb{-webkit-appearance:none;width:14px;h
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getDatabase, ref, push, onValue, query, limitToLast } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 import { getStorage, ref as sref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+import { getAuth, signInAnonymously, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 // ── CONFIG FIREBASE (preencher depois) ──
 const firebaseConfig = {
@@ -187,7 +216,10 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db      = getDatabase(app);
-const storage = getStorage(app);
+const storage  = getStorage(app);
+const auth     = getAuth(app);
+const provider = new GoogleAuthProvider();
+let   currentUser = null;
 
 // ── ID da rádio via query string ──
 const params  = new URLSearchParams(location.search);
@@ -253,7 +285,9 @@ function renderMsgs(msgs){
   const atBottom = box.scrollHeight - box.scrollTop - box.clientHeight < 60;
   if(!msgs.length){ box.innerHTML='<div class="empty-chat">📻 Seja o primeiro a comentar!</div>'; return; }
   box.innerHTML = msgs.map((m,i)=>{
-    const head = `<div class="bubble-head"><span class="bubble-nick">🎙️ ${esc(m.apelido)}</span><span class="bubble-time">${fmt(m.ts)}</span></div>`;
+    const avatarHtml = m.photo ? `<img class="bubble-avatar" src="${m.photo}" alt="">` : '🎙️ ';
+    const verifiedBadge = m.verified ? '<span class="badge-verified" style="font-size:.65rem;padding:1px 5px">✓</span>' : '';
+    const head = `<div class="bubble-head"><span class="bubble-nick">${avatarHtml}${esc(m.apelido)}${verifiedBadge}</span><span class="bubble-time">${fmt(m.ts)}</span></div>`;
     const body = m.tipo === 'audio'
       ? `<div class="bubble-type">🎤 Mensagem de voz</div><audio controls src="${m.audioUrl}" preload="none"></audio>`
       : `<div class="bubble-text">${esc(m.mensagem)}</div>`;
@@ -275,15 +309,18 @@ window.sendMsg = async function(){
   const nickEl  = document.getElementById('chat-nick');
   const inputEl = document.getElementById('chat-input');
   const statusEl= document.getElementById('chat-status');
-  const nick    = nickEl?.value?.trim();
-  const msg     = inputEl?.value?.trim();
-  if(!nick){ if(statusEl){statusEl.textContent='⚠️ Informe seu apelido.';statusEl.style.color='#f39c12';} nickEl?.focus(); return; }
+  // Nome: Google > apelido digitado > 'Anonimo'
+  const isGoogle = currentUser?.providerData?.length > 0;
+  const nick     = isGoogle ? currentUser.displayName : (nickEl?.value?.trim() || 'Anônimo');
+  const photo    = isGoogle ? currentUser.photoURL    : null;
+  const msg      = inputEl?.value?.trim();
+  if(!isGoogle && !nickEl?.value?.trim()){ if(statusEl){statusEl.textContent='⚠️ Informe seu apelido.';statusEl.style.color='#f39c12';} nickEl?.focus(); return; }
   if(!msg) return;
   localStorage.setItem(NICK_KEY, nick);
   const btn = document.getElementById('chat-send');
   if(btn) btn.disabled = true;
   try{
-    await push(ref(db,'chats/'+radioId+'/msgs'), { apelido: nick.slice(0,30), mensagem: msg.slice(0,500), ts: Date.now() });
+    await push(ref(db,'chats/'+radioId+'/msgs'), { apelido: nick.slice(0,30), mensagem: msg.slice(0,500), ts: Date.now(), photo: photo||'', verified: isGoogle });
     if(inputEl) inputEl.value='';
     if(statusEl) statusEl.textContent='';
   } catch(e){
@@ -345,6 +382,67 @@ window.toggleMic = async function(){
     if(st){st.textContent='Processando...';st.style.color='#94a3b8';}
   }
 };
+
+// ── AUTENTICACAO ──────────────────────────────────────────────────────────
+async function loginGoogle(){
+  try{ await signInWithPopup(auth, provider); }
+  catch(e){ console.error('Login Google falhou:', e); }
+}
+window.loginGoogle = loginGoogle;
+
+window.logoutUser = async function(){
+  await signOut(auth);
+  await signInAnonymously(auth);
+};
+
+onAuthStateChanged(auth, async user => {
+  if(!user){
+    await signInAnonymously(auth);
+    return;
+  }
+  currentUser = user;
+  const isGoogle  = user.providerData?.length > 0;
+  const name      = isGoogle ? user.displayName : null;
+  const photo     = isGoogle ? user.photoURL    : null;
+  const savedNick = localStorage.getItem('spes_chat_nick') || '';
+
+  // Auth bar
+  const avatarWrap = document.getElementById('auth-avatar-wrap');
+  const dispName   = document.getElementById('auth-display-name');
+  const badge      = document.getElementById('auth-badge');
+  const nickRow    = document.getElementById('nick-row');
+  const btnGoogle  = document.getElementById('btn-google-login');
+  const btnLogout  = document.getElementById('btn-logout');
+
+  if(isGoogle){
+    if(avatarWrap) avatarWrap.innerHTML = '<img class="auth-avatar" src="'+photo+'" alt="">';
+    if(dispName)   dispName.textContent = name;
+    if(badge){     badge.textContent = 'verificado'; badge.className = 'badge-verified'; }
+    if(nickRow)    nickRow.style.display = 'none';
+    if(btnGoogle)  btnGoogle.style.display = 'none';
+    if(btnLogout)  btnLogout.style.display = 'block';
+  } else {
+    if(avatarWrap) avatarWrap.innerHTML = '👤';
+    if(dispName)   dispName.textContent = savedNick || 'Anônimo';
+    if(badge){     badge.textContent = 'anônimo'; badge.className = 'badge-anon'; }
+    if(nickRow)    nickRow.style.display = 'flex';
+    if(btnGoogle)  btnGoogle.style.display = 'flex';
+    if(btnLogout)  btnLogout.style.display = 'none';
+  }
+
+  // Atualizar nome exibido quando digita apelido
+  document.getElementById('chat-nick')?.addEventListener('input', function(){
+    if(!isGoogle && dispName) dispName.textContent = this.value || 'Anônimo';
+    localStorage.setItem('spes_chat_nick', this.value);
+  });
+});
+
+// Restaurar nick salvo
+const savedNick = localStorage.getItem('spes_chat_nick');
+if(savedNick){ const el=document.getElementById('chat-nick'); if(el) el.value=savedNick; }
+
+// Login anonimo automatico na primeira visita
+signInAnonymously(auth).catch(()=>{});
 
 loadRadio();
 </script>
