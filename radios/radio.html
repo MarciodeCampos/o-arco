@@ -100,6 +100,13 @@ input[type=range].vol::-webkit-slider-thumb{-webkit-appearance:none;width:14px;h
 .btn-logout{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:#94a3b8;border-radius:8px;padding:6px 12px;cursor:pointer;font-size:.78rem;font-family:inherit;transition:all .2s}
 .btn-logout:hover{border-color:#ef5350;color:#ef5350}
 .bubble-avatar{width:22px;height:22px;border-radius:50%;object-fit:cover;flex-shrink:0;vertical-align:middle;margin-right:4px}
+/* PRESENCA ONLINE */
+.online-bar{display:flex;align-items:center;gap:12px;padding:10px 16px;background:rgba(76,175,80,.06);border:1px solid rgba(76,175,80,.15);border-radius:10px;margin-bottom:14px;flex-wrap:wrap}
+.online-count{font-size:1.1rem;font-weight:700;color:#4CAF50}
+.online-label{font-size:.82rem;color:#94a3b8}
+.online-avatars{display:flex;gap:-6px;margin-left:auto}
+.online-avatar{width:28px;height:28px;border-radius:50%;object-fit:cover;border:2px solid #0d0e1a;margin-left:-6px;background:rgba(124,110,247,.3);display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0}
+.online-avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover}
 </style>
 </head>
 <body>
@@ -156,6 +163,13 @@ input[type=range].vol::-webkit-slider-thumb{-webkit-appearance:none;width:14px;h
   <!-- Chat -->
   <div id="p-chat" class="pane">
     <div class="glass">
+      <!-- Presença online -->
+      <div class="online-bar" id="online-bar">
+        <span class="live-dot"></span>
+        <span class="online-count" id="online-count">0</span>
+        <span class="online-label">ouvintes online</span>
+        <div class="online-avatars" id="online-avatars"></div>
+      </div>
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
         <strong style="font-size:1.1rem">💬 Bate-Papo ao Vivo</strong>
         <span style="font-size:.8rem;color:#4CAF50"><span class="live-dot"></span>Tempo real</span>
@@ -199,7 +213,7 @@ input[type=range].vol::-webkit-slider-thumb{-webkit-appearance:none;width:14px;h
 <!-- Firebase SDK -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, push, onValue, query, limitToLast } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getDatabase, ref, push, onValue, query, limitToLast, get, set, remove, serverTimestamp, onDisconnect } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 import { getStorage, ref as sref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 import { getAuth, signInAnonymously, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
@@ -305,6 +319,21 @@ onValue(chatRef, snap => {
   window._renderMsgs = renderMsgs;
   renderMsgs(msgs);
 });
+
+// Fallback: polling a cada 3s caso WebSocket falhe
+async function pollMsgs(){
+  try{
+    const snap = await get(chatRef);
+    const msgs = [];
+    snap.forEach(child => msgs.push(child.val()));
+    if(msgs.length !== (window._lastMsgs||[]).length){
+      window._lastMsgs = msgs;
+      renderMsgs(msgs);
+    }
+  }catch(e){}
+}
+setInterval(pollMsgs, 3000);
+pollMsgs();
 
 // Enviar mensagem
 window.sendMsg = async function(){
@@ -446,6 +475,54 @@ if(savedNick){ const el=document.getElementById('chat-nick'); if(el) el.value=sa
 // Login anonimo automatico na primeira visita
 signInAnonymously(auth).catch(()=>{});
 
+// ── PRESENCA ONLINE ─────────────────────────────────────────────────────────
+let _presenceRef = null;
+
+onAuthStateChanged(auth, user => {
+  // segundo listener: atualiza presenca quando auth muda
+  if(!user || !radioId) return;
+  if(_presenceRef) return; // ja registrado
+  _presenceRef = ref(db, 'radioPresence/' + radioId + '/' + user.uid);
+  const payload = {
+    uid:      user.uid,
+    name:     user.displayName || (localStorage.getItem('spes_chat_nick') || 'Ouvinte'),
+    photo:    user.photoURL    || '',
+    online:   true,
+    ts:       Date.now()
+  };
+  set(_presenceRef, payload).catch(()=>{});
+  onDisconnect(_presenceRef).remove();
+
+  // Ouvir quem esta online neste canal
+  const channelRef = ref(db, 'radioPresence/' + radioId);
+  onValue(channelRef, snap => {
+    const users = {};
+    snap.forEach(c => { users[c.key] = c.val(); });
+    const list = Object.values(users);
+    const countEl = document.getElementById('online-count');
+    const avEl    = document.getElementById('online-avatars');
+    if(countEl) countEl.textContent = list.length;
+    if(avEl){
+      avEl.innerHTML = list.slice(0,8).map(u =>
+        u.photo
+          ? `<div class="online-avatar" title="${u.name||'Ouvinte'}"><img src="${u.photo}" alt=""></div>`
+          : `<div class="online-avatar" title="${u.name||'Ouvinte'}">${(u.name||'?')[0].toUpperCase()}</div>`
+      ).join('');
+    }
+  });
+});
+
+// Atualizar nome na presenca quando usuario digita apelido
+document.getElementById('chat-nick')?.addEventListener('input', function(){
+  if(_presenceRef) set(_presenceRef, {
+    uid: auth.currentUser?.uid || 'anon',
+    name: this.value || 'Ouvinte',
+    photo: '',
+    online: true,
+    ts: Date.now()
+  }).catch(()=>{});
+});
+
 loadRadio();
 </script>
 
@@ -460,9 +537,10 @@ document.querySelectorAll('.tab').forEach(btn=>{
     document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
     this.classList.add('on');
     document.getElementById(this.dataset.pane).classList.add('on');
-    // Re-render chat quando aba abre
-    if(this.dataset.pane === 'p-chat' && window._lastMsgs){
-      window._renderMsgs(window._lastMsgs);
+    // Forca releitura do Firebase ao abrir aba bate-papo
+    if(this.dataset.pane === 'p-chat'){
+      if(window._lastMsgs && window._renderMsgs) window._renderMsgs(window._lastMsgs);
+      if(typeof pollMsgs === 'function') pollMsgs();
     }
   });
 });
