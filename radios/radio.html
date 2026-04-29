@@ -64,6 +64,28 @@ audio{width:100%;border-radius:8px;margin-top:8px;outline:none}
 @keyframes recPulse{0%,100%{box-shadow:0 0 0 0 rgba(239,83,80,.4)}50%{box-shadow:0 0 0 6px rgba(239,83,80,0)}}
 .bubble-audio audio{width:100%;margin-top:6px;height:36px;border-radius:6px}
 .bubble-audio .bubble-type{font-size:.72rem;color:#a78bfa;margin-bottom:2px}
+
+/* SHARE + VOLUME */
+.share-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.08)}
+.share-btn{display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;border:none;cursor:pointer;font-size:.82rem;font-weight:600;font-family:inherit;transition:opacity .2s}
+.share-btn:hover{opacity:.85}
+.share-copy{background:rgba(255,255,255,.1);color:#e2e8f0}
+.share-wpp{background:#25D366;color:#fff}
+.vol-row{display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap}
+.vol-row label{font-size:.8rem;color:#94a3b8;white-space:nowrap;min-width:70px}
+input[type=range].vol{-webkit-appearance:none;height:4px;border-radius:4px;background:rgba(255,255,255,.15);outline:none;cursor:pointer;flex:1;min-width:80px}
+input[type=range].vol::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:#7c6ef7;cursor:pointer}
+.vol-val{font-size:.78rem;color:#64748b;width:30px;text-align:right}
+.copied-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1e1e2e;border:1px solid #7c6ef7;color:#a78bfa;padding:10px 20px;border-radius:10px;font-size:.88rem;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none}
+.copied-toast.show{opacity:1}
+/* MOBILE - botao enviar sempre visivel */
+@media(max-width:520px){
+  .chat-input-row{flex-wrap:wrap}
+  .chat-box-input{width:100%;flex:none;border-radius:8px!important}
+  #mic-btn{flex:1;justify-content:center}
+  #chat-send{flex:2;justify-content:center;padding:12px 0}
+  #chat-send,#mic-btn{border-radius:8px!important}
+}
 </style>
 </head>
 <body>
@@ -72,6 +94,7 @@ audio{width:100%;border-radius:8px;margin-top:8px;outline:none}
   <span style="color:#3a3d50">|</span>
   <span id="header-nome" style="color:#e2e8f0;font-weight:600"></span>
 </header>
+<div class="copied-toast" id="toast">Link copiado!</div>
 <div class="wrap">
   <!-- Cabeçalho da rádio -->
   <div class="glass">
@@ -96,6 +119,25 @@ audio{width:100%;border-radius:8px;margin-top:8px;outline:none}
         <div style="color:#7c6ef7;font-style:italic">Conectando ao áudio...</div>
       </div>
     </div>
+
+    <!-- Volume controles -->
+    <div class="vol-row" id="vol-controls" style="display:none">
+      <label>📻 Rádio</label>
+      <input type="range" class="vol" id="vol-radio" min="0" max="100" value="80">
+      <span class="vol-val" id="vol-radio-val">80%</span>
+    </div>
+    <div class="vol-row" id="vol-voice-row" style="display:none">
+      <label>🎤 Vozes</label>
+      <input type="range" class="vol" id="vol-voice" min="0" max="100" value="100">
+      <span class="vol-val" id="vol-voice-val">100%</span>
+    </div>
+    <!-- Compartilhar -->
+    <div class="share-bar">
+      <span style="font-size:.82rem;color:#64748b;">Compartilhar canal:</span>
+      <button class="share-btn share-copy" onclick="shareChat('copy')">📋 Copiar link</button>
+      <button class="share-btn share-wpp"  onclick="shareChat('wpp')">💬 WhatsApp</button>
+    </div>
+
   </div>
   <!-- Chat -->
   <div id="p-chat" class="pane">
@@ -321,5 +363,81 @@ document.querySelectorAll('.tab').forEach(btn=>{
   });
 });
 </script>
+
+<script>
+// ── ABRIR CHAT VIA HASH ───────────────────────────────────────────────────
+(function(){
+  if(location.hash === '#chat'){
+    document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
+    document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
+    const btn = document.querySelector('[data-pane="p-chat"]');
+    if(btn) btn.classList.add('on');
+    const pane = document.getElementById('p-chat');
+    if(pane) pane.classList.add('on');
+  }
+})();
+
+// ── COMPARTILHAR ──────────────────────────────────────────────────────────
+window.shareChat = function(mode){
+  const params = new URLSearchParams(location.search);
+  const id     = params.get('id') || '';
+  const nome   = document.getElementById('radio-nome')?.textContent || 'Rádio';
+  const url    = location.origin + location.pathname + '?id=' + id + '#chat';
+  const texto  = 'Ouça ' + nome + ' e bate-papo ao vivo: ' + url;
+
+  if(mode === 'copy'){
+    navigator.clipboard.writeText(url).then(()=>{
+      const t = document.getElementById('toast');
+      if(t){ t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), 2000); }
+    });
+  } else {
+    window.open('https://wa.me/?text=' + encodeURIComponent(texto), '_blank');
+  }
+};
+
+// ── VOLUME DUPLO + AUTO-DUCK ─────────────────────────────────────────────
+window._radioAudioEl  = null;
+window._voiceVolume   = 1.0;
+
+// Expoe audio quando criado pelo loadRadio
+const _origCreate = document.createElement.bind(document);
+// Monitorar via MutationObserver
+const _obs = new MutationObserver(()=>{
+  const a = document.getElementById('radio-audio');
+  if(a && !window._radioAudioEl){
+    window._radioAudioEl = a;
+    const vc = document.getElementById('vol-controls');
+    if(vc) vc.style.display = 'flex';
+    const vvr = document.getElementById('vol-voice-row');
+    if(vvr) vvr.style.display = 'flex';
+    a.volume = 0.8;
+  }
+});
+_obs.observe(document.getElementById('p-player') || document.body, { childList:true, subtree:true });
+
+// Sliders
+document.getElementById('vol-radio')?.addEventListener('input', function(){
+  const v = this.value / 100;
+  document.getElementById('vol-radio-val').textContent = this.value + '%';
+  if(window._radioAudioEl) window._radioAudioEl.volume = v;
+});
+document.getElementById('vol-voice')?.addEventListener('input', function(){
+  window._voiceVolume = this.value / 100;
+  document.getElementById('vol-voice-val').textContent = this.value + '%';
+});
+
+// Auto-duck: intercept audio play nos bubbles de voz
+document.getElementById('chat-msgs')?.addEventListener('play', function(e){
+  if(e.target.tagName === 'AUDIO' && window._radioAudioEl){
+    window._radioAudioEl.volume = Math.max(0.05, (window._radioAudioEl.volume * 0.3));
+    e.target.volume = window._voiceVolume;
+    e.target.addEventListener('ended', function(){
+      const slider = document.getElementById('vol-radio');
+      window._radioAudioEl.volume = (slider ? slider.value / 100 : 0.8);
+    }, { once: true });
+  }
+}, true);
+</script>
+
 </body>
 </html>
