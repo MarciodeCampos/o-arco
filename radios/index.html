@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rádios do Brasil | triadic.life</title>
+<meta name="description" content="Diretório soberano de rádios brasileiras com bate-papo ao vivo">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#0d0e1a;color:#e2e8f0;min-height:100vh}
+header{background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.08);padding:16px 24px;display:flex;align-items:center;gap:16px}
+header a{color:#a78bfa;text-decoration:none;font-weight:700;font-size:1.1rem}
+h1{font-size:1.6rem;background:linear-gradient(135deg,#7c6ef7,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.search-bar{max-width:900px;margin:32px auto 0;padding:0 20px}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.filters select,.filters input{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:8px;color:#e2e8f0;padding:9px 14px;font-size:.9rem;outline:none;cursor:pointer}
+.filters input{flex:1;min-width:200px}
+.filters select:focus,.filters input:focus{border-color:#7c6ef7}
+#count{font-size:.85rem;color:#64748b;margin-bottom:16px}
+.grid{max-width:900px;margin:0 auto;padding:0 20px 40px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:16px;cursor:pointer;transition:all .2s;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:8px}
+.card:hover{border-color:#7c6ef7;background:rgba(124,110,247,.08);transform:translateY(-2px)}
+.card-name{font-weight:700;font-size:1rem;color:#f1f5f9}
+.card-loc{font-size:.82rem;color:#94a3b8}
+.card-badges{display:flex;gap:6px;flex-wrap:wrap}
+.badge{font-size:.72rem;padding:2px 8px;border-radius:20px}
+.badge-stream{background:rgba(76,175,80,.15);color:#4CAF50;border:1px solid rgba(76,175,80,.3)}
+.badge-chat{background:rgba(124,110,247,.15);color:#a78bfa;border:1px solid rgba(124,110,247,.3)}
+.badge-uf{background:rgba(255,255,255,.08);color:#94a3b8}
+.logo-thumb{width:48px;height:48px;border-radius:8px;object-fit:cover;flex-shrink:0}
+.card-top{display:flex;align-items:center;gap:12px}
+.spinner{text-align:center;padding:60px;color:#64748b}
+</style>
+</head>
+<body>
+<header>
+  <a href="https://triadic.life">triadic.life</a>
+  <h1>📻 Rádios do Brasil</h1>
+</header>
+<div class="search-bar">
+  <div class="filters">
+    <input id="q" type="search" placeholder="🔍 Buscar rádio..." oninput="filter()">
+    <select id="uf" onchange="filter()"><option value="">Todos os estados</option></select>
+  </div>
+  <div id="count"></div>
+</div>
+<div class="grid" id="grid"><div class="spinner">Carregando rádios...</div></div>
+<script>
+let ALL = [];
+async function init(){
+  const r = await fetch('radios.json');
+  ALL = await r.json();
+  const ufs = [...new Set(ALL.map(r=>r.uf).filter(Boolean))].sort();
+  const sel = document.getElementById('uf');
+  ufs.forEach(u=>{ const o=document.createElement('option'); o.value=o.textContent=u; sel.appendChild(o); });
+  filter();
+}
+function filter(){
+  const q = document.getElementById('q').value.toLowerCase();
+  const uf = document.getElementById('uf').value;
+  let list = ALL;
+  if(q) list = list.filter(r=>r.nome.toLowerCase().includes(q)||r.loc.toLowerCase().includes(q));
+  if(uf) list = list.filter(r=>r.uf===uf);
+  document.getElementById('count').textContent = list.length + ' rádios encontradas';
+  document.getElementById('grid').innerHTML = list.slice(0,200).map(r=>`
+    <a class="card" href="radio.html?id=${r.id}">
+      <div class="card-top">
+        ${r.logo ? `<img class="logo-thumb" src="${r.logo}" alt="" loading="lazy" onerror="this.style.display='none'">` : '<div style="width:48px;height:48px;border-radius:8px;background:linear-gradient(135deg,#7c6ef7,#a78bfa);display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0">📻</div>'}
+        <div>
+          <div class="card-name">${r.nome}</div>
+          <div class="card-loc">📍 ${r.loc}</div>
+        </div>
+      </div>
+      <div class="card-badges">
+        <span class="badge badge-uf">${r.uf}</span>
+        ${r.stream ? '<span class="badge badge-stream">● Ao vivo</span>' : ''}
+        <span class="badge badge-chat">💬 Chat</span>
+      </div>
+    </a>
+  `).join('');
+}
+init();
+</script>
+</body>
+</html>

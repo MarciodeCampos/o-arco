@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title id="page-title">Rádio | triadic.life</title>
+<meta name="description" content="Ouça e bate-papo ao vivo">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#0d0e1a;color:#e2e8f0;min-height:100vh}
+header{background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.08);padding:14px 24px;display:flex;align-items:center;gap:12px}
+header a{color:#94a3b8;text-decoration:none;font-size:.9rem}
+header a:hover{color:#a78bfa}
+.wrap{max-width:820px;margin:0 auto;padding:24px 16px 40px}
+.glass{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:22px;margin-bottom:20px}
+.radio-header{display:flex;align-items:center;gap:18px}
+.logo-img{width:80px;height:80px;border-radius:12px;object-fit:cover;border:2px solid rgba(255,255,255,.1)}
+.logo-placeholder{width:80px;height:80px;border-radius:12px;background:linear-gradient(135deg,#7c6ef7,#a78bfa);display:flex;align-items:center;justify-content:center;font-size:2.2rem;flex-shrink:0}
+h1{font-size:1.8rem;color:#f1f5f9;margin-bottom:6px}
+.sub{color:#94a3b8;font-size:.95rem}
+.tabs{display:flex;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:20px}
+.tab{background:none;border:none;border-bottom:2px solid transparent;color:#94a3b8;font-size:.95rem;font-weight:600;cursor:pointer;padding:10px 18px;margin-bottom:-1px;transition:all .2s;font-family:inherit}
+.tab:hover{color:#e2e8f0}
+.tab.on{color:#a78bfa;border-bottom-color:#a78bfa}
+.pane{display:none} .pane.on{display:block}
+audio{width:100%;border-radius:8px;margin-top:8px;outline:none}
+.ok{color:#4CAF50;font-size:.9rem}
+.contact-row{display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);padding:14px;border-radius:8px;margin-bottom:10px}
+.contact-label{display:flex;align-items:center;gap:10px}
+.btn{padding:6px 14px;border-radius:6px;text-decoration:none;font-size:.85rem;font-weight:600;color:#fff}
+/* CHAT */
+.chat-nick{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.chat-nick label{color:#94a3b8;font-size:.85rem;white-space:nowrap}
+.chat-nick input,.chat-box-input{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#e2e8f0;padding:8px 12px;outline:none;font-family:inherit}
+.chat-nick input{flex:1}
+.chat-nick input:focus,.chat-box-input:focus{border-color:#7c6ef7}
+#chat-msgs{height:350px;overflow-y:auto;background:rgba(0,0,0,.3);border-radius:10px;border:1px solid rgba(255,255,255,.08);padding:14px;display:flex;flex-direction:column;gap:10px;margin-bottom:12px;scroll-behavior:smooth}
+#chat-msgs::-webkit-scrollbar{width:4px}
+#chat-msgs::-webkit-scrollbar-thumb{background:#3a3d50;border-radius:4px}
+.bubble{background:rgba(124,110,247,.1);border-left:3px solid #7c6ef7;border-radius:8px;padding:10px 14px;animation:fadeUp .2s ease}
+.bubble.alt{border-left-color:#a78bfa}
+@keyframes fadeUp{from{opacity:0;transform:translateY(5px)}to{opacity:1}}
+.bubble-head{display:flex;justify-content:space-between;margin-bottom:4px}
+.bubble-nick{color:#c4b5fd;font-weight:700;font-size:.85rem}
+.bubble-time{color:#64748b;font-size:.72rem}
+.bubble-text{font-size:.92rem;line-height:1.5}
+.chat-input-row{display:flex;gap:8px}
+.chat-box-input{flex:1;font-size:.92rem}
+#chat-send{background:linear-gradient(135deg,#7c6ef7,#a78bfa);border:none;border-radius:8px;color:#fff;padding:10px 20px;cursor:pointer;font-weight:700;font-size:.9rem;font-family:inherit;white-space:nowrap;transition:opacity .2s}
+#chat-send:hover{opacity:.85}
+#chat-send:disabled{opacity:.5;cursor:not-allowed}
+#chat-status{font-size:.78rem;color:#64748b;margin-top:6px;min-height:16px}
+.live-dot{display:inline-block;width:8px;height:8px;background:#4CAF50;border-radius:50%;margin-right:6px;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.empty-chat{color:#64748b;text-align:center;font-size:.85rem;margin:auto}
+
+/* MIC BUTTON */
+#mic-btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:8px;
+  color:#e2e8f0;padding:10px 14px;cursor:pointer;font-size:1.1rem;transition:all .2s;font-family:inherit}
+#mic-btn:hover{border-color:#7c6ef7}
+#mic-btn.recording{background:rgba(239,83,80,.2);border-color:#ef5350;animation:recPulse 1s infinite}
+@keyframes recPulse{0%,100%{box-shadow:0 0 0 0 rgba(239,83,80,.4)}50%{box-shadow:0 0 0 6px rgba(239,83,80,0)}}
+.bubble-audio audio{width:100%;margin-top:6px;height:36px;border-radius:6px}
+.bubble-audio .bubble-type{font-size:.72rem;color:#a78bfa;margin-bottom:2px}
+</style>
+</head>
+<body>
+<header>
+  <a href="index.html">← Rádios</a>
+  <span style="color:#3a3d50">|</span>
+  <span id="header-nome" style="color:#e2e8f0;font-weight:600"></span>
+</header>
+<div class="wrap">
+  <!-- Cabeçalho da rádio -->
+  <div class="glass">
+    <div class="radio-header">
+      <div id="logo-wrap"><div class="logo-placeholder">📻</div></div>
+      <div>
+        <h1 id="radio-nome">Carregando...</h1>
+        <div class="sub" id="radio-loc"></div>
+      </div>
+    </div>
+  </div>
+  <!-- Abas -->
+  <div class="tabs">
+    <button class="tab on" data-pane="p-player">Ao vivo</button>
+    <button class="tab" data-pane="p-chat">💬 Bate-Papo</button>
+    <button class="tab" data-pane="p-contatos">Contatos</button>
+  </div>
+  <!-- Player -->
+  <div id="p-player" class="pane on">
+    <div class="glass">
+      <div id="player-area" style="text-align:center;padding:16px 0">
+        <div style="color:#7c6ef7;font-style:italic">Conectando ao áudio...</div>
+      </div>
+    </div>
+  </div>
+  <!-- Chat -->
+  <div id="p-chat" class="pane">
+    <div class="glass">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <strong style="font-size:1.1rem">💬 Bate-Papo ao Vivo</strong>
+        <span style="font-size:.8rem;color:#4CAF50"><span class="live-dot"></span>Tempo real</span>
+      </div>
+      <div class="chat-nick">
+        <label>🎙️ Apelido:</label>
+        <input id="chat-nick" type="text" maxlength="30" placeholder="Seu nome...">
+      </div>
+      <div id="chat-msgs"><div class="empty-chat">📻 Seja o primeiro a comentar!</div></div>
+      <div class="chat-input-row">
+        <input id="chat-input" class="chat-box-input" type="text" maxlength="500" placeholder="Digite sua mensagem...">
+        <button id="mic-btn" title="Gravar mensagem de voz" onclick="toggleMic()">🎤</button>
+        <button id="chat-send" onclick="sendMsg()">Enviar ➤</button>
+      </div>
+      <div id="mic-status" style="font-size:.78rem;color:#64748b;margin-top:4px;min-height:14px;"></div>
+      <div id="chat-status"></div>
+    </div>
+  </div>
+  <!-- Contatos -->
+  <div id="p-contatos" class="pane">
+    <div class="glass" id="contatos-area">
+      <p style="color:#64748b">Carregando contatos...</p>
+    </div>
+  </div>
+</div>
+
+<!-- Firebase SDK -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, push, onValue, query, limitToLast } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getStorage, ref as sref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+// ── CONFIG FIREBASE (preencher depois) ──
+const firebaseConfig = {
+  apiKey: "AIzaSyDa0XWSvNISi47olox7U2HHawf3pf1rOjI",
+  authDomain: "triadic-radios.firebaseapp.com",
+  databaseURL: "https://triadic-radios-default-rtdb.firebaseio.com",
+  projectId: "triadic-radios",
+  storageBucket: "triadic-radios.firebasestorage.app",
+  messagingSenderId: "574115949337",
+  appId: "1:574115949337:web:527670aa35d9bb939f3388"
+};
+
+const app = initializeApp(firebaseConfig);
+const db      = getDatabase(app);
+const storage = getStorage(app);
+
+// ── ID da rádio via query string ──
+const params  = new URLSearchParams(location.search);
+const radioId = params.get('id') || '';
+
+// ── Carregar dados da rádio ──
+async function loadRadio(){
+  const res  = await fetch('radios.json');
+  const all  = await res.json();
+  const r    = all.find(x => x.id === radioId);
+  if(!r){ document.getElementById('radio-nome').textContent = 'Rádio não encontrada'; return; }
+
+  document.getElementById('page-title').textContent = r.nome + ' | triadic.life';
+  document.getElementById('header-nome').textContent = r.nome;
+  document.getElementById('radio-nome').textContent  = r.nome;
+  document.getElementById('radio-loc').innerHTML = '📍 ' + r.loc + ' &nbsp;|&nbsp; 📈 ' + r.vis + ' visitas';
+
+  if(r.logo){
+    document.getElementById('logo-wrap').innerHTML =
+      '<img class="logo-img" src="'+r.logo+'" alt="" onerror="this.parentNode.innerHTML=\'<div class=logo-placeholder>📻</div>\'">';
+  }
+
+  // Player
+  const pa = document.getElementById('player-area');
+  if(r.stream){
+    pa.innerHTML = '<div class="ok">✓ Canal de áudio conectado</div><audio controls autoplay id="radio-audio"></audio>';
+    const audio = document.getElementById('radio-audio');
+    if(r.stream.includes('.m3u8')){
+      if(typeof Hls !== 'undefined' && Hls.isSupported()){
+        const hls = new Hls(); hls.loadSource(r.stream); hls.attachMedia(audio);
+      } else if(audio.canPlayType('application/vnd.apple.mpegurl')){ audio.src=r.stream; }
+    } else { audio.src=r.stream; }
+    audio.play().catch(()=>{});
+  } else {
+    pa.innerHTML = '<div style="color:#f39c12;margin-bottom:12px;font-size:.9rem">⚠️ Áudio via espelho</div>'
+      +'<iframe src="https://www.radios.com.br/play/'+radioId+'" width="100%" height="200" frameborder="0" style="border-radius:8px"></iframe>';
+  }
+
+  // Contatos
+  const ca = document.getElementById('contatos-area');
+  let html = '';
+  if(r.wp) html += contactRow('💬', 'WhatsApp', 'https://wa.me/'+r.wp.replace(/\D/g,''), '#25D366');
+  if(r.mail) html += contactRow('✉️', r.mail, 'mailto:'+r.mail, '#555');
+  if(r.fb)   html += contactRow('📘', 'Facebook', r.fb, '#1877F2');
+  if(r.ig)   html += contactRow('📸', 'Instagram', r.ig, '#C13584');
+  ca.innerHTML = html || '<p style="color:#64748b">Nenhum contato disponível.</p>';
+}
+
+function contactRow(icon, label, href, color){
+  return '<div class="contact-row"><div class="contact-label"><span style="font-size:1.4rem">'+icon+'</span><span>'+label+'</span></div><a class="btn" href="'+href+'" target="_blank" style="background:'+color+'">Abrir</a></div>';
+}
+
+// ── CHAT FIREBASE ──
+const NICK_KEY = 'spes_chat_nick';
+let lastCount = 0;
+
+function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function fmt(ts){ return new Date(ts).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}); }
+
+function renderMsgs(msgs){
+  const box = document.getElementById('chat-msgs');
+  if(!box) return;
+  const atBottom = box.scrollHeight - box.scrollTop - box.clientHeight < 60;
+  if(!msgs.length){ box.innerHTML='<div class="empty-chat">📻 Seja o primeiro a comentar!</div>'; return; }
+  box.innerHTML = msgs.map((m,i)=>{
+    const head = `<div class="bubble-head"><span class="bubble-nick">🎙️ ${esc(m.apelido)}</span><span class="bubble-time">${fmt(m.ts)}</span></div>`;
+    const body = m.tipo === 'audio'
+      ? `<div class="bubble-type">🎤 Mensagem de voz</div><audio controls src="${m.audioUrl}" preload="none"></audio>`
+      : `<div class="bubble-text">${esc(m.mensagem)}</div>`;
+    return `<div class="bubble bubble-${m.tipo||'text'} ${i%2?'alt':''}">${head}${body}</div>`;
+  }).join('');
+  if(atBottom || msgs.length !== lastCount){ box.scrollTop = box.scrollHeight; lastCount = msgs.length; }
+}
+
+// Escutar mensagens em tempo real
+const chatRef = query(ref(db, 'chats/' + radioId + '/msgs'), limitToLast(100));
+onValue(chatRef, snap => {
+  const msgs = [];
+  snap.forEach(child => msgs.push(child.val()));
+  renderMsgs(msgs);
+});
+
+// Enviar mensagem
+window.sendMsg = async function(){
+  const nickEl  = document.getElementById('chat-nick');
+  const inputEl = document.getElementById('chat-input');
+  const statusEl= document.getElementById('chat-status');
+  const nick    = nickEl?.value?.trim();
+  const msg     = inputEl?.value?.trim();
+  if(!nick){ if(statusEl){statusEl.textContent='⚠️ Informe seu apelido.';statusEl.style.color='#f39c12';} nickEl?.focus(); return; }
+  if(!msg) return;
+  localStorage.setItem(NICK_KEY, nick);
+  const btn = document.getElementById('chat-send');
+  if(btn) btn.disabled = true;
+  try{
+    await push(ref(db,'chats/'+radioId+'/msgs'), { apelido: nick.slice(0,30), mensagem: msg.slice(0,500), ts: Date.now() });
+    if(inputEl) inputEl.value='';
+    if(statusEl) statusEl.textContent='';
+  } catch(e){
+    if(statusEl){statusEl.textContent='❌ Erro ao enviar.';statusEl.style.color='#ef5350';}
+  } finally {
+    if(btn) btn.disabled=false;
+  }
+};
+
+// Restaurar nick
+const saved = localStorage.getItem(NICK_KEY);
+if(saved){ const el=document.getElementById('chat-nick'); if(el) el.value=saved; }
+
+// Enter para enviar
+document.getElementById('chat-input')?.addEventListener('keydown', e=>{ if(e.key==='Enter') window.sendMsg(); });
+
+
+// ── GRAVACAO DE VOZ ──────────────────────────────────────────────────────────
+let mediaRec = null;
+let audioChunks = [];
+let isRecording = false;
+
+window.toggleMic = async function(){
+  const btn = document.getElementById('mic-btn');
+  const st  = document.getElementById('mic-status');
+  if(!isRecording){
+    try{
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      audioChunks = [];
+      mediaRec = new MediaRecorder(stream);
+      mediaRec.ondataavailable = e => { if(e.data.size>0) audioChunks.push(e.data); };
+      mediaRec.onstop = async () => {
+        stream.getTracks().forEach(t=>t.stop());
+        const blob = new Blob(audioChunks, { type: 'audio/webm' });
+        if(blob.size < 1000){ if(st) st.textContent='Gravacao muito curta.'; return; }
+        const nick = document.getElementById('chat-nick')?.value?.trim();
+        if(!nick){ if(st){st.textContent='⚠️ Informe seu apelido.';st.style.color='#f39c12';} return; }
+        if(st) st.textContent = 'Enviando audio...';
+        try{
+          const fname = 'chats/'+radioId+'/'+Date.now()+'.webm';
+          const storageRef = sref(storage, fname);
+          await uploadBytes(storageRef, blob);
+          const url = await getDownloadURL(storageRef);
+          await push(ref(db,'chats/'+radioId+'/msgs'), { apelido:nick.slice(0,30), tipo:'audio', audioUrl:url, mensagem:'', ts:Date.now() });
+          if(st) st.textContent = '';
+        } catch(e){ if(st){st.textContent='Erro no upload.';st.style.color='#ef5350';} }
+      };
+      mediaRec.start();
+      isRecording = true;
+      if(btn){btn.textContent='⏹ Parar';btn.classList.add('recording');}
+      if(st){st.textContent='● Gravando...';st.style.color='#ef5350';}
+    } catch(e){
+      if(st){st.textContent='Microfone nao permitido.';st.style.color='#f39c12';}
+    }
+  } else {
+    mediaRec?.stop();
+    isRecording = false;
+    if(btn){btn.textContent='🎤';btn.classList.remove('recording');}
+    if(st){st.textContent='Processando...';st.style.color='#94a3b8';}
+  }
+};
+
+loadRadio();
+</script>
+
+<!-- HLS.js -->
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+<!-- Tabs -->
+<script>
+document.querySelectorAll('.tab').forEach(btn=>{
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
+    document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
+    this.classList.add('on');
+    document.getElementById(this.dataset.pane).classList.add('on');
+  });
+});
+</script>
+</body>
+</html>
