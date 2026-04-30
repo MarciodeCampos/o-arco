@@ -148,13 +148,13 @@ import { getDatabase, ref, onValue, set, get, push, update } from "https://www.g
 import { getAuth, signInAnonymously, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDa0XWSvNISi47olox7U2HHawf3pf1rOjI",
-  authDomain: "triadic-radios.firebaseapp.com",
-  databaseURL: "https://triadic-radios-default-rtdb.firebaseio.com",
-  projectId: "triadic-radios",
-  storageBucket: "triadic-radios.firebasestorage.app",
-  messagingSenderId: "574115949337",
-  appId: "1:574115949337:web:527670aa35d9bb939f3388"
+  apiKey:"AIzaSyD3sWsZJPz-p6i3G2VzBHcnDuBMxasNhxE",
+  authDomain:"triadiclife.firebaseapp.com",
+  databaseURL:"https://triadiclife-default-rtdb.firebaseio.com",
+  projectId:"triadiclife",
+  storageBucket:"triadiclife.appspot.com",
+  messagingSenderId:"248890474038",
+  appId:"1:248890474038:web:3e70bc27474eebe6b9b3cd"
 };
 
 const app  = initializeApp(firebaseConfig);
@@ -166,7 +166,6 @@ const targetPid = params.get('pid') || '';
 
 let _myPid = localStorage.getItem('spes_pid') || '';
 let _myChatId = null;
-let _theirPid = null; // sempre armazenado quando abre conversa
 let _dmListener = null;
 
 // Helpers
@@ -218,16 +217,19 @@ function renderProfile(u){
   let radioHtml  = '';
   let cityHtml   = u.city ? `<div class="profile-city">📍 ${esc(u.city)}</div>` : '';
 
-  // Actions + layout por tipo de visualizacao
+  // Actions
+  let actionsHtml = '';
   if(isOwn){
-    // Proprio perfil: inbox em primeiro lugar
-    document.getElementById('profile-card').style.display = 'none';
+    actionsHtml = `
+      <button class="btn-secondary" onclick="toggleEdit()">✏️ Editar perfil</button>
+    `;
     document.getElementById('inbox-section').style.display = 'block';
-    // Banner login para anonimos
-    const isGoogle = auth.currentUser?.providerData?.length > 0;
-    if(!isGoogle) document.getElementById('login-banner').style.display = 'flex';
+    // Mostrar banner de login para anonimos
+    const isGoogle = auth.currentUser && auth.currentUser.providerData && auth.currentUser.providerData.length > 0;
+    if(!isGoogle){
+      document.getElementById('login-banner').style.display = 'flex';
+    }
     loadInbox();
-    return; // nao renderiza card
   } else {
     actionsHtml = `
       <button class="btn-primary" onclick="openDMWith('${esc(u.pid||targetPid)}','${esc(u.name||'Ouvinte')}','${esc(u.photo||'')}')">💬 Enviar mensagem</button>
@@ -332,14 +334,13 @@ function loadInbox(){
 window.openDMWith = function(theirPid, name, photo){
   if(!theirPid || theirPid === _myPid) return;
   _myChatId = dmChatId(_myPid, theirPid);
-  _theirPid = theirPid; // armazenar para sendDM
   renderDMArea(name, photo);
+  // Mark unread → false
   set(ref(db, 'userInbox/' + _myPid + '/' + _myChatId + '/unread'), false).catch(()=>{});
 };
 
 window.openConv = function(chatId, name, photo, withPid){
   _myChatId = chatId;
-  _theirPid = withPid; // armazenar para sendDM
   renderDMArea(name, photo);
   set(ref(db, 'userInbox/' + _myPid + '/' + chatId + '/unread'), false).catch(()=>{});
 };
@@ -386,21 +387,25 @@ window.closeDMArea = function(){
 window.sendDM = async function(){
   const inp = document.getElementById('dm-input');
   const text = inp.value.trim();
-  if(!text || !_myChatId || !_theirPid) return;
+  if(!text || !_myChatId) return;
+  const nick = localStorage.getItem('spes_chat_nick') || 'Usuário';
   const u = auth.currentUser;
-  const myName = u?.displayName || localStorage.getItem('spes_chat_nick') || 'Usuário';
-  const myPhoto = u?.photoURL || '';
+  const myName = (u && u.displayName) ? u.displayName : nick;
+
+  // Find their pid from chatId
+  const parts = _myChatId.split('_');
+  const theirPid = parts.find(p => p !== _myPid) || parts[1];
 
   inp.value = '';
   await push(ref(db, 'directChats/' + _myChatId + '/messages'), {
-    from: _myPid, to: _theirPid, text, ts: Date.now()
+    from: _myPid, to: theirPid, text, ts: Date.now()
   });
   await set(ref(db, 'userInbox/' + _myPid + '/' + _myChatId), {
-    with: _theirPid, name: document.getElementById('dm-hname').textContent,
+    with: theirPid, name: document.getElementById('dm-hname').textContent,
     lastMessage: text, ts: Date.now()
   });
-  await set(ref(db, 'userInbox/' + _theirPid + '/' + _myChatId), {
-    with: _myPid, name: myName, photo: myPhoto, lastMessage: text, ts: Date.now(), unread: true
+  await set(ref(db, 'userInbox/' + theirPid + '/' + _myChatId), {
+    with: _myPid, name: myName, lastMessage: text, ts: Date.now(), unread: true
   });
 };
 </script>
