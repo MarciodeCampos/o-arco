@@ -223,7 +223,17 @@ input[type=range].vol::-webkit-slider-thumb{-webkit-appearance:none;width:14px;h
     💬 DMs
     <span id="inbox-unread">0</span>
   </a>
+  <!-- Botao instalar PWA (aparece quando disponivel) -->
+  <button id="btn-install-pwa" onclick="window.installPWA()" style="display:none;align-items:center;gap:5px;background:rgba(124,110,247,.15);border:1px solid rgba(124,110,247,.3);color:#a78bfa;border-radius:8px;padding:5px 10px;cursor:pointer;font-size:.75rem;font-family:inherit">
+    📲 Instalar
+  </button>
 </header>
+<!-- Overlay tap-to-play (mobile autoplay bloqueado) -->
+<div id="play-overlay" style="display:none;position:fixed;inset:0;z-index:3000;background:rgba(13,14,26,.85);align-items:center;justify-content:center;flex-direction:column;gap:16px">
+  <div style="font-size:4rem">📻</div>
+  <div style="color:#e2e8f0;font-size:1.1rem;font-weight:700">Toque para ouvir a rádio</div>
+  <button onclick="window.tapToPlay()" style="background:linear-gradient(135deg,#7c6ef7,#a78bfa);border:none;border-radius:14px;color:#fff;font-size:1rem;font-weight:700;padding:14px 36px;cursor:pointer;font-family:inherit">▶ Tocar agora</button>
+</div>
 <div id="dm-overlay" onclick="window.closeDMPanel()"></div>
 <!-- DM OVERLAY PANEL -->
 <div id="dm-panel">
@@ -1031,6 +1041,30 @@ function watchUnread(pid){
   });
 }
 
+<script>
+// ── ABRIR CHAT VIA URL - garante que roda depois do DOM completo ──────────
+function openChatIfRequested(){
+  const qp = new URLSearchParams(location.search);
+  const shouldOpen = location.hash === '#chat'
+    || qp.get('open') === 'chat'
+    || location.hash.startsWith('#msg=');
+  if(!shouldOpen) return;
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.pane').forEach(pn=>pn.classList.remove('on'));
+  const tabBtn = document.querySelector('[data-pane="p-chat"]');
+  if(tabBtn) tabBtn.classList.add('on');
+  const pane = document.getElementById('p-chat');
+  if(pane) pane.classList.add('on');
+  setTimeout(()=>{ if(window.pollMsgs) window.pollMsgs(); }, 500);
+}
+// Roda apos DOM pronto (mais confiavel no mobile/PWA)
+if(document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', openChatIfRequested);
+} else {
+  openChatIfRequested();
+}
+</script>
+
 loadRadio();
 </script>
 
@@ -1148,10 +1182,63 @@ document.getElementById('chat-msgs')?.addEventListener('play', function(e){
 </script>
 
 <script>
-// Registro do Service Worker (PWA - instalar no celular)
+// Registro do Service Worker (PWA)
 if('serviceWorker' in navigator){
   navigator.serviceWorker.register('/sw.js').catch(()=>{});
 }
+
+// ── PWA: interceptar install prompt (nao mostrar automatico) ───────────
+let _pwaPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault(); // bloqueia banner automatico
+  _pwaPrompt = e;
+  // Mostra botao sutil no header
+  const btn = document.getElementById('btn-install-pwa');
+  if(btn) btn.style.display = 'flex';
+});
+window.installPWA = function(){
+  if(!_pwaPrompt) return;
+  _pwaPrompt.prompt();
+  _pwaPrompt.userChoice.then(()=>{
+    _pwaPrompt = null;
+    const btn = document.getElementById('btn-install-pwa');
+    if(btn) btn.style.display = 'none';
+  });
+};
+window.addEventListener('appinstalled', ()=>{
+  const btn = document.getElementById('btn-install-pwa');
+  if(btn) btn.style.display = 'none';
+});
+
+// ── MOBILE PLAY: botao tap-to-play para autoplay bloqueado ───────────
+window._mobilePlayNeeded = false;
+function checkMobileAutoplay(){
+  const audio = document.getElementById('radio-audio');
+  if(!audio) return;
+  const playPromise = audio.play();
+  if(playPromise !== undefined){
+    playPromise.catch(()=>{
+      // Autoplay bloqueado - mostrar botao
+      const overlay = document.getElementById('play-overlay');
+      if(overlay) overlay.style.display = 'flex';
+    });
+  }
+}
+window.tapToPlay = function(){
+  const audio = document.getElementById('radio-audio');
+  if(audio) audio.play().catch(()=>{});
+  const overlay = document.getElementById('play-overlay');
+  if(overlay) overlay.style.display = 'none';
+};
+// Ouvir quando o player for criado
+const _playObs = new MutationObserver(()=>{
+  const a = document.getElementById('radio-audio');
+  if(a && !a._playChecked){
+    a._playChecked = true;
+    setTimeout(checkMobileAutoplay, 800);
+  }
+});
+_playObs.observe(document.body, {childList:true, subtree:true});
 </script>
 
 </body>
