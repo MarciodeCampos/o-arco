@@ -55,6 +55,10 @@ audio{width:100%;border-radius:8px;margin-top:8px;outline:none}
 .live-dot{display:inline-block;width:8px;height:8px;background:#4CAF50;border-radius:50%;margin-right:6px;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 .empty-chat{color:#64748b;text-align:center;font-size:.85rem;margin:auto}
+/* INBOX BADGE */
+.inbox-icon{position:relative;cursor:pointer;padding:6px 10px;border-radius:8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:#e2e8f0;font-size:1.1rem;transition:background .2s;margin-left:auto;text-decoration:none;display:flex;align-items:center;gap:6px;font-size:.85rem;font-weight:600;font-family:inherit}
+.inbox-icon:hover{background:rgba(124,110,247,.15);border-color:#7c6ef7}
+#inbox-unread{position:absolute;top:-6px;right:-6px;background:#ef5350;color:#fff;font-size:.65rem;font-weight:700;padding:2px 5px;border-radius:99px;display:none;min-width:18px;text-align:center}
 
 /* MIC BUTTON */
 #mic-btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:8px;
@@ -126,6 +130,10 @@ input[type=range].vol::-webkit-slider-thumb{-webkit-appearance:none;width:14px;h
   <a href="index.html">← Rádios</a>
   <span style="color:#3a3d50">|</span>
   <span id="header-nome" style="color:#e2e8f0;font-weight:600"></span>
+  <a class="inbox-icon" href="inbox.html" id="inbox-btn" title="Mensagens privadas">
+    💬 DMs
+    <span id="inbox-unread">0</span>
+  </a>
 </header>
 <div class="copied-toast" id="toast">Link copiado!</div>
 <div class="wrap">
@@ -489,6 +497,9 @@ onAuthStateChanged(auth, async user => {
     if(btnLogout)  btnLogout.style.display = 'none';
   }
 
+  // Ativar badge de msgs nao lidas
+  watchUnread(user.uid);
+
   // Atualizar nome exibido quando digita apelido
   document.getElementById('chat-nick')?.addEventListener('input', function(){
     if(!isGoogle && dispName) dispName.textContent = this.value || 'Anônimo';
@@ -572,8 +583,22 @@ document.getElementById('chat-nick')?.addEventListener('input', function(){
 // Abrir DM (base para inbox)
 window.openDM = function(uid, name){
   if(!uid || uid === auth.currentUser?.uid) return;
-  window.location.href = 'inbox.html?with=' + uid + '&name=' + encodeURIComponent(name);
+  window.location.href = 'inbox.html?with=' + uid + '&name=' + encodeURIComponent(name) + '&radio=' + radioId;
 };
+
+// Badge de nao lidas - ouvir inbox em tempo real
+function watchUnread(uid){
+  onValue(ref(db, 'userInbox/' + uid), snap => {
+    const data = snap.val() || {};
+    let count = 0;
+    Object.values(data).forEach(ch => { if(ch.unread) count++; });
+    const badge = document.getElementById('inbox-unread');
+    if(badge){
+      badge.textContent = count;
+      badge.style.display = count > 0 ? 'block' : 'none';
+    }
+  });
+}
 
 loadRadio();
 </script>
