@@ -413,7 +413,7 @@ function renderMsgs(msgs){
     btn.onclick = () => { _showAll = !_showAll; renderMsgs(window._lastMsgs || []); };
     box.appendChild(btn);
   }
-  box.scrollTop = 0;
+  // SEM reset de scroll - novas msgs ficam no topo automaticamente
   lastCount = msgs.length;
   // Registrar keys vistas
   msgs.forEach(m => { if(m._key) _seenKeys.add(m._key); });
