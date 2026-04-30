@@ -129,6 +129,34 @@ input[type=range].vol::-webkit-slider-thumb{-webkit-appearance:none;width:14px;h
 .sidebar-user span{font-size:.8rem;color:#e2e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:110px}
 .sidebar-user .su-me{font-size:.65rem;color:#64748b;display:block}
 @media(max-width:600px){.chat-layout{flex-direction:column}.chat-sidebar{width:100%;max-height:120px}.#sidebar-users{flex-direction:row;flex-wrap:wrap;max-height:80px}}
+/* DM OVERLAY PANEL */
+#dm-panel{position:fixed;right:0;top:0;height:100%;width:340px;max-width:95vw;background:#0f0f1c;border-left:1px solid rgba(255,255,255,.1);display:flex;flex-direction:column;z-index:1000;transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);box-shadow:-8px 0 32px rgba(0,0,0,.5)}
+#dm-panel.open{transform:translateX(0)}
+.dm-header{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
+.dm-back{background:none;border:none;color:#a78bfa;cursor:pointer;font-size:1.2rem;padding:4px 8px;border-radius:6px;transition:background .2s}
+.dm-back:hover{background:rgba(167,139,250,.1)}
+.dm-av{width:32px;height:32px;border-radius:50%;background:rgba(124,110,247,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden}
+.dm-av img{width:100%;height:100%;object-fit:cover}
+.dm-title{font-weight:700;font-size:.95rem;flex:1}
+.dm-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px}
+.dm-msgs::-webkit-scrollbar{width:3px}
+.dm-msgs::-webkit-scrollbar-thumb{background:#2a2a3d;border-radius:3px}
+.dm-bubble{max-width:80%;padding:8px 12px;border-radius:12px;font-size:.88rem;line-height:1.45;word-break:break-word;animation:fadeUp .15s ease}
+.dm-bubble.me{background:linear-gradient(135deg,#7c6ef7,#a78bfa);color:#fff;margin-left:auto;border-bottom-right-radius:3px}
+.dm-bubble.other{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);border-bottom-left-radius:3px}
+.dm-bubble audio{width:100%;margin-top:4px;height:32px;border-radius:4px}
+.dm-time{font-size:.62rem;opacity:.55;margin-top:3px;text-align:right}
+.dm-bubble.other .dm-time{text-align:left}
+.dm-typing{padding:2px 14px;font-size:.72rem;color:#7c6ef7;font-style:italic;min-height:18px;flex-shrink:0}
+.dm-input-row{display:flex;gap:8px;padding:10px 12px;border-top:1px solid rgba(255,255,255,.08);flex-shrink:0}
+.dm-input-row input{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#e2e8f0;padding:8px 12px;outline:none;font-family:inherit;font-size:.88rem}
+.dm-input-row input:focus{border-color:#7c6ef7}
+#dm-mic{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:8px;color:#e2e8f0;padding:8px 10px;cursor:pointer;font-size:1rem;transition:all .2s;user-select:none}
+#dm-mic.recording{background:rgba(239,83,80,.2);border-color:#ef5350;animation:recPulse 1s infinite}
+#dm-send{background:linear-gradient(135deg,#7c6ef7,#a78bfa);border:none;border-radius:8px;color:#fff;padding:8px 14px;cursor:pointer;font-weight:700;font-size:.85rem;font-family:inherit}
+#dm-send:disabled{opacity:.4}
+#dm-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:999;display:none}
+#dm-overlay.show{display:block}
 </style>
 </head>
 <body>
@@ -136,11 +164,28 @@ input[type=range].vol::-webkit-slider-thumb{-webkit-appearance:none;width:14px;h
   <a href="index.html">← Rádios</a>
   <span style="color:#3a3d50">|</span>
   <span id="header-nome" style="color:#e2e8f0;font-weight:600"></span>
-  <a class="inbox-icon" href="inbox.html" id="inbox-btn" title="Mensagens privadas">
+  <a class="inbox-icon" onclick="window.openInboxPage()" style="cursor:pointer" id="inbox-btn" title="Mensagens privadas">
     💬 DMs
     <span id="inbox-unread">0</span>
   </a>
 </header>
+<div id="dm-overlay" onclick="window.closeDMPanel()"></div>
+<!-- DM OVERLAY PANEL -->
+<div id="dm-panel">
+  <div class="dm-header">
+    <button class="dm-back" onclick="window.closeDMPanel()">←</button>
+    <div class="dm-av" id="dm-av">👤</div>
+    <div class="dm-title" id="dm-name">Usuário</div>
+    <a href="inbox.html" style="font-size:.72rem;color:#64748b;text-decoration:none;margin-left:auto">📥 inbox</a>
+  </div>
+  <div class="dm-msgs" id="dm-msgs"></div>
+  <div class="dm-typing" id="dm-typing"></div>
+  <div class="dm-input-row">
+    <input id="dm-input" type="text" maxlength="500" placeholder="Mensagem privada...">
+    <button id="dm-mic" title="Segurar para gravar">🎤</button>
+    <button id="dm-send" onclick="window.sendDMPanel()">&#10148;</button>
+  </div>
+</div>
 <div class="copied-toast" id="toast">Link copiado!</div>
 <div class="wrap">
   <!-- Cabeçalho da rádio -->
@@ -610,11 +655,134 @@ document.getElementById('chat-nick')?.addEventListener('input', function(){
   }).catch(()=>{});
 });
 
-// Abrir DM (base para inbox)
-window.openDM = function(uid, name){
+// DM OVERLAY PANEL
+let _dmChatId = null, _dmWithUid = null, _dmWithName = null, _dmListener = null, _dmTypingListener = null;
+let _dmRec = null, _dmChunks = [], _dmRecording = false;
+
+function dmChatId(a,b){ return [a,b].sort().join('_'); }
+function dmFmt(ts){ return new Date(ts).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}); }
+
+window.openDM = function(uid, name, photo){
   if(!uid || uid === auth.currentUser?.uid) return;
-  window.location.href = 'inbox.html?with=' + uid + '&name=' + encodeURIComponent(name) + '&radio=' + radioId;
+  _dmWithUid  = uid;
+  _dmWithName = name;
+  _dmChatId   = dmChatId(auth.currentUser.uid, uid);
+  document.getElementById('dm-name').textContent = name || 'Usuário';
+  document.getElementById('dm-av').innerHTML = photo
+    ? `<img src="${photo}" alt="">`
+    : (name||'?')[0].toUpperCase();
+  document.getElementById('dm-panel').classList.add('open');
+  document.getElementById('dm-overlay').classList.add('show');
+  // Marcar como lida
+  set(ref(db, `userInbox/${auth.currentUser.uid}/${_dmChatId}/unread`), false).catch(()=>{});
+  // Desconectar listener anterior
+  if(_dmListener){ _dmListener(); _dmListener=null; }
+  if(_dmTypingListener){ _dmTypingListener(); _dmTypingListener=null; }
+  // Ouvir mensagens
+  _dmListener = onValue(ref(db,`directChats/${_dmChatId}/messages`), snap=>{
+    const data = snap.val()||{};
+    const msgs = Object.values(data).sort((a,b)=>(a.ts||0)-(b.ts||0));
+    const box  = document.getElementById('dm-msgs');
+    box.innerHTML = msgs.map(m=>{
+      const mine = m.from===auth.currentUser?.uid;
+      const body = m.type==='audio'
+        ? `<div style="font-size:.68rem;color:#c4b5fd;margin-bottom:2px">🎤 Áudio</div><audio controls src="${m.audioUrl}" preload="none"></audio>`
+        : esc(m.text||'');
+      return `<div class="dm-bubble ${mine?'me':'other'}">${body}<div class="dm-time">${m.ts?dmFmt(m.ts):''}</div></div>`;
+    }).join('');
+    box.scrollTop = box.scrollHeight;
+  });
+  // Typing indicator
+  _dmTypingListener = onValue(ref(db,`typing/${_dmChatId}`), snap=>{
+    const data = snap.val()||{};
+    const typing = Object.keys(data).filter(u=>u!==auth.currentUser?.uid&&data[u]);
+    const el = document.getElementById('dm-typing');
+    if(el) el.textContent = typing.length ? '✍️ digitando...' : '';
+  });
 };
+
+window.closeDMPanel = function(){
+  document.getElementById('dm-panel').classList.remove('open');
+  document.getElementById('dm-overlay').classList.remove('show');
+};
+
+window.openInboxPage = function(){
+  window.location.href='inbox.html?radio='+radioId;
+};
+
+window.sendDMPanel = async function(){
+  const inp = document.getElementById('dm-input');
+  const text = inp.value.trim();
+  if(!text || !_dmChatId || !auth.currentUser) return;
+  const btn = document.getElementById('dm-send');
+  if(btn) btn.disabled=true;
+  const me = auth.currentUser;
+  try{
+    await push(ref(db,`directChats/${_dmChatId}/messages`),{
+      from:me.uid, fromName:me.displayName||'Usuário', to:_dmWithUid, text, ts:Date.now()
+    });
+    await set(ref(db,`userInbox/${me.uid}/${_dmChatId}`),{
+      with:_dmWithUid,name:_dmWithName,photo:'',lastMessage:text,ts:Date.now()
+    });
+    await set(ref(db,`userInbox/${_dmWithUid}/${_dmChatId}`),{
+      with:me.uid,name:me.displayName||'Usuário',photo:me.photoURL||'',lastMessage:text,ts:Date.now(),unread:true
+    });
+    inp.value='';
+  }catch(e){console.error('sendDM',e);}
+  finally{if(btn)btn.disabled=false;}
+};
+
+// Typing no DM panel
+let _dmTypingTimer=null;
+document.getElementById('dm-input')?.addEventListener('input',()=>{
+  if(!_dmChatId||!auth.currentUser) return;
+  set(ref(db,`typing/${_dmChatId}/${auth.currentUser.uid}`),true).catch(()=>{});
+  clearTimeout(_dmTypingTimer);
+  _dmTypingTimer=setTimeout(()=>set(ref(db,`typing/${_dmChatId}/${auth.currentUser.uid}`),false).catch(()=>{}),2000);
+});
+document.getElementById('dm-input')?.addEventListener('keydown',e=>{ if(e.key==='Enter') window.sendDMPanel(); });
+
+// Voice no DM panel
+const dmMic=document.getElementById('dm-mic');
+if(dmMic){
+  const startDmRec=async()=>{
+    if(_dmRecording||!_dmChatId) return;
+    try{
+      const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+      _dmChunks=[];
+      _dmRec=new MediaRecorder(stream);
+      _dmRec.ondataavailable=e=>{if(e.data.size>0)_dmChunks.push(e.data);};
+      _dmRec.onstop=async()=>{
+        stream.getTracks().forEach(t=>t.stop());
+        const blob=new Blob(_dmChunks,{type:'audio/webm'});
+        if(blob.size<500){dmMic.textContent='🎤';return;}
+        dmMic.textContent='⏳';
+        try{
+          const st=getStorage(app);
+          const fname=`dm/${_dmChatId}/${Date.now()}.webm`;
+          const sr=sref(st,fname);
+          await uploadBytes(sr,blob);
+          const url=await getDownloadURL(sr);
+          const me=auth.currentUser;
+          await push(ref(db,`directChats/${_dmChatId}/messages`),{
+            from:me.uid,fromName:me.displayName||'Usuário',to:_dmWithUid,type:'audio',audioUrl:url,ts:Date.now()
+          });
+          await set(ref(db,`userInbox/${me.uid}/${_dmChatId}`),{with:_dmWithUid,name:_dmWithName,photo:'',lastMessage:'🎤 Áudio',ts:Date.now()});
+          await set(ref(db,`userInbox/${_dmWithUid}/${_dmChatId}`),{with:me.uid,name:me.displayName||'Usuário',photo:me.photoURL||'',lastMessage:'🎤 Áudio',ts:Date.now(),unread:true});
+        }catch(e){console.error('dm audio',e);}
+        dmMic.textContent='🎤';dmMic.classList.remove('recording');
+      };
+      _dmRec.start(); _dmRecording=true;
+      dmMic.textContent='⏹';dmMic.classList.add('recording');
+    }catch(e){dmMic.textContent='🎤';}
+  };
+  const stopDmRec=()=>{if(!_dmRecording)return;_dmRec?.stop();_dmRecording=false;};
+  dmMic.addEventListener('mousedown',startDmRec);
+  dmMic.addEventListener('mouseup',stopDmRec);
+  dmMic.addEventListener('mouseleave',stopDmRec);
+  dmMic.addEventListener('touchstart',e=>{e.preventDefault();startDmRec();});
+  dmMic.addEventListener('touchend',e=>{e.preventDefault();stopDmRec();});
+}
 
 // Badge de nao lidas - ouvir inbox em tempo real
 function watchUnread(uid){
