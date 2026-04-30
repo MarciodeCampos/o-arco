@@ -333,9 +333,10 @@ window.pollMsgs = async function(){
     window._lastMsgs = msgs;
     window._renderMsgs = renderMsgs;
     renderMsgs(msgs);
-  }catch(e){}
-setInterval(pollMsgs, 3000);
-pollMsgs();
+  }catch(e){};
+};
+setInterval(window.pollMsgs, 3000);
+window.pollMsgs();
 
 // Enviar mensagem
 window.sendMsg = async function(){
