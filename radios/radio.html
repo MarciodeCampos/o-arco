@@ -52,6 +52,10 @@ audio{width:100%;border-radius:8px;margin-top:8px;outline:none}
 .share-msg-btn:hover{color:#a78bfa;background:rgba(167,139,250,.1)}
 .bubble.highlight{animation:highlight 2s ease;}
 @keyframes highlight{0%,100%{background:rgba(124,110,247,.1)}50%{background:rgba(124,110,247,.35)}}
+.bubble.new-msg{animation:newFlash 2s ease;}
+@keyframes newFlash{0%{background:rgba(167,139,250,.35);border-left-color:#fff}100%{background:rgba(124,110,247,.1);border-left-color:#7c6ef7}}
+.ver-mais-btn{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:#94a3b8;border-radius:8px;padding:8px;cursor:pointer;font-size:.8rem;font-family:inherit;transition:all .2s;margin-top:8px;display:block;text-align:center}
+.ver-mais-btn:hover{background:rgba(124,110,247,.1);border-color:#7c6ef7;color:#a78bfa}
 .chat-input-row{display:flex;gap:8px;position:sticky;top:0;z-index:5;background:#0d0e1a;padding-bottom:8px;padding-top:4px}
 .chat-box-input{flex:1;font-size:.92rem}
 #chat-send{background:linear-gradient(135deg,#7c6ef7,#a78bfa);border:none;border-radius:8px;color:#fff;padding:10px 20px;cursor:pointer;font-weight:700;font-size:.9rem;font-family:inherit;white-space:nowrap;transition:opacity .2s}
@@ -375,6 +379,9 @@ function contactRow(icon, label, href, color){
 // ── CHAT FIREBASE ──
 const NICK_KEY = 'spes_chat_nick';
 let lastCount = 0;
+const LIMIT_INITIAL = 20;
+let _seenKeys = new Set();
+let _showAll  = false;
 
 function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function fmt(ts){ return new Date(ts).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}); }
@@ -384,8 +391,11 @@ function renderMsgs(msgs){
   if(!box){ console.warn('[chat] #chat-msgs nao encontrado'); return; }
   if(!msgs || !msgs.length){ box.innerHTML='<div class="empty-chat">📻 Seja o primeiro a comentar!</div>'; return; }
   const sorted = [...msgs].sort((a,b)=>(b.ts||0)-(a.ts||0)); // novas no topo
-  box.innerHTML = sorted.map((m,i)=>{
+  const total  = sorted.length;
+  const visible = _showAll ? sorted : sorted.slice(0, LIMIT_INITIAL);
+  box.innerHTML = visible.map((m,i)=>{
     const key = m._key || i;
+    const isNew = !_seenKeys.has(key) && _seenKeys.size > 0; // flash apenas se nao for primeira carga
     const avatarHtml = m.photo ? `<img class="bubble-avatar" src="${m.photo}" alt="">` : '🎙️ ';
     const verifiedBadge = m.verified ? '<span class="badge-verified" style="font-size:.65rem;padding:1px 5px">✓</span>' : '';
     const head = `<div class="bubble-head"><span class="bubble-nick">${avatarHtml}${esc(m.apelido||'?')}${verifiedBadge}</span><span class="bubble-time">${m.ts?fmt(m.ts):''}</span></div>`;
@@ -393,10 +403,20 @@ function renderMsgs(msgs){
       ? `<div class="bubble-type">🎤 Mensagem de voz</div><audio controls src="${m.audioUrl||''}" preload="none"></audio>`
       : `<div class="bubble-text">${esc(m.mensagem||'')}</div>`;
     const actions = `<div class="msg-actions"><button class="share-msg-btn" onclick="window.shareMsg('${esc(m.apelido||'')}','${esc(m.mensagem||'')}','${key}')">🔗 compartilhar</button></div>`;
-    return `<div class="bubble bubble-${m.tipo||'text'} ${i%2?'alt':''}" data-id="${key}">${head}${body}${actions}</div>`;
+    return `<div class="bubble bubble-${m.tipo||'text'} ${i%2?'alt':''} ${isNew?'new-msg':''}" data-id="${key}">${head}${body}${actions}</div>`;
   }).join('');
+  // Botao ver mais / ver menos
+  if(total > LIMIT_INITIAL){
+    const btn = document.createElement('button');
+    btn.className = 'ver-mais-btn';
+    btn.textContent = _showAll ? `⬆️ Ver menos` : `📖 Ver histórico (${total - LIMIT_INITIAL} mensagens anteriores)`;
+    btn.onclick = () => { _showAll = !_showAll; renderMsgs(window._lastMsgs || []); };
+    box.appendChild(btn);
+  }
   box.scrollTop = 0;
   lastCount = msgs.length;
+  // Registrar keys vistas
+  msgs.forEach(m => { if(m._key) _seenKeys.add(m._key); });
   // Destacar mensagem se vier de link direto
   const hashMsg = location.hash.startsWith('#msg=') ? location.hash.replace('#msg=','') : null;
   if(hashMsg){
