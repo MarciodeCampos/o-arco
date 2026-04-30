@@ -81,7 +81,13 @@ header h1{font-size:1rem;font-weight:700;color:#e2e8f0;flex:1}
 .invite-card strong{display:block;font-size:.88rem;color:#8affc1;margin-bottom:4px}
 .invite-card small{font-size:.75rem;color:#94a3b8}
 .invite-card a{display:inline-block;margin-top:8px;background:rgba(76,175,80,.2);border:1px solid rgba(76,175,80,.4);color:#8affc1;border-radius:6px;padding:5px 12px;font-size:.8rem;font-weight:700;text-decoration:none}
-.loading{color:#64748b;font-size:.85rem;text-align:center;padding:20px}
+.login-banner{background:linear-gradient(135deg,rgba(124,110,247,.12),rgba(124,110,247,.06));border:1px solid rgba(124,110,247,.25);border-radius:14px;padding:16px 18px;margin-bottom:20px;display:flex;align-items:center;gap:14px}
+.login-banner-icon{font-size:1.8rem;flex-shrink:0}
+.login-banner-text{flex:1}
+.login-banner-text strong{display:block;font-size:.9rem;font-weight:700;color:#e2e8f0;margin-bottom:3px}
+.login-banner-text small{font-size:.76rem;color:#94a3b8;line-height:1.4}
+.btn-google-banner{background:#fff;color:#333;border:none;border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:700;font-size:.8rem;font-family:inherit;white-space:nowrap;flex-shrink:0;transition:opacity .2s}
+.btn-google-banner:hover{opacity:.88}
 </style>
 </head>
 <body>
@@ -103,6 +109,16 @@ header h1{font-size:1rem;font-weight:700;color:#e2e8f0;flex:1}
     <label>Bio</label>
     <textarea id="edit-bio" placeholder="Sobre você..."></textarea>
     <button class="btn-primary save-btn" onclick="saveProfile()">Salvar</button>
+  </div>
+
+  <!-- LOGIN BANNER (anônimos) -->
+  <div class="login-banner" id="login-banner" style="display:none">
+    <div class="login-banner-icon">🔑</div>
+    <div class="login-banner-text">
+      <strong>Histórico em qualquer dispositivo</strong>
+      <small>Faça login com Google para acessar suas conversas em qualquer lugar e ter um perfil verificado.</small>
+    </div>
+    <button class="btn-google-banner" onclick="loginGoogle()">Entrar com Google</button>
   </div>
 
   <!-- INBOX (só para o próprio perfil) -->
@@ -129,7 +145,7 @@ header h1{font-size:1rem;font-weight:700;color:#e2e8f0;flex:1}
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getDatabase, ref, onValue, set, get, push, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getAuth, signInAnonymously, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey:"AIzaSyD3sWsZJPz-p6i3G2VzBHcnDuBMxasNhxE",
@@ -208,6 +224,11 @@ function renderProfile(u){
       <button class="btn-secondary" onclick="toggleEdit()">✏️ Editar perfil</button>
     `;
     document.getElementById('inbox-section').style.display = 'block';
+    // Mostrar banner de login para anonimos
+    const isGoogle = auth.currentUser && auth.currentUser.providerData && auth.currentUser.providerData.length > 0;
+    if(!isGoogle){
+      document.getElementById('login-banner').style.display = 'flex';
+    }
     loadInbox();
   } else {
     actionsHtml = `
@@ -253,6 +274,16 @@ function renderProfile(u){
     }
   });
 }
+
+// Login Google
+window.loginGoogle = async function(){
+  try{
+    const provider = new GoogleAuthProvider();
+    await signInWithPopup(auth, provider);
+    // Reload profile with new identity
+    loadPage();
+  } catch(e){ console.error('login', e); }
+};
 
 // ── EDIT PROFILE ──────────────────────────────────────────────────────────────
 window.toggleEdit = function(){
