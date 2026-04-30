@@ -387,42 +387,45 @@ function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/
 function fmt(ts){ return new Date(ts).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}); }
 
 function renderMsgs(msgs){
-  const box = document.getElementById('chat-msgs');
-  if(!box){ console.warn('[chat] #chat-msgs nao encontrado'); return; }
-  if(!msgs || !msgs.length){ box.innerHTML='<div class="empty-chat">📻 Seja o primeiro a comentar!</div>'; return; }
-  const sorted = [...msgs].sort((a,b)=>(b.ts||0)-(a.ts||0)); // novas no topo
-  const total  = sorted.length;
-  const visible = _showAll ? sorted : sorted.slice(0, LIMIT_INITIAL);
-  box.innerHTML = visible.map((m,i)=>{
-    const key = m._key || i;
-    const isNew = !_seenKeys.has(key) && _seenKeys.size > 0; // flash apenas se nao for primeira carga
-    const avatarHtml = m.photo ? `<img class="bubble-avatar" src="${m.photo}" alt="">` : '🎙️ ';
-    const verifiedBadge = m.verified ? '<span class="badge-verified" style="font-size:.65rem;padding:1px 5px">✓</span>' : '';
-    const head = `<div class="bubble-head"><span class="bubble-nick">${avatarHtml}${esc(m.apelido||'?')}${verifiedBadge}</span><span class="bubble-time">${m.ts?fmt(m.ts):''}</span></div>`;
-    const body = m.tipo === 'audio'
-      ? `<div class="bubble-type">🎤 Mensagem de voz</div><audio controls src="${m.audioUrl||''}" preload="none"></audio>`
-      : `<div class="bubble-text">${esc(m.mensagem||'')}</div>`;
-    const actions = `<div class="msg-actions"><button class="share-msg-btn" onclick="window.shareMsg('${esc(m.apelido||'')}','${esc(m.mensagem||'')}','${key}')">🔗 compartilhar</button></div>`;
-    return `<div class="bubble bubble-${m.tipo||'text'} ${i%2?'alt':''} ${isNew?'new-msg':''}" data-id="${key}">${head}${body}${actions}</div>`;
-  }).join('');
-  // Botao ver mais / ver menos
-  if(total > LIMIT_INITIAL){
-    const btn = document.createElement('button');
-    btn.className = 'ver-mais-btn';
-    btn.textContent = _showAll ? `⬆️ Ver menos` : `📖 Ver histórico (${total - LIMIT_INITIAL} mensagens anteriores)`;
-    btn.onclick = () => { _showAll = !_showAll; renderMsgs(window._lastMsgs || []); };
-    box.appendChild(btn);
-  }
-  // SEM reset de scroll - novas msgs ficam no topo automaticamente
-  lastCount = msgs.length;
-  // Registrar keys vistas
-  msgs.forEach(m => { if(m._key) _seenKeys.add(m._key); });
-  // Destacar mensagem se vier de link direto
-  const hashMsg = location.hash.startsWith('#msg=') ? location.hash.replace('#msg=','') : null;
-  if(hashMsg){
-    const el = box.querySelector(`[data-id="${hashMsg}"]`);
-    if(el){ el.scrollIntoView({behavior:'smooth',block:'center'}); el.classList.add('highlight'); }
-  }
+  try{
+    const box = document.getElementById('chat-msgs');
+    if(!box){ console.warn('[chat] #chat-msgs nao encontrado'); return; }
+    if(!msgs || !msgs.length){ box.innerHTML='<div class="empty-chat">📻 Seja o primeiro a comentar!</div>'; return; }
+    const sorted = [...msgs].sort((a,b)=>(b.ts||0)-(a.ts||0));
+    const total  = sorted.length;
+    const visible = _showAll ? sorted : sorted.slice(0, LIMIT_INITIAL);
+    box.innerHTML = visible.map((m,i)=>{
+      const key = m._key || i;
+      const isNew = !_seenKeys.has(key) && _seenKeys.size > 0;
+      const avatarHtml = m.photo ? `<img class="bubble-avatar" src="${m.photo}" alt="">` : '🎙️ ';
+      const verifiedBadge = m.verified ? '<span class="badge-verified" style="font-size:.65rem;padding:1px 5px">✓</span>' : '';
+      const head = `<div class="bubble-head"><span class="bubble-nick">${avatarHtml}${esc(m.apelido||'?')}${verifiedBadge}</span><span class="bubble-time">${m.ts?fmt(m.ts):''}</span></div>`;
+      const body = m.tipo === 'audio'
+        ? `<div class="bubble-type">🎤 Mensagem de voz</div><audio controls src="${m.audioUrl||''}" preload="none"></audio>`
+        : `<div class="bubble-text">${esc(m.mensagem||'')}</div>`;
+      const safeApelido = (m.apelido||'').replace(/'/g,'&#39;');
+      const safeMensagem = (m.mensagem||'').replace(/'/g,'&#39;');
+      const actions = `<div class="msg-actions"><button class="share-msg-btn" onclick="window.shareMsg('${safeApelido}','${safeMensagem}','${key}')">🔗 compartilhar</button></div>`;
+      return `<div class="bubble bubble-${m.tipo||'text'} ${i%2?'alt':''} ${isNew?'new-msg':''}" data-id="${key}">${head}${body}${actions}</div>`;
+    }).join('');
+    if(total > LIMIT_INITIAL){
+      const btn = document.createElement('button');
+      btn.className = 'ver-mais-btn';
+      btn.textContent = _showAll ? '⬆️ Ver menos' : `📖 Ver histórico (${total - LIMIT_INITIAL} mensagens anteriores)`;
+      btn.onclick = () => { _showAll = !_showAll; renderMsgs(window._lastMsgs || []); };
+      box.appendChild(btn);
+    }
+    lastCount = msgs.length;
+    msgs.forEach(m => { if(m._key) _seenKeys.add(m._key); });
+    // Highlight por link direto - apenas uma vez
+    if(!window._hashHighlightDone){
+      const hashMsg = location.hash.startsWith('#msg=') ? location.hash.slice(5) : null;
+      if(hashMsg){
+        const el = box.querySelector(`[data-id="${hashMsg}"]`);
+        if(el){ el.scrollIntoView({behavior:'smooth',block:'center'}); el.classList.add('highlight'); window._hashHighlightDone=true; }
+      }
+    }
+  } catch(err){ console.error('[chat] renderMsgs erro:', err); }
 }
 
 // Listener principal - tempo real
@@ -846,17 +849,19 @@ document.querySelectorAll('.tab').forEach(btn=>{
 <script>
 // ── ABRIR CHAT VIA HASH ───────────────────────────────────────────────────
 (function(){
-  const p = new URLSearchParams(location.search);
+  const qp = new URLSearchParams(location.search);
   const shouldOpen = location.hash === '#chat'
-    || p.get('open') === 'chat'
+    || qp.get('open') === 'chat'
     || location.hash.startsWith('#msg=');
   if(shouldOpen){
     document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
-    document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
-    const btn = document.querySelector('[data-pane="p-chat"]');
-    if(btn) btn.classList.add('on');
+    document.querySelectorAll('.pane').forEach(pn=>pn.classList.remove('on'));
+    const tabBtn = document.querySelector('[data-pane="p-chat"]');
+    if(tabBtn) tabBtn.classList.add('on');
     const pane = document.getElementById('p-chat');
     if(pane) pane.classList.add('on');
+    // Forca releitura imediata
+    setTimeout(()=>{ if(window.pollMsgs) window.pollMsgs(); }, 300);
   }
 })();
 
