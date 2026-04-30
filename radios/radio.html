@@ -107,6 +107,18 @@ input[type=range].vol::-webkit-slider-thumb{-webkit-appearance:none;width:14px;h
 .online-avatars{display:flex;gap:-6px;margin-left:auto}
 .online-avatar{width:28px;height:28px;border-radius:50%;object-fit:cover;border:2px solid #0d0e1a;margin-left:-6px;background:rgba(124,110,247,.3);display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0}
 .online-avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+/* SIDEBAR */
+.chat-layout{display:flex;gap:14px;align-items:flex-start}
+.chat-main{flex:1;min-width:0}
+.chat-sidebar{width:200px;flex-shrink:0;background:#13131f;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px}
+.sidebar-header{font-size:.82rem;font-weight:700;color:#8affc1;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+#sidebar-users{display:flex;flex-direction:column;gap:6px;max-height:340px;overflow-y:auto}
+.sidebar-user{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;cursor:pointer;transition:background .2s}
+.sidebar-user:hover{background:rgba(255,255,255,.07)}
+.sidebar-user img,.sidebar-user .su-av{width:28px;height:28px;border-radius:50%;object-fit:cover;flex-shrink:0;background:rgba(124,110,247,.3);display:flex;align-items:center;justify-content:center;font-size:.85rem}
+.sidebar-user span{font-size:.8rem;color:#e2e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:110px}
+.sidebar-user .su-me{font-size:.65rem;color:#64748b;display:block}
+@media(max-width:600px){.chat-layout{flex-direction:column}.chat-sidebar{width:100%;max-height:120px}.#sidebar-users{flex-direction:row;flex-wrap:wrap;max-height:80px}}
 </style>
 </head>
 <body>
@@ -170,36 +182,49 @@ input[type=range].vol::-webkit-slider-thumb{-webkit-appearance:none;width:14px;h
         <span class="online-label">ouvintes online</span>
         <div class="online-avatars" id="online-avatars"></div>
       </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-        <strong style="font-size:1.1rem">💬 Bate-Papo ao Vivo</strong>
-        <span style="font-size:.8rem;color:#4CAF50"><span class="live-dot"></span>Tempo real</span>
-      </div>
-      <!-- Auth bar -->
-      <div class="auth-bar" id="auth-bar">
-        <div class="auth-avatar-anon" id="auth-avatar-wrap">👤</div>
-        <div>
-          <span class="auth-name" id="auth-display-name">Entrando...</span>
-          <span id="auth-badge" class="badge-anon">anônimo</span>
+      <div class="chat-layout">
+        <!-- CHAT MAIN -->
+        <div class="chat-main">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+            <strong style="font-size:1.1rem">💬 Bate-Papo ao Vivo</strong>
+            <span style="font-size:.8rem;color:#4CAF50"><span class="live-dot"></span>Tempo real</span>
+          </div>
+          <!-- Auth bar -->
+          <div class="auth-bar" id="auth-bar">
+            <div class="auth-avatar-anon" id="auth-avatar-wrap">👤</div>
+            <div>
+              <span class="auth-name" id="auth-display-name">Entrando...</span>
+              <span id="auth-badge" class="badge-anon">anônimo</span>
+            </div>
+            <button class="btn-google" id="btn-google-login" onclick="loginGoogle()" style="margin-left:auto;display:none">
+              <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="G">
+              Entrar com Google
+            </button>
+            <button class="btn-logout" id="btn-logout" onclick="logoutUser()" style="display:none">Sair</button>
+          </div>
+          <!-- Apelido (so para anonimos) -->
+          <div class="chat-nick" id="nick-row">
+            <label>🎙️ Apelido:</label>
+            <input id="chat-nick" type="text" maxlength="30" placeholder="Seu apelido...">
+          </div>
+          <div id="chat-msgs"><div class="empty-chat">📻 Seja o primeiro a comentar!</div></div>
+          <div class="chat-input-row">
+            <input id="chat-input" class="chat-box-input" type="text" maxlength="500" placeholder="Digite sua mensagem...">
+            <button id="mic-btn" title="Gravar mensagem de voz" onclick="toggleMic()">🎤</button>
+            <button id="chat-send" onclick="sendMsg()">Enviar ➤</button>
+          </div>
+          <div id="mic-status" style="font-size:.78rem;color:#64748b;margin-top:4px;min-height:14px;"></div>
+          <div id="chat-status"></div>
         </div>
-        <button class="btn-google" id="btn-google-login" onclick="loginGoogle()" style="margin-left:auto;display:none">
-          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="G">
-          Entrar com Google
-        </button>
-        <button class="btn-logout" id="btn-logout" onclick="logoutUser()" style="display:none">Sair</button>
+        <!-- SIDEBAR ONLINE -->
+        <div class="chat-sidebar">
+          <div class="sidebar-header">
+            <span class="live-dot"></span>
+            Online <span id="sidebar-count">0</span>
+          </div>
+          <div id="sidebar-users"></div>
+        </div>
       </div>
-      <!-- Apelido (so para anonimos) -->
-      <div class="chat-nick" id="nick-row">
-        <label>🎙️ Apelido:</label>
-        <input id="chat-nick" type="text" maxlength="30" placeholder="Seu apelido...">
-      </div>
-      <div id="chat-msgs"><div class="empty-chat">📻 Seja o primeiro a comentar!</div></div>
-      <div class="chat-input-row">
-        <input id="chat-input" class="chat-box-input" type="text" maxlength="500" placeholder="Digite sua mensagem...">
-        <button id="mic-btn" title="Gravar mensagem de voz" onclick="toggleMic()">🎤</button>
-        <button id="chat-send" onclick="sendMsg()">Enviar ➤</button>
-      </div>
-      <div id="mic-status" style="font-size:.78rem;color:#64748b;margin-top:4px;min-height:14px;"></div>
-      <div id="chat-status"></div>
     </div>
   </div>
   <!-- Contatos -->
@@ -502,6 +527,8 @@ onAuthStateChanged(auth, user => {
     const users = {};
     snap.forEach(c => { users[c.key] = c.val(); });
     const list = Object.values(users);
+    const meUid = auth.currentUser?.uid;
+    // barra topo
     const countEl = document.getElementById('online-count');
     const avEl    = document.getElementById('online-avatars');
     if(countEl) countEl.textContent = list.length;
@@ -511,6 +538,22 @@ onAuthStateChanged(auth, user => {
           ? `<div class="online-avatar" title="${u.name||'Ouvinte'}"><img src="${u.photo}" alt=""></div>`
           : `<div class="online-avatar" title="${u.name||'Ouvinte'}">${(u.name||'?')[0].toUpperCase()}</div>`
       ).join('');
+    }
+    // sidebar
+    const sbCount = document.getElementById('sidebar-count');
+    const sbUsers = document.getElementById('sidebar-users');
+    if(sbCount) sbCount.textContent = list.length;
+    if(sbUsers){
+      sbUsers.innerHTML = list.map(u => {
+        const isMe = u.uid === meUid;
+        const avatar = u.photo
+          ? `<img src="${u.photo}" alt="">`
+          : `<div class="su-av">${(u.name||'?')[0].toUpperCase()}</div>`;
+        return `<div class="sidebar-user" onclick="window.openDM('${u.uid}','${(u.name||'Ouvinte').replace(/'/g,'')}')">
+          ${avatar}
+          <div><span>${u.name||'Ouvinte'}</span>${isMe?'<span class="su-me">você</span>':''}</div>
+        </div>`;
+      }).join('');
     }
   });
 });
@@ -525,6 +568,12 @@ document.getElementById('chat-nick')?.addEventListener('input', function(){
     ts: Date.now()
   }).catch(()=>{});
 });
+
+// Abrir DM (base para inbox)
+window.openDM = function(uid, name){
+  if(!uid || uid === auth.currentUser?.uid) return;
+  window.location.href = 'inbox.html?with=' + uid + '&name=' + encodeURIComponent(name);
+};
 
 loadRadio();
 </script>
