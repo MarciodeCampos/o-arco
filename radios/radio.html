@@ -1041,7 +1041,6 @@ function watchUnread(pid){
   });
 }
 
-<script>
 // ── ABRIR CHAT VIA URL - garante que roda depois do DOM completo ──────────
 function openChatIfRequested(){
   const qp = new URLSearchParams(location.search);
@@ -1057,13 +1056,11 @@ function openChatIfRequested(){
   if(pane) pane.classList.add('on');
   setTimeout(()=>{ if(window.pollMsgs) window.pollMsgs(); }, 500);
 }
-// Roda apos DOM pronto (mais confiavel no mobile/PWA)
 if(document.readyState === 'loading'){
   document.addEventListener('DOMContentLoaded', openChatIfRequested);
 } else {
   openChatIfRequested();
 }
-</script>
 
 loadRadio();
 </script>
