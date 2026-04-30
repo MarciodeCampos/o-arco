@@ -456,7 +456,7 @@ window.pollMsgs();
 window.shareMsg = function(apelido, mensagem, msgId){
   const id   = new URLSearchParams(location.search).get('id') || '';
   const nome = document.getElementById('radio-nome')?.textContent || 'Rádio';
-  const url  = `${location.origin}${location.pathname}?id=${id}#msg=${msgId}`;
+  const url  = `${location.origin}${location.pathname}?id=${id}&open=chat#msg=${msgId}`;
   const text = `“${mensagem || '🎤 áudio'}” — ${apelido}\n\n📻 ${nome} ao vivo:\n${url}`;
   if(navigator.share){
     navigator.share({ title: nome, text }).catch(()=>{});
@@ -846,7 +846,11 @@ document.querySelectorAll('.tab').forEach(btn=>{
 <script>
 // ── ABRIR CHAT VIA HASH ───────────────────────────────────────────────────
 (function(){
-  if(location.hash === '#chat'){
+  const p = new URLSearchParams(location.search);
+  const shouldOpen = location.hash === '#chat'
+    || p.get('open') === 'chat'
+    || location.hash.startsWith('#msg=');
+  if(shouldOpen){
     document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
     document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
     const btn = document.querySelector('[data-pane="p-chat"]');
