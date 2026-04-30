@@ -295,43 +295,45 @@ function fmt(ts){ return new Date(ts).toLocaleTimeString('pt-BR',{hour:'2-digit'
 
 function renderMsgs(msgs){
   const box = document.getElementById('chat-msgs');
-  if(!box) return;
-  const atBottom = box.scrollHeight - box.scrollTop - box.clientHeight < 60;
-  if(!msgs.length){ box.innerHTML='<div class="empty-chat">📻 Seja o primeiro a comentar!</div>'; return; }
-  box.innerHTML = msgs.map((m,i)=>{
+  if(!box){ console.warn('[chat] #chat-msgs nao encontrado'); return; }
+  if(!msgs || !msgs.length){ box.innerHTML='<div class="empty-chat">📻 Seja o primeiro a comentar!</div>'; return; }
+  const sorted = [...msgs].sort((a,b)=>(a.ts||0)-(b.ts||0));
+  box.innerHTML = sorted.map((m,i)=>{
     const avatarHtml = m.photo ? `<img class="bubble-avatar" src="${m.photo}" alt="">` : '🎙️ ';
     const verifiedBadge = m.verified ? '<span class="badge-verified" style="font-size:.65rem;padding:1px 5px">✓</span>' : '';
-    const head = `<div class="bubble-head"><span class="bubble-nick">${avatarHtml}${esc(m.apelido)}${verifiedBadge}</span><span class="bubble-time">${fmt(m.ts)}</span></div>`;
+    const head = `<div class="bubble-head"><span class="bubble-nick">${avatarHtml}${esc(m.apelido||'?')}${verifiedBadge}</span><span class="bubble-time">${m.ts?fmt(m.ts):''}</span></div>`;
     const body = m.tipo === 'audio'
-      ? `<div class="bubble-type">🎤 Mensagem de voz</div><audio controls src="${m.audioUrl}" preload="none"></audio>`
-      : `<div class="bubble-text">${esc(m.mensagem)}</div>`;
+      ? `<div class="bubble-type">🎤 Mensagem de voz</div><audio controls src="${m.audioUrl||''}" preload="none"></audio>`
+      : `<div class="bubble-text">${esc(m.mensagem||'')}</div>`;
     return `<div class="bubble bubble-${m.tipo||'text'} ${i%2?'alt':''}">${head}${body}</div>`;
   }).join('');
-  if(atBottom || msgs.length !== lastCount){ box.scrollTop = box.scrollHeight; lastCount = msgs.length; }
+  box.scrollTop = box.scrollHeight;
+  lastCount = msgs.length;
 }
 
-// Escutar mensagens em tempo real
-const chatRef = query(ref(db, 'chats/' + radioId + '/msgs'), limitToLast(100));
+// Listener principal - tempo real
+const msgsPath = 'chats/' + radioId + '/msgs';
+const chatRef  = ref(db, msgsPath);
 onValue(chatRef, snap => {
-  const msgs = [];
-  snap.forEach(child => msgs.push(child.val()));
+  const data = snap.val();
+  if(!data){ renderMsgs([]); window._lastMsgs=[]; return; }
+  const msgs = Object.values(data).sort((a,b)=>(a.ts||0)-(b.ts||0));
   window._lastMsgs = msgs;
   window._renderMsgs = renderMsgs;
   renderMsgs(msgs);
 });
 
-// Fallback: polling a cada 3s caso WebSocket falhe
-async function pollMsgs(){
+// Polling fallback a cada 3s
+window.pollMsgs = async function(){
   try{
-    const snap = await get(chatRef);
-    const msgs = [];
-    snap.forEach(child => msgs.push(child.val()));
-    if(msgs.length !== (window._lastMsgs||[]).length){
-      window._lastMsgs = msgs;
-      renderMsgs(msgs);
-    }
+    const snap = await get(ref(db, msgsPath));
+    const data = snap.val();
+    if(!data){ return; }
+    const msgs = Object.values(data).sort((a,b)=>(a.ts||0)-(b.ts||0));
+    window._lastMsgs = msgs;
+    window._renderMsgs = renderMsgs;
+    renderMsgs(msgs);
   }catch(e){}
-}
 setInterval(pollMsgs, 3000);
 pollMsgs();
 
