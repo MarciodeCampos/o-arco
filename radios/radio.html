@@ -161,9 +161,52 @@ input[type=range].vol::-webkit-slider-thumb{-webkit-appearance:none;width:14px;h
 #dm-send:disabled{opacity:.4}
 #dm-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:999;display:none}
 #dm-overlay.show{display:block}
+/* MINI PROFILE POPUP */
+#mini-profile{position:fixed;z-index:2000;background:#13131f;border:1px solid rgba(124,110,247,.35);border-radius:16px;padding:16px;width:240px;box-shadow:0 8px 40px rgba(0,0,0,.7);transform:scale(.92) translateY(8px);opacity:0;pointer-events:none;transition:transform .2s ease,opacity .2s ease}
+#mini-profile.show{transform:scale(1) translateY(0);opacity:1;pointer-events:all}
+.mp-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.mp-av{width:44px;height:44px;border-radius:50%;background:rgba(124,110,247,.25);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;overflow:hidden;border:2px solid rgba(124,110,247,.4)}
+.mp-av img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.mp-name{font-weight:700;font-size:.95rem;color:#e2e8f0}
+.mp-status{font-size:.75rem;color:#4CAF50;margin-top:2px}
+.mp-radio{font-size:.75rem;color:#a78bfa;background:rgba(124,110,247,.1);border-radius:6px;padding:5px 8px;margin-bottom:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mp-actions{display:flex;gap:8px;flex-wrap:wrap}
+.mp-btn{flex:1;padding:8px 6px;border-radius:8px;border:none;cursor:pointer;font-size:.78rem;font-weight:700;font-family:inherit;transition:all .2s;text-align:center;text-decoration:none}
+.mp-btn-msg{background:linear-gradient(135deg,#7c6ef7,#a78bfa);color:#fff}
+.mp-btn-invite{background:rgba(76,175,80,.15);border:1px solid rgba(76,175,80,.3)!important;color:#8affc1}
+.mp-btn-profile{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)!important;color:#94a3b8;display:flex;align-items:center;justify-content:center}
+.mp-close{position:absolute;top:10px;right:10px;background:none;border:none;color:#64748b;cursor:pointer;font-size:1rem;padding:2px 6px;border-radius:4px;transition:color .2s}
+.mp-close:hover{color:#e2e8f0}
+#mp-overlay{position:fixed;inset:0;z-index:1999;background:transparent}
+/* DM INVITE CARD */
+.dm-invite-card{background:rgba(76,175,80,.1);border:1px solid rgba(76,175,80,.25);border-radius:10px;padding:10px 12px}
+.dm-invite-card strong{display:block;font-size:.88rem;color:#8affc1;margin-bottom:4px}
+.dm-invite-card small{font-size:.75rem;color:#94a3b8}
+.dm-invite-card a{display:inline-block;margin-top:8px;background:rgba(76,175,80,.2);border:1px solid rgba(76,175,80,.4);color:#8affc1;border-radius:6px;padding:5px 12px;font-size:.8rem;font-weight:700;text-decoration:none;transition:background .2s}
+.dm-invite-card a:hover{background:rgba(76,175,80,.35)}
 </style>
 </head>
 <body>
+<!-- MINI PROFILE POPUP -->
+<div id="mp-overlay" onclick="window.closeMiniProfile()" style="display:none"></div>
+<div id="mini-profile">
+  <button class="mp-close" onclick="window.closeMiniProfile()">✕</button>
+  <div class="mp-header">
+    <div class="mp-av" id="mp-av">?</div>
+    <div>
+      <div class="mp-name" id="mp-name"></div>
+      <div class="mp-status">🟢 Online agora</div>
+    </div>
+  </div>
+  <div class="mp-radio" id="mp-radio"></div>
+  <div class="mp-actions">
+    <button class="mp-btn mp-btn-msg" onclick="window.miniProfileDM()">💬 Mensagem</button>
+    <button class="mp-btn mp-btn-invite" onclick="window.miniProfileInvite()">📻 Convidar</button>
+  </div>
+  <div class="mp-actions" style="margin-top:6px">
+    <a id="mp-link" href="#" class="mp-btn mp-btn-profile">👤 Ver perfil</a>
+  </div>
+</div>
 <header>
   <a href="index.html">← Rádios</a>
   <span style="color:#3a3d50">|</span>
@@ -306,7 +349,7 @@ input[type=range].vol::-webkit-slider-thumb{-webkit-appearance:none;width:14px;h
 <!-- Firebase SDK -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, push, onValue, query, limitToLast, get, set, remove, serverTimestamp, onDisconnect } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getDatabase, ref, push, onValue, query, limitToLast, get, set, update, remove, serverTimestamp, onDisconnect } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 import { getStorage, ref as sref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 import { getAuth, signInAnonymously, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
@@ -608,6 +651,17 @@ onAuthStateChanged(auth, async user => {
     if(!isGoogle && dispName) dispName.textContent = this.value || 'Anônimo';
     localStorage.setItem('spes_chat_nick', this.value);
   });
+
+  // Registrar perfil no Firebase
+  const displayName = isGoogle ? user.displayName : (localStorage.getItem('spes_chat_nick') || 'Ouvinte');
+  const userPayload = {
+    pid: _myPid, name: displayName, photo: user.photoURL||'',
+    verified: isGoogle, updatedAt: Date.now()
+  };
+  get(ref(db,'users/'+_myPid)).then(snap=>{
+    if(!snap.exists()) set(ref(db,'users/'+_myPid), {...userPayload, createdAt:Date.now()}).catch(()=>{});
+    else update(ref(db,'users/'+_myPid), userPayload).catch(()=>{});
+  }).catch(()=>{});
 });
 
 // Restaurar nick salvo
@@ -640,6 +694,12 @@ onAuthStateChanged(auth, user => {
   set(_presenceRef, payload).catch(()=>{});
   onDisconnect(_presenceRef).remove();
 
+  // Presenca global do usuario (independente de radio)
+  const userPresRef = ref(db, 'userPresence/' + _myPid);
+  const radioName = document.getElementById('radio-nome')?.textContent || '';
+  set(userPresRef, { online:true, currentRadioId:radioId, currentRadioName:radioName, lastSeen:Date.now() }).catch(()=>{});
+  onDisconnect(userPresRef).update({ online:false, lastSeen:Date.now() }).catch(()=>{});
+
   // Ouvir quem esta online neste canal
   const channelRef = ref(db, 'radioPresence/' + radioId);
   onValue(channelRef, snap => {
@@ -664,11 +724,12 @@ onAuthStateChanged(auth, user => {
     if(sbCount) sbCount.textContent = list.length;
     if(sbUsers){
       sbUsers.innerHTML = list.map(u => {
-        const isMe = u.uid === meUid;
+        const isMe = u.pid === _myPid || u.uid === meUid;
+        window._onlinePeers[u.uid] = u; // rastrear peers online
         const avatar = u.photo
           ? `<img src="${u.photo}" alt="">`
           : `<div class="su-av">${(u.name||'?')[0].toUpperCase()}</div>`;
-        return `<div class="sidebar-user" onclick="window.openDM('${u.uid}','${(u.name||'Ouvinte').replace(/'/g,'')}','','${u.pid||u.uid}')">
+        return `<div class="sidebar-user" onclick="window.showMiniProfile('${u.uid}',event)">
           ${avatar}
           <div><span>${u.name||'Ouvinte'}</span>${isMe?'<span class="su-me">você</span>':''}</div>
         </div>`;
@@ -689,8 +750,83 @@ document.getElementById('chat-nick')?.addEventListener('input', function(){
 });
 
 // DM OVERLAY PANEL
+window._onlinePeers = {};
 let _dmChatId = null, _dmWithUid = null, _dmWithName = null, _dmWithPid = null, _dmListener = null, _dmTypingListener = null;
 let _dmRec = null, _dmChunks = [], _dmRecording = false;
+
+// ── MINI PROFILE POPUP ───────────────────────────────────────────────────────
+let _mpUser = null;
+
+window.showMiniProfile = function(uid, evt){
+  const u = window._onlinePeers[uid];
+  if(!u) return;
+  const isMe = u.pid === _myPid || u.uid === auth.currentUser?.uid;
+  _mpUser = u;
+  document.getElementById('mp-name').textContent = u.name || 'Ouvinte';
+  const av = document.getElementById('mp-av');
+  av.innerHTML = u.photo ? `<img src="${u.photo}" alt="">` : (u.name||'?')[0].toUpperCase();
+  const radioEl = document.getElementById('mp-radio');
+  radioEl.textContent = u.name && (document.getElementById('radio-nome')?.textContent) ? '📻 Ouvindo: ' + (document.getElementById('radio-nome')?.textContent || '') : '';
+  radioEl.style.display = radioEl.textContent ? 'block' : 'none';
+  document.getElementById('mp-link').href = 'profile.html?pid=' + (u.pid || u.uid);
+  // Posicionar proximo ao clique
+  const popup = document.getElementById('mini-profile');
+  if(evt){
+    const x = Math.min(evt.clientX, window.innerWidth - 260);
+    const y = Math.min(evt.clientY + 8, window.innerHeight - 200);
+    popup.style.left = x + 'px';
+    popup.style.top  = y + 'px';
+  }
+  document.getElementById('mp-overlay').style.display = 'block';
+  popup.classList.add('show');
+  if(isMe){
+    document.querySelector('.mp-btn-msg').style.display = 'none';
+    document.querySelector('.mp-btn-invite').style.display = 'none';
+  } else {
+    document.querySelector('.mp-btn-msg').style.display = '';
+    document.querySelector('.mp-btn-invite').style.display = '';
+  }
+};
+
+window.closeMiniProfile = function(){
+  document.getElementById('mini-profile').classList.remove('show');
+  document.getElementById('mp-overlay').style.display = 'none';
+  _mpUser = null;
+};
+
+window.miniProfileDM = function(){
+  if(!_mpUser) return;
+  window.closeMiniProfile();
+  window.openDM(_mpUser.uid, _mpUser.name, _mpUser.photo, _mpUser.pid || _mpUser.uid);
+};
+
+window.miniProfileInvite = function(){
+  if(!_mpUser) return;
+  window.closeMiniProfile();
+  window.sendRadioInvite(_mpUser.pid || _mpUser.uid, _mpUser.name);
+};
+
+window.sendRadioInvite = function(theirPid, theirName){
+  if(!theirPid || theirPid === _myPid) return;
+  const me = auth.currentUser;
+  if(!me) return;
+  const radioId2 = new URLSearchParams(location.search).get('id') || '';
+  const radioName2 = document.getElementById('radio-nome')?.textContent || 'esta rádio';
+  const radioUrl = location.origin + location.pathname + '?id=' + radioId2 + '&open=chat';
+  const chatId = dmChatId(_myPid, theirPid);
+  const myName = me.displayName || localStorage.getItem('spes_chat_nick') || 'Alguém';
+  push(ref(db,'directChats/'+chatId+'/messages'),{
+    from:_myPid, to:theirPid, type:'radio_invite',
+    radioId:radioId2, radioName:radioName2, radioUrl,
+    text: myName + ' convidou você para ouvir ' + radioName2,
+    ts:Date.now()
+  }).then(()=>{
+    set(ref(db,'userInbox/'+_myPid+'/'+chatId),{with:theirPid,name:theirName||'',lastMessage:'📻 Convite de rádio',ts:Date.now()}).catch(()=>{});
+    set(ref(db,'userInbox/'+theirPid+'/'+chatId),{with:_myPid,name:myName,lastMessage:'📻 Convite de rádio',ts:Date.now(),unread:true}).catch(()=>{});
+    const t=document.getElementById('toast');
+    if(t){t.textContent='Convite enviado!';t.classList.add('show');setTimeout(()=>{t.textContent='Link copiado!';t.classList.remove('show');},2000);}
+  }).catch(e=>console.error('sendInvite',e));
+};
 
 function dmChatId(a,b){ return [a,b].sort().join('_'); }
 function dmFmt(ts){ return new Date(ts).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}); }
@@ -722,9 +858,14 @@ window.openDM = function(uid, name, photo, pid){
     const box  = document.getElementById('dm-msgs');
     box.innerHTML = msgs.map(m=>{
       const mine = m.from===_myPid;
-      const body = m.type==='audio'
-        ? `<div style="font-size:.68rem;color:#c4b5fd;margin-bottom:2px">🎤 Áudio</div><audio controls src="${m.audioUrl}" preload="none"></audio>`
-        : esc(m.text||'');
+      let body;
+      if(m.type==='audio'){
+        body = `<div style="font-size:.68rem;color:#c4b5fd;margin-bottom:2px">🎤 Áudio</div><audio controls src="${m.audioUrl}" preload="none"></audio>`;
+      } else if(m.type==='radio_invite'){
+        body = `<div class="dm-invite-card"><strong>📻 ${esc(m.radioName||'Rádio')}</strong><small>${esc(m.text||'Convite para ouvir rádio')}</small><br><a href="${m.radioUrl||'#'}" target="_blank">Entrar na rádio →</a></div>`;
+      } else {
+        body = esc(m.text||'');
+      }
       return `<div class="dm-bubble ${mine?'me':'other'}">${body}<div class="dm-time">${m.ts?dmFmt(m.ts):''}</div></div>`;
     }).join('');
     box.scrollTop = box.scrollHeight;
