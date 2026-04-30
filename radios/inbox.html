@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mensagens | triadic.life</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#0d0e1a;color:#e2e8f0;height:100vh;display:flex;flex-direction:column}
+header{background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.08);padding:12px 20px;display:flex;align-items:center;gap:12px;flex-shrink:0}
+header a{color:#94a3b8;text-decoration:none;font-size:.9rem}
+header a:hover{color:#a78bfa}
+header .h-title{color:#e2e8f0;font-weight:700;font-size:1rem}
+.inbox-wrap{display:flex;flex:1;overflow:hidden}
+
+/* LISTA */
+.inbox-list{width:280px;flex-shrink:0;background:#0f0f1c;border-right:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column}
+.inbox-list-header{padding:14px 16px;font-size:.82rem;color:#64748b;font-weight:600;border-bottom:1px solid rgba(255,255,255,.06)}
+.inbox-items{flex:1;overflow-y:auto;padding:8px}
+.inbox-items::-webkit-scrollbar{width:4px}
+.inbox-items::-webkit-scrollbar-thumb{background:#2a2a3d;border-radius:4px}
+.chat-item{padding:10px 12px;border-radius:10px;cursor:pointer;margin-bottom:4px;transition:background .2s;position:relative}
+.chat-item:hover{background:rgba(255,255,255,.05)}
+.chat-item.active{background:rgba(124,110,247,.15);border-left:3px solid #7c6ef7}
+.ci-row{display:flex;align-items:center;gap:10px}
+.ci-av{width:38px;height:38px;border-radius:50%;flex-shrink:0;background:rgba(124,110,247,.25);display:flex;align-items:center;justify-content:center;font-size:1rem;overflow:hidden}
+.ci-av img{width:100%;height:100%;object-fit:cover}
+.ci-info{flex:1;min-width:0}
+.ci-name{font-weight:600;font-size:.88rem;color:#e2e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ci-last{font-size:.76rem;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.ci-badge{background:#7c6ef7;color:#fff;border-radius:99px;font-size:.65rem;font-weight:700;padding:2px 6px;flex-shrink:0}
+.ci-time{font-size:.68rem;color:#475569;flex-shrink:0;margin-left:auto;padding-left:6px}
+
+/* AREA DO CHAT */
+.chat-area{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.chat-header{padding:14px 20px;background:#0f0f1c;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:12px;flex-shrink:0}
+.ch-av{width:36px;height:36px;border-radius:50%;background:rgba(124,110,247,.25);display:flex;align-items:center;justify-content:center;font-size:1.1rem;overflow:hidden;flex-shrink:0}
+.ch-av img{width:100%;height:100%;object-fit:cover}
+.ch-name{font-weight:700;font-size:.95rem}
+.ch-status{font-size:.75rem;color:#4CAF50}
+.chat-messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:10px}
+.chat-messages::-webkit-scrollbar{width:4px}
+.chat-messages::-webkit-scrollbar-thumb{background:#2a2a3d;border-radius:4px}
+.msg{max-width:68%;padding:10px 14px;border-radius:12px;font-size:.9rem;line-height:1.5;animation:fadeUp .15s ease;word-break:break-word}
+@keyframes fadeUp{from{opacity:0;transform:translateY(4px)}to{opacity:1}}
+.msg.me{background:linear-gradient(135deg,#7c6ef7,#a78bfa);color:#fff;margin-left:auto;border-bottom-right-radius:3px}
+.msg.other{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-bottom-left-radius:3px}
+.msg-time{font-size:.68rem;opacity:.6;margin-top:4px;text-align:right}
+.msg.other .msg-time{text-align:left}
+.msg-name{font-size:.7rem;font-weight:600;color:#a78bfa;margin-bottom:3px}
+.chat-input-row{padding:14px 20px;border-top:1px solid rgba(255,255,255,.08);display:flex;gap:10px;align-items:center;flex-shrink:0}
+.chat-input-row input{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#e2e8f0;padding:10px 14px;outline:none;font-family:inherit;font-size:.92rem}
+.chat-input-row input:focus{border-color:#7c6ef7}
+.send-btn{background:linear-gradient(135deg,#7c6ef7,#a78bfa);border:none;border-radius:10px;color:#fff;padding:10px 18px;cursor:pointer;font-weight:700;font-size:.9rem;font-family:inherit;transition:opacity .2s}
+.send-btn:hover{opacity:.85}
+.send-btn:disabled{opacity:.4;cursor:not-allowed}
+
+/* EMPTY STATE */
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:12px;color:#475569}
+.empty-state .es-icon{font-size:3rem}
+.empty-state p{font-size:.9rem}
+
+/* NOTIF BADGE no header */
+.inbox-badge{background:#ef5350;color:#fff;border-radius:99px;font-size:.68rem;font-weight:700;padding:2px 6px;margin-left:4px}
+
+@media(max-width:600px){
+  .inbox-list{width:70px}
+  .ci-info,.ci-time,.inbox-list-header{display:none}
+  .ci-av{width:44px;height:44px}
+  .chat-item{padding:8px;display:flex;justify-content:center}
+}
+</style>
+</head>
+<body>
+<header>
+  <a id="back-link" href="index.html">← Rádios</a>
+  <span style="color:#3a3d50">|</span>
+  <span class="h-title">💬 Mensagens</span>
+  <span id="unread-badge" class="inbox-badge" style="display:none">0</span>
+</header>
+
+<div class="inbox-wrap">
+  <!-- Lista de conversas -->
+  <div class="inbox-list">
+    <div class="inbox-list-header">Conversas</div>
+    <div class="inbox-items" id="inbox-items">
+      <div style="color:#475569;font-size:.8rem;padding:12px">Nenhuma conversa ainda.</div>
+    </div>
+  </div>
+
+  <!-- Área do chat -->
+  <div class="chat-area" id="chat-area">
+    <div class="empty-state" id="empty-state">
+      <div class="es-icon">💬</div>
+      <p>Selecione uma conversa ou<br>volte à rádio e clique em alguém online.</p>
+    </div>
+    <div class="chat-header" id="chat-header" style="display:none">
+      <div class="ch-av" id="ch-av">👤</div>
+      <div>
+        <div class="ch-name" id="ch-name">—</div>
+        <div class="ch-status" id="ch-status"></div>
+      </div>
+      <a id="ch-back-radio" href="#" style="margin-left:auto;font-size:.8rem;color:#7c6ef7;text-decoration:none">← voltar à rádio</a>
+    </div>
+    <div class="chat-messages" id="chat-messages" style="display:none"></div>
+    <div class="chat-input-row" id="chat-input-row" style="display:none">
+      <input id="msg-input" type="text" maxlength="500" placeholder="Digite sua mensagem...">
+      <button class="send-btn" id="send-btn" onclick="window.sendDM()">Enviar ➤</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp }                             from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, onValue, push, set, get } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getAuth, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDa0XWSvNISi47olox7U2HHawf3pf1rOjI",
+  authDomain: "triadic-radios.firebaseapp.com",
+  databaseURL: "https://triadic-radios-default-rtdb.firebaseio.com",
+  projectId: "triadic-radios",
+  storageBucket: "triadic-radios.firebasestorage.app",
+  messagingSenderId: "574115949337",
+  appId: "1:574115949337:web:527670aa35d9bb939f3388"
+};
+
+const app  = initializeApp(firebaseConfig);
+const db   = getDatabase(app);
+const auth = getAuth(app);
+
+let me = null;
+let currentChatId   = null;
+let currentWithUid  = null;
+let currentWithName = null;
+let msgListener     = null;
+
+// Util
+function chatId(a, b){ return [a, b].sort().join('_'); }
+function fmt(ts){ return new Date(ts).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}); }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// Ler query params
+const params       = new URLSearchParams(location.search);
+const withUid      = params.get('with');
+const withName     = params.get('name') ? decodeURIComponent(params.get('name')) : 'Usuário';
+const fromRadioId  = params.get('radio');
+
+// Auth
+onAuthStateChanged(auth, async user => {
+  if(!user){ await signInAnonymously(auth); return; }
+  me = user;
+
+  // Carregar inbox
+  loadInbox();
+
+  // Se veio com ?with=uid, abrir direto
+  if(withUid && withUid !== me.uid){
+    const cid = chatId(me.uid, withUid);
+    openChat(withUid, withName, null, cid);
+  }
+
+  // Link voltar à rádio
+  if(fromRadioId){
+    document.getElementById('back-link').href = 'radio.html?id=' + fromRadioId + '#chat';
+  }
+});
+signInAnonymously(auth).catch(()=>{});
+
+// INBOX
+function loadInbox(){
+  const inboxRef = ref(db, 'userInbox/' + me.uid);
+  onValue(inboxRef, snap => {
+    const data = snap.val() || {};
+    const container = document.getElementById('inbox-items');
+    const entries = Object.entries(data).sort((a,b) => (b[1].ts||0) - (a[1].ts||0));
+    if(!entries.length){
+      container.innerHTML = '<div style="color:#475569;font-size:.8rem;padding:12px">Nenhuma conversa ainda.</div>';
+      return;
+    }
+    let unread = 0;
+    container.innerHTML = entries.map(([cid, ch]) => {
+      const isActive = cid === currentChatId ? 'active' : '';
+      const badge    = ch.unread ? `<span class="ci-badge">●</span>` : '';
+      if(ch.unread) unread++;
+      const av = ch.photo
+        ? `<div class="ci-av"><img src="${ch.photo}" alt=""></div>`
+        : `<div class="ci-av">${(ch.name||'?')[0].toUpperCase()}</div>`;
+      return `<div class="chat-item ${isActive}" onclick="window.openChatFromInbox('${cid}','${esc(ch.with||'')}','${esc(ch.name||'Usuário')}','${esc(ch.photo||'')}')">
+        <div class="ci-row">
+          ${av}
+          <div class="ci-info">
+            <div class="ci-name">${esc(ch.name||'Usuário')}</div>
+            <div class="ci-last">${esc(ch.lastMessage||'')}</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+            <span class="ci-time">${ch.ts ? fmt(ch.ts) : ''}</span>
+            ${badge}
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+    // Badge global
+    const badgeEl = document.getElementById('unread-badge');
+    badgeEl.textContent = unread;
+    badgeEl.style.display = unread ? 'inline' : 'none';
+  });
+}
+
+// Abrir chat
+function openChat(uid, name, photo, cid){
+  if(msgListener) msgListener(); // desconectar listener anterior
+  currentChatId   = cid || chatId(me.uid, uid);
+  currentWithUid  = uid;
+  currentWithName = name;
+
+  // UI header
+  document.getElementById('empty-state').style.display   = 'none';
+  document.getElementById('chat-header').style.display   = 'flex';
+  document.getElementById('chat-messages').style.display = 'flex';
+  document.getElementById('chat-input-row').style.display = 'flex';
+  document.getElementById('ch-name').textContent = name || 'Usuário';
+  document.getElementById('ch-av').innerHTML = photo
+    ? `<img src="${photo}" alt="">`
+    : (name||'?')[0].toUpperCase();
+
+  // Marcar como lida
+  set(ref(db, `userInbox/${me.uid}/${currentChatId}/unread`), false).catch(()=>{});
+
+  // Ouvir mensagens
+  const msgsRef = ref(db, `directChats/${currentChatId}/messages`);
+  msgListener = onValue(msgsRef, snap => {
+    const data = snap.val() || {};
+    const msgs = Object.values(data).sort((a,b)=>(a.ts||0)-(b.ts||0));
+    const box  = document.getElementById('chat-messages');
+    box.innerHTML = msgs.map(m => {
+      const isMine = m.from === me.uid;
+      return `<div class="msg ${isMine?'me':'other'}">
+        ${!isMine ? `<div class="msg-name">${esc(m.fromName||name)}</div>` : ''}
+        ${esc(m.text||'')}
+        <div class="msg-time">${m.ts ? fmt(m.ts) : ''}</div>
+      </div>`;
+    }).join('');
+    box.scrollTop = box.scrollHeight;
+  });
+}
+
+window.openChatFromInbox = function(cid, uid, name, photo){
+  openChat(uid, name, photo, cid);
+};
+
+// Enviar DM
+window.sendDM = async function(){
+  const input = document.getElementById('msg-input');
+  const text  = input.value.trim();
+  if(!text || !currentChatId || !me) return;
+  const btn = document.getElementById('send-btn');
+  if(btn) btn.disabled = true;
+
+  const msg = { from: me.uid, fromName: me.displayName || 'Usuário', to: currentWithUid, text, ts: Date.now() };
+  try{
+    await push(ref(db, `directChats/${currentChatId}/messages`), msg);
+
+    const myPhoto    = me.photoURL || '';
+    const myName     = me.displayName || 'Usuário';
+
+    // Atualiza inbox dos dois
+    await set(ref(db, `userInbox/${me.uid}/${currentChatId}`), {
+      with: currentWithUid, name: currentWithName, photo: '', lastMessage: text, ts: Date.now()
+    });
+    await set(ref(db, `userInbox/${currentWithUid}/${currentChatId}`), {
+      with: me.uid, name: myName, photo: myPhoto, lastMessage: text, ts: Date.now(), unread: true
+    });
+    input.value = '';
+  } catch(e){ console.error('sendDM erro:', e); }
+  finally { if(btn) btn.disabled = false; }
+};
+
+// Enter envia
+document.getElementById('msg-input')?.addEventListener('keydown', e => {
+  if(e.key === 'Enter') window.sendDM();
+});
+</script>
+</body>
+</html>
