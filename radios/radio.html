@@ -448,7 +448,8 @@ let _myPid = localStorage.getItem('spes_pid');
 // === PID ANCHOR: amarra spes_pid ao Google UID para cross-device ===
 async function anchorPidToGoogle(googleUser) {
   try {
-    const uid = googleUser.uid;
+    const uid    = googleUser.uid;
+    const oldPid = _myPid; // guarda pid anterior para limpar presenca duplicada
     const savedSnap = await get(ref(db, 'users/' + uid + '/pid'));
     const savedPid  = savedSnap.val();
     if (savedPid) {
@@ -463,11 +464,25 @@ async function anchorPidToGoogle(googleUser) {
       await set(ref(db, 'users/' + uid + '/pid'), _myPid);
       console.log('[pid] anchored to google:', _myPid);
     }
-    // Salvar tambem nome e foto no perfil publico
-    await set(ref(db, 'users/' + _myPid + '/name'),    googleUser.displayName || '');
-    await set(ref(db, 'users/' + _myPid + '/photo'),   googleUser.photoURL    || '');
+    // Salvar nome e foto no perfil publico
+    await set(ref(db, 'users/' + _myPid + '/name'),     googleUser.displayName || '');
+    await set(ref(db, 'users/' + _myPid + '/photo'),    googleUser.photoURL    || '');
     await set(ref(db, 'users/' + _myPid + '/verified'), true);
-    await set(ref(db, 'users/' + _myPid + '/uid'),     uid);
+    await set(ref(db, 'users/' + _myPid + '/uid'),      uid);
+    // Se o pid mudou: re-registrar presenca com pid correto (elimina duplicata na lista Online)
+    if (oldPid !== _myPid && radioId) {
+      remove(ref(db, 'radioPresence/' + radioId + '/' + oldPid)).catch(()=>{});
+      const newPresRef = ref(db, 'radioPresence/' + radioId + '/' + _myPid);
+      set(newPresRef, {
+        uid: uid, pid: _myPid,
+        name: googleUser.displayName || 'Ouvinte',
+        photo: googleUser.photoURL   || '',
+        online: true, ts: Date.now()
+      }).catch(()=>{});
+      onDisconnect(newPresRef).remove();
+      if (_presenceRef) _presenceRef = newPresRef;
+      console.log('[presence] re-registered with correct pid:', _myPid);
+    }
   } catch(e) { console.warn('[pid] anchor error:', e); }
 }
 // ===============================================================
@@ -673,6 +688,8 @@ onAuthStateChanged(auth, async user => {
   }
   currentUser = user;
   const isGoogle  = user.providerData?.length > 0;
+  // Cross-device: se ja logado com Google (sessao anterior), ancora pid na carga da pagina
+  if (isGoogle) anchorPidToGoogle(user).catch(()=>{});
   const name      = isGoogle ? user.displayName : null;
   const photo     = isGoogle ? user.photoURL    : null;
   const savedNick = localStorage.getItem('spes_chat_nick') || '';
