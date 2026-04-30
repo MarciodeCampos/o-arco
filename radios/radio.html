@@ -812,15 +812,17 @@ window.showMiniProfileFromMsg = function(stableId, name, photo, evt){
 
 window.miniProfileDM = function(){
   if(!_mpUser) return;
+  const u = _mpUser; // captura ANTES de fechar (closeMiniProfile seta _mpUser=null)
   window.closeMiniProfile();
-  const pid = _mpUser.pid || _mpUser.stableId || _mpUser.uid;
-  window.openDM(_mpUser.uid || pid, _mpUser.name, _mpUser.photo, pid);
+  const pid = u.pid || u.stableId || u.uid;
+  window.openDM(u.uid || pid, u.name, u.photo, pid);
 };
 
 window.miniProfileInvite = function(){
   if(!_mpUser) return;
+  const u = _mpUser; // captura ANTES de fechar
   window.closeMiniProfile();
-  window.sendRadioInvite(_mpUser.pid || _mpUser.uid, _mpUser.name);
+  window.sendRadioInvite(u.pid || u.stableId || u.uid, u.name);
 };
 
 window.sendRadioInvite = function(theirPid, theirName){
