@@ -52,7 +52,7 @@ audio{width:100%;border-radius:8px;margin-top:8px;outline:none}
 .share-msg-btn:hover{color:#a78bfa;background:rgba(167,139,250,.1)}
 .bubble.highlight{animation:highlight 2s ease;}
 @keyframes highlight{0%,100%{background:rgba(124,110,247,.1)}50%{background:rgba(124,110,247,.35)}}
-.chat-input-row{display:flex;gap:8px}
+.chat-input-row{display:flex;gap:8px;position:sticky;top:0;z-index:5;background:#0d0e1a;padding-bottom:8px;padding-top:4px}
 .chat-box-input{flex:1;font-size:.92rem}
 #chat-send{background:linear-gradient(135deg,#7c6ef7,#a78bfa);border:none;border-radius:8px;color:#fff;padding:10px 20px;cursor:pointer;font-weight:700;font-size:.9rem;font-family:inherit;white-space:nowrap;transition:opacity .2s}
 #chat-send:hover{opacity:.85}
@@ -266,7 +266,7 @@ input[type=range].vol::-webkit-slider-thumb{-webkit-appearance:none;width:14px;h
             <label>🎙️ Apelido:</label>
             <input id="chat-nick" type="text" maxlength="30" placeholder="Seu apelido...">
           </div>
-          <div id="chat-msgs"><div class="empty-chat">📻 Seja o primeiro a comentar!</div></div>
+          <!-- Input ACIMA do historico -->
           <div class="chat-input-row">
             <input id="chat-input" class="chat-box-input" type="text" maxlength="500" placeholder="Digite sua mensagem...">
             <button id="mic-btn" title="Gravar mensagem de voz" onclick="toggleMic()">🎤</button>
@@ -274,6 +274,8 @@ input[type=range].vol::-webkit-slider-thumb{-webkit-appearance:none;width:14px;h
           </div>
           <div id="mic-status" style="font-size:.78rem;color:#64748b;margin-top:4px;min-height:14px;"></div>
           <div id="chat-status"></div>
+          <!-- Feed invertido: novas mensagens no topo -->
+          <div id="chat-msgs"><div class="empty-chat">📻 Seja o primeiro a comentar!</div></div>
         </div>
         <!-- SIDEBAR ONLINE -->
         <div class="chat-sidebar">
@@ -381,7 +383,7 @@ function renderMsgs(msgs){
   const box = document.getElementById('chat-msgs');
   if(!box){ console.warn('[chat] #chat-msgs nao encontrado'); return; }
   if(!msgs || !msgs.length){ box.innerHTML='<div class="empty-chat">📻 Seja o primeiro a comentar!</div>'; return; }
-  const sorted = [...msgs].sort((a,b)=>(a.ts||0)-(b.ts||0));
+  const sorted = [...msgs].sort((a,b)=>(b.ts||0)-(a.ts||0)); // novas no topo
   box.innerHTML = sorted.map((m,i)=>{
     const key = m._key || i;
     const avatarHtml = m.photo ? `<img class="bubble-avatar" src="${m.photo}" alt="">` : '🎙️ ';
@@ -393,7 +395,7 @@ function renderMsgs(msgs){
     const actions = `<div class="msg-actions"><button class="share-msg-btn" onclick="window.shareMsg('${esc(m.apelido||'')}','${esc(m.mensagem||'')}','${key}')">🔗 compartilhar</button></div>`;
     return `<div class="bubble bubble-${m.tipo||'text'} ${i%2?'alt':''}" data-id="${key}">${head}${body}${actions}</div>`;
   }).join('');
-  box.scrollTop = box.scrollHeight;
+  box.scrollTop = 0;
   lastCount = msgs.length;
   // Destacar mensagem se vier de link direto
   const hashMsg = location.hash.startsWith('#msg=') ? location.hash.replace('#msg=','') : null;
