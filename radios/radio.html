@@ -443,6 +443,34 @@ function contactRow(icon, label, href, color){
 // ── ID PERMANENTE — deve ser o PRIMEIRO dado inicializado ──────────────────
 // stableId persiste no localStorage; uid é apenas dado informativo do auth
 let _myPid = localStorage.getItem('spes_pid');
+
+
+// === PID ANCHOR: amarra spes_pid ao Google UID para cross-device ===
+async function anchorPidToGoogle(googleUser) {
+  try {
+    const uid = googleUser.uid;
+    const savedSnap = await get(ref(db, 'users/' + uid + '/pid'));
+    const savedPid  = savedSnap.val();
+    if (savedPid) {
+      // Dispositivo novo: restaurar pid do servidor
+      if (savedPid !== _myPid) {
+        _myPid = savedPid;
+        localStorage.setItem('spes_pid', _myPid);
+        console.log('[pid] restored from google:', _myPid);
+      }
+    } else {
+      // Primeiro login neste pid: salvar no servidor
+      await set(ref(db, 'users/' + uid + '/pid'), _myPid);
+      console.log('[pid] anchored to google:', _myPid);
+    }
+    // Salvar tambem nome e foto no perfil publico
+    await set(ref(db, 'users/' + _myPid + '/name'),    googleUser.displayName || '');
+    await set(ref(db, 'users/' + _myPid + '/photo'),   googleUser.photoURL    || '');
+    await set(ref(db, 'users/' + _myPid + '/verified'), true);
+    await set(ref(db, 'users/' + _myPid + '/uid'),     uid);
+  } catch(e) { console.warn('[pid] anchor error:', e); }
+}
+// ===============================================================
 if(!_myPid){
   _myPid = 'p_' + Math.random().toString(36).slice(2) + Date.now().toString(36);
   localStorage.setItem('spes_pid', _myPid);
@@ -626,7 +654,9 @@ window.toggleMic = async function(){
 
 // ── AUTENTICACAO ──────────────────────────────────────────────────────────
 async function loginGoogle(){
-  try{ await signInWithPopup(auth, provider); }
+  try{ await signInWithPopup(auth, provider);
+      // Cross-device: ancora pid ao Google UID
+      if (auth.currentUser) await anchorPidToGoogle(auth.currentUser); }
   catch(e){ console.error('Login Google falhou:', e); }
 }
 window.loginGoogle = loginGoogle;

@@ -166,6 +166,34 @@ const params    = new URLSearchParams(location.search);
 const targetPid = params.get('pid') || '';
 
 let _myPid = localStorage.getItem('spes_pid') || '';
+
+
+// === PID ANCHOR: amarra spes_pid ao Google UID para cross-device ===
+async function anchorPidToGoogle(googleUser) {
+  try {
+    const uid = googleUser.uid;
+    const savedSnap = await get(ref(db, 'users/' + uid + '/pid'));
+    const savedPid  = savedSnap.val();
+    if (savedPid) {
+      // Dispositivo novo: restaurar pid do servidor
+      if (savedPid !== _myPid) {
+        _myPid = savedPid;
+        localStorage.setItem('spes_pid', _myPid);
+        console.log('[pid] restored from google:', _myPid);
+      }
+    } else {
+      // Primeiro login neste pid: salvar no servidor
+      await set(ref(db, 'users/' + uid + '/pid'), _myPid);
+      console.log('[pid] anchored to google:', _myPid);
+    }
+    // Salvar tambem nome e foto no perfil publico
+    await set(ref(db, 'users/' + _myPid + '/name'),    googleUser.displayName || '');
+    await set(ref(db, 'users/' + _myPid + '/photo'),   googleUser.photoURL    || '');
+    await set(ref(db, 'users/' + _myPid + '/verified'), true);
+    await set(ref(db, 'users/' + _myPid + '/uid'),     uid);
+  } catch(e) { console.warn('[pid] anchor error:', e); }
+}
+// ===============================================================
 let _myChatId = null;
 let _dmListener = null;
 
@@ -176,12 +204,15 @@ function dmChatId(a,b){ return [a,b].sort().join('_'); }
 
 // ── AUTH ─────────────────────────────────────────────────────────────────────
 signInAnonymously(auth).catch(()=>{});
-onAuthStateChanged(auth, user => {
+onAuthStateChanged(auth, async user => {
   if(!user) return;
   if(!_myPid){
     _myPid = 'p_' + Math.random().toString(36).slice(2) + Date.now().toString(36);
     localStorage.setItem('spes_pid', _myPid);
   }
+  // Cross-device: se Google, restaurar pid do servidor
+  const isGoogle = user.providerData && user.providerData.length > 0;
+  if(isGoogle) await anchorPidToGoogle(user);
   loadPage();
 });
 
