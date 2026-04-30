@@ -56,6 +56,13 @@ header .h-title{color:#e2e8f0;font-weight:700;font-size:1rem}
 .send-btn{background:linear-gradient(135deg,#7c6ef7,#a78bfa);border:none;border-radius:10px;color:#fff;padding:10px 18px;cursor:pointer;font-weight:700;font-size:.9rem;font-family:inherit;transition:opacity .2s}
 .send-btn:hover{opacity:.85}
 .send-btn:disabled{opacity:.4;cursor:not-allowed}
+/* MIC */
+#rec-btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:10px;color:#e2e8f0;padding:10px 13px;cursor:pointer;font-size:1.1rem;transition:all .2s;user-select:none}
+#rec-btn:hover{border-color:#7c6ef7}
+#rec-btn.recording{background:rgba(239,83,80,.2);border-color:#ef5350;animation:recPulse 1s infinite}
+@keyframes recPulse{0%,100%{box-shadow:0 0 0 0 rgba(239,83,80,.4)}50%{box-shadow:0 0 0 6px rgba(239,83,80,0)}}
+.msg audio{width:100%;margin-top:6px;height:34px;border-radius:6px}
+.typing-bar{padding:4px 20px;font-size:.75rem;color:#7c6ef7;min-height:20px;font-style:italic}
 
 /* EMPTY STATE */
 .empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:12px;color:#475569}
@@ -105,17 +112,20 @@ header .h-title{color:#e2e8f0;font-weight:700;font-size:1rem}
       <a id="ch-back-radio" href="#" style="margin-left:auto;font-size:.8rem;color:#7c6ef7;text-decoration:none">← voltar à rádio</a>
     </div>
     <div class="chat-messages" id="chat-messages" style="display:none"></div>
+    <div class="typing-bar" id="typing-bar"></div>
     <div class="chat-input-row" id="chat-input-row" style="display:none">
       <input id="msg-input" type="text" maxlength="500" placeholder="Digite sua mensagem...">
+      <button id="rec-btn" title="Segurar para gravar voz">🎤</button>
       <button class="send-btn" id="send-btn" onclick="window.sendDM()">Enviar ➤</button>
     </div>
   </div>
 </div>
 
 <script type="module">
-import { initializeApp }                             from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, onValue, push, set, get } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-import { getAuth, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { initializeApp }                                       from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, onValue, push, set, get, remove }   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getStorage, ref as sref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+import { getAuth, onAuthStateChanged, signInAnonymously }       from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDa0XWSvNISi47olox7U2HHawf3pf1rOjI",
@@ -127,9 +137,10 @@ const firebaseConfig = {
   appId: "1:574115949337:web:527670aa35d9bb939f3388"
 };
 
-const app  = initializeApp(firebaseConfig);
-const db   = getDatabase(app);
-const auth = getAuth(app);
+const app     = initializeApp(firebaseConfig);
+const db      = getDatabase(app);
+const storage = getStorage(app);
+const auth    = getAuth(app);
 
 let me = null;
 let currentChatId   = null;
@@ -237,13 +248,25 @@ function openChat(uid, name, photo, cid){
     const box  = document.getElementById('chat-messages');
     box.innerHTML = msgs.map(m => {
       const isMine = m.from === me.uid;
+      const body = m.type === 'audio'
+        ? `<div style="font-size:.72rem;color:#a78bfa;margin-bottom:3px">🎤 Áudio</div><audio controls src="${m.audioUrl}" preload="none"></audio>`
+        : esc(m.text||'');
       return `<div class="msg ${isMine?'me':'other'}">
         ${!isMine ? `<div class="msg-name">${esc(m.fromName||name)}</div>` : ''}
-        ${esc(m.text||'')}
+        ${body}
         <div class="msg-time">${m.ts ? fmt(m.ts) : ''}</div>
       </div>`;
     }).join('');
     box.scrollTop = box.scrollHeight;
+  });
+
+  // Typing indicator
+  const typingPath = `typing/${currentChatId}`;
+  onValue(ref(db, typingPath), snap => {
+    const data = snap.val() || {};
+    const typing = Object.keys(data).filter(uid => uid !== me.uid && data[uid]);
+    const bar = document.getElementById('typing-bar');
+    if(bar) bar.textContent = typing.length ? '✍️ digitando...' : '';
   });
 }
 
@@ -282,6 +305,76 @@ window.sendDM = async function(){
 document.getElementById('msg-input')?.addEventListener('keydown', e => {
   if(e.key === 'Enter') window.sendDM();
 });
+
+// Typing indicator
+let typingTimer = null;
+document.getElementById('msg-input')?.addEventListener('input', () => {
+  if(!currentChatId || !me) return;
+  set(ref(db, `typing/${currentChatId}/${me.uid}`), true).catch(()=>{});
+  clearTimeout(typingTimer);
+  typingTimer = setTimeout(() => {
+    set(ref(db, `typing/${currentChatId}/${me.uid}`), false).catch(()=>{});
+  }, 2000);
+});
+
+// GRAVACAO DE VOZ na DM
+let dmRec = null;
+let dmChunks = [];
+let dmRecording = false;
+
+const recBtn = document.getElementById('rec-btn');
+if(recBtn){
+  const startRec = async () => {
+    if(dmRecording || !currentChatId) return;
+    try{
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      dmChunks = [];
+      dmRec = new MediaRecorder(stream);
+      dmRec.ondataavailable = e => { if(e.data.size > 0) dmChunks.push(e.data); };
+      dmRec.onstop = async () => {
+        stream.getTracks().forEach(t => t.stop());
+        const blob = new Blob(dmChunks, { type: 'audio/webm' });
+        if(blob.size < 500){ recBtn.textContent = '🎤'; return; }
+        recBtn.textContent = '⏳';
+        try{
+          const fname = `dm/${currentChatId}/${Date.now()}.webm`;
+          const storageRef = sref(storage, fname);
+          await uploadBytes(storageRef, blob);
+          const url = await getDownloadURL(storageRef);
+          const myName = me.displayName || 'Usuário';
+          const myPhoto = me.photoURL || '';
+          await push(ref(db, `directChats/${currentChatId}/messages`), {
+            from: me.uid, fromName: myName, to: currentWithUid,
+            type: 'audio', audioUrl: url, ts: Date.now()
+          });
+          await set(ref(db, `userInbox/${me.uid}/${currentChatId}`), {
+            with: currentWithUid, name: currentWithName, photo: '', lastMessage: '🎤 Áudio', ts: Date.now()
+          });
+          await set(ref(db, `userInbox/${currentWithUid}/${currentChatId}`), {
+            with: me.uid, name: myName, photo: myPhoto, lastMessage: '🎤 Áudio', ts: Date.now(), unread: true
+          });
+        } catch(e){ console.error('audio dm error:', e); }
+        recBtn.textContent = '🎤'; recBtn.classList.remove('recording');
+      };
+      dmRec.start();
+      dmRecording = true;
+      recBtn.textContent = '⏹'; recBtn.classList.add('recording');
+    } catch(e){
+      recBtn.textContent = '🎤'; alert('Microfone não permitido.');
+    }
+  };
+  const stopRec = () => {
+    if(!dmRecording) return;
+    dmRec?.stop(); dmRecording = false;
+  };
+  // Desktop
+  recBtn.addEventListener('mousedown', startRec);
+  recBtn.addEventListener('mouseup', stopRec);
+  recBtn.addEventListener('mouseleave', stopRec);
+  // Mobile
+  recBtn.addEventListener('touchstart', e => { e.preventDefault(); startRec(); });
+  recBtn.addEventListener('touchend',   e => { e.preventDefault(); stopRec(); });
+}
 </script>
 </body>
 </html>
