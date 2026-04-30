@@ -422,6 +422,14 @@ function contactRow(icon, label, href, color){
   return '<div class="contact-row"><div class="contact-label"><span style="font-size:1.4rem">'+icon+'</span><span>'+label+'</span></div><a class="btn" href="'+href+'" target="_blank" style="background:'+color+'">Abrir</a></div>';
 }
 
+// ── ID PERMANENTE — deve ser o PRIMEIRO dado inicializado ──────────────────
+// stableId persiste no localStorage; uid é apenas dado informativo do auth
+let _myPid = localStorage.getItem('spes_pid');
+if(!_myPid){
+  _myPid = 'p_' + Math.random().toString(36).slice(2) + Date.now().toString(36);
+  localStorage.setItem('spes_pid', _myPid);
+}
+
 // ── CHAT FIREBASE ──
 const NICK_KEY = 'spes_chat_nick';
 let lastCount = 0;
@@ -646,7 +654,7 @@ onAuthStateChanged(auth, async user => {
   }
 
   // Ativar badge de msgs nao lidas
-  watchUnread(user.uid);
+  watchUnread(_myPid); // usa _myPid, nunca user.uid
 
   // Atualizar nome exibido quando digita apelido
   document.getElementById('chat-nick')?.addEventListener('input', function(){
@@ -669,13 +677,8 @@ onAuthStateChanged(auth, async user => {
 // Restaurar nick salvo
 const savedNick = localStorage.getItem('spes_chat_nick');
 if(savedNick){ const el=document.getElementById('chat-nick'); if(el) el.value=savedNick; }
-
-// ID PERMANENTE - nao muda entre sessoes (resolve DM history)
-let _myPid = localStorage.getItem('spes_pid');
-if(!_myPid){ _myPid = 'p_' + Math.random().toString(36).slice(2) + Date.now().toString(36); localStorage.setItem('spes_pid', _myPid); }
-
-// Login anonimo automatico na primeira visita
-signInAnonymously(auth).catch(()=>{});
+// NOTA: _myPid ja foi inicializado no topo do modulo
+// NOTA: signInAnonymously so roda dentro do if(!user) no onAuthStateChanged acima
 
 // ── PRESENCA ONLINE ─────────────────────────────────────────────────────────
 let _presenceRef = null;
@@ -683,7 +686,8 @@ let _presenceRef = null;
 onAuthStateChanged(auth, user => {
   // segundo listener: atualiza presenca quando auth muda
   if(!user || !radioId) return;
-  if(_presenceRef) return; // ja registrado
+  // Limpa presenca anterior (permite re-registro no login Google apos anonimo)
+  if(_presenceRef){ remove(_presenceRef).catch(()=>{}); _presenceRef = null; }
   _presenceRef = ref(db, 'radioPresence/' + radioId + '/' + _myPid); // usa stableId como chave
   const payload = {
     uid:      user.uid,
@@ -805,7 +809,26 @@ window.showMiniProfile = function(uid, evt){
 
 // Bolha do chat (online OU offline)
 window.showMiniProfileFromMsg = function(stableId, name, photo, evt){
+  // Se stableId e uma chave Firebase (comeca com '-'), a mensagem e antiga e nao tem identidade real
+  // Nao abre DM — evita historico falso
+  const isLegacyKey = stableId.startsWith('-') || stableId.match(/^\d+$/);
   const online = Object.values(window._onlinePeers).find(u => u.pid === stableId || u.uid === stableId);
+  if(isLegacyKey && !online){
+    // Mostra apenas nome, sem DM
+    _mpUser = { stableId: null, pid: null, name, photo };
+    const popup = document.getElementById('mini-profile');
+    document.getElementById('mp-name').textContent = name || 'Ouvinte';
+    const av = document.getElementById('mp-av');
+    av.innerHTML = photo ? `<img src="${photo}" alt="">` : (name||'?')[0].toUpperCase();
+    document.getElementById('mp-radio').style.display = 'none';
+    document.getElementById('mp-link').href = '#';
+    document.querySelector('.mp-btn-msg').style.display = 'none';
+    document.querySelector('.mp-btn-invite').style.display = 'none';
+    if(evt){ popup.style.left=Math.min(evt.clientX,window.innerWidth-260)+'px'; popup.style.top=Math.min(evt.clientY+8,window.innerHeight-180)+'px'; }
+    document.getElementById('mp-overlay').style.display = 'block';
+    popup.classList.add('show');
+    return;
+  }
   const u = online || { stableId, pid: stableId, name, photo };
   window._showMiniProfileCore(u, evt);
 };
@@ -866,7 +889,8 @@ window.openDM = function(uid, name, photo, pid){
   document.getElementById('dm-panel').classList.add('open');
   document.getElementById('dm-overlay').classList.add('show');
   // Marcar como lida
-  set(ref(db, `userInbox/${auth.currentUser.uid}/${_dmChatId}/unread`), false).catch(()=>{});
+  // usa _myPid, nunca auth.currentUser.uid
+  set(ref(db, `userInbox/${_myPid}/${_dmChatId}/unread`), false).catch(()=>{});
   // Desconectar listener anterior
   if(_dmListener){ _dmListener(); _dmListener=null; }
   if(_dmTypingListener){ _dmTypingListener(); _dmTypingListener=null; }
@@ -961,11 +985,13 @@ if(dmMic){
           await uploadBytes(sr,blob);
           const url=await getDownloadURL(sr);
           const me=auth.currentUser;
+          const myName=me?.displayName||localStorage.getItem('spes_chat_nick')||'Usuário';
+          // usa _myPid e _dmWithPid, nunca uid
           await push(ref(db,`directChats/${_dmChatId}/messages`),{
-            from:me.uid,fromName:me.displayName||'Usuário',to:_dmWithUid,type:'audio',audioUrl:url,ts:Date.now()
+            from:_myPid,fromName:myName,to:_dmWithPid||_dmWithUid,type:'audio',audioUrl:url,ts:Date.now()
           });
-          await set(ref(db,`userInbox/${me.uid}/${_dmChatId}`),{with:_dmWithUid,name:_dmWithName,photo:'',lastMessage:'🎤 Áudio',ts:Date.now()});
-          await set(ref(db,`userInbox/${_dmWithUid}/${_dmChatId}`),{with:me.uid,name:me.displayName||'Usuário',photo:me.photoURL||'',lastMessage:'🎤 Áudio',ts:Date.now(),unread:true});
+          await set(ref(db,`userInbox/${_myPid}/${_dmChatId}`),{with:_dmWithPid||_dmWithUid,name:_dmWithName,photo:'',lastMessage:'🎤 Áudio',ts:Date.now()});
+          await set(ref(db,`userInbox/${_dmWithPid||_dmWithUid}/${_dmChatId}`),{with:_myPid,name:myName,photo:me?.photoURL||'',lastMessage:'🎤 Áudio',ts:Date.now(),unread:true});
         }catch(e){console.error('dm audio',e);}
         dmMic.textContent='🎤';dmMic.classList.remove('recording');
       };
@@ -982,8 +1008,9 @@ if(dmMic){
 }
 
 // Badge de nao lidas - ouvir inbox em tempo real
-function watchUnread(uid){
-  onValue(ref(db, 'userInbox/' + uid), snap => {
+function watchUnread(pid){
+  // pid = _myPid (stableId), nunca user.uid
+  onValue(ref(db, 'userInbox/' + pid), snap => {
     const data = snap.val() || {};
     let count = 0;
     Object.values(data).forEach(ch => { if(ch.unread) count++; });
