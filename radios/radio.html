@@ -928,7 +928,8 @@ window.closeDMPanel = function(){
 };
 
 window.openInboxPage = function(){
-  window.location.href='inbox.html?radio='+radioId;
+  // Usa profile.html como inbox - le userInbox por _myPid corretamente
+  window.location.href = 'profile.html?pid=' + _myPid;
 };
 
 window.sendDMPanel = async function(){
