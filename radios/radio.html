@@ -445,13 +445,15 @@ function renderMsgs(msgs){
       const isNew = !_seenKeys.has(key) && _seenKeys.size > 0;
       const avatarHtml = m.photo ? `<img class="bubble-avatar" src="${m.photo}" alt="">` : '🎙️ ';
       const verifiedBadge = m.verified ? '<span class="badge-verified" style="font-size:.65rem;padding:1px 5px">✓</span>' : '';
-      const head = `<div class="bubble-head"><span class="bubble-nick">${avatarHtml}${esc(m.apelido||'?')}${verifiedBadge}</span><span class="bubble-time">${m.ts?fmt(m.ts):''}</span></div>`;
+      const safeApelido = (m.apelido||'').replace(/'/g,'&#39;');
+      const safeMensagem = (m.mensagem||'').replace(/'/g,'&#39;');
+      const safeStableId = (m.stableId||key).replace(/'/g,'');
+      const safePhoto    = (m.photo||'').replace(/'/g,'');
+      const actions = `<div class="msg-actions"><button class="share-msg-btn" onclick="window.shareMsg('${safeApelido}','${safeMensagem}','${key}')">🔗 compartilhar</button></div>`;
+      const head = `<div class="bubble-head" onclick="window.showMiniProfileFromMsg('${safeStableId}','${safeApelido}','${safePhoto}',event)" style="cursor:pointer;user-select:none"><span class="bubble-nick">${avatarHtml}${esc(m.apelido||'?')}${verifiedBadge}</span><span class="bubble-time">${m.ts?fmt(m.ts):''}</span></div>`;
       const body = m.tipo === 'audio'
         ? `<div class="bubble-type">🎤 Mensagem de voz</div><audio controls src="${m.audioUrl||''}" preload="none"></audio>`
         : `<div class="bubble-text">${esc(m.mensagem||'')}</div>`;
-      const safeApelido = (m.apelido||'').replace(/'/g,'&#39;');
-      const safeMensagem = (m.mensagem||'').replace(/'/g,'&#39;');
-      const actions = `<div class="msg-actions"><button class="share-msg-btn" onclick="window.shareMsg('${safeApelido}','${safeMensagem}','${key}')">🔗 compartilhar</button></div>`;
       return `<div class="bubble bubble-${m.tipo||'text'} ${i%2?'alt':''} ${isNew?'new-msg':''}" data-id="${key}">${head}${body}${actions}</div>`;
     }).join('');
     if(total > LIMIT_INITIAL){
@@ -533,7 +535,7 @@ window.sendMsg = async function(){
   const btn = document.getElementById('chat-send');
   if(btn) btn.disabled = true;
   try{
-    await push(ref(db,'chats/'+radioId+'/msgs'), { apelido: nick.slice(0,30), mensagem: msg.slice(0,500), ts: Date.now(), photo: photo||'', verified: isGoogle });
+    await push(ref(db,'chats/'+radioId+'/msgs'), { apelido: nick.slice(0,30), mensagem: msg.slice(0,500), ts: Date.now(), photo: photo||'', verified: isGoogle, stableId: _myPid });
     if(inputEl) inputEl.value='';
     if(statusEl) statusEl.textContent='';
   } catch(e){
@@ -577,7 +579,7 @@ window.toggleMic = async function(){
           const storageRef = sref(storage, fname);
           await uploadBytes(storageRef, blob);
           const url = await getDownloadURL(storageRef);
-          await push(ref(db,'chats/'+radioId+'/msgs'), { apelido:nick.slice(0,30), tipo:'audio', audioUrl:url, mensagem:'', ts:Date.now() });
+          await push(ref(db,'chats/'+radioId+'/msgs'), { apelido:nick.slice(0,30), tipo:'audio', audioUrl:url, mensagem:'', ts:Date.now(), stableId:_myPid });
           if(st) st.textContent = '';
         } catch(e){ if(st){st.textContent='Erro no upload.';st.style.color='#ef5350';} }
       };
@@ -682,7 +684,7 @@ onAuthStateChanged(auth, user => {
   // segundo listener: atualiza presenca quando auth muda
   if(!user || !radioId) return;
   if(_presenceRef) return; // ja registrado
-  _presenceRef = ref(db, 'radioPresence/' + radioId + '/' + user.uid);
+  _presenceRef = ref(db, 'radioPresence/' + radioId + '/' + _myPid); // usa stableId como chave
   const payload = {
     uid:      user.uid,
     pid:      _myPid,
@@ -742,6 +744,7 @@ onAuthStateChanged(auth, user => {
 document.getElementById('chat-nick')?.addEventListener('input', function(){
   if(_presenceRef) set(_presenceRef, {
     uid: auth.currentUser?.uid || 'anon',
+    pid: _myPid,
     name: this.value || 'Ouvinte',
     photo: '',
     online: true,
@@ -757,23 +760,23 @@ let _dmRec = null, _dmChunks = [], _dmRecording = false;
 // ── MINI PROFILE POPUP ───────────────────────────────────────────────────────
 let _mpUser = null;
 
-window.showMiniProfile = function(uid, evt){
-  const u = window._onlinePeers[uid];
+// showMiniProfile - funciona com ou sem usuario online
+window._showMiniProfileCore = function(u, evt){
   if(!u) return;
-  const isMe = u.pid === _myPid || u.uid === auth.currentUser?.uid;
+  const isMe = u.pid === _myPid || u.uid === auth.currentUser?.uid || u.stableId === _myPid;
   _mpUser = u;
   document.getElementById('mp-name').textContent = u.name || 'Ouvinte';
   const av = document.getElementById('mp-av');
   av.innerHTML = u.photo ? `<img src="${u.photo}" alt="">` : (u.name||'?')[0].toUpperCase();
   const radioEl = document.getElementById('mp-radio');
-  radioEl.textContent = u.name && (document.getElementById('radio-nome')?.textContent) ? '📻 Ouvindo: ' + (document.getElementById('radio-nome')?.textContent || '') : '';
+  const radioName = document.getElementById('radio-nome')?.textContent || '';
+  radioEl.textContent = radioName ? '📻 Ouvindo: ' + radioName : '';
   radioEl.style.display = radioEl.textContent ? 'block' : 'none';
-  document.getElementById('mp-link').href = 'profile.html?pid=' + (u.pid || u.uid);
-  // Posicionar proximo ao clique
+  document.getElementById('mp-link').href = 'profile.html?pid=' + (u.pid || u.stableId || u.uid);
   const popup = document.getElementById('mini-profile');
   if(evt){
     const x = Math.min(evt.clientX, window.innerWidth - 260);
-    const y = Math.min(evt.clientY + 8, window.innerHeight - 200);
+    const y = Math.min(evt.clientY + 8, window.innerHeight - 220);
     popup.style.left = x + 'px';
     popup.style.top  = y + 'px';
   }
@@ -794,10 +797,24 @@ window.closeMiniProfile = function(){
   _mpUser = null;
 };
 
+// Sidebar (usuario online)
+window.showMiniProfile = function(uid, evt){
+  const u = window._onlinePeers[uid];
+  if(u) window._showMiniProfileCore(u, evt);
+};
+
+// Bolha do chat (online OU offline)
+window.showMiniProfileFromMsg = function(stableId, name, photo, evt){
+  const online = Object.values(window._onlinePeers).find(u => u.pid === stableId || u.uid === stableId);
+  const u = online || { stableId, pid: stableId, name, photo };
+  window._showMiniProfileCore(u, evt);
+};
+
 window.miniProfileDM = function(){
   if(!_mpUser) return;
   window.closeMiniProfile();
-  window.openDM(_mpUser.uid, _mpUser.name, _mpUser.photo, _mpUser.pid || _mpUser.uid);
+  const pid = _mpUser.pid || _mpUser.stableId || _mpUser.uid;
+  window.openDM(_mpUser.uid || pid, _mpUser.name, _mpUser.photo, pid);
 };
 
 window.miniProfileInvite = function(){
