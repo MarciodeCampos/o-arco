@@ -614,6 +614,10 @@ onAuthStateChanged(auth, async user => {
 const savedNick = localStorage.getItem('spes_chat_nick');
 if(savedNick){ const el=document.getElementById('chat-nick'); if(el) el.value=savedNick; }
 
+// ID PERMANENTE - nao muda entre sessoes (resolve DM history)
+let _myPid = localStorage.getItem('spes_pid');
+if(!_myPid){ _myPid = 'p_' + Math.random().toString(36).slice(2) + Date.now().toString(36); localStorage.setItem('spes_pid', _myPid); }
+
 // Login anonimo automatico na primeira visita
 signInAnonymously(auth).catch(()=>{});
 
@@ -627,6 +631,7 @@ onAuthStateChanged(auth, user => {
   _presenceRef = ref(db, 'radioPresence/' + radioId + '/' + user.uid);
   const payload = {
     uid:      user.uid,
+    pid:      _myPid,
     name:     user.displayName || (localStorage.getItem('spes_chat_nick') || 'Ouvinte'),
     photo:    user.photoURL    || '',
     online:   true,
@@ -663,7 +668,7 @@ onAuthStateChanged(auth, user => {
         const avatar = u.photo
           ? `<img src="${u.photo}" alt="">`
           : `<div class="su-av">${(u.name||'?')[0].toUpperCase()}</div>`;
-        return `<div class="sidebar-user" onclick="window.openDM('${u.uid}','${(u.name||'Ouvinte').replace(/'/g,'')}')">
+        return `<div class="sidebar-user" onclick="window.openDM('${u.uid}','${(u.name||'Ouvinte').replace(/'/g,'')}','','${u.pid||u.uid}')">
           ${avatar}
           <div><span>${u.name||'Ouvinte'}</span>${isMe?'<span class="su-me">você</span>':''}</div>
         </div>`;
@@ -684,17 +689,21 @@ document.getElementById('chat-nick')?.addEventListener('input', function(){
 });
 
 // DM OVERLAY PANEL
-let _dmChatId = null, _dmWithUid = null, _dmWithName = null, _dmListener = null, _dmTypingListener = null;
+let _dmChatId = null, _dmWithUid = null, _dmWithName = null, _dmWithPid = null, _dmListener = null, _dmTypingListener = null;
 let _dmRec = null, _dmChunks = [], _dmRecording = false;
 
 function dmChatId(a,b){ return [a,b].sort().join('_'); }
 function dmFmt(ts){ return new Date(ts).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}); }
 
-window.openDM = function(uid, name, photo){
-  if(!uid || uid === auth.currentUser?.uid) return;
+window.openDM = function(uid, name, photo, pid){
+  if(!uid) return;
+  const myPid = _myPid;
+  const theirPid = pid || uid; // pid permanente deles, ou uid como fallback
+  if(theirPid === myPid) return; // nao abre DM com si mesmo
   _dmWithUid  = uid;
   _dmWithName = name;
-  _dmChatId   = dmChatId(auth.currentUser.uid, uid);
+  _dmChatId   = dmChatId(myPid, theirPid); // usa PIDs permanentes
+  _dmWithPid  = theirPid;
   document.getElementById('dm-name').textContent = name || 'Usuário';
   document.getElementById('dm-av').innerHTML = photo
     ? `<img src="${photo}" alt="">`
@@ -712,7 +721,7 @@ window.openDM = function(uid, name, photo){
     const msgs = Object.values(data).sort((a,b)=>(a.ts||0)-(b.ts||0));
     const box  = document.getElementById('dm-msgs');
     box.innerHTML = msgs.map(m=>{
-      const mine = m.from===auth.currentUser?.uid;
+      const mine = m.from===_myPid;
       const body = m.type==='audio'
         ? `<div style="font-size:.68rem;color:#c4b5fd;margin-bottom:2px">🎤 Áudio</div><audio controls src="${m.audioUrl}" preload="none"></audio>`
         : esc(m.text||'');
@@ -747,13 +756,13 @@ window.sendDMPanel = async function(){
   const me = auth.currentUser;
   try{
     await push(ref(db,`directChats/${_dmChatId}/messages`),{
-      from:me.uid, fromName:me.displayName||'Usuário', to:_dmWithUid, text, ts:Date.now()
+      from:_myPid, fromName:me.displayName||localStorage.getItem('spes_chat_nick')||'Usuário', to:_dmWithPid||_dmWithUid, text, ts:Date.now()
     });
-    await set(ref(db,`userInbox/${me.uid}/${_dmChatId}`),{
-      with:_dmWithUid,name:_dmWithName,photo:'',lastMessage:text,ts:Date.now()
+    await set(ref(db,`userInbox/${_myPid}/${_dmChatId}`),{
+      with:_dmWithPid||_dmWithUid,name:_dmWithName,photo:'',lastMessage:text,ts:Date.now()
     });
-    await set(ref(db,`userInbox/${_dmWithUid}/${_dmChatId}`),{
-      with:me.uid,name:me.displayName||'Usuário',photo:me.photoURL||'',lastMessage:text,ts:Date.now(),unread:true
+    await set(ref(db,`userInbox/${_dmWithPid||_dmWithUid}/${_dmChatId}`),{
+      with:_myPid,name:me.displayName||localStorage.getItem('spes_chat_nick')||'Usuário',photo:me.photoURL||'',lastMessage:text,ts:Date.now(),unread:true
     });
     inp.value='';
   }catch(e){console.error('sendDM',e);}
