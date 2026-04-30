@@ -123,7 +123,7 @@ header h1{font-size:1rem;font-weight:700;color:#e2e8f0;flex:1}
 
   <!-- INBOX (só para o próprio perfil) -->
   <div id="inbox-section" style="display:none">
-    <div class="section-title">💬 Conversas</div>
+    <div class="section-title">👥 Contatos &amp; Conversas</div>
     <div class="conv-list" id="conv-list"><div class="loading">Carregando conversas...</div></div>
   </div>
 
@@ -147,14 +147,15 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import { getDatabase, ref, onValue, set, get, push, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 import { getAuth, signInAnonymously, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+// Mesmo Firebase do radio.html - banco unificado triadic-radios
 const firebaseConfig = {
-  apiKey:"AIzaSyD3sWsZJPz-p6i3G2VzBHcnDuBMxasNhxE",
-  authDomain:"triadiclife.firebaseapp.com",
-  databaseURL:"https://triadiclife-default-rtdb.firebaseio.com",
-  projectId:"triadiclife",
-  storageBucket:"triadiclife.appspot.com",
-  messagingSenderId:"248890474038",
-  appId:"1:248890474038:web:3e70bc27474eebe6b9b3cd"
+  apiKey: "AIzaSyDa0XWSvNISi47olox7U2HHawf3pf1rOjI",
+  authDomain: "triadic-radios.firebaseapp.com",
+  databaseURL: "https://triadic-radios-default-rtdb.firebaseio.com",
+  projectId: "triadic-radios",
+  storageBucket: "triadic-radios.firebasestorage.app",
+  messagingSenderId: "574115949337",
+  appId: "1:574115949337:web:527670aa35d9bb939f3388"
 };
 
 const app  = initializeApp(firebaseConfig);
