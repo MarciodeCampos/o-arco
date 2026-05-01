@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title id="pg-title">Comércios Locais | triadic.life</title>
+  <meta name="description" content="Diretório de comércios locais — encontre lojas, restaurantes e serviços na sua cidade.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="business.css">
+</head>
+<body>
+
+<header>
+  <a href="/" class="header-logo">🏙️ CIDADE<span>ONLINE</span></a>
+  <nav class="header-nav">
+    <a href="/radios/radio.html?id=12177">📻 Rádio</a>
+    <a href="/radios/profile.html" class="header-profile-link" id="header-profile-link" style="display:none">👤 Meu Perfil</a>
+  </nav>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>🏪 Comércios Locais</h1>
+      <p>Encontre lojas, restaurantes e serviços na sua cidade.</p>
+    </div>
+  </section>
+
+  <!-- FILTERS -->
+  <div class="filters-bar container">
+    <div class="filter-row">
+      <select id="filter-uf" class="filter-select"><option value="">Todos os estados</option></select>
+      <select id="filter-city" class="filter-select" disabled><option value="">Todas as cidades</option></select>
+      <select id="filter-category" class="filter-select"><option value="">Todas as categorias</option></select>
+    </div>
+    <div class="filter-row">
+      <input id="filter-name" class="filter-input" type="text" placeholder="🔍 Buscar por nome...">
+      <label class="filter-toggle"><input type="checkbox" id="filter-whatsapp"> Só com WhatsApp</label>
+      <label class="filter-toggle"><input type="checkbox" id="filter-claimed"> Só verificados</label>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="container">
+    <div class="results-meta" id="results-meta"></div>
+    <div class="biz-grid" id="biz-grid">
+      <div class="empty-state"><span>⏳</span>Carregando comércios...</div>
+    </div>
+  </div>
+</main>
+
+<script type="module" src="business-logic.js"></script>
+</body>
+</html>
