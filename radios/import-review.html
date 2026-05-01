@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Painel de Revisão — CIDADEONLINE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="import-review.css">
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <span class="logo">🏙️ CIDADE<span>ONLINE</span></span>
+    <span class="header-tag">Painel de Revisão</span>
+  </div>
+  <div class="header-right">
+    <a href="business.html">🏪 Diretório</a>
+    <div class="admin-gate" id="admin-gate">
+      <input id="admin-key-input" type="password" placeholder="Chave de operador">
+      <button onclick="setAdminKey()">Entrar</button>
+    </div>
+    <span id="admin-label" style="display:none;font-size:.78rem;color:#8affc1">✓ Operador ativo</span>
+  </div>
+</header>
+
+<div id="locked-msg" class="locked-msg">
+  <span>🔒</span>
+  <p>Informe a chave de operador para acessar o painel.</p>
+</div>
+
+<main id="main-panel" style="display:none">
+
+  <!-- COUNTERS -->
+  <div class="counters" id="counters">
+    <div class="counter-card" id="cnt-total"><span>0</span>Total</div>
+    <div class="counter-card pending" id="cnt-pending"><span>0</span>Pendentes</div>
+    <div class="counter-card published" id="cnt-published"><span>0</span>Publicados</div>
+    <div class="counter-card rejected" id="cnt-rejected"><span>0</span>Rejeitados</div>
+    <div class="counter-card duplicate" id="cnt-duplicate"><span>0</span>Duplicatas</div>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="filters-bar">
+    <input id="f-name" class="f-input" type="text" placeholder="🔍 Buscar por nome...">
+    <select id="f-uf" class="f-select"><option value="">Todos os estados</option></select>
+    <select id="f-city" class="f-select" disabled><option value="">Todas as cidades</option></select>
+    <select id="f-type" class="f-select">
+      <option value="">Todos os tipos</option>
+      <option value="commerce">🏪 Comércio</option>
+      <option value="radio">📻 Rádio</option>
+      <option value="service">⚙️ Serviço</option>
+      <option value="church">⛪ Igreja</option>
+      <option value="school">🏫 Escola</option>
+      <option value="realstate">🏠 Imobiliária</option>
+      <option value="news">📰 Portal</option>
+      <option value="creator">🎙️ Criador</option>
+    </select>
+    <select id="f-status" class="f-select">
+      <option value="pending">⏳ Pendentes</option>
+      <option value="published">✅ Publicados</option>
+      <option value="rejected">❌ Rejeitados</option>
+      <option value="duplicate">🔁 Duplicatas</option>
+      <option value="">Todos</option>
+    </select>
+    <button class="btn-seed" onclick="runSeed()" title="Executar seed inicial">🌱 Seed</button>
+  </div>
+
+  <!-- CANDIDATE LIST -->
+  <div class="results-meta" id="results-meta"></div>
+  <div class="candidates-list" id="candidates-list">
+    <div class="empty-state"><span>⏳</span>Carregando candidatos...</div>
+  </div>
+
+</main>
+
+<!-- DUPLICATE MODAL -->
+<div id="dup-modal" class="modal-overlay" style="display:none">
+  <div class="modal-box">
+    <div class="modal-title">🔁 Marcar como Duplicata</div>
+    <p style="font-size:.83rem;color:#94a3b8;margin-bottom:12px">Informe o profileId do original (opcional):</p>
+    <input id="dup-of-input" class="f-input" type="text" placeholder="profileId do original (opcional)">
+    <div style="display:flex;gap:8px;margin-top:14px">
+      <button class="btn-action btn-dup" onclick="confirmDuplicate()">Confirmar</button>
+      <button class="btn-action btn-reject" onclick="closeDupModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="import-review-logic.js"></script>
+</body>
+</html>
