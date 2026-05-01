@@ -219,6 +219,44 @@ function listenLinktree(pid, user){
   });
 }
 
+// ── MEDIA HELPERS ─────────────────────────────────────────────────────────────
+function extractYouTubeId(url){
+  try{
+    const u=new URL(url);
+    if(u.hostname.includes('youtu.be')) return u.pathname.slice(1).split('?')[0];
+    if(u.hostname.includes('youtube.com')){
+      if(u.pathname.includes('/shorts/')) return u.pathname.split('/shorts/')[1].split('?')[0];
+      return u.searchParams.get('v');
+    }
+  }catch(e){}
+  return null;
+}
+function getMediaType(url){
+  if(!url) return 'link';
+  const u=url.toLowerCase();
+  if(u.includes('youtu.be/')||u.includes('youtube.com/')) return 'youtube';
+  if(u.includes('instagram.com/')) return 'instagram';
+  if(u.includes('tiktok.com/')) return 'tiktok';
+  if(u.includes('facebook.com/')||u.includes('fb.watch/')) return 'facebook';
+  if(u.includes('suno.ai/')||u.includes('suno.com/')) return 'suno';
+  if(u.includes('soundcloud.com/')) return 'soundcloud';
+  if(u.includes('spotify.com/')) return 'spotify';
+  return 'link';
+}
+const MEDIA_ICONS={youtube:'▶️',instagram:'📸',tiktok:'🎵',facebook:'📘',suno:'🎵',soundcloud:'🎧',spotify:'🎵',link:'🔗'};
+const MEDIA_LABELS={youtube:'YouTube',instagram:'Instagram',tiktok:'TikTok',facebook:'Facebook',suno:'Suno',soundcloud:'SoundCloud',spotify:'Spotify',link:'Link'};
+
+function renderPostMedia(url){
+  if(!url) return '';
+  const type=getMediaType(url);
+  const safe=esc(normalizeUrl(url));
+  if(type==='youtube'){
+    const vid=extractYouTubeId(url);
+    if(vid) return `<div class="post-embed-wrap"><iframe class="post-yt" src="https://www.youtube.com/embed/${esc(vid)}?rel=0" allow="autoplay;encrypted-media;picture-in-picture" allowfullscreen loading="lazy"></iframe></div>`;
+  }
+  return `<div class="post-preview-card"><div class="ppc-icon">${MEDIA_ICONS[type]||'🔗'}</div><div class="ppc-info"><strong>${MEDIA_LABELS[type]||'Link'}</strong><div class="ppc-url">${esc(url)}</div></div><a class="ppc-btn" href="${safe}" target="_blank" rel="noopener">Abrir →</a></div>`;
+}
+
 // ── POSTS ─────────────────────────────────────────────────────────────────────
 function listenPosts(pid){
   onValue(ref(db,'profilePosts/'+pid), snap => {
@@ -231,13 +269,37 @@ function listenPosts(pid){
     if(!posts.length){ sec.style.display='none'; return; }
     sec.style.display='block';
     list.innerHTML = posts.map(p=>`
-      <div class="post-card">
+      <div class="post-card" data-id="${esc(p.postId)}">
         ${p.text?`<div class="post-text">${esc(p.text)}</div>`:''}
-        ${p.url?`<div><a class="post-link" href="${esc(normalizeUrl(p.url))}" target="_blank" rel="noopener">${esc(p.url)}</a></div>`:''}
+        ${renderPostMedia(p.url)}
         <div class="post-time">${fmt(p.createdAt)}</div>
       </div>`).join('');
   });
 }
+
+// ── CREATE POST ───────────────────────────────────────────────────────────────
+window.createPost = async function(){
+  if(!currentProfile||!auth.currentUser) return;
+  if(!isProfileOwner(currentProfile,auth.currentUser)) return;
+  const textEl=document.getElementById('post-text-input');
+  const urlEl=document.getElementById('post-url-input');
+  const text=textEl?.value.trim();
+  const url=urlEl?.value.trim();
+  if(!text&&!url){ alert('Escreva algo ou cole um link.'); return; }
+  const mediaType=getMediaType(url);
+  await push(ref(db,'profilePosts/'+currentProfile.profileId),{
+    type: url?'video_embed':'text',
+    text: text||'',
+    url:  url?normalizeUrl(url):'',
+    mediaType,
+    createdAt:Date.now(),
+    createdBy:auth.currentUser.uid
+  });
+  if(textEl) textEl.value='';
+  if(urlEl)  urlEl.value='';
+};
+
+
 
 // ── PRESENCE ──────────────────────────────────────────────────────────────────
 function listenPresence(pid){
@@ -499,8 +561,10 @@ function isProfileOwner(profile, user){
 
 function renderOwnerControls(profile, user){
   const sec = document.getElementById('link-manager-section');
-  if(!sec) return;
-  sec.style.display = isProfileOwner(profile, user) ? 'block' : 'none';
+  const postSec = document.getElementById('post-create-section');
+  const isOwner = isProfileOwner(profile, user);
+  if(sec) sec.style.display = isOwner ? 'block' : 'none';
+  if(postSec) postSec.style.display = isOwner ? 'block' : 'none';
 }
 
 function renderLinkManager(links){

@@ -133,6 +133,16 @@
     <div class="social-pills" id="social-pills"></div>
   </div>
 
+  <!-- POST CREATE (owner only) -->
+  <div class="section" id="post-create-section" style="display:none">
+    <div class="section-title">✏️ Nova Publicação</div>
+    <div class="post-form">
+      <textarea id="post-text-input" placeholder="Escreva algo... (opcional)"></textarea>
+      <input id="post-url-input" type="text" placeholder="Cole link: YouTube, Instagram, TikTok, Suno...">
+      <button class="btn-primary" onclick="createPost()">Publicar</button>
+    </div>
+  </div>
+
   <!-- POSTS SECTION -->
   <div class="section" id="posts-section" style="display:none">
     <div class="section-title">📋 Publicações</div>

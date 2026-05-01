@@ -154,3 +154,23 @@ header h1{font-size:1rem;font-weight:700;color:#e2e8f0;flex:1}
 .lm-btn.danger:hover{background:rgba(239,83,80,.3)}
 .lm-btn.success{background:rgba(34,197,94,.15);color:#86efac}
 .lm-btn.success:hover{background:rgba(34,197,94,.3)}
+
+/* POST FORM */
+.post-form{display:grid;gap:8px}
+.post-form textarea{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#e2e8f0;padding:9px 12px;font-family:inherit;font-size:.85rem;outline:none;resize:vertical;min-height:60px}
+.post-form input{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#e2e8f0;padding:9px 12px;font-family:inherit;font-size:.85rem;outline:none}
+.post-form textarea:focus,.post-form input:focus{border-color:#7c6ef7}
+
+/* POST EMBED */
+.post-embed-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;margin-top:10px;background:#000}
+.post-yt{position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:12px}
+
+/* POST PREVIEW CARD */
+.post-preview-card{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:12px 14px;margin-top:10px}
+.ppc-icon{font-size:1.5rem;flex-shrink:0}
+.ppc-info{flex:1;min-width:0}
+.ppc-info strong{font-size:.85rem;font-weight:700;display:block}
+.ppc-url{font-size:.7rem;color:#64748b;word-break:break-all;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ppc-btn{flex-shrink:0;background:linear-gradient(135deg,#7c6ef7,#a78bfa);color:#fff;border:none;border-radius:8px;padding:7px 14px;cursor:pointer;font-weight:700;font-size:.78rem;font-family:inherit;text-decoration:none;white-space:nowrap}
+.ppc-btn:hover{opacity:.85}
+
