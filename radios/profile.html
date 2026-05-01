@@ -57,8 +57,10 @@
     </select>
     <label>Categoria</label>
     <input id="edit-category" type="text" placeholder="Ex: Supermercado, DJ, Fotógrafo...">
-    <label>Cidade / UF</label>
-    <input id="edit-city" type="text" placeholder="Ex: Francisco Beltrão / PR">
+    <label>Estado</label>
+    <select id="edit-uf"><option value="">Selecione o estado</option></select>
+    <label>Cidade</label>
+    <select id="edit-city" disabled><option value="">Selecione primeiro o estado</option></select>
     <label>Bio</label>
     <textarea id="edit-bio" placeholder="Sobre você ou seu negócio..."></textarea>
     <label>Instagram</label>
@@ -84,6 +86,39 @@
       <small>Entre com Google para acessar suas conversas em qualquer lugar e ter um perfil verificado.</small>
     </div>
     <button class="btn-google" onclick="loginGoogle()">Entrar com Google</button>
+  </div>
+
+  <!-- LINK MANAGER (owner only) -->
+  <div class="section" id="link-manager-section" style="display:none">
+    <div class="section-title">⚙️ Gerenciar Central de Links</div>
+    <div class="link-form">
+      <input id="link-title-input" type="text" placeholder="Título do link">
+      <input id="link-url-input" type="text" placeholder="URL">
+      <select id="link-type-input">
+        <option value="custom">Link personalizado</option>
+        <option value="whatsapp">WhatsApp</option>
+        <option value="instagram">Instagram</option>
+        <option value="youtube">YouTube</option>
+        <option value="tiktok">TikTok</option>
+        <option value="facebook">Facebook</option>
+        <option value="website">Site</option>
+        <option value="google_maps">Mapa</option>
+        <option value="menu">Cardápio</option>
+        <option value="catalog">Catálogo</option>
+        <option value="store">Loja</option>
+        <option value="booking">Agendamento</option>
+        <option value="radio">Rádio</option>
+        <option value="live">Ao vivo</option>
+        <option value="video">Vídeo</option>
+        <option value="post">Post</option>
+        <option value="playlist">Playlist</option>
+        <option value="payment">Pagamento</option>
+        <option value="spotify">Spotify</option>
+        <option value="telegram">Telegram</option>
+      </select>
+      <button class="btn-primary" id="add-link-btn">+ Adicionar link</button>
+    </div>
+    <div id="link-manager-list"></div>
   </div>
 
   <!-- LINKTREE SECTION -->

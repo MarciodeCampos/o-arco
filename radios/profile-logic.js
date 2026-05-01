@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, onValue, set, get, push, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getDatabase, ref, onValue, set, get, push, update, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 import { getAuth, signInAnonymously, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
@@ -19,10 +19,12 @@ const auth = getAuth(app);
 const params    = new URLSearchParams(location.search);
 const targetPid = params.get('pid') || '';
 
-let _myPid     = localStorage.getItem('spes_pid') || '';
-let _myChatId  = null;
-let _theirPid  = null;
+let _myPid      = localStorage.getItem('spes_pid') || '';
+let _myChatId   = null;
+let _theirPid   = null;
 let _dmListener = null;
+let currentProfile = null;
+let currentLinks   = [];
 
 // ── HELPERS ───────────────────────────────────────────────────────────────────
 function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
@@ -107,18 +109,24 @@ function loadPage(pid, user){
     const isGoogle = user.providerData && user.providerData.length > 0;
     if(!isGoogle) document.getElementById('login-banner').style.display = 'flex';
     loadInbox();
-    document.getElementById('edit-section') && fillEditFields();
+    fillEditFields();
+    loadStates();
   }
+
+  // Init add-link button
+  document.getElementById('add-link-btn')?.addEventListener('click', addProfileLink);
 
   // Listen profile
   onValue(ref(db,'profiles/'+pid), snap => {
     const p = snap.val();
     if(!p){ renderNotFound(); return; }
+    currentProfile = p;
     renderProfile(p, isOwn, user);
+    renderOwnerControls(p, user);
   });
 
   // Listen linktree
-  listenLinktree(pid);
+  listenLinktree(pid, user);
   // Listen posts
   listenPosts(pid);
   // Listen presence
@@ -188,22 +196,26 @@ function renderSocialLinks(p){
 }
 
 // ── LINKTREE ──────────────────────────────────────────────────────────────────
-function listenLinktree(pid){
+function listenLinktree(pid, user){
   onValue(ref(db,'profileLinks/'+pid), snap => {
     const data = snap.val()||{};
-    const links = Object.entries(data)
+    currentLinks = Object.entries(data)
       .map(([k,v])=>({linkId:k,...v}))
-      .filter(l=>l.active!==false)
       .sort((a,b)=>(a.order||999)-(b.order||999));
+    const active = currentLinks.filter(l=>l.active!==false);
     const sec = document.getElementById('linktree-section');
     const list = document.getElementById('linktree-list');
-    if(!links.length){ sec.style.display='none'; return; }
-    sec.style.display='block';
-    list.innerHTML = links.map(l=>`
-      <a class="linktree-item lt-${esc(l.type||'custom')}" href="${esc(normalizeUrl(l.url))}" target="_blank" rel="noopener noreferrer">
-        <span class="linktree-title">${esc(l.title||'Link')}</span>
-        <span class="linktree-type">${esc(getLinkTypeLabel(l.type))}</span>
-      </a>`).join('');
+    if(!active.length){ sec.style.display='none'; } else {
+      sec.style.display='block';
+      list.innerHTML = active.map(l=>`
+        <a class="linktree-item lt-${esc(l.type||'custom')}" href="${esc(normalizeUrl(l.url))}" target="_blank" rel="noopener noreferrer">
+          <span class="linktree-title">${esc(l.title||'Link')}</span>
+          <span class="linktree-type">${esc(getLinkTypeLabel(l.type))}</span>
+        </a>`).join('');
+    }
+    if(user && currentProfile && isProfileOwner(currentProfile, user)){
+      renderLinkManager(currentLinks);
+    }
   });
 }
 
@@ -351,7 +363,6 @@ async function fillEditFields(){
   document.getElementById('edit-name').value      = p.name||'';
   document.getElementById('edit-type').value      = p.type||'user';
   document.getElementById('edit-category').value  = p.category||'';
-  document.getElementById('edit-city').value      = p.city||'';
   document.getElementById('edit-bio').value       = p.bio||'';
   document.getElementById('edit-instagram').value = p.instagram||'';
   document.getElementById('edit-youtube').value   = p.youtube||'';
@@ -359,23 +370,34 @@ async function fillEditFields(){
   document.getElementById('edit-facebook').value  = p.facebook||'';
   document.getElementById('edit-whatsapp').value  = p.whatsapp||'';
   document.getElementById('edit-website').value   = p.website||'';
+  // Geo: load states then pre-select saved uf+city
+  await loadStates();
+  if(p.uf){
+    document.getElementById('edit-uf').value = p.uf;
+    await loadCitiesByUf(p.uf, p.citySlug||'');
+  }
 }
 
 window.saveProfile = async function(){
-  const u = auth.currentUser;
+  const ufSel   = document.getElementById('edit-uf');
+  const citySel = document.getElementById('edit-city');
+  const cityOpt = citySel.options[citySel.selectedIndex];
   const data = {
-    name:     document.getElementById('edit-name').value.trim(),
-    type:     document.getElementById('edit-type').value,
-    category: document.getElementById('edit-category').value.trim(),
-    city:     document.getElementById('edit-city').value.trim(),
-    bio:      document.getElementById('edit-bio').value.trim(),
-    instagram:document.getElementById('edit-instagram').value.trim(),
-    youtube:  document.getElementById('edit-youtube').value.trim(),
-    tiktok:   document.getElementById('edit-tiktok').value.trim(),
-    facebook: document.getElementById('edit-facebook').value.trim(),
-    whatsapp: document.getElementById('edit-whatsapp').value.trim(),
-    website:  document.getElementById('edit-website').value.trim(),
-    updatedAt:Date.now()
+    name:      document.getElementById('edit-name').value.trim(),
+    type:      document.getElementById('edit-type').value,
+    category:  document.getElementById('edit-category').value.trim(),
+    uf:        ufSel.value,
+    city:      cityOpt?.dataset.city || citySel.value,
+    citySlug:  citySel.value,
+    stateName: cityOpt?.dataset.stateName || '',
+    bio:       document.getElementById('edit-bio').value.trim(),
+    instagram: document.getElementById('edit-instagram').value.trim(),
+    youtube:   document.getElementById('edit-youtube').value.trim(),
+    tiktok:    document.getElementById('edit-tiktok').value.trim(),
+    facebook:  document.getElementById('edit-facebook').value.trim(),
+    whatsapp:  document.getElementById('edit-whatsapp').value.trim(),
+    website:   document.getElementById('edit-website').value.trim(),
+    updatedAt: Date.now()
   };
   await update(ref(db,'profiles/'+_myPid), data);
   if(data.name) localStorage.setItem('spes_chat_nick', data.name);
@@ -413,4 +435,159 @@ window.scrollToInbox = function(){
 // ── NOT FOUND ─────────────────────────────────────────────────────────────────
 function renderNotFound(){
   document.getElementById('profile-card').innerHTML='<div class="empty-state"><span>🔍</span>Perfil não encontrado</div>';
+}
+
+// ── GEO: ESTADOS BR ───────────────────────────────────────────────────────────
+const BR_STATES = [
+  {uf:'AC',name:'Acre'},{uf:'AL',name:'Alagoas'},{uf:'AP',name:'Amapá'},
+  {uf:'AM',name:'Amazonas'},{uf:'BA',name:'Bahia'},{uf:'CE',name:'Ceará'},
+  {uf:'DF',name:'Distrito Federal'},{uf:'ES',name:'Espírito Santo'},
+  {uf:'GO',name:'Goiás'},{uf:'MA',name:'Maranhão'},{uf:'MT',name:'Mato Grosso'},
+  {uf:'MS',name:'Mato Grosso do Sul'},{uf:'MG',name:'Minas Gerais'},
+  {uf:'PA',name:'Pará'},{uf:'PB',name:'Paraíba'},{uf:'PR',name:'Paraná'},
+  {uf:'PE',name:'Pernambuco'},{uf:'PI',name:'Piauí'},{uf:'RJ',name:'Rio de Janeiro'},
+  {uf:'RN',name:'Rio Grande do Norte'},{uf:'RS',name:'Rio Grande do Sul'},
+  {uf:'RO',name:'Rondônia'},{uf:'RR',name:'Roraima'},{uf:'SC',name:'Santa Catarina'},
+  {uf:'SP',name:'São Paulo'},{uf:'SE',name:'Sergipe'},{uf:'TO',name:'Tocantins'}
+];
+
+async function loadStates(){
+  const sel = document.getElementById('edit-uf');
+  if(!sel) return;
+  sel.innerHTML = '<option value="">Selecione o estado</option>';
+  BR_STATES.forEach(s=>{
+    const o = document.createElement('option');
+    o.value = s.uf; o.textContent = s.name + ' (' + s.uf + ')';
+    sel.appendChild(o);
+  });
+  sel.onchange = async (e) => { await loadCitiesByUf(e.target.value); };
+}
+
+async function loadCitiesByUf(uf, selectedSlug=''){
+  const sel = document.getElementById('edit-city');
+  if(!sel) return;
+  sel.innerHTML = '<option value="">Carregando...</option>';
+  sel.disabled = true;
+  if(!uf){ sel.innerHTML='<option value="">Selecione primeiro o estado</option>'; return; }
+  const snap = await get(ref(db,'geoCities/'+uf));
+  const data = snap.val()||{};
+  const cities = Object.values(data).filter(c=>c.active!==false)
+    .sort((a,b)=>(a.city||'').localeCompare(b.city||''));
+  sel.innerHTML = '<option value="">Selecione a cidade</option>';
+  if(!cities.length){
+    // Fallback: allow free text via hidden input
+    sel.innerHTML = '<option value="">Nenhuma cidade cadastrada para este estado</option>';
+  } else {
+    cities.forEach(c=>{
+      const o = document.createElement('option');
+      o.value = c.citySlug;
+      o.textContent = c.city;
+      o.dataset.city = c.city;
+      o.dataset.uf = c.uf;
+      o.dataset.stateName = c.stateName||BR_STATES.find(s=>s.uf===uf)?.name||'';
+      sel.appendChild(o);
+    });
+    if(selectedSlug) sel.value = selectedSlug;
+  }
+  sel.disabled = false;
+}
+
+// ── LINK MANAGER ──────────────────────────────────────────────────────────────
+function isProfileOwner(profile, user){
+  return !!(user && profile && user.uid && profile.ownerUid && user.uid === profile.ownerUid);
+}
+
+function renderOwnerControls(profile, user){
+  const sec = document.getElementById('link-manager-section');
+  if(!sec) return;
+  sec.style.display = isProfileOwner(profile, user) ? 'block' : 'none';
+}
+
+function renderLinkManager(links){
+  const container = document.getElementById('link-manager-list');
+  if(!container) return;
+  if(!links.length){ container.innerHTML='<div class="empty-state">Nenhum link ainda. Adicione acima.</div>'; return; }
+  container.innerHTML='';
+  links.forEach(link=>{
+    const el = document.createElement('div');
+    el.className='link-manager-item';
+    const isActive = link.active !== false;
+    el.innerHTML=`
+      <div class="link-manager-row">
+        <div class="link-manager-info">
+          <strong>${esc(link.title||'Link')}</strong>
+          <div class="link-manager-url">${esc(link.url||'')}</div>
+          <div class="link-manager-meta">${esc(getLinkTypeLabel(link.type))} · ordem ${link.order||0} · <span class="${isActive?'link-manager-status-on':'link-manager-status-off'}">${isActive?'ativo':'inativo'}</span></div>
+        </div>
+      </div>
+      <div class="link-manager-actions">
+        <button class="lm-btn" data-a="up">↑</button>
+        <button class="lm-btn" data-a="down">↓</button>
+        <button class="lm-btn" data-a="edit">Editar</button>
+        <button class="lm-btn ${isActive?'':'success'}" data-a="toggle">${isActive?'Desativar':'Ativar'}</button>
+        <button class="lm-btn danger" data-a="del">Remover</button>
+      </div>`;
+    el.querySelector('[data-a="up"]').onclick   = ()=>moveLink(link.linkId,-1);
+    el.querySelector('[data-a="down"]').onclick = ()=>moveLink(link.linkId,1);
+    el.querySelector('[data-a="edit"]').onclick = ()=>editLink(link);
+    el.querySelector('[data-a="toggle"]').onclick = ()=>toggleLink(link);
+    el.querySelector('[data-a="del"]').onclick  = ()=>deleteLink(link);
+    container.appendChild(el);
+  });
+}
+
+async function addProfileLink(){
+  if(!currentProfile) return;
+  const u = auth.currentUser;
+  if(!isProfileOwner(currentProfile,u)) return;
+  const title = document.getElementById('link-title-input')?.value.trim();
+  const url   = document.getElementById('link-url-input')?.value.trim();
+  const type  = document.getElementById('link-type-input')?.value||'custom';
+  if(!title||!url){ alert('Informe título e URL.'); return; }
+  const nextOrder = currentLinks.length ? Math.max(...currentLinks.map(l=>Number(l.order||0)))+1 : 1;
+  const now = Date.now();
+  await push(ref(db,'profileLinks/'+currentProfile.profileId),{
+    title, url:normalizeUrl(url), type, icon:type, order:nextOrder,
+    active:true, createdAt:now, updatedAt:now, createdBy:u.uid, updatedBy:u.uid
+  });
+  document.getElementById('link-title-input').value='';
+  document.getElementById('link-url-input').value='';
+}
+
+async function editLink(link){
+  if(!currentProfile||!auth.currentUser) return;
+  const title = prompt('Título do link:', link.title||'');
+  if(title===null) return;
+  const url = prompt('URL do link:', link.url||'');
+  if(url===null) return;
+  await update(ref(db,'profileLinks/'+currentProfile.profileId+'/'+link.linkId),{
+    title:title.trim(), url:normalizeUrl(url.trim()),
+    updatedAt:Date.now(), updatedBy:auth.currentUser.uid
+  });
+}
+
+async function toggleLink(link){
+  if(!currentProfile||!auth.currentUser) return;
+  await update(ref(db,'profileLinks/'+currentProfile.profileId+'/'+link.linkId),{
+    active: link.active===false, updatedAt:Date.now(), updatedBy:auth.currentUser.uid
+  });
+}
+
+async function deleteLink(link){
+  if(!currentProfile||!auth.currentUser) return;
+  if(!confirm('Remover "'+link.title+'"?')) return;
+  await remove(ref(db,'profileLinks/'+currentProfile.profileId+'/'+link.linkId));
+}
+
+async function moveLink(linkId, dir){
+  if(!currentProfile||!auth.currentUser) return;
+  const ordered = [...currentLinks].sort((a,b)=>(a.order||999)-(b.order||999));
+  const idx = ordered.findIndex(l=>l.linkId===linkId);
+  if(idx<0) return;
+  const ti = idx+dir;
+  if(ti<0||ti>=ordered.length) return;
+  const curr = ordered[idx], tgt = ordered[ti];
+  const now = Date.now(), uid = auth.currentUser.uid;
+  await update(ref(db,'profileLinks/'+currentProfile.profileId+'/'+curr.linkId),{order:tgt.order||ti+1,updatedAt:now,updatedBy:uid});
+  await update(ref(db,'profileLinks/'+currentProfile.profileId+'/'+tgt.linkId),{order:curr.order||idx+1,updatedAt:now,updatedBy:uid});
 }
