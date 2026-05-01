@@ -3,131 +3,114 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Perfil | SPES OS</title>
+<title id="pg-title">Perfil | triadic.life</title>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#7c6ef7">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#0d0e1a;color:#e2e8f0;font-family:'Inter',sans-serif;min-height:100vh}
-header{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.08);background:#0d0e1a;position:sticky;top:0;z-index:100}
-header a{color:#a78bfa;text-decoration:none;font-size:.85rem}
-header h1{font-size:1rem;font-weight:700;color:#e2e8f0;flex:1}
-.container{max-width:560px;margin:0 auto;padding:20px 16px}
-
-/* PROFILE CARD */
-.profile-card{background:linear-gradient(135deg,#13131f,#1a1a2e);border:1px solid rgba(124,110,247,.2);border-radius:20px;padding:28px 24px;margin-bottom:20px;text-align:center}
-.profile-av{width:80px;height:80px;border-radius:50%;background:rgba(124,110,247,.25);border:3px solid rgba(124,110,247,.5);display:flex;align-items:center;justify-content:center;font-size:2.2rem;margin:0 auto 14px;overflow:hidden}
-.profile-av img{width:100%;height:100%;object-fit:cover;border-radius:50%}
-.profile-name{font-size:1.4rem;font-weight:800;margin-bottom:6px}
-.profile-badges{display:flex;justify-content:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
-.badge{font-size:.7rem;padding:3px 10px;border-radius:20px;font-weight:600}
-.badge-google{background:rgba(76,175,80,.15);color:#8affc1;border:1px solid rgba(76,175,80,.3)}
-.badge-anon{background:rgba(255,255,255,.07);color:#94a3b8;border:1px solid rgba(255,255,255,.1)}
-.profile-status{font-size:.82rem;margin-bottom:8px}
-.status-online{color:#4CAF50}
-.status-offline{color:#64748b}
-.profile-radio{font-size:.8rem;color:#a78bfa;background:rgba(124,110,247,.1);border-radius:8px;padding:6px 12px;display:inline-block;margin-bottom:14px}
-.profile-city{font-size:.8rem;color:#64748b;margin-bottom:16px}
-.profile-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-.btn-primary{background:linear-gradient(135deg,#7c6ef7,#a78bfa);color:#fff;border:none;border-radius:10px;padding:10px 22px;cursor:pointer;font-weight:700;font-size:.88rem;font-family:inherit;transition:opacity .2s}
-.btn-primary:hover{opacity:.85}
-.btn-secondary{background:rgba(255,255,255,.07);color:#e2e8f0;border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:10px 22px;cursor:pointer;font-weight:600;font-size:.88rem;font-family:inherit;transition:all .2s}
-.btn-secondary:hover{border-color:#7c6ef7;color:#a78bfa}
-.own-tag{font-size:.72rem;color:#64748b;margin-top:8px}
-
-/* EDIT PROFILE */
-.edit-section{background:#13131f;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:20px;margin-bottom:20px;display:none}
-.edit-section.show{display:block}
-.edit-section label{font-size:.8rem;color:#94a3b8;display:block;margin-bottom:4px;margin-top:12px}
-.edit-section input,.edit-section textarea{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#e2e8f0;padding:9px 12px;font-family:inherit;font-size:.88rem;outline:none}
-.edit-section input:focus,.edit-section textarea:focus{border-color:#7c6ef7}
-.edit-section textarea{resize:vertical;min-height:60px}
-.save-btn{margin-top:14px;width:100%}
-
-/* DM SECTION */
-.section-title{font-size:.85rem;font-weight:700;color:#94a3b8;letter-spacing:.05em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
-.conv-list{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
-.conv-item{display:flex;align-items:center;gap:12px;padding:12px 16px;background:#13131f;border:1px solid rgba(255,255,255,.07);border-radius:12px;cursor:pointer;transition:all .2s}
-.conv-item:hover,.conv-item.active{background:rgba(124,110,247,.1);border-color:rgba(124,110,247,.3)}
-.conv-av{width:40px;height:40px;border-radius:50%;background:rgba(124,110,247,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden}
-.conv-av img{width:100%;height:100%;object-fit:cover;border-radius:50%}
-.conv-info{flex:1;min-width:0}
-.conv-name{font-weight:700;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.conv-last{font-size:.76rem;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
-.conv-unread{background:#7c6ef7;color:#fff;font-size:.65rem;font-weight:700;padding:2px 7px;border-radius:99px;flex-shrink:0}
-.conv-time{font-size:.68rem;color:#475569;flex-shrink:0}
-
-/* DM CHAT AREA */
-.dm-area{display:none;background:#13131f;border:1px solid rgba(124,110,247,.2);border-radius:16px;overflow:hidden;margin-bottom:20px}
-.dm-area.show{display:flex;flex-direction:column}
-.dm-header-bar{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
-.dm-back-btn{background:none;border:none;color:#a78bfa;cursor:pointer;font-size:1.1rem;padding:4px 6px}
-.dm-header-av{width:32px;height:32px;border-radius:50%;background:rgba(124,110,247,.2);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
-.dm-header-av img{width:100%;height:100%;object-fit:cover;border-radius:50%}
-.dm-header-name{font-weight:700;font-size:.92rem;flex:1}
-.dm-msgs-area{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px;max-height:360px;min-height:180px}
-.dm-bubble{max-width:82%;padding:9px 13px;border-radius:14px;font-size:.88rem;line-height:1.5;word-break:break-word}
-.dm-bubble.me{background:linear-gradient(135deg,#7c6ef7,#a78bfa);color:#fff;margin-left:auto;border-bottom-right-radius:3px}
-.dm-bubble.other{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);border-bottom-left-radius:3px}
-.dm-time{font-size:.62rem;opacity:.5;margin-top:3px;text-align:right}
-.dm-bubble.other .dm-time{text-align:left}
-.dm-input-bar{display:flex;gap:8px;padding:10px 14px;border-top:1px solid rgba(255,255,255,.08)}
-.dm-input-bar input{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#e2e8f0;padding:9px 12px;font-family:inherit;font-size:.88rem;outline:none}
-.dm-input-bar input:focus{border-color:#7c6ef7}
-.dm-send-btn{background:linear-gradient(135deg,#7c6ef7,#a78bfa);border:none;border-radius:10px;color:#fff;padding:9px 16px;cursor:pointer;font-weight:700;font-family:inherit;font-size:.85rem}
-.empty-state{text-align:center;color:#475569;font-size:.85rem;padding:32px 20px}
-.empty-state span{font-size:2rem;display:block;margin-bottom:8px}
-.invite-card{background:rgba(76,175,80,.1);border:1px solid rgba(76,175,80,.25);border-radius:10px;padding:10px 12px}
-.invite-card strong{display:block;font-size:.88rem;color:#8affc1;margin-bottom:4px}
-.invite-card small{font-size:.75rem;color:#94a3b8}
-.invite-card a{display:inline-block;margin-top:8px;background:rgba(76,175,80,.2);border:1px solid rgba(76,175,80,.4);color:#8affc1;border-radius:6px;padding:5px 12px;font-size:.8rem;font-weight:700;text-decoration:none}
-.login-banner{background:linear-gradient(135deg,rgba(124,110,247,.12),rgba(124,110,247,.06));border:1px solid rgba(124,110,247,.25);border-radius:14px;padding:16px 18px;margin-bottom:20px;display:flex;align-items:center;gap:14px}
-.login-banner-icon{font-size:1.8rem;flex-shrink:0}
-.login-banner-text{flex:1}
-.login-banner-text strong{display:block;font-size:.9rem;font-weight:700;color:#e2e8f0;margin-bottom:3px}
-.login-banner-text small{font-size:.76rem;color:#94a3b8;line-height:1.4}
-.btn-google-banner{background:#fff;color:#333;border:none;border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:700;font-size:.8rem;font-family:inherit;white-space:nowrap;flex-shrink:0;transition:opacity .2s}
-.btn-google-banner:hover{opacity:.88}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="profile.css">
 </head>
 <body>
+
 <header>
   <a href="javascript:history.back()">← Voltar</a>
-  <h1 id="page-title">Perfil</h1>
+  <h1 id="page-title-text">Perfil</h1>
+  <a class="inbox-link" id="dms-link" href="javascript:void(0)" onclick="scrollToInbox()" style="display:none">
+    💬 <span id="dms-badge" style="display:none"></span>
+  </a>
 </header>
+
+<!-- COVER + AVATAR -->
+<div class="cover-wrap cover-type-user" id="cover-wrap">
+  <div class="avatar-float" id="avatar-float">?</div>
+</div>
+
 <div class="container">
+
   <!-- PROFILE CARD -->
   <div class="profile-card" id="profile-card">
-    <div class="loading">Carregando...</div>
+    <div class="profile-name-row">
+      <h1 class="profile-name" id="profile-name">Carregando...</h1>
+      <span class="type-badge type-user" id="type-badge">Perfil</span>
+      <span class="verified-badge" id="verified-badge" style="display:none">✓ Verificado</span>
+    </div>
+    <div class="profile-meta" id="profile-meta"></div>
+    <p class="profile-bio" id="profile-bio"></p>
+    <div class="profile-actions" id="profile-actions"></div>
+    <div class="own-tag" id="own-tag" style="display:none">Este é o seu perfil</div>
   </div>
 
-  <!-- EDIT (só para o próprio perfil) -->
+  <!-- EDIT SECTION (own) -->
   <div class="edit-section" id="edit-section">
     <div class="section-title">✏️ Editar Perfil</div>
+    <label>Nome</label>
+    <input id="edit-name" type="text" placeholder="Seu nome ou nome do negócio">
+    <label>Tipo de perfil</label>
+    <select id="edit-type">
+      <option value="user">Usuário</option>
+      <option value="business">Comércio / Loja</option>
+      <option value="artist">Artista</option>
+      <option value="songwriter">Compositor</option>
+      <option value="producer">Produtor</option>
+      <option value="announcer">Locutor</option>
+      <option value="sponsor">Patrocinador</option>
+    </select>
+    <label>Categoria</label>
+    <input id="edit-category" type="text" placeholder="Ex: Supermercado, DJ, Fotógrafo...">
     <label>Cidade / UF</label>
     <input id="edit-city" type="text" placeholder="Ex: Francisco Beltrão / PR">
     <label>Bio</label>
-    <textarea id="edit-bio" placeholder="Sobre você..."></textarea>
+    <textarea id="edit-bio" placeholder="Sobre você ou seu negócio..."></textarea>
+    <label>Instagram</label>
+    <input id="edit-instagram" type="text" placeholder="https://instagram.com/...">
+    <label>YouTube</label>
+    <input id="edit-youtube" type="text" placeholder="https://youtube.com/...">
+    <label>TikTok</label>
+    <input id="edit-tiktok" type="text" placeholder="https://tiktok.com/@...">
+    <label>Facebook</label>
+    <input id="edit-facebook" type="text" placeholder="https://facebook.com/...">
+    <label>WhatsApp (com DDD+DDI)</label>
+    <input id="edit-whatsapp" type="text" placeholder="5546999999999">
+    <label>Site</label>
+    <input id="edit-website" type="text" placeholder="https://seusite.com.br">
     <button class="btn-primary save-btn" onclick="saveProfile()">Salvar</button>
   </div>
 
-  <!-- LOGIN BANNER (anônimos) -->
+  <!-- LOGIN BANNER (anonymous) -->
   <div class="login-banner" id="login-banner" style="display:none">
     <div class="login-banner-icon">🔑</div>
     <div class="login-banner-text">
       <strong>Histórico em qualquer dispositivo</strong>
-      <small>Faça login com Google para acessar suas conversas em qualquer lugar e ter um perfil verificado.</small>
+      <small>Entre com Google para acessar suas conversas em qualquer lugar e ter um perfil verificado.</small>
     </div>
-    <button class="btn-google-banner" onclick="loginGoogle()">Entrar com Google</button>
+    <button class="btn-google" onclick="loginGoogle()">Entrar com Google</button>
   </div>
 
-  <!-- INBOX (só para o próprio perfil) -->
+  <!-- LINKTREE SECTION -->
+  <div class="section" id="linktree-section" style="display:none">
+    <div class="section-title">🔗 Central de Links</div>
+    <div class="linktree" id="linktree-list"></div>
+  </div>
+
+  <!-- SOCIAL LINKS (fixed) -->
+  <div class="section" id="social-section" style="display:none">
+    <div class="section-title">🌐 Redes Sociais</div>
+    <div class="social-pills" id="social-pills"></div>
+  </div>
+
+  <!-- POSTS SECTION -->
+  <div class="section" id="posts-section" style="display:none">
+    <div class="section-title">📋 Publicações</div>
+    <div id="posts-list"></div>
+  </div>
+
+  <!-- INBOX SECTION (own) -->
   <div id="inbox-section" style="display:none">
-    <div class="section-title">👥 Contatos &amp; Conversas</div>
+    <div class="section-title" style="margin-bottom:10px">💬 Contatos &amp; Conversas</div>
     <div class="conv-list" id="conv-list"><div class="loading">Carregando conversas...</div></div>
   </div>
 
-  <!-- DM CHAT ABERTO -->
+  <!-- DM CHAT AREA -->
   <div class="dm-area" id="dm-area">
     <div class="dm-header-bar">
       <button class="dm-back-btn" onclick="closeDMArea()">←</button>
@@ -140,306 +123,9 @@ header h1{font-size:1rem;font-weight:700;color:#e2e8f0;flex:1}
       <button class="dm-send-btn" onclick="sendDM()">Enviar</button>
     </div>
   </div>
-</div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, onValue, set, get, push, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-import { getAuth, signInAnonymously, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+</div><!-- /container -->
 
-// Mesmo Firebase do radio.html - banco unificado triadic-radios
-const firebaseConfig = {
-  apiKey: "AIzaSyDa0XWSvNISi47olox7U2HHawf3pf1rOjI",
-  authDomain: "triadic-radios.firebaseapp.com",
-  databaseURL: "https://triadic-radios-default-rtdb.firebaseio.com",
-  projectId: "triadic-radios",
-  storageBucket: "triadic-radios.firebasestorage.app",
-  messagingSenderId: "574115949337",
-  appId: "1:574115949337:web:527670aa35d9bb939f3388"
-};
-
-const app  = initializeApp(firebaseConfig);
-const db   = getDatabase(app);
-const auth = getAuth(app);
-
-const params    = new URLSearchParams(location.search);
-const targetPid = params.get('pid') || '';
-
-let _myPid = localStorage.getItem('spes_pid') || '';
-
-
-// === PID ANCHOR: amarra spes_pid ao Google UID para cross-device ===
-async function anchorPidToGoogle(googleUser) {
-  try {
-    const uid = googleUser.uid;
-    const savedSnap = await get(ref(db, 'users/' + uid + '/pid'));
-    const savedPid  = savedSnap.val();
-    if (savedPid) {
-      // Dispositivo novo: restaurar pid do servidor
-      if (savedPid !== _myPid) {
-        _myPid = savedPid;
-        localStorage.setItem('spes_pid', _myPid);
-        console.log('[pid] restored from google:', _myPid);
-      }
-    } else {
-      // Primeiro login neste pid: salvar no servidor
-      await set(ref(db, 'users/' + uid + '/pid'), _myPid);
-      console.log('[pid] anchored to google:', _myPid);
-    }
-    // Salvar tambem nome e foto no perfil publico
-    await set(ref(db, 'users/' + _myPid + '/name'),    googleUser.displayName || '');
-    await set(ref(db, 'users/' + _myPid + '/photo'),   googleUser.photoURL    || '');
-    await set(ref(db, 'users/' + _myPid + '/verified'), true);
-    await set(ref(db, 'users/' + _myPid + '/uid'),     uid);
-  } catch(e) { console.warn('[pid] anchor error:', e); }
-}
-// ===============================================================
-let _myChatId = null;
-let _dmListener = null;
-
-// Helpers
-function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function fmt(ts){ return new Date(ts).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}); }
-function dmChatId(a,b){ return [a,b].sort().join('_'); }
-
-// ── AUTH ─────────────────────────────────────────────────────────────────────
-signInAnonymously(auth).catch(()=>{});
-onAuthStateChanged(auth, async user => {
-  if(!user) return;
-  if(!_myPid){
-    _myPid = 'p_' + Math.random().toString(36).slice(2) + Date.now().toString(36);
-    localStorage.setItem('spes_pid', _myPid);
-  }
-  // Cross-device: se Google, restaurar pid do servidor
-  const isGoogle = user.providerData && user.providerData.length > 0;
-  if(isGoogle) await anchorPidToGoogle(user);
-  loadPage();
-});
-
-// ── MAIN LOAD ─────────────────────────────────────────────────────────────────
-async function loadPage(){
-  if(!targetPid){ renderNotFound(); return; }
-  const snap = await get(ref(db, 'users/' + targetPid));
-  const u = snap.val() || { pid: targetPid, name: 'Ouvinte', photo: '', verified: false };
-  renderProfile(u);
-}
-
-function renderNotFound(){
-  document.getElementById('profile-card').innerHTML =
-    '<div class="empty-state"><span>🔍</span>Perfil não encontrado</div>';
-}
-
-function renderProfile(u){
-  const isOwn = targetPid === _myPid;
-  document.getElementById('page-title').textContent = isOwn ? 'Meu Perfil' : (u.name || 'Perfil');
-  document.title = (u.name || 'Perfil') + ' | SPES OS';
-
-  // Avatar
-  const avHtml = u.photo
-    ? `<div class="profile-av"><img src="${u.photo}" alt=""></div>`
-    : `<div class="profile-av">${(u.name||'?')[0].toUpperCase()}</div>`;
-
-  // Verified badge
-  const badge = u.verified
-    ? `<span class="badge badge-google">✓ Verificado</span>`
-    : `<span class="badge badge-anon">Anônimo</span>`;
-
-  // Online status (check userPresence)
-  let statusHtml = '';
-  let radioHtml  = '';
-  let cityHtml   = u.city ? `<div class="profile-city">📍 ${esc(u.city)}</div>` : '';
-
-  // Actions
-  let actionsHtml = '';
-  if(isOwn){
-    actionsHtml = `
-      <button class="btn-secondary" onclick="toggleEdit()">✏️ Editar perfil</button>
-    `;
-    document.getElementById('inbox-section').style.display = 'block';
-    // Mostrar banner de login para anonimos
-    const isGoogle = auth.currentUser && auth.currentUser.providerData && auth.currentUser.providerData.length > 0;
-    if(!isGoogle){
-      document.getElementById('login-banner').style.display = 'flex';
-    }
-    loadInbox();
-  } else {
-    actionsHtml = `
-      <button class="btn-primary" onclick="openDMWith('${esc(u.pid||targetPid)}','${esc(u.name||'Ouvinte')}','${esc(u.photo||'')}')">💬 Enviar mensagem</button>
-    `;
-  }
-
-  document.getElementById('profile-card').innerHTML = `
-    ${avHtml}
-    <div class="profile-name">${esc(u.name||'Ouvinte')}</div>
-    <div class="profile-badges">${badge}</div>
-    <div id="status-line" class="profile-status status-offline">⚫ Status carregando...</div>
-    <div id="radio-line"></div>
-    ${cityHtml}
-    ${u.bio ? `<div style="font-size:.82rem;color:#94a3b8;margin-bottom:14px;line-height:1.55">${esc(u.bio)}</div>` : ''}
-    <div class="profile-actions">${actionsHtml}</div>
-    ${isOwn ? '<div class="own-tag">Este é o seu perfil</div>' : ''}
-  `;
-
-  // Populate edit fields if own
-  if(isOwn){
-    document.getElementById('edit-city').value = u.city || '';
-    document.getElementById('edit-bio').value  = u.bio  || '';
-  }
-
-  // Load live presence
-  onValue(ref(db, 'userPresence/' + targetPid), snap => {
-    const p = snap.val();
-    const statusEl = document.getElementById('status-line');
-    const radioEl  = document.getElementById('radio-line');
-    if(!statusEl) return;
-    if(p && p.online){
-      statusEl.className = 'profile-status status-online';
-      statusEl.textContent = '🟢 Online agora';
-      if(p.currentRadioName && radioEl){
-        radioEl.innerHTML = `<div class="profile-radio">📻 Ouvindo: ${esc(p.currentRadioName)}</div>`;
-      }
-    } else {
-      statusEl.className = 'profile-status status-offline';
-      const last = p?.lastSeen ? ' · ' + fmt(p.lastSeen) : '';
-      statusEl.textContent = '⚫ Offline' + last;
-      if(radioEl) radioEl.innerHTML = '';
-    }
-  });
-}
-
-// Login Google
-window.loginGoogle = async function(){
-  try{
-    const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
-    // Reload profile with new identity
-    loadPage();
-  } catch(e){ console.error('login', e); }
-};
-
-// ── EDIT PROFILE ──────────────────────────────────────────────────────────────
-window.toggleEdit = function(){
-  const el = document.getElementById('edit-section');
-  el.classList.toggle('show');
-};
-
-window.saveProfile = async function(){
-  const city = document.getElementById('edit-city').value.trim();
-  const bio  = document.getElementById('edit-bio').value.trim();
-  await update(ref(db, 'users/' + _myPid), { city, bio, updatedAt: Date.now() });
-  document.getElementById('edit-section').classList.remove('show');
-  // Reload
-  loadPage();
-};
-
-// ── INBOX ─────────────────────────────────────────────────────────────────────
-function loadInbox(){
-  const listEl = document.getElementById('conv-list');
-  onValue(ref(db, 'userInbox/' + _myPid), snap => {
-    const data = snap.val() || {};
-    const convs = Object.entries(data)
-      .map(([chatId, v]) => ({ chatId, ...v }))
-      .sort((a,b) => (b.ts||0) - (a.ts||0));
-    if(!convs.length){
-      listEl.innerHTML = '<div class="empty-state"><span>💬</span>Nenhuma conversa ainda</div>';
-      return;
-    }
-    listEl.innerHTML = convs.map(c => {
-      const avHtml = c.photo
-        ? `<div class="conv-av"><img src="${c.photo}" alt=""></div>`
-        : `<div class="conv-av">${(c.name||'?')[0].toUpperCase()}</div>`;
-      const unread = c.unread ? `<span class="conv-unread">•</span>` : '';
-      const time   = c.ts ? `<span class="conv-time">${fmt(c.ts)}</span>` : '';
-      return `<div class="conv-item" onclick="openConv('${c.chatId}','${esc(c.name||'')}','${esc(c.photo||'')}','${c.with||''}')">
-        ${avHtml}
-        <div class="conv-info">
-          <div class="conv-name">${esc(c.name||'Usuário')}</div>
-          <div class="conv-last">${esc(c.lastMessage||'')}</div>
-        </div>
-        ${unread}${time}
-      </div>`;
-    }).join('');
-  });
-}
-
-// ── DM ────────────────────────────────────────────────────────────────────────
-window.openDMWith = function(theirPid, name, photo){
-  if(!theirPid || theirPid === _myPid) return;
-  _myChatId = dmChatId(_myPid, theirPid);
-  renderDMArea(name, photo);
-  // Mark unread → false
-  set(ref(db, 'userInbox/' + _myPid + '/' + _myChatId + '/unread'), false).catch(()=>{});
-};
-
-window.openConv = function(chatId, name, photo, withPid){
-  _myChatId = chatId;
-  renderDMArea(name, photo);
-  set(ref(db, 'userInbox/' + _myPid + '/' + chatId + '/unread'), false).catch(()=>{});
-};
-
-function renderDMArea(name, photo){
-  document.getElementById('dm-area').classList.add('show');
-  document.getElementById('dm-hname').textContent = name || 'Usuário';
-  const hav = document.getElementById('dm-hav');
-  hav.innerHTML = photo ? `<img src="${photo}" alt="">` : (name||'?')[0].toUpperCase();
-
-  // Scroll inbox out of focus
-  document.getElementById('inbox-section').style.opacity = '.4';
-
-  if(_dmListener){ _dmListener(); _dmListener = null; }
-  _dmListener = onValue(ref(db, 'directChats/' + _myChatId + '/messages'), snap => {
-    const data = snap.val() || {};
-    const msgs = Object.values(data).sort((a,b) => (a.ts||0)-(b.ts||0));
-    const box  = document.getElementById('dm-msgs');
-    if(!msgs.length){
-      box.innerHTML = '<div class="empty-state"><span>👋</span>Comece a conversa!</div>';
-      return;
-    }
-    box.innerHTML = msgs.map(m => {
-      const mine = m.from === _myPid;
-      let body;
-      if(m.type === 'radio_invite'){
-        body = `<div class="invite-card"><strong>📻 ${esc(m.radioName||'Rádio')}</strong><small>${esc(m.text||'')}</small><br><a href="${m.radioUrl||'#'}" target="_blank">Entrar na rádio →</a></div>`;
-      } else {
-        body = esc(m.text || '');
-      }
-      return `<div class="dm-bubble ${mine?'me':'other'}">${body}<div class="dm-time">${m.ts?fmt(m.ts):''}</div></div>`;
-    }).join('');
-    box.scrollTop = box.scrollHeight;
-  });
-}
-
-window.closeDMArea = function(){
-  document.getElementById('dm-area').classList.remove('show');
-  document.getElementById('inbox-section').style.opacity = '1';
-  if(_dmListener){ _dmListener(); _dmListener = null; }
-  _myChatId = null;
-};
-
-window.sendDM = async function(){
-  const inp = document.getElementById('dm-input');
-  const text = inp.value.trim();
-  if(!text || !_myChatId) return;
-  const nick = localStorage.getItem('spes_chat_nick') || 'Usuário';
-  const u = auth.currentUser;
-  const myName = (u && u.displayName) ? u.displayName : nick;
-
-  // Find their pid from chatId
-  const parts = _myChatId.split('_');
-  const theirPid = parts.find(p => p !== _myPid) || parts[1];
-
-  inp.value = '';
-  await push(ref(db, 'directChats/' + _myChatId + '/messages'), {
-    from: _myPid, to: theirPid, text, ts: Date.now()
-  });
-  await set(ref(db, 'userInbox/' + _myPid + '/' + _myChatId), {
-    with: theirPid, name: document.getElementById('dm-hname').textContent,
-    lastMessage: text, ts: Date.now()
-  });
-  await set(ref(db, 'userInbox/' + theirPid + '/' + _myChatId), {
-    with: _myPid, name: myName, lastMessage: text, ts: Date.now(), unread: true
-  });
-};
-</script>
+<script type="module" src="profile-logic.js"></script>
 </body>
 </html>
