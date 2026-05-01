@@ -841,7 +841,10 @@ window._showMiniProfileCore = function(u, evt){
   const radioName = document.getElementById('radio-nome')?.textContent || '';
   radioEl.textContent = radioName ? '📻 Ouvindo: ' + radioName : '';
   radioEl.style.display = radioEl.textContent ? 'block' : 'none';
-  document.getElementById('mp-link').href = 'profile.html?pid=' + (u.pid || u.stableId || u.uid);
+  const _mpRadioId = new URLSearchParams(location.search).get('id') || '';
+  const _mpRadioName = encodeURIComponent(document.getElementById('radio-nome')?.textContent || '');
+  document.getElementById('mp-link').href = 'profile.html?pid=' + (u.pid || u.stableId || u.uid)
+    + (_mpRadioId ? '&radioId=' + _mpRadioId + '&radioName=' + _mpRadioName : '');
   const popup = document.getElementById('mini-profile');
   if(evt){
     const x = Math.min(evt.clientX, window.innerWidth - 260);
