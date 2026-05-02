@@ -1,0 +1,111 @@
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07080f;--bg2:#0d0e1a;--bg3:#11121f;
+  --purple:#7c6ef7;--purple-light:#a78bfa;
+  --teal:#4fd1c5;--gold:#fbbf24;--green:#22c55e;
+  --red:#f87171;--indigo:#818cf8;
+  --text:#e2e8f0;--muted:#64748b;--dimmed:#94a3b8;
+  --border:rgba(255,255,255,.07);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;line-height:1.6}
+.container{max-width:1100px;margin:0 auto;padding:0 20px}
+a{color:inherit;text-decoration:none}
+code{font-family:monospace;background:rgba(255,255,255,.08);border-radius:5px;padding:2px 6px;font-size:.82em;color:#86efac}
+
+/* ── NAV ─────────────────────────────────────────────────────── */
+.nav{position:sticky;top:0;z-index:200;background:rgba(7,8,15,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:12px 20px;gap:12px;flex-wrap:wrap}
+.nav-logo{font-size:1.05rem;font-weight:900;letter-spacing:-.03em}
+.nav-logo span{color:var(--purple)}
+.nav-links{display:flex;gap:4px;flex-wrap:wrap}
+.nav-links a{font-size:.78rem;font-weight:600;color:var(--muted);padding:6px 12px;border-radius:8px;transition:all .15s}
+.nav-links a:hover{color:var(--text);background:rgba(255,255,255,.06)}
+
+/* ── HERO ─────────────────────────────────────────────────────── */
+.hero{position:relative;padding:64px 20px 52px;text-align:center;border-bottom:1px solid var(--border);overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% -20%,rgba(124,110,247,.16) 0%,transparent 65%);pointer-events:none}
+.hero-inner{position:relative;z-index:1}
+.hero-eyebrow{font-size:.7rem;text-transform:uppercase;letter-spacing:.14em;color:var(--purple-light);font-weight:800;margin-bottom:14px;display:inline-block;background:rgba(124,110,247,.1);border:1px solid rgba(124,110,247,.25);border-radius:20px;padding:4px 14px}
+.hero h1{font-size:clamp(2rem,5vw,3rem);font-weight:900;letter-spacing:-.04em;background:linear-gradient(135deg,var(--text) 30%,var(--purple-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px}
+.hero p{font-size:.9rem;color:var(--muted);max-width:440px;margin:0 auto 24px}
+.btn-hero{background:linear-gradient(135deg,var(--purple),var(--purple-light));color:#fff;border-radius:12px;padding:11px 24px;font-weight:800;font-size:.88rem;display:inline-block;transition:transform .2s,opacity .2s}
+.btn-hero:hover{transform:translateY(-2px);opacity:.88}
+
+/* ── SECTIONS ─────────────────────────────────────────────────── */
+.section{padding:64px 0;border-bottom:1px solid var(--border)}
+.section-label{font-size:.68rem;text-transform:uppercase;letter-spacing:.13em;color:var(--purple-light);font-weight:800;margin-bottom:10px}
+.section h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:900;letter-spacing:-.04em;margin-bottom:24px}
+
+/* ── PATHS ────────────────────────────────────────────────────── */
+.paths-grid{display:flex;flex-direction:column;gap:12px}
+.path-card{background:var(--bg3);border:1px solid var(--border);border-radius:18px;padding:18px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;transition:border-color .2s}
+.path-card.path-morador:hover{border-color:rgba(124,110,247,.3)}
+.path-card.path-comercio:hover{border-color:rgba(251,191,36,.3)}
+.path-card.path-afiliado:hover{border-color:rgba(34,197,94,.3)}
+.path-card.path-operador:hover{border-color:rgba(239,68,68,.25)}
+.path-card.path-cidade:hover{border-color:rgba(79,209,197,.3)}
+.path-icon{font-size:1.8rem;flex-shrink:0}
+.path-title{font-size:.78rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;min-width:100px;flex-shrink:0}
+.path-flow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;flex:1}
+.path-step{font-size:.78rem;font-weight:700;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:9px;padding:5px 12px;color:var(--dimmed);transition:all .2s;white-space:nowrap}
+.path-step:hover{background:rgba(124,110,247,.12);border-color:rgba(124,110,247,.25);color:var(--purple-light)}
+.path-step.future{opacity:.4;cursor:default;pointer-events:none}
+.path-arrow{color:var(--muted);font-weight:800;font-size:.85rem}
+
+/* ── MODULE GROUPS ────────────────────────────────────────────── */
+.modules-section{padding-top:40px}
+.module-group{margin-bottom:36px}
+.group-header{display:flex;align-items:center;gap:14px;padding:14px 18px;border-radius:14px;margin-bottom:14px;border-left:3px solid}
+.group-icon{font-size:1.6rem;flex-shrink:0}
+.group-title{font-size:.92rem;font-weight:900;margin-bottom:2px}
+.group-desc{font-size:.74rem;color:var(--muted)}
+/* Group themes */
+.group-header.entry    {background:rgba(124,110,247,.06);border-color:var(--purple)}
+.group-header.radio    {background:rgba(99,102,241,.05);border-color:#818cf8}
+.group-header.biz      {background:rgba(251,191,36,.05);border-color:var(--gold)}
+.group-header.affiliate{background:rgba(34,197,94,.05);border-color:var(--green)}
+.group-header.places   {background:rgba(79,209,197,.05);border-color:var(--teal)}
+.group-header.import   {background:rgba(251,146,60,.05);border-color:#f97316}
+.group-header.admin    {background:rgba(239,68,68,.05);border-color:var(--red)}
+.group-header.future   {background:rgba(100,116,139,.05);border-color:#475569}
+
+/* ── MODULE CARDS ─────────────────────────────────────────────── */
+.module-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.mod-card{background:var(--bg3);border:1px solid var(--border);border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;transition:transform .18s,border-color .18s}
+.mod-card:not(.future):hover{transform:translateY(-2px);border-color:rgba(124,110,247,.3)}
+.mod-card.active{border-color:rgba(124,110,247,.4);background:rgba(124,110,247,.06)}
+.mod-card.future{opacity:.5;cursor:default}
+.mod-icon{font-size:1.5rem;flex-shrink:0;line-height:1}
+.mod-info{flex:1;min-width:0}
+.mod-title{font-size:.83rem;font-weight:800;margin-bottom:2px}
+.mod-desc{font-size:.7rem;color:var(--muted);line-height:1.35}
+
+/* ── ROLE BADGES ──────────────────────────────────────────────── */
+.role-badge{font-size:.6rem;font-weight:800;padding:2px 8px;border-radius:20px;white-space:nowrap;flex-shrink:0;text-transform:uppercase;letter-spacing:.05em}
+.role-badge.public   {background:rgba(124,110,247,.1);color:var(--purple-light);border:1px solid rgba(124,110,247,.25)}
+.role-badge.owner    {background:rgba(251,191,36,.1);color:var(--gold);border:1px solid rgba(251,191,36,.25)}
+.role-badge.affiliate{background:rgba(34,197,94,.1);color:#86efac;border:1px solid rgba(34,197,94,.2)}
+.role-badge.admin    {background:rgba(239,68,68,.08);color:#fca5a5;border:1px solid rgba(239,68,68,.2)}
+.role-badge.future   {background:rgba(100,116,139,.1);color:#94a3b8;border:1px solid rgba(100,116,139,.2)}
+.role-badge.current  {background:rgba(79,209,197,.1);color:var(--teal);border:1px solid rgba(79,209,197,.25)}
+
+/* ── LEGEND ───────────────────────────────────────────────────── */
+.legend-section{padding:28px 0;border-top:none}
+.container .legend-title{font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:700;margin-bottom:12px}
+.legend-items{display:flex;flex-wrap:wrap;gap:14px}
+.legend-item{display:flex;align-items:center;gap:8px;font-size:.78rem;color:var(--muted)}
+
+/* ── FOOTER ───────────────────────────────────────────────────── */
+.footer{padding:24px 20px;border-top:1px solid var(--border)}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:.8rem;font-weight:700;color:#334155}
+
+/* ── FUTURE GROUP ─────────────────────────────────────────────── */
+.future-group{opacity:.75}
+
+/* ── RESPONSIVE ───────────────────────────────────────────────── */
+@media(max-width:720px){
+  .path-card{flex-direction:column;align-items:flex-start;gap:10px}
+  .path-title{min-width:auto}
+  .module-cards{grid-template-columns:1fr}
+  .legend-items{flex-direction:column}
+}
