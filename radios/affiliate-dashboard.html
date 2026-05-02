@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Meus Links de Afiliado | CIDADEONLINE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="affiliate-dashboard.css">
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <a href="offers.html" class="logo">🏙️ CIDADE<span>ONLINE</span></a>
+    <span class="header-tag">🔗 Afiliado</span>
+  </div>
+  <div class="header-right">
+    <a href="offers.html">🏷️ Vitrine</a>
+    <span id="user-label" class="user-label"></span>
+    <button id="btn-login" class="btn-login" onclick="doLogin()" style="display:none">Entrar com Google</button>
+  </div>
+</header>
+
+<!-- AUTH GATE -->
+<div id="auth-gate" class="gate-msg">
+  <span>🔐</span>
+  <p>Faça login para gerar seus links de afiliado e acompanhar seus resultados.</p>
+  <button class="btn-primary" onclick="doLogin()">Entrar com Google</button>
+</div>
+
+<main id="main-panel" style="display:none">
+
+  <!-- MY STATS SUMMARY -->
+  <div class="summary-bar">
+    <div class="summary-kpi"><div class="kpi-val" id="s-links">0</div><div class="kpi-lbl">Links ativos</div></div>
+    <div class="summary-kpi"><div class="kpi-val clicks" id="s-clicks">0</div><div class="kpi-lbl">Total cliques</div></div>
+    <div class="summary-kpi"><div class="kpi-val leads" id="s-leads">0</div><div class="kpi-lbl">Total leads</div></div>
+    <div class="summary-kpi"><div class="kpi-val comms" id="s-comms">R$ 0</div><div class="kpi-lbl">Comissões</div></div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" id="tab-offers" onclick="setTab('offers')">🏷️ Ofertas disponíveis</button>
+    <button class="tab" id="tab-links" onclick="setTab('links')">🔗 Meus links</button>
+  </div>
+
+  <!-- OFFERS TAB -->
+  <div id="pane-offers">
+    <div class="pane-header">
+      <input id="f-search" class="f-input" type="text" placeholder="🔍 Buscar oferta...">
+    </div>
+    <div class="cards-grid" id="available-offers">
+      <div class="empty-state"><span>⏳</span>Carregando...</div>
+    </div>
+  </div>
+
+  <!-- MY LINKS TAB -->
+  <div id="pane-links" style="display:none">
+    <div class="links-list" id="my-links-list">
+      <div class="empty-state"><span>🔗</span>Você ainda não gerou nenhum link.<br><small>Vá em "Ofertas disponíveis" e clique em <strong>Gerar meu link</strong>.</small></div>
+    </div>
+  </div>
+
+</main>
+
+<script type="module" src="affiliate-dashboard-logic.js"></script>
+</body>
+</html>
