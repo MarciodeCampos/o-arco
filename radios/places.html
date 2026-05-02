@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Lugares da Cidade | CIDADEONLINE</title>
+  <meta name="description" content="Endereços, pontos de referência e lugares reivindicáveis da sua cidade. CIDADEONLINE — infraestrutura digital local.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="places.css">
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <a href="cidadeonline.html" class="logo">🏙️ CIDADE<span>ONLINE</span></a>
+    <span class="header-tag">📍 Lugares</span>
+  </div>
+  <div class="header-right">
+    <a href="business.html">🏪 Comércios</a>
+    <a href="offers.html">🏷️ Ofertas</a>
+    <a href="control-center.html">⚙️ Central</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-eyebrow">📍 Infraestrutura digital local</div>
+  <h1>Lugares da Cidade</h1>
+  <p>Endereços, pontos de referência e espaços públicos com porta digital. Encontre e reivindique.</p>
+</section>
+
+<!-- FILTERS -->
+<div class="filters-bar">
+  <input id="f-text" class="f-input" type="text" placeholder="🔍 Buscar lugar, bairro...">
+  <select id="f-uf" class="f-select"><option value="">Todos os estados</option></select>
+  <select id="f-city" class="f-select" disabled><option value="">Todas as cidades</option></select>
+  <select id="f-type" class="f-select">
+    <option value="">Todos os tipos</option>
+    <option value="commercial_point">🏪 Ponto comercial</option>
+    <option value="health_unit">🏥 Saúde</option>
+    <option value="school">🏫 Escola</option>
+    <option value="public_service">🏛️ Serviço público</option>
+    <option value="church">⛪ Igreja/Templo</option>
+    <option value="neighborhood_place">🌳 Praça/Parque</option>
+    <option value="landmark">📌 Ponto de referência</option>
+    <option value="property">🏗️ Propriedade</option>
+    <option value="residential_address">🏠 Endereço residencial</option>
+  </select>
+  <select id="f-status" class="f-select">
+    <option value="">Todos os status</option>
+    <option value="unclaimed">Não reivindicado</option>
+    <option value="pending">Em análise</option>
+    <option value="claimed">Reivindicado</option>
+  </select>
+</div>
+
+<div class="results-meta" id="results-meta"></div>
+
+<div class="places-grid" id="places-grid">
+  <div class="empty-state"><span>⏳</span>Carregando lugares...</div>
+</div>
+
+<script type="module" src="places-logic.js"></script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title id="pg-title">Lugar | CIDADEONLINE</title>
+  <meta name="description" id="pg-desc" content="Lugar digital do CIDADEONLINE.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="place.css">
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <a href="cidadeonline.html" class="logo">🏙️ CIDADE<span>ONLINE</span></a>
+    <span class="header-tag">📍 Lugar</span>
+  </div>
+  <div class="header-right">
+    <a href="places.html">← Todos os lugares</a>
+  </div>
+</header>
+
+<main id="main-content">
+
+  <div id="loading-state" class="loading-state"><span>⏳</span>Carregando lugar...</div>
+  <div id="not-found" class="empty-state" style="display:none"><span>🔍</span><p>Lugar não encontrado.</p><a href="places.html" class="btn-primary">Ver todos os lugares</a></div>
+
+  <div id="place-content" style="display:none">
+
+    <!-- TOP CARD -->
+    <div class="place-top-card">
+      <div class="place-icon" id="place-icon"></div>
+      <div class="place-header-info">
+        <h1 id="place-name"></h1>
+        <div class="place-type-line" id="place-type-line"></div>
+        <div class="place-address-line" id="place-address-line"></div>
+      </div>
+      <div class="place-status-badge" id="place-status-badge"></div>
+    </div>
+
+    <!-- LINKED BUSINESS -->
+    <div id="linked-biz-card" class="linked-biz-card" style="display:none"></div>
+
+    <!-- DESCRIPTION / MURAL -->
+    <div id="place-description" class="place-section" style="display:none">
+      <div class="section-label">Sobre este lugar</div>
+      <p id="place-desc-text" class="place-desc-text"></p>
+    </div>
+
+    <div id="place-mural" class="place-section" style="display:none">
+      <div class="section-label">📋 Mural</div>
+      <div id="mural-list" class="mural-list"></div>
+    </div>
+
+    <!-- LINKS / CONTACT -->
+    <div id="place-links-section" class="place-section" style="display:none">
+      <div class="section-label">🔗 Contato & Links</div>
+      <div id="place-links-list" class="place-links-list"></div>
+    </div>
+
+    <!-- CLAIM AREA -->
+    <div class="claim-area" id="claim-area">
+
+      <!-- UNCLAIMED: FORM TRIGGER -->
+      <div id="claim-trigger" style="display:none">
+        <div class="claim-invite">
+          <span class="claim-invite-icon">🏷️</span>
+          <div>
+            <div class="claim-invite-title">Este lugar é seu?</div>
+            <div class="claim-invite-sub">Reivindique este endereço e gerencie sua presença digital.</div>
+          </div>
+          <button class="btn-claim-open" onclick="openClaimForm()">Reivindicar →</button>
+        </div>
+      </div>
+
+      <!-- CLAIM FORM (inline) -->
+      <div id="claim-form" class="claim-form" style="display:none">
+        <div class="claim-form-title">📋 Solicitar reivindicação</div>
+        <div class="claim-form-fields">
+          <input id="cf-name" class="cf-input" type="text" placeholder="Seu nome *">
+          <input id="cf-phone" class="cf-input" type="tel" placeholder="Seu WhatsApp *">
+          <select id="cf-role" class="cf-select">
+            <option value="">Sua relação com este lugar *</option>
+            <option value="morador">🏠 Morador</option>
+            <option value="responsavel">👤 Responsável</option>
+            <option value="proprietario">🔑 Proprietário</option>
+            <option value="gestor">📋 Gestor / Coordenador</option>
+            <option value="representante">🤝 Representante</option>
+            <option value="outro">... Outro</option>
+          </select>
+          <textarea id="cf-note" class="cf-input" rows="2" placeholder="Contexto adicional (opcional)"></textarea>
+        </div>
+        <div id="cf-feedback" class="cf-feedback" style="display:none"></div>
+        <div class="claim-form-actions">
+          <button class="btn-claim-submit" id="btn-claim-submit" onclick="submitClaim()">📨 Enviar solicitação</button>
+          <button class="btn-claim-cancel" onclick="closeClaimForm()">Cancelar</button>
+        </div>
+        <p class="cf-note-small">Sua solicitação será analisada pela equipe CIDADEONLINE.</p>
+      </div>
+
+      <!-- PENDING -->
+      <div id="claim-pending" class="claim-status-msg pending" style="display:none">
+        <span>⏳</span>
+        <div>
+          <strong>Reivindicação em análise</strong>
+          <p>Uma solicitação está sendo revisada. Em breve este lugar terá um responsável.</p>
+        </div>
+      </div>
+
+      <!-- CLAIMED -->
+      <div id="claim-claimed" class="claim-status-msg claimed" style="display:none">
+        <span>✅</span>
+        <div>
+          <strong>Lugar reivindicado</strong>
+          <p>Este lugar já tem um responsável cadastrado na plataforma.</p>
+        </div>
+      </div>
+
+    </div><!-- /claim-area -->
+
+    <div style="text-align:center;margin-top:24px">
+      <a href="places.html" style="color:#7c6ef7;font-size:.82rem;text-decoration:none">← Ver todos os lugares da cidade</a>
+    </div>
+
+  </div>
+</main>
+
+<script type="module" src="place-logic.js"></script>
+</body>
+</html>

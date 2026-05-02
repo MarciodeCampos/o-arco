@@ -1,0 +1,71 @@
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d0e1a;color:#e2e8f0;font-family:'Inter',sans-serif;min-height:100vh}
+header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:12px 20px;border-bottom:1px solid rgba(255,255,255,.07);background:#0d0e1a;position:sticky;top:0;z-index:100}
+.header-left{display:flex;align-items:center;gap:12px}
+.logo{font-size:1.05rem;font-weight:900;text-decoration:none;color:#e2e8f0;letter-spacing:-.03em}
+.logo span{color:#7c6ef7}
+.header-tag{font-size:.7rem;background:rgba(79,209,197,.1);color:#4fd1c5;border:1px solid rgba(79,209,197,.25);border-radius:20px;padding:3px 10px;font-weight:700}
+.header-right a{color:#a78bfa;text-decoration:none;font-size:.78rem;font-weight:600;padding:5px 10px;border-radius:8px}
+.header-right a:hover{background:rgba(124,110,247,.12)}
+/* STATES */
+.loading-state,.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:50vh;gap:14px;color:#475569;font-size:.9rem;text-align:center;padding:40px}
+.loading-state span,.empty-state span{font-size:3rem}
+.btn-primary{background:linear-gradient(135deg,#7c6ef7,#a78bfa);color:#fff;border:none;border-radius:12px;padding:10px 24px;cursor:pointer;font-weight:700;font-size:.88rem;font-family:inherit;text-decoration:none;display:inline-block}
+/* LAYOUT */
+#main-content{max-width:640px;margin:0 auto;padding:24px 16px 60px}
+/* TOP CARD */
+.place-top-card{background:#13131f;border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:22px;display:flex;align-items:flex-start;gap:16px;margin-bottom:14px;flex-wrap:wrap}
+.place-icon{font-size:3rem;flex-shrink:0;line-height:1}
+.place-header-info{flex:1}
+.place-header-info h1{font-size:1.3rem;font-weight:900;letter-spacing:-.02em;margin-bottom:6px}
+.place-type-line{font-size:.78rem;color:#4fd1c5;font-weight:700;margin-bottom:4px}
+.place-address-line{font-size:.78rem;color:#64748b}
+.place-status-badge{font-size:.68rem;font-weight:800;padding:4px 12px;border-radius:20px;white-space:nowrap;align-self:flex-start}
+.status-unclaimed{background:rgba(245,158,11,.08);color:#fcd34d;border:1px solid rgba(245,158,11,.2)}
+.status-pending{background:rgba(99,102,241,.1);color:#a5b4fc;border:1px solid rgba(99,102,241,.25)}
+.status-claimed{background:rgba(34,197,94,.1);color:#86efac;border:1px solid rgba(34,197,94,.2)}
+/* LINKED BIZ */
+.linked-biz-card{background:#13131f;border:1px solid rgba(124,110,247,.2);border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.linked-biz-card a{color:#a78bfa;font-weight:700;font-size:.8rem;text-decoration:none;margin-left:auto}
+/* SECTIONS */
+.place-section{background:#13131f;border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:16px;margin-bottom:12px}
+.section-label{font-size:.66rem;text-transform:uppercase;letter-spacing:.1em;color:#64748b;font-weight:800;margin-bottom:10px}
+.place-desc-text{font-size:.85rem;color:#94a3b8;line-height:1.65}
+.mural-list{display:flex;flex-direction:column;gap:8px}
+.mural-item{background:rgba(255,255,255,.04);border-radius:10px;padding:10px 12px;font-size:.82rem;color:#94a3b8}
+.mural-item a{color:#a78bfa;text-decoration:none}
+.place-links-list{display:flex;flex-direction:column;gap:8px}
+.place-link-item{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.04);border-radius:10px;padding:9px 12px;text-decoration:none;color:#94a3b8;font-size:.82rem;transition:background .15s}
+.place-link-item:hover{background:rgba(255,255,255,.08)}
+/* CLAIM AREA */
+.claim-area{margin-top:4px}
+.claim-invite{background:linear-gradient(135deg,rgba(79,209,197,.08),rgba(124,110,247,.06));border:1px solid rgba(79,209,197,.2);border-radius:18px;padding:20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.claim-invite-icon{font-size:2rem;flex-shrink:0}
+.claim-invite-title{font-size:.9rem;font-weight:800;margin-bottom:3px}
+.claim-invite-sub{font-size:.75rem;color:#64748b}
+.btn-claim-open{background:linear-gradient(135deg,#4fd1c5,#38b2ac);color:#0d0e1a;border:none;border-radius:12px;padding:10px 20px;cursor:pointer;font-weight:800;font-size:.82rem;font-family:inherit;margin-left:auto;white-space:nowrap;transition:opacity .2s}
+.btn-claim-open:hover{opacity:.85}
+/* CLAIM FORM */
+.claim-form{background:#13131f;border:1px solid rgba(79,209,197,.2);border-radius:18px;padding:20px;margin-top:10px}
+.claim-form-title{font-size:.85rem;font-weight:800;color:#4fd1c5;margin-bottom:14px}
+.claim-form-fields{display:flex;flex-direction:column;gap:9px;margin-bottom:12px}
+.cf-input{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#e2e8f0;padding:10px 12px;font-family:inherit;font-size:.83rem;outline:none;resize:vertical;width:100%}
+.cf-input:focus{border-color:#4fd1c5}
+.cf-select{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#e2e8f0;padding:10px 12px;font-family:inherit;font-size:.83rem;outline:none;width:100%;cursor:pointer}
+.cf-select:focus{border-color:#4fd1c5}
+.cf-feedback{border-radius:10px;padding:10px 14px;font-size:.82rem;font-weight:600;margin-bottom:10px}
+.cf-feedback.ok{background:rgba(34,197,94,.1);color:#86efac;border:1px solid rgba(34,197,94,.2)}
+.cf-feedback.err{background:rgba(239,68,68,.08);color:#fca5a5;border:1px solid rgba(239,68,68,.15)}
+.claim-form-actions{display:flex;gap:8px}
+.btn-claim-submit{flex:1;background:linear-gradient(135deg,#4fd1c5,#38b2ac);color:#0d0e1a;border:none;border-radius:12px;padding:11px;cursor:pointer;font-weight:800;font-size:.85rem;font-family:inherit;transition:opacity .2s}
+.btn-claim-submit:hover{opacity:.85}
+.btn-claim-submit:disabled{opacity:.4;cursor:not-allowed}
+.btn-claim-cancel{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:#94a3b8;border-radius:12px;padding:11px 16px;cursor:pointer;font-family:inherit;font-size:.82rem}
+.cf-note-small{font-size:.68rem;color:#475569;text-align:center;margin-top:8px}
+/* STATUS MSGS */
+.claim-status-msg{display:flex;align-items:center;gap:14px;border-radius:16px;padding:18px}
+.claim-status-msg span{font-size:1.8rem;flex-shrink:0}
+.claim-status-msg strong{display:block;font-size:.85rem;margin-bottom:4px}
+.claim-status-msg p{font-size:.78rem;color:#64748b}
+.claim-status-msg.pending{background:rgba(99,102,241,.06);border:1px solid rgba(99,102,241,.2)}
+.claim-status-msg.claimed{background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.2)}

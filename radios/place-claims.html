@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin Lugares | CIDADEONLINE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="place-claims.css">
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <a href="cidadeonline.html" class="logo">🏙️ CIDADE<span>ONLINE</span></a>
+    <span class="header-tag">⚙️ Admin Lugares</span>
+  </div>
+  <div class="header-right">
+    <a href="places.html">📍 Lugares</a>
+    <a href="control-center.html">Central</a>
+    <div id="admin-gate" class="admin-gate">
+      <input id="admin-key-input" type="password" placeholder="Chave de operador" class="f-input-sm" onkeydown="if(event.key==='Enter')setAdminKey()">
+      <button onclick="setAdminKey()" class="btn-admin-enter">Entrar</button>
+    </div>
+    <span id="admin-label" style="display:none;font-size:.78rem;color:#8affc1;font-weight:700">✓ Operador</span>
+  </div>
+</header>
+
+<div id="locked-msg" class="locked-msg"><span>🔒</span><p>Informe a chave de operador.</p></div>
+
+<main id="main-panel" style="display:none">
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" id="tab-claims" onclick="setTab('claims')">📋 Reivindicações</button>
+    <button class="tab" id="tab-places" onclick="setTab('places')">📍 Gerenciar Lugares</button>
+  </div>
+
+  <!-- FILTER -->
+  <div class="filter-bar">
+    <select id="f-status" class="f-select" onchange="renderActive()">
+      <option value="pending">Pendentes</option>
+      <option value="approved">Aprovados</option>
+      <option value="rejected">Rejeitados</option>
+      <option value="">Todos</option>
+    </select>
+    <input id="f-search" class="f-input" type="text" placeholder="🔍 Buscar lugar, nome...">
+  </div>
+
+  <!-- CLAIMS PANE -->
+  <div id="pane-claims" class="pane">
+    <div id="claims-list" class="item-list"><div class="empty-state"><span>⏳</span>Carregando...</div></div>
+  </div>
+
+  <!-- PLACES PANE -->
+  <div id="pane-places" class="pane" style="display:none">
+    <div class="pane-top-bar">
+      <button class="btn-new-place" onclick="openPlaceForm()">+ Novo lugar</button>
+    </div>
+    <div id="places-list" class="item-list"><div class="empty-state"><span>⏳</span>Carregando...</div></div>
+  </div>
+
+</main>
+
+<!-- REJECT MODAL -->
+<div id="reject-modal" class="modal-overlay" style="display:none" onclick="closeRejectModal(event)">
+  <div class="modal-box">
+    <div class="modal-title">❌ Rejeitar reivindicação</div>
+    <div class="form-group">
+      <label>Motivo (opcional)</label>
+      <textarea id="reject-reason" class="f-input" rows="3" placeholder="Ex: informações insuficientes, lugar já reivindicado..."></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-confirm-reject" onclick="confirmReject()">Confirmar rejeição</button>
+      <button class="btn-cancel" onclick="closeRejectModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- NEW PLACE MODAL -->
+<div id="place-modal" class="modal-overlay" style="display:none" onclick="closePlaceModal(event)">
+  <div class="modal-box wide">
+    <div class="modal-title" id="place-modal-title">+ Novo lugar</div>
+    <div class="form-scroll">
+      <div class="form-row">
+        <div class="form-group"><label>Nome *</label><input id="pm-name" class="f-input" type="text" placeholder="Nome público do lugar"></div>
+        <div class="form-group"><label>Tipo *</label>
+          <select id="pm-type" class="f-select">
+            <option value="commercial_point">🏪 Ponto comercial</option>
+            <option value="health_unit">🏥 Saúde</option>
+            <option value="school">🏫 Escola</option>
+            <option value="public_service">🏛️ Serviço público</option>
+            <option value="church">⛪ Igreja/Templo</option>
+            <option value="neighborhood_place">🌳 Praça/Parque</option>
+            <option value="landmark">📌 Referência</option>
+            <option value="property">🏗️ Propriedade</option>
+            <option value="residential_address">🏠 Residencial</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label>Descrição</label><textarea id="pm-desc" class="f-input" rows="2" placeholder="Breve descrição pública"></textarea></div>
+      <div class="form-row">
+        <div class="form-group"><label>Rua</label><input id="pm-street" class="f-input" type="text" placeholder="Rua das Flores"></div>
+        <div class="form-group"><label>Número</label><input id="pm-number" class="f-input" type="text" placeholder="120"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Bairro</label><input id="pm-neighborhood" class="f-input" type="text"></div>
+        <div class="form-group"><label>Cidade</label><input id="pm-city" class="f-input" type="text" value="Francisco Beltrão"></div>
+        <div class="form-group"><label>UF</label><input id="pm-uf" class="f-input" type="text" value="PR" style="max-width:70px"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-save-place" onclick="savePlace()">💾 Salvar lugar</button>
+      <button class="btn-cancel" onclick="closePlaceModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="place-claims-logic.js"></script>
+</body>
+</html>
