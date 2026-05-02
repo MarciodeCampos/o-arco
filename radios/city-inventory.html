@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Inventário da Cidade | CIDADEONLINE</title>
+  <meta name="description" content="Inventário comercial completo da cidade — oportunidades, activation score e mapa de ativos para o Master Local.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="city-inventory.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="cidadeonline.html" class="nav-logo">🏙️ CIDADE<span>ONLINE</span></a>
+  <div class="nav-links">
+    <a href="master-dashboard.html">🧑‍💼 Dashboard</a>
+    <a href="control-center.html">⚙️ Control Center</a>
+    <a href="master-admin.html">⚙️ Admin Masters</a>
+  </div>
+</nav>
+
+<!-- GATE -->
+<div id="admin-gate" class="gate-wrap">
+  <div class="gate-card">
+    <div class="gate-icon">🗂️</div>
+    <div class="gate-title">Inventário da Cidade</div>
+    <div class="gate-sub">Área restrita ao operador local</div>
+    <input id="gate-input" type="password" class="gate-input" placeholder="Chave de operador"
+      onkeydown="if(event.key==='Enter')checkGate()">
+    <button class="btn-gate" onclick="checkGate()">Entrar →</button>
+    <div id="gate-err" class="gate-err" style="display:none">Chave incorreta.</div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main id="main-panel" style="display:none">
+
+  <!-- HEADER -->
+  <section class="page-hero">
+    <div class="page-hero-bg"></div>
+    <div class="container page-hero-inner">
+      <div class="page-eyebrow">🗂️ Inventário territorial</div>
+      <h1>Inventário da Cidade</h1>
+      <p>Sua cidade mapeada como território operável. Enxergue oportunidades, ative ativos e acompanhe o progresso.</p>
+
+      <!-- City selector -->
+      <div class="city-selector-row">
+        <label for="city-select" class="city-selector-label">Cidade:</label>
+        <select id="city-select" class="city-select" onchange="loadCity(this.value)">
+          <option value="">Carregando cidades...</option>
+        </select>
+        <span class="city-last-updated" id="last-updated"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCORE BANNER -->
+  <div class="score-banner" id="score-banner">
+    <div class="container score-banner-inner">
+      <div class="score-main">
+        <div class="score-city" id="score-city-name">—</div>
+        <div class="score-sub" id="score-sub-label">Carregando...</div>
+      </div>
+      <div class="score-bar-group">
+        <div class="score-bar-label">Activation Score</div>
+        <div class="score-bar-track">
+          <div class="score-bar-fill" id="score-bar-fill" style="width:0%"></div>
+        </div>
+        <div class="score-bar-num" id="score-num">0 / 100</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container main-body">
+
+    <!-- INVENTORY CARDS -->
+    <section class="inv-section">
+      <div class="section-label">Inventário completo</div>
+      <h2>O que existe na sua cidade.</h2>
+      <div class="inv-grid" id="inv-grid">
+        <!-- rendered by JS -->
+      </div>
+    </section>
+
+    <!-- OPPORTUNITIES -->
+    <section class="opp-section">
+      <div class="opp-header">
+        <div>
+          <div class="section-label">Oportunidades</div>
+          <h2>O que você pode ativar.</h2>
+        </div>
+        <button class="btn-primary" onclick="openOppForm()">+ Nova oportunidade</button>
+      </div>
+
+      <!-- Filters -->
+      <div class="opp-filters">
+        <select id="f-type" class="f-select" onchange="renderOpps()">
+          <option value="">Todos os tipos</option>
+          <option value="commercial">Comercial</option>
+          <option value="service">Serviço</option>
+          <option value="place">Lugar</option>
+          <option value="category">Categoria</option>
+        </select>
+        <select id="f-status" class="f-select" onchange="renderOpps()">
+          <option value="">Todos os status</option>
+          <option value="open">Aberta</option>
+          <option value="in_progress">Em progresso</option>
+          <option value="closed">Fechada</option>
+        </select>
+        <select id="f-priority" class="f-select" onchange="renderOpps()">
+          <option value="">Todas as prioridades</option>
+          <option value="5">⭐⭐⭐⭐⭐ Alta</option>
+          <option value="4">⭐⭐⭐⭐</option>
+          <option value="3">⭐⭐⭐</option>
+          <option value="2">⭐⭐</option>
+          <option value="1">⭐ Baixa</option>
+        </select>
+        <div class="opp-count" id="opp-count">— oportunidades</div>
+      </div>
+
+      <div id="opp-list">
+        <div class="loading">Selecione uma cidade para ver as oportunidades.</div>
+      </div>
+    </section>
+
+  </div><!-- /container -->
+</main>
+
+<!-- MODAL OPP -->
+<div id="opp-modal" class="modal-backdrop" onclick="closeOppModal(event)" style="display:none">
+  <div class="modal-card">
+    <div class="modal-title" id="opp-modal-title">Nova Oportunidade</div>
+
+    <div class="form-row">
+      <label>Título</label>
+      <input id="om-title" type="text" class="f-input" placeholder="Ex: 10 restaurantes sem perfil na Rua XV">
+    </div>
+    <div class="form-row">
+      <label>Descrição</label>
+      <textarea id="om-desc" class="f-input f-textarea" placeholder="Detalhe a oportunidade..."></textarea>
+    </div>
+    <div class="form-row two-col">
+      <div>
+        <label>Tipo</label>
+        <select id="om-type" class="f-input">
+          <option value="commercial">Comercial</option>
+          <option value="service">Serviço</option>
+          <option value="place">Lugar</option>
+          <option value="category">Categoria</option>
+        </select>
+      </div>
+      <div>
+        <label>Prioridade (1–5)</label>
+        <select id="om-priority" class="f-input">
+          <option value="5">⭐⭐⭐⭐⭐ Alta</option>
+          <option value="4">⭐⭐⭐⭐</option>
+          <option value="3" selected>⭐⭐⭐</option>
+          <option value="2">⭐⭐</option>
+          <option value="1">⭐ Baixa</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row two-col">
+      <div>
+        <label>Receita estimada (R$/mês)</label>
+        <input id="om-revenue" type="number" class="f-input" placeholder="0">
+      </div>
+      <div>
+        <label>Status</label>
+        <select id="om-status" class="f-input">
+          <option value="open">Aberta</option>
+          <option value="in_progress">Em progresso</option>
+          <option value="closed">Fechada</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="opp-fb" class="form-feedback" style="display:none"></div>
+
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeOppModal()">Cancelar</button>
+      <button class="btn-primary" id="btn-save-opp" onclick="saveOpp()">💾 Salvar</button>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div>🏙️ CIDADE<span style="color:#7c6ef7">ONLINE</span></div>
+  <div style="font-size:.7rem;color:#334155">Inventário da cidade — uso restrito ao operador.</div>
+  <a href="master-dashboard.html" style="color:#a78bfa;font-size:.78rem;font-weight:700;text-decoration:none">🧑‍💼 Dashboard →</a>
+</footer>
+
+<script type="module" src="city-inventory-logic.js"></script>
+</body>
+</html>
