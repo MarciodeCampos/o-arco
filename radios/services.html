@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Serviços Locais | CIDADEONLINE</title>
+  <meta name="description" content="Encontre prestadores de serviço locais — pedreiros, eletricistas, pintores, encanadores e muito mais.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="services.css">
+</head>
+<body>
+<nav class="nav">
+  <a href="cidadeonline.html" class="nav-logo">🏙️ CIDADE<span>ONLINE</span></a>
+  <div class="nav-links">
+    <a href="business.html">🏪 Comércios</a>
+    <a href="places.html">📍 Lugares</a>
+    <a href="control-center.html">⚙️ Control</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="container hero-inner">
+    <div class="eyebrow">🔧 Serviços locais</div>
+    <h1>Profissionais da sua cidade.</h1>
+    <p>Pedreiros, eletricistas, pintores, diaristas e muito mais — locais, verificados, prontos para atender.</p>
+    <div class="city-filter-row">
+      <span class="city-label">Cidade:</span>
+      <select id="city-sel" class="city-sel" onchange="filterByCity(this.value)">
+        <option value="">Todas</option>
+        <option value="francisco-beltrao" selected>Francisco Beltrão / PR</option>
+      </select>
+    </div>
+  </div>
+</section>
+
+<div class="container main-body">
+  <div class="section-head">
+    <div class="section-label">15 categorias disponíveis</div>
+    <a href="service-admin.html" class="link-admin">⚙️ Admin serviços →</a>
+  </div>
+  <div id="cat-grid" class="cat-grid">
+    <div class="loading">Carregando categorias...</div>
+  </div>
+</div>
+
+<section class="cta-band">
+  <div class="container">
+    <div class="cta-text">
+      <div class="cta-title">Você é um profissional local?</div>
+      <div class="cta-sub">Cadastre-se e receba chamadas de clientes da sua cidade.</div>
+    </div>
+    <a href="service-admin.html" class="btn-cta">Cadastrar como prestador →</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div>🏙️ CIDADE<span style="color:#7c6ef7">ONLINE</span></div>
+  <div style="font-size:.7rem;color:#334155">Serviços locais — a sua cidade te atende.</div>
+  <a href="control-center.html" style="color:#a78bfa;font-size:.78rem;font-weight:700;text-decoration:none">⚙️ Control Center →</a>
+</footer>
+
+<script type="module" src="services-logic.js"></script>
+</body>
+</html>

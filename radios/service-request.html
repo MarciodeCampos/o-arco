@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Pedir Orçamento | CIDADEONLINE</title>
+  <meta name="description" content="Abra uma chamada de serviço e receba orçamento de profissionais locais.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="service-request.css">
+</head>
+<body>
+<nav class="nav">
+  <a href="cidadeonline.html" class="nav-logo">🏙️ CIDADE<span>ONLINE</span></a>
+  <div class="nav-links">
+    <a href="services.html">🔧 Serviços</a>
+    <a href="control-center.html">⚙️ Control</a>
+  </div>
+</nav>
+
+<div class="container req-body">
+  <div class="req-card">
+    <div class="req-icon">📋</div>
+    <h1>Pedir orçamento</h1>
+    <p class="req-sub">Preencha o formulário. O Master Local da sua cidade vai conectar você ao profissional certo.</p>
+
+    <form id="req-form" onsubmit="submitRequest(event)">
+      <div class="form-row">
+        <label>Seu nome *</label>
+        <input id="r-name" type="text" class="f-input" placeholder="Como você se chama?" required>
+      </div>
+      <div class="form-row">
+        <label>Telefone / WhatsApp *</label>
+        <input id="r-phone" type="tel" class="f-input" placeholder="(46) 9 9999-0000" required>
+      </div>
+      <div class="form-row two-col">
+        <div>
+          <label>Cidade *</label>
+          <input id="r-city" type="text" class="f-input" placeholder="Francisco Beltrão" required>
+        </div>
+        <div>
+          <label>Estado (UF) *</label>
+          <input id="r-uf" type="text" class="f-input" placeholder="PR" maxlength="2" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <label>Bairro ou referência (opcional)</label>
+        <input id="r-neighborhood" type="text" class="f-input" placeholder="Ex: Jardim Primavera, perto da escola">
+      </div>
+      <div class="form-row">
+        <label>Tipo de serviço *</label>
+        <select id="r-cat" class="f-input" required>
+          <option value="">Selecione o serviço...</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Descreva o que precisa *</label>
+        <textarea id="r-desc" class="f-input f-textarea" placeholder="Ex: Instalar tomadas no quarto, trocar quadro de luz..." required></textarea>
+      </div>
+      <div class="form-row">
+        <label>Urgência</label>
+        <select id="r-urgency" class="f-input">
+          <option value="normal">Normal — sem pressa</option>
+          <option value="soon">Logo que possível</option>
+          <option value="urgent">Urgente</option>
+        </select>
+      </div>
+
+      <div id="req-fb" class="form-feedback" style="display:none"></div>
+
+      <button type="submit" class="btn-submit" id="btn-submit">📋 Enviar pedido de orçamento</button>
+    </form>
+
+    <div id="req-success" class="success-card" style="display:none">
+      <div class="success-icon">✅</div>
+      <div class="success-title">Pedido enviado!</div>
+      <div class="success-sub">O Master Local da sua cidade já recebeu sua chamada e vai conectar você ao profissional certo em breve.</div>
+      <a href="services.html" class="btn-back">← Ver mais serviços</a>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div>🏙️ CIDADE<span style="color:#7c6ef7">ONLINE</span></div>
+  <div style="font-size:.7rem;color:#334155">Serviços locais</div>
+  <a href="services.html" style="color:#a78bfa;font-size:.78rem;font-weight:700;text-decoration:none">← Todas as categorias</a>
+</footer>
+
+<script type="module" src="service-request-logic.js"></script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title id="page-title">Prestador | CIDADEONLINE</title>
+  <meta name="description" content="Perfil de prestador de serviço local.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="provider-profile.css">
+</head>
+<body>
+<nav class="nav">
+  <a href="cidadeonline.html" class="nav-logo">🏙️ CIDADE<span>ONLINE</span></a>
+  <div class="nav-links">
+    <a href="services.html">🔧 Serviços</a>
+    <a href="control-center.html">⚙️ Control</a>
+  </div>
+</nav>
+
+<div class="container pp-body" id="pp-loading">
+  <div class="loading-center">Carregando perfil...</div>
+</div>
+
+<div id="pp-main" style="display:none">
+  <section class="pp-hero">
+    <div class="pp-hero-bg"></div>
+    <div class="container pp-hero-inner">
+      <a href="services.html" class="back-link">← Serviços</a>
+      <div class="pp-avatar" id="pp-avatar">?</div>
+      <h1 id="pp-name">—</h1>
+      <div class="pp-cats" id="pp-cats"></div>
+      <div class="pp-location" id="pp-location"></div>
+      <div class="pp-avail" id="pp-avail"></div>
+
+      <div class="pp-rating-row" id="pp-rating-row"></div>
+
+      <div class="pp-actions">
+        <a href="service-request.html" id="btn-request" class="btn-primary">📋 Pedir orçamento</a>
+        <a href="#" id="btn-whatsapp" class="btn-wa" style="display:none" target="_blank" rel="noopener">💬 WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container pp-content">
+    <div class="pp-bio-card" id="pp-bio-card" style="display:none">
+      <div class="pp-bio-label">Sobre o profissional</div>
+      <div class="pp-bio" id="pp-bio"></div>
+    </div>
+
+    <div class="pp-detail-card">
+      <div class="pp-detail-row"><span class="pp-dl">📍 Área</span><span id="pp-area">—</span></div>
+      <div class="pp-detail-row"><span class="pp-dl">🗂️ Categorias</span><span id="pp-cats-detail">—</span></div>
+      <div class="pp-detail-row"><span class="pp-dl">⭐ Avaliações</span><span id="pp-rating-detail">—</span></div>
+      <div class="pp-detail-row"><span class="pp-dl">📅 Membro desde</span><span id="pp-since">—</span></div>
+    </div>
+
+    <div class="pp-cta-band">
+      <div class="pp-cta-text">Precisa desse profissional?</div>
+      <a href="service-request.html" id="btn-request2" class="btn-primary">📋 Pedir orçamento agora</a>
+    </div>
+  </div>
+</div>
+
+<div id="pp-not-found" style="display:none">
+  <div class="container not-found-inner">
+    <div class="not-found-icon">🔍</div>
+    <div class="not-found-title">Prestador não encontrado</div>
+    <a href="services.html" class="btn-primary">← Ver serviços</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div>🏙️ CIDADE<span style="color:#7c6ef7">ONLINE</span></div>
+  <div style="font-size:.7rem;color:#334155">Serviços locais</div>
+  <a href="services.html" style="color:#a78bfa;font-size:.78rem;font-weight:700;text-decoration:none">← Todos os serviços</a>
+</footer>
+
+<script type="module" src="provider-profile-logic.js"></script>
+</body>
+</html>

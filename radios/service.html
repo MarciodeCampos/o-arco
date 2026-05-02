@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title id="page-title">Categoria | CIDADEONLINE</title>
+  <meta name="description" content="Prestadores de serviço locais por categoria.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="service.css">
+</head>
+<body>
+<nav class="nav">
+  <a href="cidadeonline.html" class="nav-logo">🏙️ CIDADE<span>ONLINE</span></a>
+  <div class="nav-links">
+    <a href="services.html">🔧 Serviços</a>
+    <a href="business.html">🏪 Comércios</a>
+    <a href="control-center.html">⚙️ Control</a>
+  </div>
+</nav>
+
+<section class="cat-hero">
+  <div class="cat-hero-bg"></div>
+  <div class="container cat-hero-inner">
+    <a href="services.html" class="back-link">← Todos os serviços</a>
+    <div class="cat-icon" id="cat-icon">🔧</div>
+    <h1 id="cat-name">Carregando...</h1>
+    <p id="cat-desc" class="cat-desc"></p>
+    <div class="cat-meta-row">
+      <span class="cat-meta-chip" id="prov-count">— prestadores</span>
+      <span class="cat-meta-chip" id="req-count">— chamadas abertas</span>
+    </div>
+    <a href="service-request.html" id="cta-request" class="btn-request">📋 Pedir orçamento →</a>
+  </div>
+</section>
+
+<div class="container main-body">
+
+  <div class="providers-head">
+    <div class="section-label">Prestadores disponíveis</div>
+    <div class="avail-filter">
+      <label><input type="checkbox" id="f-avail" onchange="renderProviders()" checked> Somente disponíveis</label>
+    </div>
+  </div>
+
+  <div id="providers-grid" class="providers-grid">
+    <div class="loading">Carregando prestadores...</div>
+  </div>
+
+  <div class="request-band">
+    <div class="rb-icon">📋</div>
+    <div class="rb-text">
+      <div class="rb-title">Não encontrou o que precisa?</div>
+      <div class="rb-sub">Abra um pedido e o Master Local da cidade cuida do resto.</div>
+    </div>
+    <a href="service-request.html" id="cta-request2" class="btn-request">Pedir orçamento →</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div>🏙️ CIDADE<span style="color:#7c6ef7">ONLINE</span></div>
+  <div style="font-size:.7rem;color:#334155">Serviços locais</div>
+  <a href="services.html" style="color:#a78bfa;font-size:.78rem;font-weight:700;text-decoration:none">← Todas as categorias</a>
+</footer>
+
+<script type="module" src="service-logic.js"></script>
+</body>
+</html>

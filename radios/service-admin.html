@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin Serviços | CIDADEONLINE</title>
+  <meta name="description" content="Painel administrativo de serviços locais — gerenciar chamadas, prestadores e atribuições.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="service-admin.css">
+</head>
+<body>
+<nav class="nav">
+  <a href="cidadeonline.html" class="nav-logo">🏙️ CIDADE<span>ONLINE</span></a>
+  <div class="nav-links">
+    <a href="services.html">🔧 Serviços</a>
+    <a href="master-dashboard.html">🧑‍💼 Dashboard</a>
+    <a href="control-center.html">⚙️ Control</a>
+  </div>
+</nav>
+
+<!-- GATE -->
+<div id="admin-gate" class="gate-wrap">
+  <div class="gate-card">
+    <div class="gate-icon">🔧</div>
+    <div class="gate-title">Admin Serviços</div>
+    <div class="gate-sub">Gerenciar chamadas, prestadores e atribuições</div>
+    <input id="gate-input" type="password" class="gate-input" placeholder="Chave de operador"
+      onkeydown="if(event.key==='Enter')checkGate()">
+    <button class="btn-gate" onclick="checkGate()">Entrar →</button>
+    <div id="gate-err" class="gate-err" style="display:none">Chave incorreta.</div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main id="main-panel" style="display:none">
+
+  <section class="page-header">
+    <div class="container">
+      <div class="page-eyebrow">⚙️ Admin Master Local</div>
+      <h1>Admin Serviços</h1>
+      <p>Gerencie chamadas, atribua prestadores e acompanhe o status de cada ordem de serviço.</p>
+    </div>
+  </section>
+
+  <!-- TABS -->
+  <div class="tab-bar">
+    <div class="container tab-bar-inner">
+      <button class="tab-btn active" onclick="switchTab('requests')">📋 Chamadas <span class="tab-badge" id="tb-requests">0</span></button>
+      <button class="tab-btn" onclick="switchTab('providers')">🧑‍🔧 Prestadores <span class="tab-badge" id="tb-providers">0</span></button>
+      <button class="tab-btn" onclick="switchTab('categories')">🗂️ Categorias</button>
+    </div>
+  </div>
+
+  <div class="container tab-body">
+
+    <!-- REQUESTS TAB -->
+    <div id="tab-requests" class="tab-pane">
+      <div class="pane-header">
+        <div class="filter-row">
+          <select id="f-status" class="f-sel" onchange="renderRequests()">
+            <option value="">Todos os status</option>
+            <option value="open">Aberta</option>
+            <option value="assigned">Atribuída</option>
+            <option value="in_progress">Em andamento</option>
+            <option value="done">Concluída</option>
+            <option value="cancelled">Cancelada</option>
+          </select>
+          <select id="f-cat" class="f-sel" onchange="renderRequests()">
+            <option value="">Todas as categorias</option>
+          </select>
+        </div>
+        <div class="req-count" id="req-count">— chamadas</div>
+      </div>
+      <div id="requests-list"><div class="loading">Carregando...</div></div>
+    </div>
+
+    <!-- PROVIDERS TAB -->
+    <div id="tab-providers" class="tab-pane" style="display:none">
+      <div class="pane-header">
+        <button class="btn-primary" onclick="openProviderForm()">+ Cadastrar prestador</button>
+      </div>
+      <div id="providers-list"><div class="loading">Carregando...</div></div>
+    </div>
+
+    <!-- CATEGORIES TAB -->
+    <div id="tab-categories" class="tab-pane" style="display:none">
+      <div id="categories-list"><div class="loading">Carregando...</div></div>
+    </div>
+
+  </div><!-- /tab-body -->
+</main>
+
+<!-- MODAL PROVIDER -->
+<div id="prov-modal" class="modal-backdrop" onclick="closeProvModal(event)" style="display:none">
+  <div class="modal-card">
+    <div class="modal-title" id="prov-modal-title">Cadastrar Prestador</div>
+    <div class="form-row"><label>Nome *</label><input id="pm-name" type="text" class="f-input" placeholder="Nome completo"></div>
+    <div class="form-row"><label>WhatsApp</label><input id="pm-phone" type="tel" class="f-input" placeholder="46999990000"></div>
+    <div class="form-row two-col">
+      <div><label>Cidade *</label><input id="pm-city" type="text" class="f-input" placeholder="Francisco Beltrão"></div>
+      <div><label>UF *</label><input id="pm-uf" type="text" class="f-input" placeholder="PR" maxlength="2"></div>
+    </div>
+    <div class="form-row"><label>Bairro / Área de atendimento</label><input id="pm-area" type="text" class="f-input" placeholder="Ex: Centro e arredores"></div>
+    <div class="form-row"><label>Categorias (selecione)</label><div id="pm-cats-grid" class="cats-check-grid"></div></div>
+    <div class="form-row"><label>Bio / Apresentação</label><textarea id="pm-bio" class="f-input f-textarea" placeholder="Experiência, especialidades..."></textarea></div>
+    <div class="form-row two-col">
+      <div><label>Disponível agora?</label>
+        <select id="pm-avail" class="f-input">
+          <option value="true">Disponível</option>
+          <option value="false">Indisponível</option>
+        </select>
+      </div>
+      <div><label>WhatsApp público?</label>
+        <select id="pm-wapub" class="f-input">
+          <option value="false">Não</option>
+          <option value="true">Sim</option>
+        </select>
+      </div>
+    </div>
+    <div id="prov-fb" class="form-feedback" style="display:none"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeProvModal()">Cancelar</button>
+      <button class="btn-primary" id="btn-save-prov" onclick="saveProvider()">💾 Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL ASSIGN -->
+<div id="assign-modal" class="modal-backdrop" onclick="closeAssignModal(event)" style="display:none">
+  <div class="modal-card">
+    <div class="modal-title">Atribuir prestador</div>
+    <div class="assign-req-info" id="assign-req-info"></div>
+    <div class="form-row"><label>Selecionar prestador</label>
+      <select id="assign-provider-sel" class="f-input"><option value="">Selecione...</option></select>
+    </div>
+    <div id="assign-fb" class="form-feedback" style="display:none"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeAssignModal()">Cancelar</button>
+      <button class="btn-primary" id="btn-do-assign" onclick="doAssign()">✅ Atribuir</button>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div>🏙️ CIDADE<span style="color:#7c6ef7">ONLINE</span></div>
+  <div style="font-size:.7rem;color:#334155">Admin Serviços — uso restrito</div>
+  <a href="master-dashboard.html" style="color:#a78bfa;font-size:.78rem;font-weight:700;text-decoration:none">🧑‍💼 Dashboard →</a>
+</footer>
+
+<script type="module" src="service-admin-logic.js"></script>
+</body>
+</html>
