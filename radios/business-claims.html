@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Painel de Reivindicações | CIDADEONLINE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="business-claims.css">
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <span class="logo">🏙️ CIDADE<span>ONLINE</span></span>
+    <span class="header-tag">Reivindicações</span>
+  </div>
+  <div class="header-right">
+    <a href="business.html">🏪 Diretório</a>
+    <a href="import-review.html">📋 Revisão</a>
+    <div class="admin-gate" id="admin-gate">
+      <input id="admin-key-input" type="password" placeholder="Chave de operador">
+      <button onclick="setAdminKey()">Entrar</button>
+    </div>
+    <span id="admin-label" style="display:none;font-size:.78rem;color:#8affc1">✓ Operador ativo</span>
+  </div>
+</header>
+
+<div id="locked-msg" class="locked-msg">
+  <span>🔒</span>
+  <p>Informe a chave de operador para acessar o painel.</p>
+</div>
+
+<main id="main-panel" style="display:none">
+
+  <!-- COUNTERS -->
+  <div class="counters" id="counters">
+    <div class="counter-card pending" id="cnt-pending"><span>0</span>Pendentes</div>
+    <div class="counter-card approved" id="cnt-approved"><span>0</span>Aprovados</div>
+    <div class="counter-card rejected" id="cnt-rejected"><span>0</span>Rejeitados</div>
+    <div class="counter-card total" id="cnt-total"><span>0</span>Total</div>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="filters-bar">
+    <select id="f-status" class="f-select">
+      <option value="pending">⏳ Pendentes</option>
+      <option value="approved">✅ Aprovados</option>
+      <option value="rejected">❌ Rejeitados</option>
+      <option value="">Todos</option>
+    </select>
+    <input id="f-search" class="f-input" type="text" placeholder="🔍 Buscar por nome ou comércio...">
+  </div>
+
+  <div class="results-meta" id="results-meta"></div>
+  <div class="claims-list" id="claims-list">
+    <div class="empty-state"><span>⏳</span>Carregando...</div>
+  </div>
+</main>
+
+<script type="module" src="business-claims-logic.js"></script>
+</body>
+</html>

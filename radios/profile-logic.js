@@ -179,9 +179,72 @@ function renderActions(p, isOwn, user){
     const radioName = params.get('radioName')||'';
     if(radioId) html += `<button class="btn-secondary" onclick="sendRadioInvite('${esc(p.profileId)}','${esc(p.name||'')}','${esc(radioId)}','${esc(radioName)}')">📻 Convidar para rádio</button>`;
     if(p.whatsapp) html += `<a class="btn-whatsapp" href="https://wa.me/${p.whatsapp.replace(/\D/g,'')}" target="_blank" rel="noopener">WhatsApp</a>`;
+    // Claim button: business não reivindicado + usuário logado
+    if(p.type==='business' && (p.claimStatus==='unclaimed'||!p.claimStatus) && user){
+      html += `<button class="btn-claim" onclick="openClaimForm('${esc(p.profileId)}','${esc(p.name||'')}')">🏪 Este comércio é meu</button>`;
+    }
     el.innerHTML = html;
   }
 }
+
+// ── CLAIM FORM ────────────────────────────────────────────────────────────────
+window.openClaimForm = function(profileId, bizName){
+  const existing = document.getElementById('claim-form-overlay');
+  if(existing) existing.remove();
+  const overlay = document.createElement('div');
+  overlay.id = 'claim-form-overlay';
+  overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:900;display:flex;align-items:center;justify-content:center;padding:20px';
+  overlay.innerHTML=`
+    <div style="background:#13131f;border:1px solid rgba(124,110,247,.35);border-radius:18px;padding:28px;max-width:420px;width:100%">
+      <div style="font-size:1rem;font-weight:800;margin-bottom:6px">🏪 Reivindicar comércio</div>
+      <div style="font-size:.8rem;color:#64748b;margin-bottom:18px">${esc(bizName)}</div>
+      <div style="display:grid;gap:10px">
+        <input id="claim-name" class="claim-input" type="text" placeholder="Seu nome completo *" required>
+        <input id="claim-phone" class="claim-input" type="tel" placeholder="WhatsApp / Telefone *" required>
+        <input id="claim-email" class="claim-input" type="email" placeholder="E-mail">
+        <textarea id="claim-msg" class="claim-input" placeholder="Mensagem (opcional)" style="min-height:70px;resize:vertical"></textarea>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:16px">
+        <button onclick="submitClaim('${esc(profileId)}','${esc(bizName)}')" style="flex:1;background:linear-gradient(135deg,#7c6ef7,#a78bfa);color:#fff;border:none;border-radius:10px;padding:10px;cursor:pointer;font-weight:700;font-size:.85rem;font-family:inherit">Enviar solicitação</button>
+        <button onclick="document.getElementById('claim-form-overlay').remove()" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:#94a3b8;border-radius:10px;padding:10px 16px;cursor:pointer;font-family:inherit">Cancelar</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  // Estilo inline para inputs do form
+  overlay.querySelectorAll('.claim-input').forEach(el=>{
+    el.style.cssText='background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#e2e8f0;padding:9px 12px;font-family:inherit;font-size:.84rem;outline:none;width:100%';
+    el.onfocus=()=>el.style.borderColor='#7c6ef7';
+    el.onblur=()=>el.style.borderColor='rgba(255,255,255,.1)';
+  });
+};
+
+window.submitClaim = async function(profileId, bizName){
+  const name  = document.getElementById('claim-name')?.value.trim();
+  const phone = document.getElementById('claim-phone')?.value.trim();
+  const email = document.getElementById('claim-email')?.value.trim();
+  const msg   = document.getElementById('claim-msg')?.value.trim();
+  if(!name||!phone){ alert('Nome e telefone são obrigatórios.'); return; }
+  const u = auth.currentUser;
+  if(!u){ alert('Faça login para continuar.'); return; }
+  const claimRef = push(ref(db,'businessClaims'));
+  await set(claimRef,{
+    claimId: claimRef.key,
+    businessId:profileId, profileId,
+    bizName,
+    requestedBy:u.uid,
+    requesterName:name,
+    requesterEmail:email||u.email||'',
+    requesterPhone:phone,
+    requesterPhoto:u.photoURL||'',
+    message:msg||'',
+    status:'pending',
+    createdAt:Date.now(), reviewedAt:null, reviewedBy:''
+  });
+  document.getElementById('claim-form-overlay')?.remove();
+  alert('✅ Solicitação enviada! Entraremos em contato para validação.');
+};
+
+
 
 function renderSocialLinks(p){
   const items = [
