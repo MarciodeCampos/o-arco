@@ -1,126 +1,384 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Mapa da Cidade | CIDADEONLINE</title>
-  <meta name="description" content="Visualização gamificada da cidade — comércios, lugares, prestadores, ofertas e oportunidades operáveis pelo Master Local.">
+  <meta name="description" content="Mapa navegável da cidade — comércios, lugares, prestadores e ofertas em tempo real.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="city-map.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    html,body{height:100%;font-family:'Inter',sans-serif;background:#0a0f1e;color:#e2e8f0}
+
+    /* NAV */
+    .nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,15,30,.95);backdrop-filter:blur(12px);border-bottom:1px solid #1e293b;display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:52px}
+    .nav-logo{font-size:1.1rem;font-weight:900;color:#fff;text-decoration:none;letter-spacing:-1px}
+    .nav-logo span{color:#7c6ef7}
+    .nav-links{display:flex;gap:8px;flex-wrap:wrap}
+    .nav-links a{color:#94a3b8;text-decoration:none;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:6px;transition:.2s}
+    .nav-links a:hover{color:#fff;background:#1e293b}
+
+    /* TOOLBAR */
+    .toolbar{position:fixed;top:52px;left:0;right:0;z-index:900;background:rgba(10,15,30,.97);border-bottom:1px solid #1e293b;padding:8px 16px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+    .tb-btn{background:#1e293b;border:1px solid #334155;color:#94a3b8;padding:5px 12px;border-radius:20px;font-size:.75rem;font-weight:700;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:4px}
+    .tb-btn:hover,.tb-btn.active{background:#7c6ef7;color:#fff;border-color:#7c6ef7}
+    .tb-search{background:#1e293b;border:1px solid #334155;color:#e2e8f0;padding:5px 12px;border-radius:20px;font-size:.78rem;outline:none;min-width:180px}
+    .tb-search::placeholder{color:#64748b}
+    .tb-count{margin-left:auto;font-size:.72rem;color:#64748b;white-space:nowrap}
+
+    /* MAP */
+    #map{position:fixed;top:104px;left:0;right:0;bottom:0;z-index:1}
+    .leaflet-tile-pane{filter:brightness(.85) saturate(.8) hue-rotate(200deg)}
+
+    /* DETAIL PANEL */
+    .detail{position:fixed;top:104px;right:0;bottom:0;width:320px;z-index:800;background:#0f172a;border-left:1px solid #1e293b;transform:translateX(100%);transition:transform .3s ease;display:flex;flex-direction:column;overflow:hidden}
+    .detail.open{transform:translateX(0)}
+    .detail-head{padding:16px;border-bottom:1px solid #1e293b;display:flex;align-items:flex-start;gap:10px}
+    .detail-icon{font-size:2rem;line-height:1}
+    .detail-head-info{flex:1}
+    .detail-name{font-size:1rem;font-weight:800;color:#fff;line-height:1.2}
+    .detail-cat{font-size:.72rem;color:#7c6ef7;font-weight:700;margin-top:2px}
+    .detail-close{background:none;border:none;color:#64748b;cursor:pointer;font-size:1.2rem;padding:2px}
+    .detail-close:hover{color:#fff}
+    .detail-body{flex:1;overflow-y:auto;padding:14px}
+    .detail-row{display:flex;gap:6px;align-items:flex-start;margin-bottom:8px;font-size:.78rem;color:#94a3b8}
+    .detail-row strong{color:#e2e8f0;min-width:60px}
+    .detail-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.68rem;font-weight:700}
+    .badge-claimed{background:#065f46;color:#6ee7b7}
+    .badge-unclaimed{background:#1e293b;color:#f59e0b}
+    .badge-premium{background:#3b1d8a;color:#c4b5fd}
+    .detail-tags{display:flex;flex-wrap:wrap;gap:4px;margin:8px 0}
+    .detail-tag{background:#1e293b;color:#94a3b8;padding:2px 8px;border-radius:8px;font-size:.68rem}
+    .detail-desc{font-size:.78rem;color:#64748b;line-height:1.5;margin-top:8px}
+    .detail-footer{padding:12px 14px;border-top:1px solid #1e293b;display:flex;flex-direction:column;gap:6px}
+    .btn-primary{background:linear-gradient(135deg,#7c6ef7,#a78bfa);color:#fff;border:none;padding:10px;border-radius:10px;font-size:.82rem;font-weight:700;cursor:pointer;text-align:center;text-decoration:none;display:block;transition:.2s}
+    .btn-primary:hover{opacity:.9}
+    .btn-secondary{background:#1e293b;color:#94a3b8;border:1px solid #334155;padding:8px;border-radius:10px;font-size:.78rem;font-weight:600;cursor:pointer;text-align:center;text-decoration:none;display:block;transition:.2s}
+    .btn-secondary:hover{color:#fff;border-color:#64748b}
+
+    /* CUSTOM MARKERS */
+    .cpin{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;border:2px solid rgba(255,255,255,.2);box-shadow:0 2px 8px rgba(0,0,0,.5);cursor:pointer;transition:.2s}
+    .cpin-commerce{background:#1d4ed8}
+    .cpin-place{background:#0f766e}
+    .cpin-provider{background:#b45309}
+    .cpin-offer{background:#7e22ce}
+    .cpin-unclaimed{background:#374151;border-style:dashed}
+    .cpin.selected{transform:scale(1.3);z-index:999;border-color:#fff}
+
+    /* TOAST */
+    .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1e293b;color:#e2e8f0;padding:10px 20px;border-radius:20px;font-size:.8rem;z-index:9999;opacity:0;transition:.3s;pointer-events:none;border:1px solid #334155}
+    .toast.show{opacity:1}
+
+    /* LOADING */
+    .map-loading{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9000;color:#7c6ef7;font-size:.9rem;font-weight:700;display:flex;align-items:center;gap:8px}
+    .spin{animation:spin 1s linear infinite;display:inline-block}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    @media(max-width:640px){
+      .detail{width:100%;top:auto;bottom:0;height:70%;border-left:none;border-top:1px solid #1e293b;border-radius:16px 16px 0 0;transform:translateY(100%)}
+      .detail.open{transform:translateY(0)}
+    }
+  </style>
 </head>
 <body>
+
 <nav class="nav">
   <a href="cidadeonline.html" class="nav-logo">🏙️ CIDADE<span>ONLINE</span></a>
   <div class="nav-links">
-    <a href="services.html">🔧 Serviços</a>
     <a href="business.html">🏪 Comércios</a>
+    <a href="services.html">🔧 Serviços</a>
     <a href="places.html">📍 Lugares</a>
-    <a href="control-center.html">⚙️ Control</a>
+    <a href="city-inventory.html">🗂️ Inventário</a>
+    <a href="control-center.html">⚙️ Hub</a>
   </div>
 </nav>
 
-<section class="city-header">
-  <div class="city-header-bg"></div>
-  <div class="container city-header-inner">
-    <div class="city-eyebrow">🗺️ Mapa operacional</div>
-    <h1>Território da cidade</h1>
-    <p>Cada ponto é um ativo real. Clique para ver detalhes, acessar o perfil ou ativar oportunidades.</p>
-    <div class="city-stats">
-      <div class="stat-chip" id="sc-total">— ativos</div>
-      <div class="stat-chip green" id="sc-active">— reivindicados</div>
-      <div class="stat-chip orange" id="sc-opps">— oportunidades</div>
-      <div class="stat-chip purple" id="sc-offers">— ofertas</div>
-    </div>
-  </div>
-</section>
-
-<div class="controls-bar">
-  <div class="container controls-inner">
-    <div class="filter-tabs" id="filter-tabs">
-      <button class="ftab active" data-type="" onclick="setFilter(this,'')">🗺️ Todos</button>
-      <button class="ftab" data-type="commerce" onclick="setFilter(this,'commerce')">🏪 Comércios</button>
-      <button class="ftab" data-type="place" onclick="setFilter(this,'place')">📍 Lugares</button>
-      <button class="ftab" data-type="provider" onclick="setFilter(this,'provider')">🔧 Prestadores</button>
-      <button class="ftab" data-type="offer" onclick="setFilter(this,'offer')">🎯 Ofertas</button>
-      <button class="ftab" data-type="opportunity" onclick="setFilter(this,'opportunity')">⬡ Oportunidades</button>
-    </div>
-    <div class="filter-sub">
-      <select id="f-status" class="f-sel" onchange="applyFilters()">
-        <option value="">Todos os status</option>
-        <option value="claimed">Reivindicado</option>
-        <option value="unclaimed">Não reivindicado</option>
-        <option value="premium">Premium</option>
-        <option value="available">Disponível</option>
-        <option value="active">Ativo</option>
-      </select>
-      <select id="f-plan" class="f-sel" onchange="applyFilters()">
-        <option value="">Todos os planos</option>
-        <option value="premium">Premium</option>
-        <option value="destaque">Destaque</option>
-        <option value="free">Gratuito</option>
-      </select>
-      <input id="f-search" class="f-search" type="text" placeholder="🔍 Buscar..." oninput="applyFilters()">
-    </div>
-  </div>
+<div class="toolbar" id="toolbar">
+  <button class="tb-btn active" data-filter="" onclick="setFilter(this,'')">🗺️ Todos</button>
+  <button class="tb-btn" data-filter="commerce" onclick="setFilter(this,'commerce')">🏪 Comércios</button>
+  <button class="tb-btn" data-filter="place" onclick="setFilter(this,'place')">📍 Lugares</button>
+  <button class="tb-btn" data-filter="provider" onclick="setFilter(this,'provider')">🔧 Prestadores</button>
+  <button class="tb-btn" data-filter="offer" onclick="setFilter(this,'offer')">🎯 Ofertas</button>
+  <input class="tb-search" id="tb-search" type="text" placeholder="🔍 Buscar estabelecimento..." oninput="filterMarkers()">
+  <span class="tb-count" id="tb-count">Carregando...</span>
 </div>
 
-<div class="map-main" id="map-main">
-  <div class="grid-area">
-    <div class="grid-count" id="grid-count">Carregando mapa...</div>
-    <div id="city-grid" class="city-grid">
-      <div class="loading-tiles">
-        <div class="loading-tile"></div><div class="loading-tile"></div>
-        <div class="loading-tile"></div><div class="loading-tile"></div>
-        <div class="loading-tile"></div><div class="loading-tile"></div>
-        <div class="loading-tile"></div><div class="loading-tile"></div>
-        <div class="loading-tile"></div><div class="loading-tile"></div>
-      </div>
+<div id="map"></div>
+
+<aside class="detail" id="detail-panel">
+  <div class="detail-head">
+    <div class="detail-icon" id="d-icon">📍</div>
+    <div class="detail-head-info">
+      <div class="detail-name" id="d-name">—</div>
+      <div class="detail-cat" id="d-cat">—</div>
     </div>
+    <button class="detail-close" onclick="closeDetail()">✕</button>
   </div>
-
-  <aside class="detail-panel" id="detail-panel">
-    <div class="detail-empty" id="detail-empty">
-      <div class="detail-empty-icon">🗺️</div>
-      <div class="detail-empty-title">Clique em qualquer ponto</div>
-      <div class="detail-empty-sub">Veja detalhes e acesse o perfil do ativo selecionado.</div>
-    </div>
-    <div id="detail-content" style="display:none;flex-direction:column;gap:10px">
-      <button class="detail-close" onclick="closeDetail()">✕ Fechar</button>
-      <div class="detail-type-icon" id="d-icon"></div>
-      <div class="detail-type-badge" id="d-type-badge"></div>
-      <div class="detail-name" id="d-name"></div>
-      <div class="detail-meta" id="d-meta"></div>
-      <div class="detail-tags" id="d-tags"></div>
-      <div class="detail-status" id="d-status"></div>
-      <div class="detail-desc" id="d-desc"></div>
-      <div class="detail-actions" id="d-actions"></div>
-      <div class="detail-divider" id="detail-divider"></div>
-      <div class="detail-stat-row" id="d-stat-row"></div>
-    </div>
-  </aside>
-</div>
-
-<div class="legend-bar">
-  <div class="container legend-inner">
-    <span class="legend-label">Legenda:</span>
-    <span class="leg-item commerce-claimed">🏪 Comércio ativo</span>
-    <span class="leg-item commerce-unclaimed">🔓 Não reivindicado</span>
-    <span class="leg-item commerce-premium">⭐ Premium</span>
-    <span class="leg-item place-claimed">📍 Lugar ativo</span>
-    <span class="leg-item place-unclaimed">📌 Livre</span>
-    <span class="leg-item provider-available">🔧 Prestador</span>
-    <span class="leg-item offer-active">🎯 Oferta</span>
-    <span class="leg-item opportunity">⬡ Oportunidade</span>
+  <div class="detail-body">
+    <div id="d-badges" class="detail-tags" style="margin-bottom:10px"></div>
+    <div id="d-rows"></div>
+    <div class="detail-tags" id="d-tags"></div>
+    <div class="detail-desc" id="d-desc"></div>
   </div>
-</div>
+  <div class="detail-footer" id="d-footer"></div>
+</aside>
 
-<footer class="footer">
-  <div>🏙️ CIDADE<span style="color:#7c6ef7">ONLINE</span></div>
-  <div style="font-size:.7rem;color:#334155">Mapa Operacional — Fase Master Local</div>
-  <a href="city-inventory.html" style="color:#a78bfa;font-size:.78rem;font-weight:700;text-decoration:none">🗂️ Inventário →</a>
-</footer>
+<div class="toast" id="toast"></div>
+<div class="map-loading" id="map-loading"><span class="spin">◌</span> Carregando mapa...</div>
 
-<script type="module" src="city-map-logic.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script type="module">
+import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const FB = {
+  apiKey:"AIzaSyDa0XWSvNISi47olox7U2HHawf3pf1rOjI",
+  authDomain:"triadic-radios.firebaseapp.com",
+  databaseURL:"https://triadic-radios-default-rtdb.firebaseio.com",
+  projectId:"triadic-radios",
+  storageBucket:"triadic-radios.firebasestorage.app",
+  messagingSenderId:"574115949337",
+  appId:"1:574115949337:web:527670aa35d9bb939f3388"
+};
+const app = getApps().length ? getApps()[0] : initializeApp(FB);
+const db  = getDatabase(app);
+
+// Francisco Beltrão, PR
+const DEFAULT_CENTER = [-26.0782, -53.0568];
+const DEFAULT_ZOOM = 14;
+
+// Mapa
+const map = L.map('map', { zoomControl: false }).setView(DEFAULT_CENTER, DEFAULT_ZOOM);
+L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap',
+  maxZoom: 19
+}).addTo(map);
+
+// Estado
+let allMarkers = [];
+let activeFilter = '';
+let selectedMarker = null;
+
+// Ícones por tipo
+const ICONS = {
+  commerce:  { emoji:'🏪', cls:'cpin-commerce'  },
+  place:     { emoji:'📍', cls:'cpin-place'     },
+  provider:  { emoji:'🔧', cls:'cpin-provider'  },
+  offer:     { emoji:'🎯', cls:'cpin-offer'     },
+};
+const STATUS_CLS = {
+  claimed:'badge-claimed', unclaimed:'badge-unclaimed', premium:'badge-premium'
+};
+const STATUS_LABEL = {
+  claimed:'✅ Ativo', unclaimed:'🔓 Não reivindicado', premium:'⭐ Premium', available:'Disponível', active:'Ativo'
+};
+
+function makeIcon(type, status) {
+  const ic = ICONS[type] || { emoji:'📍', cls:'cpin-commerce' };
+  const extra = (status === 'unclaimed') ? ' cpin-unclaimed' : '';
+  return L.divIcon({
+    html: `<div class="cpin ${ic.cls}${extra}">${ic.emoji}</div>`,
+    className: '', iconSize:[32,32], iconAnchor:[16,16], popupAnchor:[0,-20]
+  });
+}
+
+// Fallback seed: pontos conhecidos de F. Beltrão caso Firebase não tenha geocoordenadas
+const SEED_LOCATIONS = [
+  { name:'Padaria Central', category:'Alimentação', type:'commerce', lat:-26.0782, lng:-53.0568, status:'unclaimed', address:'Rua Marcelino Dias, 215' },
+  { name:'Barbearia do João', category:'Barbearia', type:'commerce', lat:-26.0795, lng:-53.0551, status:'claimed', address:'Av. Júlio Assis Cavalheiro, 890', whatsapp:'46999990001' },
+  { name:'Farmácia Popular', category:'Saúde', type:'commerce', lat:-26.0770, lng:-53.0580, status:'claimed', address:'Rua Souza Naves, 450' },
+  { name:'Auto Mecânica Silva', category:'Automotivo', type:'provider', lat:-26.0760, lng:-53.0595, status:'available', address:'Rua Tiradentes, 1200' },
+  { name:'Mercado Beltrão', category:'Supermercado', type:'commerce', lat:-26.0800, lng:-53.0540, status:'premium', address:'Av. General Ernesto Geisel, 2500' },
+  { name:'Praça da Bíblia', category:'Praça', type:'place', lat:-26.0778, lng:-53.0560, status:'claimed', address:'Centro, Francisco Beltrão' },
+  { name:'UBS Centro', category:'Saúde', type:'place', lat:-26.0788, lng:-53.0575, status:'claimed', address:'Rua Dez de Novembro, 100' },
+  { name:'Academia Fitness', category:'Academia', type:'provider', lat:-26.0755, lng:-53.0610, status:'available', address:'Av. Presidente Vargas, 600' },
+  { name:'Escritório Contábil', category:'Contabilidade', type:'provider', lat:-26.0810, lng:-53.0530, status:'unclaimed', address:'Rua XV de Novembro, 330' },
+  { name:'Oferta: Desconto Barbearia', category:'Oferta', type:'offer', lat:-26.0795, lng:-53.0548, status:'active', address:'Av. Júlio Assis Cavalheiro, 890' },
+];
+
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;') }
+
+function addMarker(item) {
+  if (!item.lat || !item.lng) return null;
+  const icon = makeIcon(item.type, item.status);
+  const marker = L.marker([item.lat, item.lng], { icon });
+  marker._data = item;
+  marker.addTo(map);
+  marker.on('click', () => openDetail(marker));
+  allMarkers.push(marker);
+  return marker;
+}
+
+function openDetail(marker) {
+  const d = marker._data;
+  if (selectedMarker && selectedMarker !== marker) {
+    const old = selectedMarker.getElement()?.querySelector('.cpin');
+    if (old) old.classList.remove('selected');
+  }
+  selectedMarker = marker;
+  const el = marker.getElement()?.querySelector('.cpin');
+  if (el) el.classList.add('selected');
+
+  const ic = ICONS[d.type] || { emoji:'📍' };
+  document.getElementById('d-icon').textContent = d.icon || ic.emoji;
+  document.getElementById('d-name').textContent = d.name || 'Sem nome';
+  document.getElementById('d-cat').textContent  = d.category || d.type || '';
+
+  // badges
+  const badgesEl = document.getElementById('d-badges');
+  let badges = '';
+  if (d.status) {
+    const bc = STATUS_CLS[d.status] || 'badge-unclaimed';
+    const bl = STATUS_LABEL[d.status] || d.status;
+    badges += `<span class="detail-badge ${bc}">${bl}</span>`;
+  }
+  if (d.plan) badges += ` <span class="detail-badge badge-premium">${d.plan}</span>`;
+  badgesEl.innerHTML = badges;
+
+  // rows
+  let rows = '';
+  if (d.address) rows += `<div class="detail-row"><strong>📍 Endereço</strong><span>${esc(d.address)}</span></div>`;
+  if (d.city)    rows += `<div class="detail-row"><strong>🏙️ Cidade</strong><span>${esc(d.city)}</span></div>`;
+  if (d.phone)   rows += `<div class="detail-row"><strong>📞 Telefone</strong><span>${esc(d.phone)}</span></div>`;
+  if (d.whatsapp) rows += `<div class="detail-row"><strong>💬 WhatsApp</strong><a href="https://wa.me/55${d.whatsapp.replace(/\D/g,'')}" target="_blank" style="color:#25d366">${esc(d.whatsapp)}</a></div>`;
+  if (d.hours)   rows += `<div class="detail-row"><strong>🕐 Horário</strong><span>${esc(d.hours)}</span></div>`;
+  document.getElementById('d-rows').innerHTML = rows;
+
+  // tags
+  const tags = [d.category, d.state, d.type].filter(Boolean);
+  document.getElementById('d-tags').innerHTML = tags.map(t=>`<span class="detail-tag">${esc(t)}</span>`).join('');
+
+  // desc
+  document.getElementById('d-desc').textContent = d.description || '';
+
+  // footer
+  let footer = '';
+  if (d.profileUrl || d.slug)
+    footer += `<a class="btn-primary" href="profile.html?id=${esc(d.slug||d.id||'')}" target="_blank">👁 Ver Perfil</a>`;
+  if (d.whatsapp)
+    footer += `<a class="btn-secondary" href="https://wa.me/55${d.whatsapp.replace(/\D/g,'')}" target="_blank">💬 Abrir WhatsApp</a>`;
+  if (!d.profileUrl && !d.whatsapp && d.status === 'unclaimed')
+    footer += `<a class="btn-secondary" href="business-claims.html" target="_blank">🔓 Reivindicar este perfil</a>`;
+  document.getElementById('d-footer').innerHTML = footer;
+
+  document.getElementById('detail-panel').classList.add('open');
+  map.panTo([d.lat, d.lng], { animate: true });
+}
+
+function closeDetail() {
+  document.getElementById('detail-panel').classList.remove('open');
+  if (selectedMarker) {
+    const el = selectedMarker.getElement()?.querySelector('.cpin');
+    if (el) el.classList.remove('selected');
+    selectedMarker = null;
+  }
+}
+
+// Filtros
+window.setFilter = function(btn, filter) {
+  activeFilter = filter;
+  document.querySelectorAll('.tb-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filterMarkers();
+};
+
+window.filterMarkers = function() {
+  const q = (document.getElementById('tb-search')?.value || '').toLowerCase();
+  let visible = 0;
+  allMarkers.forEach(m => {
+    const d = m._data;
+    const matchType = !activeFilter || d.type === activeFilter;
+    const matchQ    = !q || (d.name||'').toLowerCase().includes(q) || (d.category||'').toLowerCase().includes(q) || (d.address||'').toLowerCase().includes(q);
+    if (matchType && matchQ) { m.addTo(map); visible++; }
+    else m.remove();
+  });
+  document.getElementById('tb-count').textContent = `${visible} pontos`;
+};
+
+window.closeDetail = closeDetail;
+
+// Mostrar toast
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2500);
+}
+
+// CARREGAR DADOS
+async function loadData() {
+  try {
+    const [bizSnap, placesSnap, provSnap, offersSnap] = await Promise.all([
+      get(ref(db, 'businessProfiles')),
+      get(ref(db, 'places')),
+      get(ref(db, 'serviceProviders')),
+      get(ref(db, 'businessOffers')),
+    ]);
+
+    let count = 0;
+
+    // Comércios
+    if (bizSnap.exists()) {
+      Object.values(bizSnap.val()).forEach(b => {
+        if (b.lat && b.lng) {
+          addMarker({ ...b, type:'commerce', icon:'🏪' }); count++;
+        }
+      });
+    }
+
+    // Lugares
+    if (placesSnap.exists()) {
+      Object.values(placesSnap.val()).forEach(p => {
+        if (p.lat && p.lng) {
+          addMarker({ ...p, type:'place', icon:'📍' }); count++;
+        }
+      });
+    }
+
+    // Prestadores
+    if (provSnap.exists()) {
+      Object.values(provSnap.val()).forEach(p => {
+        if (p.lat && p.lng) {
+          addMarker({ ...p, type:'provider', icon:'🔧' }); count++;
+        }
+      });
+    }
+
+    // Ofertas
+    if (offersSnap.exists()) {
+      Object.values(offersSnap.val()).filter(o => o.active && o.lat && o.lng).forEach(o => {
+        addMarker({ ...o, type:'offer', icon:'🎯' }); count++;
+      });
+    }
+
+    // Se nenhum dado tem coordenadas, usa seed para demonstração
+    if (count === 0) {
+      SEED_LOCATIONS.forEach(s => addMarker(s));
+      count = SEED_LOCATIONS.length;
+      toast('Usando dados de demonstração — cadastre coordenadas nos perfis para aparecer no mapa.');
+    }
+
+    document.getElementById('tb-count').textContent = `${count} pontos`;
+    document.getElementById('map-loading').style.display = 'none';
+
+  } catch(e) {
+    console.warn('Erro ao carregar Firebase, usando seed:', e);
+    SEED_LOCATIONS.forEach(s => addMarker(s));
+    document.getElementById('tb-count').textContent = `${SEED_LOCATIONS.length} pontos`;
+    document.getElementById('map-loading').style.display = 'none';
+  }
+}
+
+loadData();
+
+// Fechar detalhe ao clicar no mapa
+map.on('click', e => {
+  if (e.originalEvent.target.closest('.cpin')) return;
+  closeDetail();
+});
+</script>
 </body>
 </html>
