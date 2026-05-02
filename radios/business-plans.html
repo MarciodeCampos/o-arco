@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Planos & Destaques | CIDADEONLINE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="business-plans.css">
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <span class="logo">🏙️ CIDADE<span>ONLINE</span></span>
+    <span class="header-tag">Planos & Destaques</span>
+  </div>
+  <div class="header-right">
+    <a href="business.html">🏪 Diretório</a>
+    <a href="business-claims.html">🏪 Reivindicações</a>
+    <a href="import-review.html">📋 Revisão</a>
+    <div class="admin-gate" id="admin-gate">
+      <input id="admin-key-input" type="password" placeholder="Chave de operador">
+      <button onclick="setAdminKey()">Entrar</button>
+    </div>
+    <span id="admin-label" style="display:none;font-size:.78rem;color:#8affc1">✓ Operador ativo</span>
+  </div>
+</header>
+
+<div id="locked-msg" class="locked-msg">
+  <span>🔒</span>
+  <p>Informe a chave de operador para acessar o painel.</p>
+</div>
+
+<main id="main-panel" style="display:none">
+
+  <!-- COUNTERS -->
+  <div class="counters">
+    <div class="counter-card" id="cnt-total"><span>0</span>Total</div>
+    <div class="counter-card featured" id="cnt-featured"><span>0</span>Destaque</div>
+    <div class="counter-card premium" id="cnt-premium"><span>0</span>Premium</div>
+    <div class="counter-card partner" id="cnt-partner"><span>0</span>Parceiros</div>
+    <div class="counter-card claimed" id="cnt-claimed"><span>0</span>Reivindicados</div>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="filters-bar">
+    <input id="f-search" class="f-input" type="text" placeholder="🔍 Buscar comércio...">
+    <select id="f-plan" class="f-select">
+      <option value="">Todos os planos</option>
+      <option value="free">Grátis</option>
+      <option value="featured">Destaque</option>
+      <option value="premium">Premium</option>
+      <option value="partner">Parceiro</option>
+    </select>
+    <select id="f-uf" class="f-select"><option value="">Todos os estados</option></select>
+  </div>
+
+  <div class="results-meta" id="results-meta"></div>
+  <div class="plans-grid" id="plans-grid">
+    <div class="empty-state"><span>⏳</span>Carregando...</div>
+  </div>
+</main>
+
+<!-- EDIT MODAL -->
+<div id="edit-modal" class="modal-overlay" style="display:none">
+  <div class="modal-box">
+    <div class="modal-title" id="modal-biz-name"></div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Plano</label>
+        <select id="m-plan" class="f-select" style="width:100%">
+          <option value="free">Grátis</option>
+          <option value="featured">Destaque</option>
+          <option value="premium">💎 Premium</option>
+          <option value="partner">🤝 Parceiro</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Destaque ativo?</label>
+        <select id="m-featured" class="f-select" style="width:100%">
+          <option value="false">Não</option>
+          <option value="true">⭐ Sim</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Destaque até (data)</label>
+        <input id="m-featured-until" class="f-input" type="date">
+      </div>
+      <div class="form-group">
+        <label>Priority (0-999)</label>
+        <input id="m-priority" class="f-input" type="number" min="0" max="999">
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:16px">
+      <button class="btn-save" onclick="saveBusinessPlan()">💾 Salvar</button>
+      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="business-plans-logic.js"></script>
+</body>
+</html>

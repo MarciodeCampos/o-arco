@@ -240,12 +240,31 @@ function applyFilters(){
     if(hasWa  && !b.whatsapp) return false;
     if(claimed && !b.claimed) return false;
     return true;
-  }).sort((a,b)=>(b.priority||0)-(a.priority||0));
+  }).sort((a,b)=>{
+    // featured ativos primeiro, depois por planScore, depois por priority
+    const now = Date.now();
+    const aFeat = a.featured && (!a.featuredUntil || a.featuredUntil > now) ? 1 : 0;
+    const bFeat = b.featured && (!b.featuredUntil || b.featuredUntil > now) ? 1 : 0;
+    if(bFeat !== aFeat) return bFeat - aFeat;
+    const planScore = {partner:4,premium:3,featured:2,claimed:1,free:0};
+    const aScore = planScore[a.plan||'free']||0;
+    const bScore = planScore[b.plan||'free']||0;
+    if(bScore !== aScore) return bScore - aScore;
+    return (b.priority||0)-(a.priority||0);
+  });
 
   renderGrid(filtered);
 }
 
-// ── RENDER ────────────────────────────────────────────────────────────────────
+function planBadge(b){
+  const now = Date.now();
+  const isActiveFeatured = b.featured && (!b.featuredUntil || b.featuredUntil > now);
+  if(isActiveFeatured) return `<span class="badge badge-featured">⭐ Destaque</span>`;
+  if(b.plan==='partner')  return `<span class="badge badge-partner">🤝 Parceiro</span>`;
+  if(b.plan==='premium')  return `<span class="badge badge-premium">💎 Premium</span>`;
+  return '';
+}
+
 function renderGrid(list){
   const grid = document.getElementById('biz-grid');
   const meta = document.getElementById('results-meta');
@@ -255,19 +274,23 @@ function renderGrid(list){
     return;
   }
   meta.textContent = list.length + ' comércio' + (list.length>1?'s':'') + ' encontrado' + (list.length>1?'s':'');
+  const now = Date.now();
   grid.innerHTML = list.map(b=>{
     const cat = Object.values(categories).find(c=>c.slug===(b.categorySlug||slugify(b.category||'')));
     const icon = cat?.icon || '🏪';
     const av = b.photoURL
-      ? `<img src="${esc(b.photoURL)}" alt="${esc(b.name)}">`
+      ? `<img src="${esc(b.photoURL)}" alt="${esc(b.name)}"> `
       : icon;
     const claimedBadge = b.claimed
       ? `<span class="badge badge-claimed">✓ Verificado</span>`
       : `<span class="badge badge-unclaimed">Não reivindicado</span>`;
     const waBadge = b.whatsapp ? `<span class="badge badge-whatsapp">WhatsApp</span>` : '';
+    const planBdg = planBadge(b);
+    const isFeat  = b.featured && (!b.featuredUntil || b.featuredUntil > now);
     const profileUrl = `profile.html?pid=${esc(b.profileId||b.businessId)}`;
     const waUrl = b.whatsapp ? `https://wa.me/${b.whatsapp.replace(/\D/g,'')}` : '';
-    return `<div class="biz-card">
+    return `<div class="biz-card${isFeat?' biz-card-featured':''}">
+      ${isFeat?'<div class="featured-glow"></div>':''}
       <div class="biz-card-top">
         <div class="biz-avatar">${av}</div>
         <div class="biz-info">
@@ -276,7 +299,7 @@ function renderGrid(list){
           <div class="biz-location">📍 ${esc(b.city||'')}${b.uf?'/'+b.uf:''}</div>
         </div>
       </div>
-      <div class="biz-badges">${claimedBadge}${waBadge}</div>
+      <div class="biz-badges">${planBdg}${claimedBadge}${waBadge}</div>
       ${b.description?`<div class="biz-description">${esc(b.description)}</div>`:''}
       <div class="biz-actions">
         <a class="btn-profile" href="${profileUrl}">👤 Ver perfil</a>
@@ -285,5 +308,6 @@ function renderGrid(list){
     </div>`;
   }).join('');
 }
+
 
 init();

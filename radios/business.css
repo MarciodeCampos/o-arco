@@ -49,6 +49,13 @@ header{display:flex;align-items:center;justify-content:space-between;padding:12p
 .badge-claimed{background:rgba(76,175,80,.15);color:#8affc1;border:1px solid rgba(76,175,80,.3)}
 .badge-unclaimed{background:rgba(255,255,255,.05);color:#64748b;border:1px solid rgba(255,255,255,.1)}
 .badge-whatsapp{background:rgba(37,211,102,.1);color:#25d366;border:1px solid rgba(37,211,102,.25)}
+.badge-featured{background:rgba(251,191,36,.12);color:#fbbf24;border:1px solid rgba(251,191,36,.35)}
+.badge-premium{background:rgba(139,92,246,.12);color:#c4b5fd;border:1px solid rgba(139,92,246,.3)}
+.badge-partner{background:rgba(59,130,246,.12);color:#93c5fd;border:1px solid rgba(59,130,246,.25)}
+/* FEATURED CARD */
+.biz-card-featured{border-color:rgba(251,191,36,.35)!important;position:relative;overflow:hidden}
+.biz-card-featured:hover{border-color:rgba(251,191,36,.6)!important;box-shadow:0 8px 32px rgba(251,191,36,.12)}
+.featured-glow{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#fbbf24,transparent);opacity:.7}
 .biz-description{font-size:.82rem;color:#94a3b8;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .biz-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
 .btn-profile{background:linear-gradient(135deg,#7c6ef7,#a78bfa);color:#fff;border:none;border-radius:10px;padding:9px 16px;cursor:pointer;font-weight:700;font-size:.8rem;font-family:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:opacity .2s;flex:1;justify-content:center}
