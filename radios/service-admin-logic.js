@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, onValue, get, push, set, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getDatabase, ref, onValue, get, push, set, update, increment } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const FB={apiKey:"AIzaSyDa0XWSvNISi47olox7U2HHawf3pf1rOjI",authDomain:"triadic-radios.firebaseapp.com",databaseURL:"https://triadic-radios-default-rtdb.firebaseio.com",projectId:"triadic-radios",storageBucket:"triadic-radios.firebasestorage.app",messagingSenderId:"574115949337",appId:"1:574115949337:web:527670aa35d9bb939f3388"};
 const app=initializeApp(FB); const db=getDatabase(app);
@@ -121,6 +121,8 @@ window.renderRequests=function(){
       <div class="req-actions">
         ${r.status==='open'?`<button class="btn-sm assign" onclick="openAssign('${r.requestId}')">✅ Atribuir</button>`:''}
         ${r.status!=='done'&&r.status!=='cancelled'?`<button class="btn-sm" onclick="advanceStatus('${r.requestId}','${r.status}')">→ Avançar</button>`:''}
+        ${r.status==='done'?`<button class="btn-sm" onclick="openReviewModal('${r.requestId}')">⭐ Avaliação</button>`:''}
+        ${r.status==='done'?`<button class="btn-sm" onclick="openPortfolioModal('${r.requestId}')">📸 Portfólio</button>`:''}
         ${r.status!=='cancelled'?`<button class="btn-sm" onclick="cancelRequest('${r.requestId}')">✕ Cancelar</button>`:''}
       </div>
     </div>`;
@@ -129,7 +131,20 @@ window.renderRequests=function(){
 
 window.advanceStatus=async function(id,current){
   const next={open:'assigned',assigned:'in_progress',in_progress:'done'}[current];
-  if(next) await update(ref(db,'serviceRequests/'+id),{status:next,updatedAt:Date.now()});
+  if(!next) return;
+  const now=Date.now();
+  await update(ref(db,'serviceRequests/'+id),{status:next,updatedAt:now});
+  // When done: track referral conversion
+  if(next==='done'){
+    const req=allRequests.find(r=>r.requestId===id);
+    if(req?.referralId){
+      await update(ref(db,'serviceReferrals/'+req.referralId),{
+        conversions:increment(1),
+        commission:increment(15), // R$15 taxa fixa manual
+        updatedAt:now
+      });
+    }
+  }
 };
 window.cancelRequest=async function(id){
   if(!confirm('Cancelar esta chamada?'))return;
@@ -279,3 +294,88 @@ function renderCategories(){
     </div>`;
   }).join('')}</div>`;
 }
+
+// ── REVIEW MODAL ──────────────────────────────────────────────
+let reviewingReqId=null;
+window.openReviewModal=function(reqId){
+  reviewingReqId=reqId;
+  const req=allRequests.find(r=>r.requestId===reqId);
+  if(!req)return;
+  const prov=req.assignedProviderId?allProviders.find(p=>p.providerId===req.assignedProviderId):null;
+  document.getElementById('review-req-info').innerHTML=
+    `<strong>${esc(prov?.name||'Prestador')}</strong> — ${esc(req.categorySlug||'').replace('_',' ')}<br>`+
+    `<small style="color:var(--muted)">${esc(req.clientName)} · ${esc(req.city)}/${esc(req.uf)}</small>`;
+  document.getElementById('rv-client').value=req.clientName||'';
+  document.getElementById('rv-comment').value='';
+  document.getElementById('rv-rating').value='5';
+  document.getElementById('review-modal').style.display='flex';
+};
+window.closeReviewModal=function(e){ if(!e||e.target.id==='review-modal') document.getElementById('review-modal').style.display='none'; };
+window.saveReview=async function(){
+  const req=allRequests.find(r=>r.requestId===reviewingReqId); if(!req)return;
+  const prov=req.assignedProviderId?allProviders.find(p=>p.providerId===req.assignedProviderId):null;
+  const rating=parseInt(document.getElementById('rv-rating')?.value||'5');
+  const comment=(document.getElementById('rv-comment')?.value||'').trim();
+  const clientRaw=(document.getElementById('rv-client')?.value||'').trim();
+  const clientName=clientRaw||'Cliente em '+req.city;
+  const btn=document.getElementById('btn-save-review');
+  btn.disabled=true; btn.textContent='Salvando...';
+  try{
+    const now=Date.now();
+    const r=push(ref(db,'serviceReviews'));
+    await set(r,{
+      reviewId:r.key, providerId:req.assignedProviderId||'',
+      requestId:reviewingReqId, clientName, rating, comment,
+      city:req.city, verified:true, createdAt:now
+    });
+    // Update provider rating average
+    if(prov&&prov.providerId){
+      const newCount=(prov.ratingCount||0)+1;
+      const newRating=Math.round(((prov.rating||0)*(prov.ratingCount||0)+rating)/newCount*10)/10;
+      await update(ref(db,'serviceProviders/'+prov.providerId),{rating:newRating,ratingCount:newCount,updatedAt:now});
+    }
+    showFb('review-fb','ok','✅ Avaliação publicada!');
+    setTimeout(()=>window.closeReviewModal(),1000);
+  }catch(err){ showFb('review-fb','err','❌ '+err.message); }
+  finally{ btn.disabled=false; btn.textContent='⭐ Salvar Avaliação'; }
+};
+
+// ── PORTFOLIO MODAL ────────────────────────────────────────────
+let portfolioReqId=null;
+window.openPortfolioModal=function(reqId){
+  portfolioReqId=reqId;
+  const req=allRequests.find(r=>r.requestId===reqId); if(!req)return;
+  const prov=req.assignedProviderId?allProviders.find(p=>p.providerId===req.assignedProviderId):null;
+  document.getElementById('portfolio-req-info').innerHTML=
+    `<strong>${esc(prov?.name||'Prestador')}</strong> — ${esc(req.categorySlug||'').replace('_',' ')}<br>`+
+    `<small style="color:var(--muted)">${esc(req.city)}/${esc(req.uf)}</small>`;
+  document.getElementById('pf-title').value=req.categorySlug?req.categorySlug.replace('_',' )+' em '+req.city:'';
+  document.getElementById('pf-desc').value='';
+  document.getElementById('pf-img').value='';
+  document.getElementById('pf-client').value=req.clientName||'';
+  document.getElementById('portfolio-modal').style.display='flex';
+};
+window.closePortfolioModal=function(e){ if(!e||e.target.id==='portfolio-modal') document.getElementById('portfolio-modal').style.display='none'; };
+window.savePortfolio=async function(){
+  const req=allRequests.find(r=>r.requestId===portfolioReqId); if(!req)return;
+  const title=(document.getElementById('pf-title')?.value||'').trim();
+  if(!title){ showFb('portfolio-fb','err','⚠️ Título obrigatório.'); return; }
+  const desc=(document.getElementById('pf-desc')?.value||'').trim();
+  const imageUrl=(document.getElementById('pf-img')?.value||'').trim();
+  const clientRaw=(document.getElementById('pf-client')?.value||'').trim();
+  const clientName=clientRaw||'Cliente em '+req.city;
+  const btn=document.getElementById('btn-save-portfolio');
+  btn.disabled=true; btn.textContent='Salvando...';
+  try{
+    const r=push(ref(db,'servicePortfolios'));
+    await set(r,{
+      portfolioId:r.key, providerId:req.assignedProviderId||'',
+      requestId:portfolioReqId, categorySlug:req.categorySlug||'',
+      title,description:desc,imageUrl,clientName,
+      city:req.city, verified:true, createdAt:Date.now()
+    });
+    showFb('portfolio-fb','ok','✅ Adicionado ao portfólio!');
+    setTimeout(()=>window.closePortfolioModal(),1000);
+  }catch(err){ showFb('portfolio-fb','err','❌ '+err.message); }
+  finally{ btn.disabled=false; btn.textContent='📸 Salvar'; }
+};

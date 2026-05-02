@@ -38,6 +38,7 @@
       <div class="pp-actions">
         <a href="service-request.html" id="btn-request" class="btn-primary">📋 Pedir orçamento</a>
         <a href="#" id="btn-whatsapp" class="btn-wa" style="display:none" target="_blank" rel="noopener">💬 WhatsApp</a>
+        <button class="btn-refer" onclick="openReferralModal()">🔗 Indicar profissional</button>
       </div>
     </div>
   </section>
@@ -59,6 +60,27 @@
       <div class="pp-cta-text">Precisa desse profissional?</div>
       <a href="service-request.html" id="btn-request2" class="btn-primary">📋 Pedir orçamento agora</a>
     </div>
+
+    <!-- PORTFOLIO -->
+    <div class="rep-section" id="portfolio-section" style="display:none">
+      <div class="rep-section-title">📸 Portfólio de trabalhos</div>
+      <div id="portfolio-list" class="portfolio-grid"></div>
+    </div>
+
+    <!-- REVIEWS -->
+    <div class="rep-section" id="reviews-section" style="display:none">
+      <div class="rep-section-title">⭐ Avaliações verificadas</div>
+      <div id="reviews-list" class="reviews-list"></div>
+    </div>
+
+    <!-- REFERRAL BAND -->
+    <div class="refer-band">
+      <div class="refer-band-left">
+        <div class="refer-title">Conhece o trabalho desse profissional?</div>
+        <div class="refer-sub">Indique para alguém e ajude a cidade a contratar bem.</div>
+      </div>
+      <button class="btn-refer-band" onclick="openReferralModal()">🔗 Gerar link de indicação</button>
+    </div>
   </div>
 </div>
 
@@ -67,6 +89,29 @@
     <div class="not-found-icon">🔍</div>
     <div class="not-found-title">Prestador não encontrado</div>
     <a href="services.html" class="btn-primary">← Ver serviços</a>
+  </div>
+</div>
+
+<!-- REFERRAL MODAL -->
+<div id="referral-modal" class="modal-backdrop" onclick="closeReferralModal(event)" style="display:none">
+  <div class="modal-card">
+    <div class="modal-title">🔗 Indicar Profissional</div>
+    <p class="modal-sub">Gere um link único. Quando alguém contratar pelo seu link, você participa do valor gerado.</p>
+    <div class="form-row"><label>Seu nome</label><input id="ref-name" type="text" class="f-input" placeholder="Como você quer aparecer?"></div>
+    <div id="ref-link-box" class="ref-link-box" style="display:none">
+      <div class="ref-link-label">Seu link de indicação:</div>
+      <div class="ref-link-val" id="ref-link-val"></div>
+      <div class="ref-link-actions">
+        <button class="btn-copy" onclick="copyRefLink()">📋 Copiar link</button>
+        <button class="btn-wa-share" id="btn-wa-share" target="_blank">💬 Compartilhar no WhatsApp</button>
+      </div>
+      <div class="ref-stats" id="ref-stats"></div>
+    </div>
+    <div id="ref-fb" class="form-feedback" style="display:none"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeReferralModal()">Fechar</button>
+      <button class="btn-primary" id="btn-gen-ref" onclick="generateReferral()">🔗 Gerar meu link</button>
+    </div>
   </div>
 </div>
 

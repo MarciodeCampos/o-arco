@@ -5,6 +5,9 @@ const FB={apiKey:"AIzaSyDa0XWSvNISi47olox7U2HHawf3pf1rOjI",authDomain:"triadic-r
 const app=initializeApp(FB); const db=getDatabase(app);
 const params=new URLSearchParams(location.search);
 const preCat=params.get('cat')||'';
+const preRef=params.get('ref')||'';        // refCode from referral link
+const preRid=params.get('rid')||'';        // referralId
+const prePid=params.get('pid')||'';        // providerId preferred
 
 function showFb(type,msg){ const el=document.getElementById('req-fb'); el.className='form-feedback '+type; el.textContent=msg; el.style.display=''; if(type==='err')setTimeout(()=>el.style.display='none',4500); }
 
@@ -46,9 +49,16 @@ window.submitRequest=async function(e){
       city,uf,neighborhood,
       categorySlug:cat,description:desc,urgency,
       status:'open',
-      assignedProviderId:'',
+      assignedProviderId:prePid||'',
+      refCode:preRef||'',
+      referralId:preRid||'',
       createdAt:Date.now(),updatedAt:Date.now()
     });
+    // Increment leads on referral
+    if(preRid){
+      const { update:dbUpdate, increment:dbInc } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js");
+      await dbUpdate(ref(db,'serviceReferrals/'+preRid),{leads:dbInc(1),updatedAt:Date.now()});
+    }
     document.getElementById('req-form').style.display='none';
     document.getElementById('req-success').style.display='';
   }catch(err){

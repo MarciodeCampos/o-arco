@@ -142,6 +142,54 @@
   </div>
 </div>
 
+<!-- MODAL REVIEW -->
+<div id="review-modal" class="modal-backdrop" onclick="closeReviewModal(event)" style="display:none">
+  <div class="modal-card">
+    <div class="modal-title">⭐ Criar Avaliação Verificada</div>
+    <div class="assign-req-info" id="review-req-info"></div>
+    <div class="form-row">
+      <label>Nota (1–5 estrelas)</label>
+      <select id="rv-rating" class="f-input">
+        <option value="5">⭐⭐⭐⭐⭐ — Excelente</option>
+        <option value="4">⭐⭐⭐⭐ — Muito bom</option>
+        <option value="3">⭐⭐⭐ — Bom</option>
+        <option value="2">⭐⭐ — Regular</option>
+        <option value="1">⭐ — Ruim</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label>Comentário</label>
+      <textarea id="rv-comment" class="f-input f-textarea" placeholder="Descreva o serviço realizado..."></textarea>
+    </div>
+    <div class="form-row">
+      <label>Nome do cliente</label>
+      <input id="rv-client" type="text" class="f-input" placeholder="Nome ou 'Cliente em Francisco Beltrão'">
+    </div>
+    <div id="review-fb" class="form-feedback" style="display:none"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeReviewModal()">Cancelar</button>
+      <button class="btn-primary" id="btn-save-review" onclick="saveReview()">⭐ Salvar Avaliação</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL PORTFOLIO -->
+<div id="portfolio-modal" class="modal-backdrop" onclick="closePortfolioModal(event)" style="display:none">
+  <div class="modal-card">
+    <div class="modal-title">📸 Adicionar ao Portfólio</div>
+    <div class="assign-req-info" id="portfolio-req-info"></div>
+    <div class="form-row"><label>Título do trabalho *</label><input id="pf-title" type="text" class="f-input" placeholder="Ex: Reforma do banheiro completo"></div>
+    <div class="form-row"><label>Descrição</label><textarea id="pf-desc" class="f-input f-textarea" placeholder="Descreva o serviço realizado..."></textarea></div>
+    <div class="form-row"><label>URL de foto (opcional)</label><input id="pf-img" type="url" class="f-input" placeholder="https://..."></div>
+    <div class="form-row"><label>Nome do cliente (público)</label><input id="pf-client" type="text" class="f-input" placeholder="Nome ou 'Cliente em Francisco Beltrão'"></div>
+    <div id="portfolio-fb" class="form-feedback" style="display:none"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closePortfolioModal()">Cancelar</button>
+      <button class="btn-primary" id="btn-save-portfolio" onclick="savePortfolio()">📸 Salvar</button>
+    </div>
+  </div>
+</div>
+
 <footer class="footer">
   <div>🏙️ CIDADE<span style="color:#7c6ef7">ONLINE</span></div>
   <div style="font-size:.7rem;color:#334155">Admin Serviços — uso restrito</div>
