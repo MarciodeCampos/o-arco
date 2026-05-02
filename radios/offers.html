@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Ofertas da Cidade | CIDADEONLINE</title>
+  <meta name="description" content="Ofertas, cupons e descontos dos melhores comércios locais do CIDADEONLINE.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="offers.css">
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <a href="business.html" class="logo">🏙️ CIDADE<span>ONLINE</span></a>
+    <span class="header-tag">🏷️ Ofertas</span>
+  </div>
+  <div class="header-right">
+    <a href="business.html">🏪 Diretório</a>
+    <a href="radio.html">📻 Rádio</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Ofertas & Cupons Locais</h1>
+  <p>Descubra descontos exclusivos dos comércios da sua cidade.</p>
+</section>
+
+<!-- FILTERS -->
+<div class="filters-bar">
+  <input id="f-text" class="f-input" type="text" placeholder="🔍 Buscar oferta...">
+  <select id="f-uf" class="f-select"><option value="">Todos os estados</option></select>
+  <select id="f-city" class="f-select" disabled><option value="">Todas as cidades</option></select>
+  <select id="f-type" class="f-select">
+    <option value="">Todos os tipos</option>
+    <option value="coupon">🏷️ Cupom</option>
+    <option value="lead">📋 Agendamento</option>
+    <option value="external_cart">🛒 Compra online</option>
+    <option value="reservation">🏨 Reserva</option>
+    <option value="custom">⭐ Especial</option>
+  </select>
+</div>
+
+<div class="results-meta" id="results-meta"></div>
+<div class="offers-grid" id="offers-grid">
+  <div class="empty-state"><span>⏳</span>Carregando ofertas...</div>
+</div>
+
+<script type="module" src="offers-logic.js"></script>
+</body>
+</html>

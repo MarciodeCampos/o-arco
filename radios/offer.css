@@ -1,0 +1,60 @@
+/* offer.css */
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d0e1a;color:#e2e8f0;font-family:'Inter',sans-serif;min-height:100vh}
+header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:12px 20px;border-bottom:1px solid rgba(255,255,255,.08);position:sticky;top:0;z-index:100;background:#0d0e1a}
+.header-left{display:flex;align-items:center;gap:12px}
+.logo{font-size:1.05rem;font-weight:800;text-decoration:none;color:#e2e8f0}
+.logo span{color:#7c6ef7}
+.header-tag{font-size:.7rem;background:rgba(251,191,36,.1);color:#fbbf24;border:1px solid rgba(251,191,36,.25);border-radius:20px;padding:2px 9px;font-weight:700}
+.header-right a{color:#a78bfa;text-decoration:none;font-size:.8rem;font-weight:600;padding:5px 10px;border-radius:8px}
+.header-right a:hover{background:rgba(124,110,247,.12)}
+/* STATES */
+.loading-state,.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:50vh;gap:14px;color:#475569;font-size:.9rem;text-align:center;padding:40px}
+.loading-state span,.empty-state span{font-size:3rem}
+.btn-primary{background:linear-gradient(135deg,#7c6ef7,#a78bfa);color:#fff;border:none;border-radius:12px;padding:11px 24px;cursor:pointer;font-weight:700;font-size:.88rem;font-family:inherit;text-decoration:none;display:inline-block;transition:opacity .2s}
+.btn-primary:hover{opacity:.85}
+/* LAYOUT */
+#main-content{max-width:600px;margin:0 auto;padding:24px 16px 60px}
+/* BIZ BAR */
+.biz-bar{display:flex;align-items:center;gap:12px;background:#13131f;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:12px 16px;margin-bottom:16px}
+.biz-avatar-sm{width:42px;height:42px;background:linear-gradient(135deg,#7c6ef7,#a78bfa);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;overflow:hidden}
+.biz-avatar-sm img{width:100%;height:100%;object-fit:cover;border-radius:12px}
+.biz-bar-info{flex:1}
+.biz-bar-name{font-size:.9rem;font-weight:800}
+.biz-bar-meta{font-size:.72rem;color:#64748b}
+.biz-bar-link{font-size:.75rem;color:#a78bfa;text-decoration:none;font-weight:600}
+.biz-bar-link:hover{text-decoration:underline}
+/* OFFER CARD */
+.offer-card{background:#13131f;border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:16px}
+.offer-type-badge{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:700;padding:4px 12px;border-radius:20px;width:fit-content}
+.type-coupon{background:rgba(251,191,36,.1);color:#fbbf24;border:1px solid rgba(251,191,36,.3)}
+.type-lead{background:rgba(124,110,247,.1);color:#c4b5fd;border:1px solid rgba(124,110,247,.3)}
+.type-external_cart{background:rgba(34,197,94,.1);color:#86efac;border:1px solid rgba(34,197,94,.25)}
+.type-reservation{background:rgba(59,130,246,.1);color:#93c5fd;border:1px solid rgba(59,130,246,.25)}
+.type-custom{background:rgba(236,72,153,.1);color:#f9a8d4;border:1px solid rgba(236,72,153,.2)}
+.offer-title{font-size:1.5rem;font-weight:800;line-height:1.3}
+.offer-desc{font-size:.88rem;color:#94a3b8;line-height:1.6}
+/* COUPON BOX */
+.coupon-box{display:flex;align-items:center;gap:10px;background:rgba(251,191,36,.06);border:1.5px dashed rgba(251,191,36,.4);border-radius:14px;padding:14px 16px;flex-wrap:wrap}
+.coupon-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:#92705e;font-weight:700;background:rgba(251,191,36,.15);padding:3px 8px;border-radius:6px}
+.coupon-code{font-size:1.4rem;font-weight:800;color:#fbbf24;letter-spacing:.08em;flex:1}
+.btn-copy{background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.3);color:#fbbf24;border-radius:8px;padding:7px 13px;cursor:pointer;font-weight:700;font-size:.78rem;font-family:inherit;transition:background .15s;white-space:nowrap}
+.btn-copy:hover{background:rgba(251,191,36,.22)}
+/* DISCOUNT */
+.discount-tag{background:linear-gradient(135deg,rgba(251,191,36,.15),rgba(251,191,36,.05));border:1px solid rgba(251,191,36,.25);border-radius:14px;padding:12px 16px;font-size:1.1rem;font-weight:800;color:#fbbf24;text-align:center}
+/* VALIDITY */
+.validity-bar{font-size:.78rem;color:#475569}
+.validity-bar.expired{color:#ef4444}
+.validity-bar.ok{color:#22c55e}
+.validity-bar.expiring{color:#f59e0b}
+/* CTA AREA */
+.cta-area{display:flex;flex-direction:column;gap:10px}
+.btn-cta-primary{display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#25d366,#16a34a);color:#fff;border:none;border-radius:14px;padding:14px;font-weight:800;font-size:.95rem;font-family:inherit;cursor:pointer;text-decoration:none;transition:opacity .2s}
+.btn-cta-primary:hover{opacity:.9}
+.btn-cta-secondary{display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:#e2e8f0;border-radius:14px;padding:13px;font-weight:700;font-size:.88rem;font-family:inherit;cursor:pointer;text-decoration:none;transition:all .2s}
+.btn-cta-secondary:hover{background:rgba(255,255,255,.1)}
+/* STATS */
+.offer-stats{display:flex;gap:16px;flex-wrap:wrap;padding-top:4px;border-top:1px solid rgba(255,255,255,.06);margin-top:4px}
+.stat{text-align:center;flex:1;min-width:70px}
+.stat-val{font-size:1.1rem;font-weight:800;color:#7c6ef7}
+.stat-lbl{font-size:.65rem;text-transform:uppercase;color:#475569;letter-spacing:.05em;margin-top:2px}

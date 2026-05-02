@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title id="pg-title">Oferta | CIDADEONLINE</title>
+  <meta name="description" id="pg-desc" content="Oferta exclusiva no CIDADEONLINE.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="offer.css">
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <a href="offers.html" class="logo">🏙️ CIDADE<span>ONLINE</span></a>
+    <span class="header-tag">🏷️ Oferta</span>
+  </div>
+  <div class="header-right">
+    <a href="offers.html">← Todas as ofertas</a>
+  </div>
+</header>
+
+<main id="main-content">
+
+  <!-- LOADING -->
+  <div id="loading-state" class="loading-state"><span>⏳</span> Carregando oferta...</div>
+
+  <!-- NOT FOUND -->
+  <div id="not-found" class="empty-state" style="display:none">
+    <span>🔍</span>
+    <p>Oferta não encontrada ou expirada.</p>
+    <a href="offers.html" class="btn-primary">Ver todas as ofertas</a>
+  </div>
+
+  <!-- OFFER CONTENT -->
+  <div id="offer-content" style="display:none">
+
+    <!-- BUSINESS BAR -->
+    <div class="biz-bar" id="biz-bar"></div>
+
+    <!-- OFFER CARD -->
+    <div class="offer-card">
+      <div class="offer-type-badge" id="offer-type-badge"></div>
+      <h1 class="offer-title" id="offer-title"></h1>
+      <p class="offer-desc" id="offer-desc"></p>
+
+      <!-- COUPON BOX -->
+      <div class="coupon-box" id="coupon-box" style="display:none">
+        <span class="coupon-label">CUPOM</span>
+        <span class="coupon-code" id="coupon-code"></span>
+        <button class="btn-copy" id="btn-copy" onclick="copyCoupon()">📋 Copiar</button>
+      </div>
+
+      <!-- DISCOUNT DISPLAY -->
+      <div class="discount-tag" id="discount-tag" style="display:none"></div>
+
+      <!-- VALIDITY -->
+      <div class="validity-bar" id="validity-bar"></div>
+
+      <!-- CTA BUTTONS -->
+      <div class="cta-area" id="cta-area"></div>
+
+      <!-- STATS (public) -->
+      <div class="offer-stats" id="offer-stats"></div>
+    </div>
+
+    <!-- BACK LINK -->
+    <div style="text-align:center;margin-top:24px">
+      <a href="offers.html" style="color:#7c6ef7;font-size:.85rem;text-decoration:none">← Ver todas as ofertas da cidade</a>
+    </div>
+
+  </div>
+</main>
+
+<script type="module" src="offer-logic.js"></script>
+</body>
+</html>
