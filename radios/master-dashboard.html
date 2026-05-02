@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dashboard Master | CIDADEONLINE</title>
+  <meta name="description" content="Painel do Master Local — opere a economia digital da sua cidade.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="master-dashboard.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="cidadeonline.html" class="nav-logo">🏙️ CIDADE<span>ONLINE</span></a>
+  <div class="nav-right">
+    <span id="user-chip" class="user-chip" style="display:none"></span>
+    <button id="btn-login"  class="btn-login"  onclick="doLogin()"  style="display:none">Entrar com Google</button>
+    <button id="btn-logout" class="btn-logout" onclick="doLogout()" style="display:none">Sair</button>
+  </div>
+</nav>
+
+<!-- LOGIN PROMPT -->
+<div id="login-prompt" class="login-prompt" style="display:none">
+  <div class="login-card">
+    <div class="login-icon">🧑‍💼</div>
+    <div class="login-title">Área do Master Local</div>
+    <p>Faça login com a conta Google vinculada ao seu perfil de operador.</p>
+    <button class="btn-primary" onclick="doLogin()">Entrar com Google</button>
+  </div>
+</div>
+
+<!-- NOT LINKED -->
+<div id="not-linked" class="login-prompt" style="display:none">
+  <div class="login-card">
+    <div class="login-icon">⚠️</div>
+    <div class="login-title">Conta não vinculada</div>
+    <p>Sua conta Google não está vinculada a nenhum perfil de Master Local. Entre em contato com o administrador.</p>
+    <a href="mailto:contato@cidadeonline.com.br" class="btn-primary" style="text-decoration:none">Falar com admin</a>
+  </div>
+</div>
+
+<!-- MAIN DASHBOARD -->
+<main id="main-dash" style="display:none">
+
+  <!-- CITY HERO -->
+  <section class="city-hero">
+    <div class="city-hero-bg"></div>
+    <div class="container city-hero-inner">
+      <div class="city-eyebrow">🧑‍💼 Painel do Master Local</div>
+      <h1 id="dash-city-name">—</h1>
+      <div id="dash-master-name" class="dash-master-name">—</div>
+
+      <div class="score-row">
+        <div class="score-label">Activation Score</div>
+        <div class="score-bar-wrap">
+          <div class="score-bar-bg">
+            <div class="score-bar-fill" id="score-bar-fill" style="width:0%"></div>
+          </div>
+          <div class="score-value" id="score-value">0</div>
+        </div>
+        <div class="score-level" id="score-level">Cidade inexplorada</div>
+      </div>
+
+      <!-- STATS -->
+      <div class="stats-row" id="stats-row">
+        <div class="stat-pill"><span id="s-commerces">—</span><small>Comércios</small></div>
+        <div class="stat-pill"><span id="s-places">—</span><small>Lugares</small></div>
+        <div class="stat-pill"><span id="s-providers">—</span><small>Prestadores</small></div>
+        <div class="stat-pill"><span id="s-offers">—</span><small>Ofertas</small></div>
+        <div class="stat-pill"><span id="s-affiliates">—</span><small>Afiliados</small></div>
+      </div>
+
+      <div class="hero-tier-badge" id="tier-badge">starter</div>
+    </div>
+  </section>
+
+  <!-- OPERAÇÕES -->
+  <section class="section ops-section">
+    <div class="container">
+      <div class="section-label">Operações da cidade</div>
+      <h2>Módulos disponíveis</h2>
+
+      <div class="ops-grid">
+        <!-- PÚBLICO / DADOS -->
+        <div class="ops-group">
+          <div class="ops-group-title">📥 Dados e importação</div>
+          <a href="import-review.html" class="op-card">
+            <div class="op-icon">📋</div>
+            <div class="op-info"><div class="op-title">Import Review</div><div class="op-desc">Revisar e publicar candidatos importados</div></div>
+            <div class="op-arrow">→</div>
+          </a>
+          <a href="city-inventory.html" class="op-card">
+            <div class="op-icon">🗂️</div>
+            <div class="op-info"><div class="op-title">Inventário da Cidade</div><div class="op-desc">Ver oportunidades e activation score</div></div>
+            <span class="op-badge-soon">Em breve</span>
+            <div class="op-arrow">→</div>
+          </a>
+        </div>
+
+        <!-- COMÉRCIO -->
+        <div class="ops-group">
+          <div class="ops-group-title">🏪 Comércio local</div>
+          <a href="business.html" class="op-card">
+            <div class="op-icon">🏪</div>
+            <div class="op-info"><div class="op-title">Diretório</div><div class="op-desc">Ver comércios da cidade</div></div>
+            <div class="op-arrow">→</div>
+          </a>
+          <a href="business-claims.html" class="op-card">
+            <div class="op-icon">🔑</div>
+            <div class="op-info"><div class="op-title">Claims Comerciais</div><div class="op-desc">Aprovar donos de comércios</div></div>
+            <div class="op-stat" id="stat-claims"></div>
+            <div class="op-arrow">→</div>
+          </a>
+          <a href="business-plans.html" class="op-card">
+            <div class="op-icon">⭐</div>
+            <div class="op-info"><div class="op-title">Planos & Destaques</div><div class="op-desc">Alterar plano e destaque de comércios</div></div>
+            <div class="op-arrow">→</div>
+          </a>
+        </div>
+
+        <!-- LUGARES -->
+        <div class="ops-group">
+          <div class="ops-group-title">📍 Lugares da cidade</div>
+          <a href="places.html" class="op-card">
+            <div class="op-icon">📍</div>
+            <div class="op-info"><div class="op-title">Diretório de Lugares</div><div class="op-desc">Postos, praças, escolas, igrejas...</div></div>
+            <div class="op-arrow">→</div>
+          </a>
+          <a href="place-claims.html" class="op-card">
+            <div class="op-icon">✅</div>
+            <div class="op-info"><div class="op-title">Claims de Lugares</div><div class="op-desc">Aprovar responsáveis por lugares</div></div>
+            <div class="op-stat" id="stat-place-claims"></div>
+            <div class="op-arrow">→</div>
+          </a>
+        </div>
+
+        <!-- OFERTAS / AFILIADOS -->
+        <div class="ops-group">
+          <div class="ops-group-title">🏷️ Ofertas & Afiliados</div>
+          <a href="offers.html" class="op-card">
+            <div class="op-icon">🏷️</div>
+            <div class="op-info"><div class="op-title">Vitrine de Ofertas</div><div class="op-desc">Ver e gerir ofertas ativas</div></div>
+            <div class="op-arrow">→</div>
+          </a>
+          <a href="affiliate-admin.html" class="op-card">
+            <div class="op-icon">💸</div>
+            <div class="op-info"><div class="op-title">Admin Afiliados</div><div class="op-desc">Leads, comissões e aprovações</div></div>
+            <div class="op-stat" id="stat-leads"></div>
+            <div class="op-arrow">→</div>
+          </a>
+        </div>
+
+        <!-- SERVIÇOS (futuro) -->
+        <div class="ops-group">
+          <div class="ops-group-title">🔧 Serviços locais</div>
+          <div class="op-card future">
+            <div class="op-icon">🔧</div>
+            <div class="op-info"><div class="op-title">Rede de Prestadores</div><div class="op-desc">Pedreiros, eletricistas, pintores...</div></div>
+            <span class="op-badge-soon">Em breve</span>
+          </div>
+          <div class="op-card future">
+            <div class="op-icon">📋</div>
+            <div class="op-info"><div class="op-title">Ordens de Serviço</div><div class="op-desc">Gerenciar chamadas e atribuições</div></div>
+            <span class="op-badge-soon">Em breve</span>
+          </div>
+        </div>
+
+        <!-- NAVEGAÇÃO -->
+        <div class="ops-group">
+          <div class="ops-group-title">🧭 Navegação</div>
+          <a href="control-center.html" class="op-card">
+            <div class="op-icon">⚙️</div>
+            <div class="op-info"><div class="op-title">Control Center</div><div class="op-desc">Hub central da plataforma</div></div>
+            <div class="op-arrow">→</div>
+          </a>
+          <a href="map.html" class="op-card">
+            <div class="op-icon">🧭</div>
+            <div class="op-info"><div class="op-title">Mapa da Plataforma</div><div class="op-desc">Todos os módulos e caminhos</div></div>
+            <div class="op-arrow">→</div>
+          </a>
+          <a href="city-map.html" class="op-card future">
+            <div class="op-icon">🗺️</div>
+            <div class="op-info"><div class="op-title">Mapa da Cidade</div><div class="op-desc">Visualização da infraestrutura urbana</div></div>
+            <span class="op-badge-soon">Em breve</span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SIMULAÇÃO ROI -->
+  <section class="section roi-section">
+    <div class="container">
+      <div class="section-label">Potencial de receita</div>
+      <h2>Simulação de retorno.</h2>
+      <p class="roi-sub">Baseada no inventário atual da sua cidade operada. Valores estimados.</p>
+      <div class="roi-grid" id="roi-grid">
+        <div class="roi-card"><div class="roi-icon">🏪</div><div class="roi-label">Comércios Destaque</div><div class="roi-val" id="roi-destaque">—</div><div class="roi-formula">× R$ 150/mês</div></div>
+        <div class="roi-card"><div class="roi-icon">⭐</div><div class="roi-label">Comércios Premium</div><div class="roi-val" id="roi-premium">—</div><div class="roi-formula">× R$ 300/mês</div></div>
+        <div class="roi-card"><div class="roi-icon">🔧</div><div class="roi-label">Ordens de serviço</div><div class="roi-val">—<small style="font-size:.75rem">/mês estimado</small></div><div class="roi-formula">× R$ 15 taxa</div></div>
+        <div class="roi-card highlight"><div class="roi-icon">💰</div><div class="roi-label">Base mínima estimada</div><div class="roi-val" id="roi-total">R$ —</div><div class="roi-formula">por mês</div></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div>🏙️ CIDADE<span style="color:#7c6ef7">ONLINE</span></div>
+  <div style="font-size:.7rem;color:#334155">A infraestrutura digital da sua cidade.</div>
+  <a href="master-admin.html" style="color:#a78bfa;font-size:.78rem;font-weight:700;text-decoration:none">⚙️ Admin Masters →</a>
+</footer>
+
+<script type="module" src="master-dashboard-logic.js"></script>
+</body>
+</html>

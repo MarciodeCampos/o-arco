@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin Masters | CIDADEONLINE</title>
+  <meta name="description" content="Painel administrativo de Masters Locais do CIDADEONLINE.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="master-admin.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="cidadeonline.html" class="nav-logo">🏙️ CIDADE<span>ONLINE</span></a>
+  <div class="nav-links">
+    <a href="control-center.html">⚙️ Control Center</a>
+    <a href="map.html">🧭 Mapa</a>
+  </div>
+</nav>
+
+<!-- GATE -->
+<div id="admin-gate" class="gate-wrap">
+  <div class="gate-card">
+    <div class="gate-icon">🔐</div>
+    <div class="gate-title">Admin Masters</div>
+    <div class="gate-sub">Informe a chave de operador para continuar</div>
+    <input id="gate-input" type="password" class="gate-input" placeholder="Chave de operador"
+      onkeydown="if(event.key==='Enter')checkGate()">
+    <button class="btn-gate" onclick="checkGate()">Entrar →</button>
+    <div id="gate-err" class="gate-err" style="display:none">Chave incorreta.</div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main id="main-panel" style="display:none">
+
+  <section class="page-header">
+    <div class="container">
+      <div class="page-eyebrow">⚙️ Operação Admin</div>
+      <h1>Masters Locais</h1>
+      <p>Crie e gerencie operadores de cidade. Cada Master opera a economia digital de uma região.</p>
+    </div>
+  </section>
+
+  <div class="container main-grid">
+
+    <!-- LISTA MASTERS -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">🧑‍💼 Masters cadastrados</div>
+        <button class="btn-primary" onclick="openMasterForm()">+ Novo Master</button>
+      </div>
+      <div id="masters-list"><div class="loading">Carregando...</div></div>
+    </div>
+
+    <!-- CIDADE OPERATIONS -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">🏙️ Operações de cidade</div>
+        <button class="btn-primary" onclick="openCityForm()">+ Nova cidade</button>
+      </div>
+      <div id="cities-list"><div class="loading">Carregando...</div></div>
+    </div>
+
+  </div>
+</main>
+
+<!-- MODAL MASTER -->
+<div id="master-modal" class="modal-backdrop" onclick="closeMasterModal(event)" style="display:none">
+  <div class="modal-card">
+    <div class="modal-title" id="master-modal-title">Novo Master Local</div>
+
+    <div class="form-row">
+      <label>Nome completo</label>
+      <input id="mm-name" type="text" class="f-input" placeholder="Ex: João da Silva">
+    </div>
+    <div class="form-row">
+      <label>E-mail</label>
+      <input id="mm-email" type="email" class="f-input" placeholder="joao@email.com">
+    </div>
+    <div class="form-row">
+      <label>WhatsApp</label>
+      <input id="mm-phone" type="tel" class="f-input" placeholder="46999990000">
+    </div>
+    <div class="form-row">
+      <label>UID Google (para login no dashboard)</label>
+      <input id="mm-uid" type="text" class="f-input" placeholder="uid do Firebase Auth (opcional)">
+    </div>
+    <div class="form-row two-col">
+      <div>
+        <label>Estado (UF)</label>
+        <input id="mm-uf" type="text" class="f-input" placeholder="PR" maxlength="2">
+      </div>
+      <div>
+        <label>Cidade principal</label>
+        <input id="mm-city" type="text" class="f-input" placeholder="Francisco Beltrão">
+      </div>
+    </div>
+    <div class="form-row">
+      <label>Tier / Plano</label>
+      <select id="mm-tier" class="f-input">
+        <option value="starter">Starter</option>
+        <option value="professional">Professional</option>
+        <option value="partner">Partner</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label>Status</label>
+      <select id="mm-status" class="f-input">
+        <option value="pending">Pendente</option>
+        <option value="active">Ativo</option>
+        <option value="suspended">Suspenso</option>
+      </select>
+    </div>
+
+    <div id="master-fb" class="form-feedback" style="display:none"></div>
+
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeMasterModal()">Cancelar</button>
+      <button class="btn-primary" id="btn-save-master" onclick="saveMaster()">💾 Salvar Master</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CIDADE -->
+<div id="city-modal" class="modal-backdrop" onclick="closeCityModal(event)" style="display:none">
+  <div class="modal-card">
+    <div class="modal-title">Nova Operação de Cidade</div>
+
+    <div class="form-row">
+      <label>Nome da cidade</label>
+      <input id="cm-city" type="text" class="f-input" placeholder="Francisco Beltrão">
+    </div>
+    <div class="form-row">
+      <label>Estado (UF)</label>
+      <input id="cm-uf" type="text" class="f-input" placeholder="PR" maxlength="2">
+    </div>
+    <div class="form-row">
+      <label>Master responsável</label>
+      <select id="cm-master" class="f-input">
+        <option value="">Sem master ainda</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label>Status</label>
+      <select id="cm-status" class="f-input">
+        <option value="inactive">Inativo</option>
+        <option value="onboarding">Em onboarding</option>
+        <option value="active">Ativo</option>
+      </select>
+    </div>
+
+    <div id="city-fb" class="form-feedback" style="display:none"></div>
+
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeCityModal()">Cancelar</button>
+      <button class="btn-primary" id="btn-save-city" onclick="saveCity()">💾 Salvar Cidade</button>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div>🏙️ CIDADEONLINE</div>
+  <div style="font-size:.7rem;color:#334155">Admin Masters — uso restrito</div>
+  <a href="control-center.html" style="color:#a78bfa;font-size:.78rem;font-weight:700;text-decoration:none">⚙️ Control Center →</a>
+</footer>
+
+<script type="module" src="master-admin-logic.js"></script>
+</body>
+</html>
