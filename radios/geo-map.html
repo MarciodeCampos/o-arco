@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Mapa Real da Cidade | CIDADEONLINE</title>
+  <meta name="description" content="Mapa de ruas navegável com comércios, lugares, prestadores e ofertas de Francisco Beltrão em tempo real.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <link rel="stylesheet" href="geo-map.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="cidadeonline.html" class="nav-logo">🏙️ CIDADE<span>ONLINE</span></a>
+  <div class="nav-links">
+    <a href="business.html">🏪 Comércios</a>
+    <a href="services.html">🔧 Serviços</a>
+    <a href="places.html">📍 Lugares</a>
+    <a href="city-map.html">🗺️ Mapa Visual</a>
+    <a href="control-center.html">⚙️ Hub</a>
+  </div>
+</nav>
+
+<div class="toolbar">
+  <button class="tb-btn active" onclick="setFilter(this,'')">🗺️ Todos</button>
+  <button class="tb-btn" onclick="setFilter(this,'commerce')">🏪 Comércios</button>
+  <button class="tb-btn" onclick="setFilter(this,'place')">📍 Lugares</button>
+  <button class="tb-btn" onclick="setFilter(this,'provider')">🔧 Prestadores</button>
+  <button class="tb-btn" onclick="setFilter(this,'offer')">🎯 Ofertas</button>
+  <input class="tb-search" id="tb-search" type="text" placeholder="🔍 Buscar..." oninput="filterMarkers()">
+  <span class="tb-count" id="tb-count">Carregando...</span>
+</div>
+
+<div id="map"></div>
+
+<aside class="detail" id="detail-panel">
+  <div class="detail-head">
+    <div class="detail-icon" id="d-icon">📍</div>
+    <div class="detail-head-info">
+      <div class="detail-name" id="d-name">—</div>
+      <div class="detail-cat" id="d-cat">—</div>
+    </div>
+    <button class="detail-close" onclick="closeDetail()">✕</button>
+  </div>
+  <div class="detail-body">
+    <div id="d-badges" class="detail-tags" style="margin-bottom:10px"></div>
+    <div id="d-rows"></div>
+    <div class="detail-tags" id="d-tags"></div>
+    <div class="detail-desc" id="d-desc"></div>
+  </div>
+  <div class="detail-footer" id="d-footer"></div>
+</aside>
+
+<div class="toast" id="toast"></div>
+<div class="map-loading" id="map-loading"><span class="spin">◌</span> Carregando mapa...</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script type="module" src="geo-map-logic.js"></script>
+</body>
+</html>
