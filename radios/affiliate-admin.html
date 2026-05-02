@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin Afiliados | CIDADEONLINE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="affiliate-admin.css">
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <a href="offers.html" class="logo">🏙️ CIDADE<span>ONLINE</span></a>
+    <span class="header-tag">⚙️ Admin Afiliados</span>
+  </div>
+  <div class="header-right">
+    <a href="affiliate-dashboard.html">🔗 Dashboard Afiliado</a>
+    <a href="business-offers.html">🏷️ Ofertas</a>
+    <div id="admin-gate-inline" class="admin-gate">
+      <input id="admin-key-input" type="password" placeholder="Chave de operador" class="f-input-sm">
+      <button onclick="setAdminKey()" class="btn-admin-enter">Entrar</button>
+    </div>
+    <span id="admin-label" style="display:none;font-size:.78rem;color:#8affc1">✓ Operador ativo</span>
+  </div>
+</header>
+
+<div id="locked-msg" class="locked-msg">
+  <span>🔒</span><p>Informe a chave de operador.</p>
+</div>
+
+<main id="main-panel" style="display:none">
+
+  <!-- SUMMARY -->
+  <div class="summary-bar">
+    <div class="s-kpi"><span id="sk-leads-p">0</span>Leads pendentes</div>
+    <div class="s-kpi approved"><span id="sk-leads-a">0</span>Leads aprovados</div>
+    <div class="s-kpi rejected"><span id="sk-leads-r">0</span>Leads rejeitados</div>
+    <div class="s-kpi comm"><span id="sk-comm-p">0</span>Comissões pendentes</div>
+    <div class="s-kpi paid"><span id="sk-comm-paid">0</span>Comissões pagas</div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" id="tab-leads" onclick="setTab('leads')">📋 Leads</button>
+    <button class="tab" id="tab-comms" onclick="setTab('comms')">💸 Comissões</button>
+  </div>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <select id="f-status" class="f-select" onchange="renderActive()">
+      <option value="">Todos os status</option>
+      <option value="pending">Pendente</option>
+      <option value="approved">Aprovado</option>
+      <option value="rejected">Rejeitado</option>
+      <option value="paid_manual">Pago (manual)</option>
+    </select>
+    <input id="f-search-admin" class="f-input" type="text" placeholder="🔍 Buscar oferta, afiliado, telefone...">
+  </div>
+
+  <!-- LEADS PANE -->
+  <div id="pane-leads" class="pane">
+    <div id="leads-list" class="item-list"><div class="empty-state"><span>⏳</span>Carregando leads...</div></div>
+  </div>
+
+  <!-- COMMISSIONS PANE -->
+  <div id="pane-comms" class="pane" style="display:none">
+    <div id="comms-list" class="item-list"><div class="empty-state"><span>⏳</span>Carregando comissões...</div></div>
+  </div>
+
+</main>
+
+<!-- REJECT MODAL -->
+<div id="reject-modal" class="modal-overlay" style="display:none" onclick="closeRejectModal(event)">
+  <div class="modal-box">
+    <div class="modal-title">❌ Rejeitar lead</div>
+    <div class="form-group">
+      <label>Motivo (opcional)</label>
+      <textarea id="reject-reason" class="f-input" rows="3" placeholder="Ex: lead duplicado, fora de área..."></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-confirm-reject" onclick="confirmReject()">Confirmar rejeição</button>
+      <button class="btn-cancel" onclick="closeRejectModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="affiliate-admin-logic.js"></script>
+</body>
+</html>

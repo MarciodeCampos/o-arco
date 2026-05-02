@@ -61,6 +61,19 @@
       <!-- CTA BUTTONS -->
       <div class="cta-area" id="cta-area"></div>
 
+      <!-- LEAD FORM (shown for offerType=lead) -->
+      <div class="lead-form-section" id="lead-form-section" style="display:none">
+        <div class="lead-form-title">📋 Solicitar contato</div>
+        <div class="lead-form-fields">
+          <input id="lf-name"  class="lf-input" type="text"  placeholder="Seu nome *">
+          <input id="lf-phone" class="lf-input" type="tel"   placeholder="WhatsApp / telefone *">
+          <textarea id="lf-msg" class="lf-input" rows="2"    placeholder="Mensagem (opcional)"></textarea>
+        </div>
+        <div id="lead-form-msg" class="lead-form-feedback" style="display:none"></div>
+        <button class="btn-lead-submit" id="btn-lead-submit" onclick="submitLead()">📨 Enviar solicitação</button>
+        <p class="lead-form-note">Seus dados são enviados diretamente ao comércio.</p>
+      </div>
+
       <!-- STATS (public) -->
       <div class="offer-stats" id="offer-stats"></div>
     </div>

@@ -22,6 +22,10 @@ const params  = new URLSearchParams(location.search);
 const offerId = params.get('id')||'';
 const refCode = params.get('ref')||'';
 
+// Current offer + link stored for submitLead()
+let _currentOffer  = null;
+let _currentLinkDoc = null;
+
 const TYPE_LABEL = {
   coupon:'🏷️ Cupom', lead:'📋 Agendamento',
   external_cart:'🛒 Compra online', reservation:'🏨 Reserva', custom:'⭐ Especial'
@@ -64,7 +68,10 @@ async function init(){
   }
 
   renderOffer(o, biz, linkDoc);
+  _currentOffer   = o;
+  _currentLinkDoc = linkDoc;
 }
+
 
 // ── TRACK CLICK ───────────────────────────────────────────────────────────────
 async function trackClick(o, linkDoc){
@@ -181,25 +188,29 @@ function renderCTA(o, linkDoc){
   const wa = (o.whatsapp||'').replace(/\D/g,'');
   const msg = encodeURIComponent(o.whatsappMessage||(o.couponCode?`Cupom: ${o.couponCode}`:'Olá, vi a oferta no CIDADEONLINE!'));
   const waUrl = wa ? `https://wa.me/${wa}?text=${msg}` : '';
+  const typeK = o.type||o.offerType||'custom';
 
   let html='';
-
   if(waUrl){
     html+=`<a class="btn-cta-primary" href="${esc(waUrl)}" target="_blank" rel="noopener">
       💬 Falar no WhatsApp${o.couponCode?' · '+esc(o.couponCode):''}
     </a>`;
   }
   if(o.externalUrl){
-    const urlLabel = (o.offerType||o.type)==='reservation'?'🏨 Fazer reserva'
-                   :(o.offerType||o.type)==='external_cart'?'🛒 Ir para a loja'
+    const urlLabel = typeK==='reservation'?'🏨 Fazer reserva'
+                   :typeK==='external_cart'?'🛒 Ir para a loja'
                    :'🔗 Acessar';
     html+=`<a class="btn-cta-secondary" href="${esc(o.externalUrl)}" target="_blank" rel="noopener">${urlLabel}</a>`;
   }
-  if(!waUrl && !o.externalUrl){
+  if(!waUrl && !o.externalUrl && typeK!=='lead'){
     html+=`<a class="btn-cta-secondary" href="profile.html?pid=${esc(o.businessId)}" target="_blank">👤 Ver perfil do comércio</a>`;
   }
   area.innerHTML=html;
+
+  // Show inline lead form for lead type
+  if(typeK==='lead') show('lead-form-section');
 }
+
 
 // ── COPY COUPON ───────────────────────────────────────────────────────────────
 window.copyCoupon = function(){
@@ -216,6 +227,70 @@ function fmtDiscount(o){
   if(o.discountType==='fixed' && o.discountValue)   return `-R$${o.discountValue} de desconto`;
   if(o.discountType==='frete_gratis') return '🚚 Frete grátis';
   return '';
+}
+
+// ── SUBMIT LEAD ───────────────────────────────────────────────────────────────
+window.submitLead = async function(){
+  const o    = _currentOffer;
+  const link = _currentLinkDoc;
+  if(!o){ alert('Oferta não encontrada.'); return; }
+
+  const name  = document.getElementById('lf-name')?.value.trim();
+  const phone = document.getElementById('lf-phone')?.value.trim().replace(/\D/g,'');
+  const msg   = document.getElementById('lf-msg')?.value.trim();
+  const fb    = document.getElementById('lead-form-msg');
+  const btn   = document.getElementById('btn-lead-submit');
+
+  if(!name)  { showFeedback(fb,'err','⚠️ Informe seu nome.'); return; }
+  if(!phone) { showFeedback(fb,'err','⚠️ Informe seu WhatsApp/telefone.'); return; }
+
+  // Antifraude: lead duplicado (phone+offerId) via localStorage 24h
+  const dedupLead=`lead_${o.offerId}_${phone}`;
+  const lastLead=parseInt(localStorage.getItem(dedupLead)||'0');
+  if(Date.now()-lastLead < 86400000){
+    showFeedback(fb,'ok','✅ Sua solicitação já foi enviada. Aguarde o contato do comércio.'); return;
+  }
+
+  btn.disabled=true; btn.textContent='Enviando...';
+  try{
+    const now=Date.now();
+    const leadRef=push(ref(db,'affiliateLeads'));
+    const leadDoc={
+      leadId:     leadRef.key,
+      offerId:    o.offerId,
+      businessId: o.businessId||'',
+      linkId:     link?.linkId||'',
+      affiliateUid: link?.affiliateUid||'',
+      refCode:    refCode||'',
+      leadName:   name,
+      leadPhone:  phone,
+      leadEmail:  '',
+      leadMessage: msg,
+      status:     'pending',
+      commissionGenerated: false,
+      createdAt:  now,
+      confirmedAt: null, rejectedAt: null
+    };
+    await set(leadRef, leadDoc);
+    // Increment totals
+    update(ref(db,'affiliateOffers/'+o.offerId),{totalLeads:(o.totalLeads||0)+1,updatedAt:now}).catch(()=>{});
+    if(link?.linkId){
+      update(ref(db,'affiliateLinks/'+link.linkId),{leads:(link.leads||0)+1}).catch(()=>{});
+    }
+    localStorage.setItem(dedupLead,now);
+    showFeedback(fb,'ok','✅ Solicitação enviada! O comércio entrará em contato em breve.');
+    ['lf-name','lf-phone','lf-msg'].forEach(id=>{ const el=document.getElementById(id); if(el)el.value=''; });
+    btn.textContent='✅ Enviado';
+  }catch(e){
+    btn.disabled=false; btn.textContent='📨 Enviar solicitação';
+    showFeedback(fb,'err','❌ Erro ao enviar. Tente novamente.');
+  }
+};
+
+function showFeedback(el,type,msg){
+  if(!el) return;
+  el.textContent=msg; el.className='lead-form-feedback '+type; el.style.display='';
+  if(type==='err') setTimeout(()=>el.style.display='none',4000);
 }
 
 init();
