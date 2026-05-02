@@ -194,3 +194,74 @@ async function loadData() {
 
 loadData();
 map.on('click', e => { if (!e.originalEvent.target.closest('.cpin')) closeDetail(); });
+// ── CAMADA DE PROPRIEDADES BC ─────────────────────────────────────
+const PROP_ICON = L.divIcon({
+  html: '<div class="cpin" style="background:#be185d;border:2px solid rgba(255,255,255,.3);font-size:11px">🏠</div>',
+  className:'', iconSize:[28,28], iconAnchor:[14,14]
+});
+
+let propMarkers = [];
+let propData    = [];
+let propLayerOn = true;
+
+async function loadProperties() {
+  try {
+    const resp = await fetch('bc-properties.json');
+    propData = await resp.json();
+    propData.forEach(p => {
+      const m = L.marker([p.lat, p.lng], { icon: PROP_ICON });
+      m._data = { ...p, name: `${p.logradouro}, ${p.numero}`, category: 'Imóvel', icon: '🏠' };
+      m.on('click', () => openDetail(m));
+      m.addTo(map);
+      propMarkers.push(m);
+    });
+    const btn = document.getElementById('btn-properties');
+    if (btn) btn.textContent = `🏠 Imóveis (${propData.length})`;
+    updateCount();
+  } catch(e) { console.warn('Propriedades:', e); }
+}
+
+window.toggleProperties = function() {
+  propLayerOn = !propLayerOn;
+  propMarkers.forEach(m => propLayerOn ? m.addTo(map) : m.remove());
+  const btn = document.getElementById('btn-properties');
+  if (btn) btn.classList.toggle('active', propLayerOn);
+};
+
+// Busca por endereço: geocodifica via Nominatim e navega
+window.searchAddress = async function() {
+  const q = document.getElementById('addr-search')?.value?.trim();
+  if (!q || q.length < 3) return;
+  const btn = document.getElementById('addr-btn');
+  btn.textContent = '⌛'; btn.disabled = true;
+
+  // Primeiro: buscar nos dados locais
+  const local = propData.filter(p =>
+    `${p.logradouro} ${p.numero} ${p.bairro}`.toLowerCase().includes(q.toLowerCase())
+  );
+  if (local.length > 0) {
+    map.setView([local[0].lat, local[0].lng], 17, { animate: true });
+    const m = propMarkers.find(m => m._data.numero === local[0].numero && m._data.logradouro === local[0].logradouro);
+    if (m) openDetail(m);
+    btn.textContent = '🔍'; btn.disabled = false;
+    return;
+  }
+
+  // Fallback: Nominatim
+  try {
+    const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q+', Balneário Camboriú, SC, Brasil')}&format=json&limit=1`;
+    const r = await fetch(url, { headers: { 'User-Agent':'CIDADEONLINE/1.0' } });
+    const data = await r.json();
+    if (data.length > 0) {
+      const lat = parseFloat(data[0].lat);
+      const lng = parseFloat(data[0].lon);
+      map.setView([lat, lng], 17, { animate: true });
+      L.popup().setLatLng([lat, lng]).setContent(`📍 ${q}<br><small>${data[0].display_name}</small>`).openOn(map);
+    } else {
+      toast('Endereço não encontrado. Tente: "Rua 2438, 159"');
+    }
+  } catch(e) { toast('Erro na busca. Tente novamente.'); }
+  btn.textContent = '🔍'; btn.disabled = false;
+};
+
+loadProperties();

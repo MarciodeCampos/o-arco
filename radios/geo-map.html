@@ -29,6 +29,11 @@
   <button class="tb-btn" onclick="setFilter(this,'place')">📍 Lugares</button>
   <button class="tb-btn" onclick="setFilter(this,'provider')">🔧 Prestadores</button>
   <button class="tb-btn" onclick="setFilter(this,'offer')">🎯 Ofertas</button>
+  <button class="tb-btn active" id="btn-properties" onclick="toggleProperties()">🏠 Imóveis</button>
+  <div style="display:flex;gap:4px;align-items:center">
+    <input class="tb-search" id="addr-search" type="text" placeholder="🏠 Buscar endereço (ex: Rua 2438, 159)..." style="min-width:240px" onkeydown="if(event.key==='Enter')searchAddress()">
+    <button class="tb-btn active" id="addr-btn" onclick="searchAddress()" style="padding:5px 10px">🔍</button>
+  </div>
   <input class="tb-search" id="tb-search" type="text" placeholder="🔍 Buscar..." oninput="filterMarkers()">
   <span class="tb-count" id="tb-count">Carregando...</span>
 </div>
