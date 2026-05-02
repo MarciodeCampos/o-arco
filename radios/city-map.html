@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Mapa da Cidade | CIDADEONLINE</title>
+  <meta name="description" content="Visualização gamificada da cidade — comércios, lugares, prestadores, ofertas e oportunidades operáveis pelo Master Local.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="city-map.css">
+</head>
+<body>
+<nav class="nav">
+  <a href="cidadeonline.html" class="nav-logo">🏙️ CIDADE<span>ONLINE</span></a>
+  <div class="nav-links">
+    <a href="services.html">🔧 Serviços</a>
+    <a href="business.html">🏪 Comércios</a>
+    <a href="places.html">📍 Lugares</a>
+    <a href="control-center.html">⚙️ Control</a>
+  </div>
+</nav>
+
+<section class="city-header">
+  <div class="city-header-bg"></div>
+  <div class="container city-header-inner">
+    <div class="city-eyebrow">🗺️ Mapa operacional</div>
+    <h1>Território da cidade</h1>
+    <p>Cada ponto é um ativo real. Clique para ver detalhes, acessar o perfil ou ativar oportunidades.</p>
+    <div class="city-stats">
+      <div class="stat-chip" id="sc-total">— ativos</div>
+      <div class="stat-chip green" id="sc-active">— reivindicados</div>
+      <div class="stat-chip orange" id="sc-opps">— oportunidades</div>
+      <div class="stat-chip purple" id="sc-offers">— ofertas</div>
+    </div>
+  </div>
+</section>
+
+<div class="controls-bar">
+  <div class="container controls-inner">
+    <div class="filter-tabs" id="filter-tabs">
+      <button class="ftab active" data-type="" onclick="setFilter(this,'')">🗺️ Todos</button>
+      <button class="ftab" data-type="commerce" onclick="setFilter(this,'commerce')">🏪 Comércios</button>
+      <button class="ftab" data-type="place" onclick="setFilter(this,'place')">📍 Lugares</button>
+      <button class="ftab" data-type="provider" onclick="setFilter(this,'provider')">🔧 Prestadores</button>
+      <button class="ftab" data-type="offer" onclick="setFilter(this,'offer')">🎯 Ofertas</button>
+      <button class="ftab" data-type="opportunity" onclick="setFilter(this,'opportunity')">⬡ Oportunidades</button>
+    </div>
+    <div class="filter-sub">
+      <select id="f-status" class="f-sel" onchange="applyFilters()">
+        <option value="">Todos os status</option>
+        <option value="claimed">Reivindicado</option>
+        <option value="unclaimed">Não reivindicado</option>
+        <option value="premium">Premium</option>
+        <option value="available">Disponível</option>
+        <option value="active">Ativo</option>
+      </select>
+      <select id="f-plan" class="f-sel" onchange="applyFilters()">
+        <option value="">Todos os planos</option>
+        <option value="premium">Premium</option>
+        <option value="destaque">Destaque</option>
+        <option value="free">Gratuito</option>
+      </select>
+      <input id="f-search" class="f-search" type="text" placeholder="🔍 Buscar..." oninput="applyFilters()">
+    </div>
+  </div>
+</div>
+
+<div class="map-main" id="map-main">
+  <div class="grid-area">
+    <div class="grid-count" id="grid-count">Carregando mapa...</div>
+    <div id="city-grid" class="city-grid">
+      <div class="loading-tiles">
+        <div class="loading-tile"></div><div class="loading-tile"></div>
+        <div class="loading-tile"></div><div class="loading-tile"></div>
+        <div class="loading-tile"></div><div class="loading-tile"></div>
+        <div class="loading-tile"></div><div class="loading-tile"></div>
+        <div class="loading-tile"></div><div class="loading-tile"></div>
+      </div>
+    </div>
+  </div>
+
+  <aside class="detail-panel" id="detail-panel">
+    <div class="detail-empty" id="detail-empty">
+      <div class="detail-empty-icon">🗺️</div>
+      <div class="detail-empty-title">Clique em qualquer ponto</div>
+      <div class="detail-empty-sub">Veja detalhes e acesse o perfil do ativo selecionado.</div>
+    </div>
+    <div id="detail-content" style="display:none;flex-direction:column;gap:10px">
+      <button class="detail-close" onclick="closeDetail()">✕ Fechar</button>
+      <div class="detail-type-icon" id="d-icon"></div>
+      <div class="detail-type-badge" id="d-type-badge"></div>
+      <div class="detail-name" id="d-name"></div>
+      <div class="detail-meta" id="d-meta"></div>
+      <div class="detail-tags" id="d-tags"></div>
+      <div class="detail-status" id="d-status"></div>
+      <div class="detail-desc" id="d-desc"></div>
+      <div class="detail-actions" id="d-actions"></div>
+      <div class="detail-divider" id="detail-divider"></div>
+      <div class="detail-stat-row" id="d-stat-row"></div>
+    </div>
+  </aside>
+</div>
+
+<div class="legend-bar">
+  <div class="container legend-inner">
+    <span class="legend-label">Legenda:</span>
+    <span class="leg-item commerce-claimed">🏪 Comércio ativo</span>
+    <span class="leg-item commerce-unclaimed">🔓 Não reivindicado</span>
+    <span class="leg-item commerce-premium">⭐ Premium</span>
+    <span class="leg-item place-claimed">📍 Lugar ativo</span>
+    <span class="leg-item place-unclaimed">📌 Livre</span>
+    <span class="leg-item provider-available">🔧 Prestador</span>
+    <span class="leg-item offer-active">🎯 Oferta</span>
+    <span class="leg-item opportunity">⬡ Oportunidade</span>
+  </div>
+</div>
+
+<footer class="footer">
+  <div>🏙️ CIDADE<span style="color:#7c6ef7">ONLINE</span></div>
+  <div style="font-size:.7rem;color:#334155">Mapa Operacional — Fase Master Local</div>
+  <a href="city-inventory.html" style="color:#a78bfa;font-size:.78rem;font-weight:700;text-decoration:none">🗂️ Inventário →</a>
+</footer>
+
+<script type="module" src="city-map-logic.js"></script>
+</body>
+</html>
