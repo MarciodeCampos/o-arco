@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>Seed Geo</title></head>
+<body>
+<pre id="log">Iniciando...</pre>
+<script type="module">
+import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const FB = {
+  apiKey:"AIzaSyDa0XWSvNISi47olox7U2HHawf3pf1rOjI",
+  authDomain:"triadic-radios.firebaseapp.com",
+  databaseURL:"https://triadic-radios-default-rtdb.firebaseio.com",
+  projectId:"triadic-radios",
+  storageBucket:"triadic-radios.firebasestorage.app",
+  messagingSenderId:"574115949337",
+  appId:"1:574115949337:web:527670aa35d9bb939f3388"
+};
+const app = getApps().length ? getApps()[0] : initializeApp(FB);
+const db  = getDatabase(app);
+
+const GEO = {
+  // Francisco Beltrao PR
+  business_farmacia_popular:    { lat:-26.0779, lng:-53.0571, address:"Rua Souza Naves, 450 - Francisco Beltrão PR", type:"commerce", status:"unclaimed" },
+  business_mercado_sao_joao:    { lat:-26.0801, lng:-53.0541, address:"Av. General Ernesto Geisel, 2500 - Francisco Beltrão PR", type:"commerce", status:"premium" },
+  business_padaria_central:     { lat:-26.0783, lng:-53.0569, address:"Rua Marcelino Dias, 215 - Francisco Beltrão PR", type:"commerce", status:"unclaimed" },
+  business_restaurante_sabor:   { lat:-26.0790, lng:-53.0558, address:"Rua Dez de Novembro, 320 - Francisco Beltrão PR", type:"commerce", status:"claimed" },
+  // Balneario Camboriu SC
+  business_loja_surf:           { lat:-26.9908, lng:-48.6352, address:"Av. Atlântica, 1200 - Balneário Camboriú SC", type:"commerce", status:"claimed" },
+  // Cascavel PR
+  business_mecanica_silva:      { lat:-24.9580, lng:-53.4590, address:"Rua Tiradentes, 1200 - Cascavel PR", type:"provider", status:"unclaimed" },
+  // Pato Branco PR
+  business_petshop_amigo:       { lat:-26.2267, lng:-52.6718, address:"Rua Caramuru, 400 - Pato Branco PR", type:"commerce", status:"claimed" },
+  // Dois Vizinhos PR
+  business_salao_beleza:        { lat:-25.7519, lng:-53.0571, address:"Rua XV de Novembro, 180 - Dois Vizinhos PR", type:"commerce", status:"unclaimed" },
+};
+
+const log = document.getElementById('log');
+let done = 0;
+const updates = {};
+for (const [id, geo] of Object.entries(GEO)) {
+  updates[`businessProfiles/${id}/lat`]     = geo.lat;
+  updates[`businessProfiles/${id}/lng`]     = geo.lng;
+  updates[`businessProfiles/${id}/address`] = geo.address;
+  updates[`businessProfiles/${id}/type`]    = geo.type;
+  updates[`businessProfiles/${id}/status`]  = geo.status;
+}
+
+try {
+  await update(ref(db), updates);
+  log.textContent = "✅ DONE: lat/lng adicionados a " + Object.keys(GEO).length + " negócios.";
+  document.title = "SEED-OK";
+} catch(e) {
+  log.textContent = "❌ ERRO: " + e.message;
+  document.title = "SEED-ERR";
+}
+</script>
+</body>
+</html>
