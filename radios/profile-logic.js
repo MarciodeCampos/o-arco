@@ -1,6 +1,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getDatabase, ref, onValue, set, get, push, update, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 import { getAuth, signInAnonymously, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { track } from './analytics.js';
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyDa0XWSvNISi47olox7U2HHawf3pf1rOjI",
@@ -123,7 +125,10 @@ function loadPage(pid, user){
     currentProfile = p;
     renderProfile(p, isOwn, user);
     renderOwnerControls(p, user);
+    // Analytics: profile_view apenas para perfis business visualizados por outros
+    if(!isOwn && p.type==='business') track('profile_view', pid, {source:'profile'});
   });
+
 
   // Listen linktree
   listenLinktree(pid, user);
@@ -174,18 +179,25 @@ function renderActions(p, isOwn, user){
   if(isOwn){
     el.innerHTML = `<button class="btn-secondary" onclick="toggleEdit()">✏️ Editar perfil</button>`;
   } else {
-    let html = `<button class="btn-primary" onclick="openDMWith('${esc(p.profileId)}','${esc(p.name||'Usuário')}','${esc(p.photoURL||'')}')">💬 Mensagem</button>`;
+    const isBiz = p.type==='business';
+    const msgTrack = isBiz ? `track('message_start','${esc(p.profileId)}',{source:'profile'});` : '';
+    let html = `<button class="btn-primary" onclick="${msgTrack}openDMWith('${esc(p.profileId)}','${esc(p.name||'Usuário')}','${esc(p.photoURL||'')}')">💬 Mensagem</button>`;
     const radioId = params.get('radioId')||'';
     const radioName = params.get('radioName')||'';
     if(radioId) html += `<button class="btn-secondary" onclick="sendRadioInvite('${esc(p.profileId)}','${esc(p.name||'')}','${esc(radioId)}','${esc(radioName)}')">📻 Convidar para rádio</button>`;
-    if(p.whatsapp) html += `<a class="btn-whatsapp" href="https://wa.me/${p.whatsapp.replace(/\D/g,'')}" target="_blank" rel="noopener">WhatsApp</a>`;
-    // Claim button: business não reivindicado + usuário logado
+    if(p.whatsapp){
+      const wa = p.whatsapp.replace(/\D/g,'');
+      const waTrack = isBiz ? `track('whatsapp_click','${esc(p.profileId)}',{source:'profile'});` : '';
+      html += `<a class="btn-whatsapp" href="https://wa.me/${wa}" target="_blank" rel="noopener" onclick="${waTrack}">WhatsApp</a>`;
+    }
+    // Claim button
     if(p.type==='business' && (p.claimStatus==='unclaimed'||!p.claimStatus) && user){
       html += `<button class="btn-claim" onclick="openClaimForm('${esc(p.profileId)}','${esc(p.name||'')}')">🏪 Este comércio é meu</button>`;
     }
     el.innerHTML = html;
   }
 }
+
 
 // ── CLAIM FORM ────────────────────────────────────────────────────────────────
 window.openClaimForm = function(profileId, bizName){
@@ -270,12 +282,17 @@ function listenLinktree(pid, user){
     const list = document.getElementById('linktree-list');
     if(!active.length){ sec.style.display='none'; } else {
       sec.style.display='block';
-      list.innerHTML = active.map(l=>`
-        <a class="linktree-item lt-${esc(l.type||'custom')}" href="${esc(normalizeUrl(l.url))}" target="_blank" rel="noopener noreferrer">
-          <span class="linktree-title">${esc(l.title||'Link')}</span>
-          <span class="linktree-type">${esc(getLinkTypeLabel(l.type))}</span>
-        </a>`).join('');
+      list.innerHTML = active.map(l=>{
+        const isBiz = currentProfile && currentProfile.type==='business';
+        const lTrack = isBiz ? `track('link_click','${esc(currentProfile.profileId)}',{linkId:'${esc(l.linkId)}',type:'${esc(l.type||'custom')}'});` : '';
+        return `
+          <a class="linktree-item lt-${esc(l.type||'custom')}" href="${esc(normalizeUrl(l.url))}" target="_blank" rel="noopener noreferrer" onclick="${lTrack}">
+            <span class="linktree-title">${esc(l.title||'Link')}</span>
+            <span class="linktree-type">${esc(getLinkTypeLabel(l.type))}</span>
+          </a>`;
+      }).join('');
     }
+
     if(user && currentProfile && isProfileOwner(currentProfile, user)){
       renderLinkManager(currentLinks);
     }

@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getDatabase, ref, onValue, get, set, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { track } from './analytics.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDa0XWSvNISi47olox7U2HHawf3pf1rOjI",
@@ -302,8 +303,8 @@ function renderGrid(list){
       <div class="biz-badges">${planBdg}${claimedBadge}${waBadge}</div>
       ${b.description?`<div class="biz-description">${esc(b.description)}</div>`:''}
       <div class="biz-actions">
-        <a class="btn-profile" href="${profileUrl}">👤 Ver perfil</a>
-        ${waUrl?`<a class="btn-whatsapp" href="${esc(waUrl)}" target="_blank" rel="noopener">💬 WhatsApp</a>`:''}
+        <a class="btn-profile" href="${profileUrl}" onclick="track('business_card_click','${esc(b.businessId||b.profileId)}',{source:'directory'})">👤 Ver perfil</a>
+        ${waUrl?`<a class="btn-whatsapp" href="${esc(waUrl)}" target="_blank" rel="noopener" onclick="track('whatsapp_click','${esc(b.businessId||b.profileId)}',{source:'directory'})">💬 WhatsApp</a>`:''}
       </div>
     </div>`;
   }).join('');

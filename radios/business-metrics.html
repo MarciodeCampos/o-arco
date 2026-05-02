@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Métricas Comerciais | CIDADEONLINE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="business-metrics.css">
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <span class="logo">🏙️ CIDADE<span>ONLINE</span></span>
+    <span class="header-tag">📊 Métricas</span>
+  </div>
+  <div class="header-right">
+    <a href="business.html">🏪 Diretório</a>
+    <a href="business-plans.html">⭐ Planos</a>
+    <div class="admin-gate" id="admin-gate">
+      <input id="admin-key-input" type="password" placeholder="Chave de operador">
+      <button onclick="setAdminKey()">Entrar</button>
+    </div>
+    <span id="admin-label" style="display:none;font-size:.78rem;color:#8affc1">✓ Operador ativo</span>
+  </div>
+</header>
+
+<div id="locked-msg" class="locked-msg">
+  <span>🔒</span>
+  <p>Informe a chave de operador para acessar as métricas.</p>
+</div>
+
+<main id="main-panel" style="display:none">
+
+  <!-- BUSINESS SELECTOR + PERIOD -->
+  <div class="controls-bar">
+    <select id="biz-select" class="f-select">
+      <option value="">Selecionar comércio...</option>
+    </select>
+    <select id="period-select" class="f-select" onchange="renderMetrics()">
+      <option value="7">Últimos 7 dias</option>
+      <option value="14">Últimos 14 dias</option>
+      <option value="30">Últimos 30 dias</option>
+      <option value="all">Todo o período</option>
+    </select>
+  </div>
+
+  <div id="no-biz-msg" class="empty-state" style="display:none"><span>🏪</span>Selecione um comércio acima.</div>
+
+  <!-- KPI CARDS -->
+  <div class="kpi-grid" id="kpi-grid" style="display:none">
+    <div class="kpi-card views"><div class="kpi-icon">👁️</div><div class="kpi-value" id="kpi-views">0</div><div class="kpi-label">Visitas ao perfil</div></div>
+    <div class="kpi-card wa"><div class="kpi-icon">💬</div><div class="kpi-value" id="kpi-wa">0</div><div class="kpi-label">Cliques WhatsApp</div></div>
+    <div class="kpi-card links"><div class="kpi-icon">🔗</div><div class="kpi-value" id="kpi-links">0</div><div class="kpi-label">Cliques em links</div></div>
+    <div class="kpi-card msgs"><div class="kpi-icon">📨</div><div class="kpi-value" id="kpi-msgs">0</div><div class="kpi-label">Mensagens iniciadas</div></div>
+    <div class="kpi-card cards"><div class="kpi-icon">🏪</div><div class="kpi-value" id="kpi-cards">0</div><div class="kpi-label">Cliques no diretório</div></div>
+    <div class="kpi-card posts"><div class="kpi-icon">📋</div><div class="kpi-value" id="kpi-posts">0</div><div class="kpi-label">Cliques em posts</div></div>
+  </div>
+
+  <!-- DAILY TABLE -->
+  <div class="daily-section" id="daily-section" style="display:none">
+    <div class="section-title">📅 Por dia</div>
+    <table class="daily-table" id="daily-table">
+      <thead><tr><th>Data</th><th>👁️ Visitas</th><th>💬 WhatsApp</th><th>🔗 Links</th><th>📨 Msgs</th><th>🏪 Cards</th></tr></thead>
+      <tbody id="daily-tbody"></tbody>
+    </table>
+  </div>
+
+</main>
+
+<script type="module" src="business-metrics-logic.js"></script>
+</body>
+</html>
