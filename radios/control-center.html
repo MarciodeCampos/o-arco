@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Control Center | CIDADEONLINE</title>
+  <meta name="description" content="Painel de controle central do CIDADEONLINE — comércio, afiliados e operação.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="control-center.css">
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <a href="../index.html" class="logo">🏙️ CIDADE<span>ONLINE</span></a>
+  </div>
+  <div class="header-right">
+    <a href="business.html">🏪 Diretório</a>
+    <a href="offers.html">🏷️ Ofertas</a>
+    <a href="radio.html">📻 Rádio</a>
+    <span id="user-name" class="user-chip" style="display:none"></span>
+    <button id="btn-login" class="btn-login" onclick="doLogin()" style="display:none">Entrar com Google</button>
+    <button id="btn-logout" class="btn-logout" onclick="doLogout()" style="display:none">Sair</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">⚙️ Control Center</div>
+    <h1>Central de Controle</h1>
+    <p id="hero-sub">Acesse todos os módulos do CIDADEONLINE em um só lugar.</p>
+  </div>
+</section>
+
+<!-- LOGIN PROMPT -->
+<div id="login-prompt" class="login-prompt" style="display:none">
+  <span>🔐</span>
+  <p>Faça login para acessar áreas protegidas.</p>
+  <button class="btn-primary" onclick="doLogin()">Entrar com Google</button>
+</div>
+
+<main id="main-content">
+
+  <!-- ── SECÇÃO: PÚBLICO ────────────────────────────────────────── -->
+  <section class="cc-section">
+    <div class="section-header">
+      <span class="section-icon">🌍</span>
+      <div>
+        <div class="section-title">Acesso público</div>
+        <div class="section-desc">Disponível para todos os visitantes</div>
+      </div>
+    </div>
+    <div class="cards-grid">
+      <a href="radio.html" class="cc-card public">
+        <div class="cc-card-icon">📻</div>
+        <div class="cc-card-body">
+          <div class="cc-card-title">Rádio ao Vivo</div>
+          <div class="cc-card-desc">Ouça rádios locais e converse em tempo real</div>
+        </div>
+        <div class="cc-card-arrow">→</div>
+      </a>
+      <a href="business.html" class="cc-card public">
+        <div class="cc-card-icon">🏪</div>
+        <div class="cc-card-body">
+          <div class="cc-card-title">Diretório Comercial</div>
+          <div class="cc-card-desc">Explore comércios por cidade e categoria</div>
+        </div>
+        <div class="cc-card-arrow">→</div>
+      </a>
+      <a href="offers.html" class="cc-card public">
+        <div class="cc-card-icon">🏷️</div>
+        <div class="cc-card-body">
+          <div class="cc-card-title">Vitrine de Ofertas</div>
+          <div class="cc-card-desc">Cupons, descontos e deals locais</div>
+        </div>
+        <div class="cc-card-arrow">→</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── SECÇÃO: AFILIADO ───────────────────────────────────────── -->
+  <section class="cc-section" id="section-affiliate">
+    <div class="section-header">
+      <span class="section-icon">🔗</span>
+      <div>
+        <div class="section-title">Afiliado</div>
+        <div class="section-desc">Gere links e ganhe por indicação <span class="req-badge">Login</span></div>
+      </div>
+    </div>
+    <div class="cards-grid">
+      <a href="affiliate-dashboard.html" class="cc-card affiliate needs-auth">
+        <div class="cc-card-icon">🔗</div>
+        <div class="cc-card-body">
+          <div class="cc-card-title">Meus Links</div>
+          <div class="cc-card-desc">Gere links rastreáveis e veja cliques, leads e comissões</div>
+        </div>
+        <div class="cc-card-stat" id="stat-my-links" style="display:none"></div>
+        <div class="cc-card-arrow">→</div>
+      </a>
+      <a href="offers.html" class="cc-card affiliate">
+        <div class="cc-card-icon">🏷️</div>
+        <div class="cc-card-body">
+          <div class="cc-card-title">Ofertas para Divulgar</div>
+          <div class="cc-card-desc">Veja todas as ofertas ativas disponíveis para afiliação</div>
+        </div>
+        <div class="cc-card-arrow">→</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── SECÇÃO: COMÉRCIO ───────────────────────────────────────── -->
+  <section class="cc-section" id="section-business">
+    <div class="section-header">
+      <span class="section-icon">🏪</span>
+      <div>
+        <div class="section-title">Meu Comércio</div>
+        <div class="section-desc">Gerencie seu perfil comercial <span class="req-badge owner">Dono</span></div>
+      </div>
+    </div>
+    <div class="cards-grid">
+      <a href="#" class="cc-card biz needs-biz" id="card-my-profile">
+        <div class="cc-card-icon">👤</div>
+        <div class="cc-card-body">
+          <div class="cc-card-title">Meu Perfil</div>
+          <div class="cc-card-desc">Edite bio, foto, links sociais e city</div>
+        </div>
+        <div class="cc-card-arrow">→</div>
+      </a>
+      <a href="business-inbox.html" class="cc-card biz needs-auth">
+        <div class="cc-card-icon">📨</div>
+        <div class="cc-card-body">
+          <div class="cc-card-title">Inbox Comercial</div>
+          <div class="cc-card-desc">Atendimento e conversas com clientes</div>
+        </div>
+        <div class="cc-card-stat" id="stat-inbox" style="display:none"></div>
+        <div class="cc-card-arrow">→</div>
+      </a>
+      <a href="business-offers.html" class="cc-card biz needs-auth">
+        <div class="cc-card-icon">🏷️</div>
+        <div class="cc-card-body">
+          <div class="cc-card-title">Minhas Ofertas</div>
+          <div class="cc-card-desc">Criar, editar e pausar ofertas e cupons</div>
+        </div>
+        <div class="cc-card-arrow">→</div>
+      </a>
+      <a href="business-metrics.html" class="cc-card biz needs-auth">
+        <div class="cc-card-icon">📊</div>
+        <div class="cc-card-body">
+          <div class="cc-card-title">Métricas</div>
+          <div class="cc-card-desc">Visualizações, cliques, leads e WhatsApp</div>
+        </div>
+        <div class="cc-card-arrow">→</div>
+      </a>
+      <a href="business-plans.html" class="cc-card biz needs-auth">
+        <div class="cc-card-icon">⭐</div>
+        <div class="cc-card-body">
+          <div class="cc-card-title">Plano & Destaque</div>
+          <div class="cc-card-desc">Grátis, Destaque, Premium ou Parceiro</div>
+        </div>
+        <div class="cc-card-arrow">→</div>
+      </a>
+    </div>
+    <!-- NO BIZ message -->
+    <div id="no-biz-msg" class="no-biz-notice" style="display:none">
+      <span>🏪</span>
+      Nenhum comércio vinculado à sua conta ainda.
+      <a href="business-claims.html">Reivindicar um comércio →</a>
+    </div>
+  </section>
+
+  <!-- ── SECÇÃO: OPERAÇÃO ADMIN ─────────────────────────────────── -->
+  <section class="cc-section" id="section-admin">
+    <div class="section-header">
+      <span class="section-icon">⚙️</span>
+      <div>
+        <div class="section-title">Operação Admin</div>
+        <div class="section-desc">
+          <span class="req-badge admin">Operador</span>
+          <span class="admin-key-inline" id="admin-key-area">
+            <input id="admin-key-input" type="password" placeholder="Chave de operador" class="f-input-sm" onkeydown="if(event.key==='Enter')setAdminKey()">
+            <button onclick="setAdminKey()" class="btn-admin-sm">Entrar</button>
+          </span>
+          <span id="admin-active-label" style="display:none;font-size:.75rem;color:#8affc1;font-weight:700">✓ Operador ativo</span>
+        </div>
+      </div>
+    </div>
+    <div class="cards-grid" id="admin-cards">
+      <div class="cc-card-locked-overlay" id="admin-lock-overlay">
+        <span>🔒</span>
+        <p>Informe a chave para acessar o painel de operação.</p>
+      </div>
+      <a href="import-review.html" class="cc-card admin admin-gated">
+        <div class="cc-card-icon">📋</div>
+        <div class="cc-card-body">
+          <div class="cc-card-title">Import Review</div>
+          <div class="cc-card-desc">Revisar, publicar ou rejeitar candidatos importados</div>
+        </div>
+        <div class="cc-card-stat" id="stat-pending-import" style="display:none"></div>
+        <div class="cc-card-arrow">→</div>
+      </a>
+      <a href="business-claims.html" class="cc-card admin admin-gated">
+        <div class="cc-card-icon">🏪</div>
+        <div class="cc-card-body">
+          <div class="cc-card-title">Reivindicações</div>
+          <div class="cc-card-desc">Aprovar ou rejeitar claims de propriedade de comércio</div>
+        </div>
+        <div class="cc-card-stat" id="stat-pending-claims" style="display:none"></div>
+        <div class="cc-card-arrow">→</div>
+      </a>
+      <a href="business-plans.html" class="cc-card admin admin-gated">
+        <div class="cc-card-icon">⭐</div>
+        <div class="cc-card-body">
+          <div class="cc-card-title">Planos & Destaques</div>
+          <div class="cc-card-desc">Alterar plano, featured e priority de qualquer comércio</div>
+        </div>
+        <div class="cc-card-arrow">→</div>
+      </a>
+      <a href="affiliate-admin.html" class="cc-card admin admin-gated">
+        <div class="cc-card-icon">💸</div>
+        <div class="cc-card-body">
+          <div class="cc-card-title">Admin Afiliados</div>
+          <div class="cc-card-desc">Aprovar leads, gerar comissões, marcar como pago</div>
+        </div>
+        <div class="cc-card-stat" id="stat-pending-leads" style="display:none"></div>
+        <div class="cc-card-arrow">→</div>
+      </a>
+      <a href="business-metrics.html" class="cc-card admin admin-gated">
+        <div class="cc-card-icon">📊</div>
+        <div class="cc-card-body">
+          <div class="cc-card-title">Métricas Globais</div>
+          <div class="cc-card-desc">Ver eventos e desempenho de qualquer comércio</div>
+        </div>
+        <div class="cc-card-arrow">→</div>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="cc-footer">
+  <span>🏙️ CIDADEONLINE</span>
+  <span>A praça digital da sua cidade.</span>
+</footer>
+
+<script type="module" src="control-center-logic.js"></script>
+</body>
+</html>
