@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Wallet | CIDADEONLINE</title>
+  <meta name="description" content="Sua carteira digital — Coins, Diamonds, XP, Nível Global e Gifts ativos na rede CIDADEONLINE.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="wallet.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="cidadeonline.html" class="nav-logo">🏙️ CIDADE<span>ONLINE</span></a>
+  <div class="nav-links">
+    <a href="profile.html">👤 Perfil</a>
+    <a href="city-map.html">🗺️ Mapa</a>
+    <a href="offers.html">🎯 Ofertas</a>
+    <a href="control-center.html">⚙️ Control</a>
+  </div>
+</nav>
+
+<!-- LOGIN GATE -->
+<div id="login-gate" class="gate-wrap" style="display:none">
+  <div class="gate-card">
+    <div class="gate-glow"></div>
+    <div class="gate-icon">💰</div>
+    <div class="gate-title">Sua Wallet CIDADEONLINE</div>
+    <p class="gate-sub">Faça login para acessar seus Coins, Diamonds, XP e Gifts.</p>
+    <button class="btn-google" id="btn-login-google" onclick="loginGoogle()">
+      <span>🔑</span> Entrar com Google
+    </button>
+  </div>
+</div>
+
+<!-- LOADING -->
+<div id="wallet-loading" class="gate-wrap">
+  <div class="loading-spin">💰</div>
+</div>
+
+<!-- MAIN WALLET -->
+<main id="wallet-main" style="display:none">
+
+  <!-- USER HERO -->
+  <section class="wallet-hero">
+    <div class="wallet-hero-bg"></div>
+    <div class="container wallet-hero-inner">
+      <div class="wallet-avatar" id="w-avatar">?</div>
+      <div class="wallet-identity">
+        <div class="wallet-name" id="w-name">—</div>
+        <div class="wallet-level-badge" id="w-level-badge">Lv. 1 · Visitante</div>
+        <div class="wallet-xp-bar-wrap">
+          <div class="wallet-xp-bar-bg">
+            <div class="wallet-xp-bar-fill" id="w-xp-fill" style="width:0%"></div>
+          </div>
+          <div class="wallet-xp-label" id="w-xp-label">0 XP</div>
+        </div>
+      </div>
+      <button class="btn-logout-sm" onclick="logoutWallet()">Sair</button>
+    </div>
+  </section>
+
+  <!-- STAT CARDS -->
+  <div class="container stat-grid">
+    <div class="stat-card coins">
+      <div class="stat-card-glow"></div>
+      <div class="stat-icon">🪙</div>
+      <div class="stat-label">Coins</div>
+      <div class="stat-val" id="w-coins">—</div>
+      <div class="stat-sub">Saldo disponível</div>
+    </div>
+    <div class="stat-card diamonds">
+      <div class="stat-card-glow"></div>
+      <div class="stat-icon">💎</div>
+      <div class="stat-label">Diamonds</div>
+      <div class="stat-val" id="w-diamonds">—</div>
+      <div class="stat-sub">Recompensas recebidas</div>
+    </div>
+    <div class="stat-card xp">
+      <div class="stat-card-glow"></div>
+      <div class="stat-icon">⚡</div>
+      <div class="stat-label">XP Global</div>
+      <div class="stat-val" id="w-xp">—</div>
+      <div class="stat-sub">Experiência acumulada</div>
+    </div>
+    <div class="stat-card level">
+      <div class="stat-card-glow"></div>
+      <div class="stat-icon">🏆</div>
+      <div class="stat-label">Nível Global</div>
+      <div class="stat-val" id="w-level">—</div>
+      <div class="stat-sub" id="w-level-name">—</div>
+    </div>
+  </div>
+
+  <!-- GIFTS ATIVOS -->
+  <div class="container section-block">
+    <div class="section-header">
+      <div class="section-eyebrow">🎁 Gifts</div>
+      <h2>Meus Gifts</h2>
+      <div class="section-tabs">
+        <button class="stab active" id="stab-active" onclick="switchGiftTab('active')">Ativos</button>
+        <button class="stab" id="stab-redeemed" onclick="switchGiftTab('redeemed')">Resgatados</button>
+        <button class="stab" id="stab-expired" onclick="switchGiftTab('expired')">Expirados</button>
+      </div>
+    </div>
+    <div id="gifts-list" class="gifts-grid">
+      <div class="empty-gifts">
+        <div class="empty-icon">🎁</div>
+        <div>Nenhum Gift ainda.</div>
+        <a href="offers.html" class="btn-sm-link">Ver ofertas →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HISTÓRICO -->
+  <div class="container section-block">
+    <div class="section-header">
+      <div class="section-eyebrow">📋 Histórico</div>
+      <h2>Movimentações</h2>
+      <div class="section-tabs">
+        <button class="stab active" id="htab-coins" onclick="switchHistTab('coins')">🪙 Coins</button>
+        <button class="stab" id="htab-diamonds" onclick="switchHistTab('diamonds')">💎 Diamonds</button>
+      </div>
+    </div>
+    <div id="history-list" class="history-list">
+      <div class="empty-hist">Nenhuma movimentação ainda.</div>
+    </div>
+  </div>
+
+  <!-- CTA BAND -->
+  <div class="container cta-band">
+    <div class="cta-band-title">O que você pode fazer com sua Wallet</div>
+    <div class="cta-grid">
+      <a href="offers.html" class="cta-card">
+        <div class="cta-icon">🎯</div>
+        <div class="cta-label">Ver Ofertas</div>
+        <div class="cta-desc">Gifts e cupons de comércios locais</div>
+      </a>
+      <a href="services.html" class="cta-card">
+        <div class="cta-icon">🔧</div>
+        <div class="cta-label">Contratar Serviço</div>
+        <div class="cta-desc">Prestadores locais verificados</div>
+      </a>
+      <a href="city-map.html" class="cta-card">
+        <div class="cta-icon">🗺️</div>
+        <div class="cta-label">Mapa da Cidade</div>
+        <div class="cta-desc">Ativos, oportunidades e lugares</div>
+      </a>
+      <a href="profile.html" class="cta-card">
+        <div class="cta-icon">👤</div>
+        <div class="cta-label">Meu Perfil</div>
+        <div class="cta-desc">Insígnias, presença e passaporte</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- LEVEL TABLE -->
+  <div class="container section-block">
+    <div class="section-header">
+      <div class="section-eyebrow">⚡ Progressão</div>
+      <h2>Tabela de Níveis</h2>
+    </div>
+    <div class="level-table">
+      <div class="lt-row lt-header"><div>Nível</div><div>Nome</div><div>XP necessário</div></div>
+      <div class="lt-row" data-range="1-10"><div class="lt-range">Lv. 1–10</div><div class="lt-name">🌱 Visitante</div><div class="lt-xp">0 XP</div></div>
+      <div class="lt-row" data-range="11-20"><div class="lt-range">Lv. 11–20</div><div class="lt-name">🏠 Morador</div><div class="lt-xp">5.000 XP</div></div>
+      <div class="lt-row" data-range="21-30"><div class="lt-range">Lv. 21–30</div><div class="lt-name">🗳️ Cidadão</div><div class="lt-xp">15.000 XP</div></div>
+      <div class="lt-row" data-range="31-40"><div class="lt-range">Lv. 31–40</div><div class="lt-name">📣 Influente</div><div class="lt-xp">35.000 XP</div></div>
+      <div class="lt-row" data-range="41-50"><div class="lt-range">Lv. 41–50</div><div class="lt-name">⭐ Referência</div><div class="lt-xp">75.000 XP</div></div>
+      <div class="lt-row" data-range="51-60"><div class="lt-range">Lv. 51–60</div><div class="lt-name">🌟 Lenda da Rede</div><div class="lt-xp">150.000 XP</div></div>
+      <div class="lt-row" data-range="61"><div class="lt-range">Lv. 61+</div><div class="lt-name">🏛️ Fundador</div><div class="lt-xp">300.000 XP</div></div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <div>🏙️ CIDADE<span style="color:#7c6ef7">ONLINE</span></div>
+  <div style="font-size:.7rem;color:#334155">Social Core — Wallet v1</div>
+  <a href="profile.html" style="color:#a78bfa;font-size:.78rem;font-weight:700;text-decoration:none">👤 Perfil →</a>
+</footer>
+
+<script type="module" src="wallet-logic.js"></script>
+</body>
+</html>
