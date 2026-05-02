@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Atendimento Comercial | triadic.life</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="business-inbox.css">
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <span class="logo">🏙️ CIDADE<span>ONLINE</span></span>
+    <span class="header-tag">Atendimento</span>
+  </div>
+  <div class="header-right">
+    <a href="business.html">🏪 Diretório</a>
+    <span id="biz-name-header" class="biz-name-header"></span>
+  </div>
+</header>
+
+<!-- AUTH GATE -->
+<div id="auth-gate" class="gate-msg">
+  <span>🔐</span>
+  <p>Faça login para acessar o atendimento do seu comércio.</p>
+  <button class="btn-primary" onclick="doLogin()">Entrar com Google</button>
+</div>
+
+<!-- NO BIZ GATE -->
+<div id="no-biz-gate" class="gate-msg" style="display:none">
+  <span>🏪</span>
+  <p>Nenhum perfil comercial encontrado para sua conta.</p>
+  <a href="business.html" class="btn-primary">Ver Diretório</a>
+</div>
+
+<main id="main-inbox" style="display:none">
+
+  <!-- BUSINESS SELECTOR (caso tenha mais de 1) -->
+  <div class="biz-selector-bar" id="biz-selector-bar" style="display:none">
+    <label style="font-size:.8rem;color:#64748b">Negócio:</label>
+    <select id="biz-selector" class="f-select"></select>
+  </div>
+
+  <!-- COUNTERS -->
+  <div class="counters" id="counters">
+    <div class="counter-card all active-filter" data-filter="" onclick="setStatusFilter(this,'')"><span id="cnt-all">0</span>Todos</div>
+    <div class="counter-card aberto" data-filter="aberto" onclick="setStatusFilter(this,'aberto')"><span id="cnt-aberto">0</span>Abertos</div>
+    <div class="counter-card respondido" data-filter="respondido" onclick="setStatusFilter(this,'respondido')"><span id="cnt-respondido">0</span>Respondidos</div>
+    <div class="counter-card aguardando" data-filter="aguardando_cliente" onclick="setStatusFilter(this,'aguardando_cliente')"><span id="cnt-aguardando">0</span>Aguardando</div>
+    <div class="counter-card resolvido" data-filter="resolvido" onclick="setStatusFilter(this,'resolvido')"><span id="cnt-resolvido">0</span>Resolvidos</div>
+    <div class="counter-card arquivado" data-filter="arquivado" onclick="setStatusFilter(this,'arquivado')"><span id="cnt-arquivado">0</span>Arquivados</div>
+  </div>
+
+  <div class="inbox-layout">
+
+    <!-- CONVERSATION LIST -->
+    <div class="conv-panel" id="conv-panel">
+      <div class="conv-search-bar">
+        <input id="conv-search" class="f-input" type="text" placeholder="🔍 Buscar cliente...">
+      </div>
+      <div class="conv-list" id="conv-list">
+        <div class="empty-state"><span>⏳</span>Carregando...</div>
+      </div>
+    </div>
+
+    <!-- CHAT PANEL -->
+    <div class="chat-panel" id="chat-panel">
+      <div class="chat-empty" id="chat-empty">
+        <span>💬</span>
+        <p>Selecione uma conversa para atender.</p>
+      </div>
+      <div class="chat-active" id="chat-active" style="display:none">
+        <div class="chat-header">
+          <div class="chat-header-left">
+            <button class="btn-back" onclick="closeChat()">← Voltar</button>
+            <div>
+              <div class="chat-customer-name" id="chat-customer-name"></div>
+              <div class="chat-customer-meta" id="chat-customer-meta"></div>
+            </div>
+          </div>
+          <div class="chat-header-actions">
+            <select id="status-select" class="status-select" onchange="changeStatus(this.value)">
+              <option value="aberto">🔴 Aberto</option>
+              <option value="respondido">🟡 Respondido</option>
+              <option value="aguardando_cliente">🟠 Aguardando cliente</option>
+              <option value="resolvido">🟢 Resolvido</option>
+              <option value="arquivado">⚫ Arquivado</option>
+            </select>
+          </div>
+        </div>
+        <div class="chat-msgs" id="chat-msgs"></div>
+        <div class="notes-bar">
+          <input id="notes-input" class="f-input" type="text" placeholder="📝 Nota interna...">
+          <button class="btn-save-note" onclick="saveNote()">Salvar</button>
+        </div>
+        <div class="saved-note" id="saved-note"></div>
+        <div class="chat-reply-bar">
+          <input id="reply-input" class="f-input" type="text" placeholder="Responder ao cliente..." onkeydown="if(event.key==='Enter')sendReply()">
+          <button class="btn-send" onclick="sendReply()">Enviar</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script type="module" src="business-inbox-logic.js"></script>
+</body>
+</html>

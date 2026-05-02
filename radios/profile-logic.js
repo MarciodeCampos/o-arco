@@ -362,7 +362,28 @@ window.openDMWith = function(theirPid, name, photo){
   _theirPid = theirPid;
   renderDMArea(name, photo);
   set(ref(db,'userInbox/'+_myPid+'/'+_myChatId+'/unread'),false).catch(()=>{});
+  // businessInbox hook: se for perfil business, registrar atendimento
+  if(currentProfile && currentProfile.type==='business'){
+    const bizId = currentProfile.profileId;
+    const chatId = _myChatId;
+    const u = auth.currentUser;
+    const customerUid = u?.uid||_myPid;
+    const customerName = u?.displayName||localStorage.getItem('spes_chat_nick')||'Cliente';
+    get(ref(db,'businessInbox/'+bizId+'/'+chatId)).then(snap=>{
+      if(!snap.exists()){
+        set(ref(db,'businessInbox/'+bizId+'/'+chatId),{
+          businessId:bizId, profileId:bizId, chatId,
+          customerUid, customerName, customerPhoto:u?.photoURL||'',
+          lastMessage:'', lastMessageAt:Date.now(),
+          status:'aberto', unread:true,
+          assignedTo:'', tags:[], notes:'',
+          createdAt:Date.now(), updatedAt:Date.now()
+        });
+      }
+    }).catch(()=>{});
+  }
 };
+
 
 window.openConv = function(chatId, name, photo, withPid){
   _myChatId = chatId;
@@ -409,10 +430,19 @@ window.sendDM = async function(){
   const myName = u?.displayName||localStorage.getItem('spes_chat_nick')||'Usuário';
   const myPhoto = u?.photoURL||'';
   inp.value='';
-  await push(ref(db,'directChats/'+_myChatId+'/messages'),{from:_myPid,to:_theirPid,text,ts:Date.now()});
-  await set(ref(db,'userInbox/'+_myPid+'/'+_myChatId),{with:_theirPid,name:document.getElementById('dm-hname').textContent,lastMessage:text,ts:Date.now()});
-  await set(ref(db,'userInbox/'+_theirPid+'/'+_myChatId),{with:_myPid,name:myName,photo:myPhoto,lastMessage:text,ts:Date.now(),unread:true});
+  const now = Date.now();
+  await push(ref(db,'directChats/'+_myChatId+'/messages'),{from:_myPid,to:_theirPid,text,ts:now});
+  await set(ref(db,'userInbox/'+_myPid+'/'+_myChatId),{with:_theirPid,name:document.getElementById('dm-hname').textContent,lastMessage:text,ts:now});
+  await set(ref(db,'userInbox/'+_theirPid+'/'+_myChatId),{with:_myPid,name:myName,photo:myPhoto,lastMessage:text,ts:now,unread:true});
+  // businessInbox sync
+  if(currentProfile && currentProfile.type==='business'){
+    const bizId = currentProfile.profileId;
+    update(ref(db,'businessInbox/'+bizId+'/'+_myChatId),{
+      lastMessage:text, lastMessageAt:now, unread:true, updatedAt:now, status:'aberto'
+    }).catch(()=>{});
+  }
 };
+
 
 // ── EDIT / SAVE ───────────────────────────────────────────────────────────────
 window.toggleEdit = function(){
