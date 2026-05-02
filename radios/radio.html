@@ -338,6 +338,7 @@ input[type=range].vol::-webkit-slider-thumb{-webkit-appearance:none;width:14px;h
           <div class="chat-input-row">
             <input id="chat-input" class="chat-box-input" type="text" maxlength="500" placeholder="Digite sua mensagem...">
             <button id="mic-btn" title="Gravar mensagem de voz" onclick="toggleMic()">🎤</button>
+            <button id="present-btn" title="Enviar Presente" onclick="window._openPresentInChannel()" style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.2);color:#fbbf24;border-radius:8px;padding:6px 10px;font-size:.82rem;cursor:pointer;font-family:inherit;transition:all .15s" onmouseover="this.style.background='rgba(251,191,36,.18)'" onmouseout="this.style.background='rgba(251,191,36,.1)'">&#x1F381;</button>
             <button id="chat-send" onclick="sendMsg()">Enviar ➤</button>
           </div>
           <div id="mic-status" style="font-size:.78rem;color:#64748b;margin-top:4px;min-height:14px;"></div>
@@ -1288,5 +1289,31 @@ const _playObs = new MutationObserver(()=>{
 _playObs.observe(document.body, {childList:true, subtree:true});
 </script>
 
+<script type="module">
+  import { openPresentModal, seedPresentsCatalog } from './presents.js';
+  // Seed catálogo de Presentes na primeira carga
+  seedPresentsCatalog().catch(()=>{});
+  // Expor para o botão inline
+  window._openPresentInChannel = function() {
+    // Pega o channelId do rádio ativo (ou usa fallback)
+    const channelId = window._activeChannelId || window._currentStationId || 'global';
+    const channelName = window._activeStationName || 'Rádio';
+    openPresentModal({
+      targetType: 'channel',
+      channelId,
+      recipientName: channelName,
+      onDelivered: (present) => {
+        // Injetar evento visual no chat
+        const feed = document.getElementById('chat-msgs');
+        if (!feed) return;
+        const user = window._myDisplayName || 'Você';
+        const el = document.createElement('div');
+        el.className = 'chat-present-event';
+        el.innerHTML = `<span class="cpe-emoji">${present.emoji}</span><span class="cpe-text"><strong>${user}</strong> enviou <strong>${present.emoji} ${present.displayName}</strong> para o Canal! ✨</span>`;
+        feed.prepend(el);
+      }
+    });
+  };
+</script>
 </body>
 </html>

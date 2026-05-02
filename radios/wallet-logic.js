@@ -3,6 +3,7 @@ import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChang
   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getDatabase, ref, get, set, push, update, query, orderByChild, limitToLast }
   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { loadPresentGallery, renderGallery as renderPresentGallery } from './presents.js';
 
 // ── CONFIG ─────────────────────────────────────────────────────
 const FB = {
@@ -80,7 +81,7 @@ onAuthStateChanged(auth, async user => {
   document.getElementById('wallet-main').style.display = 'block';
   currentUid = user.uid;
   await initWallet(user);
-  await loadGifts();
+  await loadPresentsGallery();
   await loadHistory();
 });
 
@@ -104,7 +105,7 @@ async function initWallet(user) {
       uid: user.uid,
       type: 'purchase',
       amount: 500,
-      description: '🎁 Bônus de boas-vindas — 500 Coins de teste',
+      description: '🎁 Bônus de boas-vindas — 500 Moedas de teste',
       relatedEntity: 'seed_welcome',
       createdAt: Date.now()
     });
@@ -153,7 +154,17 @@ function renderStats() {
   document.getElementById('w-level-name').textContent = `${lv.emoji} ${lv.name}`;
 }
 
-// ── LOAD GIFTS ─────────────────────────────────────────────────
+// ── GALERIA DE PRESENTES ────────────────────────────────────────
+async function loadPresentsGallery() {
+  const container = document.getElementById('presents-gallery-list');
+  if (!container) return;
+  try {
+    const items = await loadPresentGallery(currentUid, 20);
+    if (items.length) renderPresentGallery(items, container);
+  } catch(e) { console.warn('Galeria de Presentes indisponível', e); }
+}
+
+// ── LOAD GIFTS (Vales — futuro Bloco 2C) ───────────────────────
 async function loadGifts() {
   // Load user's gift instances
   const ugSnap = await get(ref(db, `userGifts/${currentUid}`));

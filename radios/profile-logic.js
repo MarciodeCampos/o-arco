@@ -178,10 +178,14 @@ function renderActions(p, isOwn, user){
   const el = document.getElementById('profile-actions');
   if(isOwn){
     el.innerHTML = `<button class="btn-secondary" onclick="toggleEdit()">✏️ Editar perfil</button>`;
+    // Carregar galeria de presentes recebidos no próprio perfil
+    if(user && window._loadOwnPresentGallery) window._loadOwnPresentGallery(user.uid);
   } else {
     const isBiz = p.type==='business';
     const msgTrack = isBiz ? `track('message_start','${esc(p.profileId)}',{source:'profile'});` : '';
     let html = `<button class="btn-primary" onclick="${msgTrack}openDMWith('${esc(p.profileId)}','${esc(p.name||'Usuário')}','${esc(p.photoURL||'')}')">💬 Mensagem</button>`;
+    // Botão Presente (apenas para usuários logados visitando outro perfil)
+    if(user) html += `<button class="btn-secondary" style="background:rgba(251,191,36,.09);border-color:rgba(251,191,36,.25);color:#fbbf24" onclick="window._openProfilePresent && window._openProfilePresent('${esc(p.profileId)}','${esc(p.name||'Usuário')}')">🎁 Enviar Presente</button>`;
     const radioId = params.get('radioId')||'';
     const radioName = params.get('radioName')||'';
     if(radioId) html += `<button class="btn-secondary" onclick="sendRadioInvite('${esc(p.profileId)}','${esc(p.name||'')}','${esc(radioId)}','${esc(radioName)}')">📻 Convidar para rádio</button>`;

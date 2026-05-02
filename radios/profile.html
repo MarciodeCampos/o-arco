@@ -155,6 +155,12 @@
     <div class="conv-list" id="conv-list"><div class="loading">Carregando conversas...</div></div>
   </div>
 
+  <!-- GALERIA DE PRESENTES -->
+  <div id="present-gallery-section" style="display:none;padding:16px 0">
+    <div style="font-size:.62rem;text-transform:uppercase;letter-spacing:.12em;color:#f97316;font-weight:800;margin-bottom:8px">🎁 Galeria de Presentes</div>
+    <div class="present-gallery-grid" id="present-gallery-container"></div>
+  </div>
+
   <!-- DM CHAT AREA -->
   <div class="dm-area" id="dm-area">
     <div class="dm-header-bar">
@@ -172,5 +178,38 @@
 </div><!-- /container -->
 
 <script type="module" src="profile-logic.js"></script>
+<script type="module">
+  import { openPresentModal, loadPresentGallery, renderGallery, seedPresentsCatalog } from './presents.js';
+  seedPresentsCatalog().catch(()=>{});
+
+  // Expor função para o botão injetado pelo profile-logic.js
+  window._openProfilePresent = async function(recipientUid, recipientName) {
+    openPresentModal({
+      targetType: 'user',
+      recipientUid,
+      recipientName,
+      channelId: null,
+      onDelivered: (present) => {
+        const msg = document.createElement('div');
+        msg.style.cssText = 'background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.15);border-radius:10px;padding:10px 14px;font-size:.78rem;margin:8px 0';
+        msg.innerHTML = `<strong>${present.emoji} Presente enviado!</strong> ${recipientName} recebeu <strong>${present.displayName}</strong> e ganhou 💎 Diamantes. ✨`;
+        const actions = document.getElementById('profile-actions');
+        if (actions) actions.appendChild(msg);
+        setTimeout(()=>msg.remove(), 6000);
+      }
+    });
+  };
+
+  // Carregar galeria se estiver no próprio perfil
+  window._loadOwnPresentGallery = async function(uid) {
+    const items = await loadPresentGallery(uid);
+    const section = document.getElementById('present-gallery-section');
+    const container = document.getElementById('present-gallery-container');
+    if (items.length > 0 && section) {
+      section.style.display = 'block';
+      renderGallery(items, container);
+    }
+  };
+</script>
 </body>
 </html>
