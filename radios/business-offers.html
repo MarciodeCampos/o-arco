@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Gerenciar Ofertas | CIDADEONLINE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="business-offers.css">
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <a href="offers.html" class="logo">🏙️ CIDADE<span>ONLINE</span></a>
+    <span class="header-tag">🏷️ Minhas Ofertas</span>
+  </div>
+  <div class="header-right">
+    <a href="offers.html">🏷️ Vitrine</a>
+    <a href="business.html">🏪 Diretório</a>
+    <span id="user-name-label" class="user-label"></span>
+    <button id="btn-login" class="btn-login" onclick="doLogin()" style="display:none">Entrar com Google</button>
+  </div>
+</header>
+
+<!-- AUTH GATE -->
+<div id="auth-gate" class="gate-msg">
+  <span>🔐</span>
+  <p>Faça login para gerenciar as ofertas do seu comércio.</p>
+  <button class="btn-primary" onclick="doLogin()">Entrar com Google</button>
+  <div class="admin-alt">
+    <span>Operador?</span>
+    <input id="admin-key-input" type="password" placeholder="Chave de operador" class="f-input-sm">
+    <button onclick="setAdminKey()" class="btn-admin-enter">Entrar como admin</button>
+  </div>
+</div>
+
+<!-- NO BIZ GATE -->
+<div id="no-biz-gate" class="gate-msg" style="display:none">
+  <span>🏪</span>
+  <p>Nenhum comércio vinculado à sua conta ainda.</p>
+  <a href="business.html" class="btn-primary">Ver Diretório</a>
+</div>
+
+<main id="main-panel" style="display:none">
+
+  <!-- BUSINESS SELECTOR -->
+  <div class="top-bar">
+    <div class="biz-selector-wrap">
+      <label class="f-label">Comércio:</label>
+      <select id="biz-selector" class="f-select"></select>
+    </div>
+    <button class="btn-new-offer" onclick="openOfferForm()">+ Nova oferta</button>
+  </div>
+
+  <!-- COUNTERS -->
+  <div class="counters" id="counters">
+    <div class="counter-card"><span id="cnt-total">0</span>Total</div>
+    <div class="counter-card active"><span id="cnt-active">0</span>Ativas</div>
+    <div class="counter-card inactive"><span id="cnt-inactive">0</span>Pausadas</div>
+    <div class="counter-card clicks"><span id="cnt-clicks">0</span>Cliques</div>
+  </div>
+
+  <div class="offers-list" id="offers-list">
+    <div class="empty-state"><span>⏳</span>Carregando...</div>
+  </div>
+
+</main>
+
+<!-- OFFER FORM MODAL -->
+<div id="offer-modal" class="modal-overlay" style="display:none" onclick="closeModalOnOverlay(event)">
+  <div class="modal-box">
+    <div class="modal-title" id="modal-title">Nova oferta</div>
+
+    <div class="form-scroll">
+      <!-- BASIC -->
+      <div class="form-section">
+        <div class="form-section-title">📋 Informações básicas</div>
+        <div class="form-group">
+          <label>Título da oferta *</label>
+          <input id="m-title" class="f-input" type="text" placeholder="Ex: 10% OFF na pizza grande">
+        </div>
+        <div class="form-group">
+          <label>Descrição</label>
+          <textarea id="m-description" class="f-input" rows="3" placeholder="Detalhe a oferta, condições, validade..."></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Tipo</label>
+            <select id="m-type" class="f-select">
+              <option value="coupon">🏷️ Cupom</option>
+              <option value="lead">📋 Agendamento/Lead</option>
+              <option value="external_cart">🛒 Compra online</option>
+              <option value="reservation">🏨 Reserva</option>
+              <option value="custom">⭐ Especial</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Categoria</label>
+            <input id="m-category" class="f-input" type="text" placeholder="Ex: Restaurante, Saúde...">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Válido até (opcional)</label>
+            <input id="m-valid-until" class="f-input" type="date">
+          </div>
+          <div class="form-group">
+            <label>Máx. de conversões</label>
+            <input id="m-max-leads" class="f-input" type="number" min="0" value="500" placeholder="0 = ilimitado">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input id="m-featured" type="checkbox"> ⭐ Marcar como destaque na vitrine
+          </label>
+        </div>
+      </div>
+
+      <!-- CUPOM -->
+      <div class="form-section" id="coupon-section">
+        <div class="form-section-title">🏷️ Cupom & Desconto</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Código do cupom</label>
+            <input id="m-coupon" class="f-input" type="text" placeholder="Ex: CIDADE10">
+          </div>
+          <div class="form-group">
+            <label>Tipo de desconto</label>
+            <select id="m-discount-type" class="f-select">
+              <option value="">Sem desconto</option>
+              <option value="percent">Porcentagem (%)</option>
+              <option value="fixed">Valor fixo (R$)</option>
+              <option value="frete_gratis">Frete grátis</option>
+              <option value="custom">Personalizado</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Valor</label>
+            <input id="m-discount-value" class="f-input" type="number" min="0" step="0.01" placeholder="0">
+          </div>
+        </div>
+      </div>
+
+      <!-- CONVERSÃO -->
+      <div class="form-section">
+        <div class="form-section-title">🎯 Conversão</div>
+        <div class="form-group">
+          <label>WhatsApp (com DDD e DDI, somente números)</label>
+          <input id="m-whatsapp" class="f-input" type="tel" placeholder="554699999000">
+        </div>
+        <div class="form-group">
+          <label>Mensagem pré-preenchida no WhatsApp</label>
+          <textarea id="m-wa-message" class="f-input" rows="2" placeholder="Olá! Vi a oferta no CIDADEONLINE..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>URL externa (opcional — carrinho, reserva, formulário)</label>
+          <input id="m-external-url" class="f-input" type="url" placeholder="https://...">
+        </div>
+      </div>
+
+      <!-- COMISSÃO -->
+      <div class="form-section">
+        <div class="form-section-title">💸 Comissão para afiliados (opcional)</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Tipo</label>
+            <select id="m-comm-type" class="f-select">
+              <option value="none">Sem comissão</option>
+              <option value="percent">Porcentagem (%)</option>
+              <option value="fixed">Valor fixo (R$)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Valor</label>
+            <input id="m-comm-value" class="f-input" type="number" min="0" step="0.01" placeholder="0">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input id="m-show-commission" type="checkbox"> Mostrar comissão publicamente na landing
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-save-offer" onclick="saveOffer()">💾 Salvar oferta</button>
+      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="business-offers-logic.js"></script>
+</body>
+</html>
