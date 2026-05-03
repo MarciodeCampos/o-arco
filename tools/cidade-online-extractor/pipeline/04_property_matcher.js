@@ -38,28 +38,54 @@ function run() {
 
         let confidence = 0; let matchStatus = "no_match"; let matchMethod = "none";
         let matchedPropertyId = null; let propLat = null; let propLng = null;
-        let inscricao = null; let officialAddress = null;
+        let inscricao = null; let officialAddress = "N/A";
 
-        if (bestCandidate && minDistance < 100) {
+        if (bestCandidate && minDistance <= 100) {
             propLat = bestCandidate.lat || bestCandidate.latitude;
             propLng = bestCandidate.lng || bestCandidate.longitude;
-            inscricao = bestCandidate.inscricao || bestCandidate.id || "N/A";
-            officialAddress = bestCandidate.endereco || bestCandidate.logradouro || "N/A";
+            inscricao = bestCandidate.id || "N/A";
+            
+            // Extrai dados da descricao (Insc.: xxx - Nr Cad.: xxx - End.: xxx)
+            if (bestCandidate.descricao) {
+                const partes = bestCandidate.descricao.split('- End.:');
+                if (partes.length > 1) {
+                    officialAddress = partes[1].trim();
+                }
+            }
+
             matchedPropertyId = inscricao;
 
-            if (minDistance <= 15) confidence += 60;
-            else if (minDistance <= 30) confidence += 40;
-            else if (minDistance <= 50) confidence += 20;
-
+            let hasAddressMatch = false;
             if (biz.address_raw && officialAddress !== "N/A") {
                 const n = t => t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
                 const bAddr = n(biz.address_raw);
-                if (n(officialAddress).split(' ').filter(t => t.length > 3).some(token => bAddr.includes(token))) confidence += 30;
+                if (n(officialAddress).split(' ').filter(t => t.length > 3).some(token => bAddr.includes(token))) {
+                    hasAddressMatch = true;
+                    confidence += 30;
+                }
             }
 
-            if (confidence >= 80) matchStatus = "strong_match";
-            else if (confidence >= 40) matchStatus = "probable_match";
-            else matchStatus = "review_needed";
+            if (minDistance <= 5) {
+                confidence += 100;
+                matchStatus = "strong_match";
+            } else if (minDistance <= 15) {
+                confidence += 70;
+                matchStatus = hasAddressMatch ? "strong_match" : "probable_match";
+            } else if (minDistance <= 30) {
+                confidence += 50;
+                matchStatus = "probable_match";
+            } else if (minDistance <= 50) {
+                confidence += 40;
+                matchStatus = hasAddressMatch ? "probable_match" : "review_needed";
+            } else if (minDistance <= 70) {
+                confidence += 20;
+                matchStatus = "review_needed";
+            } else if (minDistance <= 100) {
+                confidence += 10;
+                matchStatus = hasAddressMatch ? "review_needed" : "no_match";
+            } else {
+                matchStatus = "no_match";
+            }
             matchMethod = "geo_distance_and_address_heuristic";
         }
 
