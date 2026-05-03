@@ -1,0 +1,19 @@
+{
+  "name": "cidade-online-extractor",
+  "version": "1.0.0",
+  "description": "Ferramenta CLI reutilizável para triagem comercial de cidades",
+  "main": "pipeline_runner.js",
+  "scripts": {
+    "grid": "node pipeline_runner.js --step grid",
+    "extract": "node pipeline_runner.js --step extract",
+    "normalize": "node pipeline_runner.js --step normalize",
+    "match": "node pipeline_runner.js --step match",
+    "assets": "node pipeline_runner.js --step assets",
+    "pipeline": "node pipeline_runner.js"
+  },
+  "dependencies": {
+    "puppeteer": "^22.0.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  }
+}

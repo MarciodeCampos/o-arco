@@ -1,0 +1,17 @@
+{
+  "job_id": "job_4202008_commercial_build_001",
+  "city_id": "4202008",
+  "city_slug": "Balneario_Camboriu",
+  "state": "SC",
+  "country": "BR",
+  "job_type": "build_city_commercial_layer",
+  "steps": ["grid", "extract", "normalize", "match", "assets"],
+  "categories": ["restaurante", "farmácia", "imobiliária"],
+  "mode": "controlled_test",
+  "assigned_worker": "worker_local_001",
+  "status": "pending",
+  "created_at": null,
+  "started_at": null,
+  "finished_at": null,
+  "output_path": "data/BR/SC/4202008_Balneario_Camboriu/"
+}

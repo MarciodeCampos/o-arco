@@ -1,0 +1,22 @@
+{
+  "4202008": {
+    "country": "BR",
+    "state": "SC",
+    "city_id": "balneario_camboriu_sc",
+    "ibge_code": "4202008",
+    "city_name": "Balneário Camboriú",
+    "output_prefix": "bc",
+    "boundingBox": {
+        "minLat": -27.0611,
+        "maxLat": -26.9654,
+        "minLng": -48.6829,
+        "maxLng": -48.6259
+    },
+    "gridDivisions": {
+        "latSteps": 20,
+        "lngSteps": 20
+    },
+    "property_base_path": "input/bc_database_master.json",
+    "output_dir": "data/BR/SC/4202008_Balneario_Camboriu"
+  }
+}
