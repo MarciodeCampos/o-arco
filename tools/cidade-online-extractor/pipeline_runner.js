@@ -37,7 +37,7 @@ const envVars = {
     BOUNDING_MAX_LNG: cityConf.boundingBox.maxLng,
     GRID_LAT_STEPS: cityConf.gridDivisions.latSteps,
     GRID_LNG_STEPS: cityConf.gridDivisions.lngSteps,
-    TARGET_GRID: path.join(baseOutputDir, 'raw', 'search_route.json'),
+    TARGET_GRID: path.join(baseOutputDir, 'input', 'search_route.json'),
     TARGET_RAW: path.join(baseOutputDir, 'raw', 'businesses_raw.json'),
     TARGET_PROGRESS: path.join(baseOutputDir, 'tmp', 'progress_fast.json'),
     TARGET_NORM: path.join(baseOutputDir, 'normalized', 'businesses_normalized.json'),
