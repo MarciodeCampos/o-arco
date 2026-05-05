@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cidade Online — Balneário Camboriú</title>
+  <meta name="description" content="Cidade Online — Mapa de estabelecimentos comerciais de Balneário Camboriú por ramo de atividade."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#080d18;--surface:#0f1623;--surface2:#161f30;--surface3:#1e2a40;
+      --border:rgba(255,255,255,0.06);--accent:#3b82f6;--accent2:#8b5cf6;
+      --green:#22c55e;--gold:#f59e0b;--red:#ef4444;--cyan:#06b6d4;
+      --text:#e2e8f0;--muted:#4b5a72;--radius:10px;
+    }
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);height:100vh;display:flex;flex-direction:column;overflow:hidden}
+
+    /* HEADER */
+    header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 16px;height:52px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;z-index:1000}
+    .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px}
+    .logo-badge{width:30px;height:30px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px}
+    .hstats{display:flex;gap:10px}
+    .hpill{background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-size:11px;color:var(--muted)}
+    .hpill strong{color:var(--accent)}
+
+    /* LAYOUT */
+    .body{flex:1;display:flex;overflow:hidden}
+
+    /* SIDEBAR */
+    .sidebar{width:310px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+
+    /* TABS */
+    .tabs{display:flex;border-bottom:1px solid var(--border);flex-shrink:0}
+    .tab{flex:1;padding:10px;font-size:12px;font-weight:600;text-align:center;cursor:pointer;color:var(--muted);border:none;background:transparent;font-family:inherit;transition:color .15s}
+    .tab.active{color:var(--accent);border-bottom:2px solid var(--accent)}
+
+    /* SEARCH */
+    .searchbar{padding:10px;border-bottom:1px solid var(--border);flex-shrink:0}
+    .searchbar input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 11px;color:var(--text);font-size:13px;font-family:inherit;outline:none;transition:border-color .2s}
+    .searchbar input:focus{border-color:var(--accent)}
+    .searchbar input::placeholder{color:var(--muted)}
+
+    /* PANEL */
+    .panel{flex:1;overflow-y:auto;display:none}
+    .panel.active{display:block}
+    .panel::-webkit-scrollbar{width:3px}
+    .panel::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+    /* CATEGORY TABLE */
+    .cat-header{display:flex;justify-content:space-between;padding:8px 12px;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface);z-index:2}
+    .cat-row{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.03);transition:background .12s}
+    .cat-row:hover{background:var(--surface2)}
+    .cat-row.active{background:rgba(59,130,246,0.12);border-left:2px solid var(--accent)}
+    .cat-name{font-size:13px;display:flex;align-items:center;gap:8px}
+    .cat-bar-wrap{flex:1;margin:0 10px;background:rgba(255,255,255,0.04);border-radius:3px;height:4px;overflow:hidden}
+    .cat-bar{height:4px;border-radius:3px;background:var(--accent);opacity:.7}
+    .cat-cnt{font-size:11px;font-weight:600;color:var(--accent);min-width:28px;text-align:right}
+
+    /* RESULT LIST */
+    .result-section{padding:6px}
+    .rlabel{padding:6px 6px 4px;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
+    .rcard{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 11px;cursor:pointer;margin-bottom:5px;transition:border-color .15s,transform .1s}
+    .rcard:hover{border-color:rgba(59,130,246,.4);transform:translateX(2px)}
+    .rcard.selected{border-color:var(--accent);background:rgba(59,130,246,.08)}
+    .rcard-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .rcard-meta{font-size:11px;color:var(--muted);margin-top:3px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+    .badge{border-radius:4px;padding:1px 6px;font-size:10px;font-weight:500}
+    .badge-blue{background:rgba(59,130,246,.15);color:var(--accent)}
+    .badge-green{background:rgba(34,197,94,.15);color:var(--green)}
+    .badge-gold{background:rgba(245,158,11,.15);color:var(--gold)}
+
+    /* MAP */
+    #map{flex:1;z-index:1}
+    .leaflet-tile-pane{filter:brightness(.8) contrast(1.05) saturate(.85)}
+    .leaflet-control-zoom a{background:var(--surface)!important;color:var(--text)!important;border-color:var(--border)!important}
+
+    /* POPUP */
+    .leaflet-popup-content-wrapper{background:var(--surface)!important;border:1px solid rgba(59,130,246,.3)!important;border-radius:12px!important;box-shadow:0 20px 60px rgba(0,0,0,.7)!important;color:var(--text)!important;min-width:230px}
+    .leaflet-popup-tip{background:var(--surface)!important}
+    .leaflet-popup-content{margin:0!important}
+    .pb{padding:14px 16px}
+    .pb-name{font-size:14px;font-weight:700;margin-bottom:2px}
+    .pb-cat{font-size:11px;color:var(--accent);margin-bottom:10px;font-weight:500}
+    .pb-row{font-size:12px;color:var(--muted);margin-bottom:4px;display:flex;gap:6px}
+    .pb-row strong{color:var(--text)}
+    .pb-actions{display:flex;gap:6px;margin-top:12px}
+    .pb-btn{flex:1;padding:7px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;border:none;font-family:inherit;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:4px}
+    .pb-btn.prim{background:var(--accent);color:#fff}
+    .pb-btn.sec{background:var(--surface2);color:var(--muted);border:1px solid var(--border)}
+
+    /* FOOTER */
+    footer{background:var(--surface);border-top:1px solid var(--border);padding:6px 16px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
+    #status{color:var(--cyan)}
+
+    /* CLEAR BTN */
+    .clear-btn{margin:6px 12px;padding:6px 10px;background:var(--surface3);border:1px solid var(--border);border-radius:7px;color:var(--muted);font-size:11px;cursor:pointer;font-family:inherit;transition:color .15s}
+    .clear-btn:hover{color:var(--text)}
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-badge">📍</div>
+    <div>
+      <div>Cidade Online</div>
+      <div style="font-size:10px;font-weight:400;color:var(--muted)">Balneário Camboriú · SC</div>
+    </div>
+  </div>
+  <div class="hstats">
+    <div class="hpill">1.233 ramos</div>
+    <div class="hpill"><strong id="shown">0</strong> visíveis</div>
+    <div class="hpill"><strong>12.396</strong> ativos</div>
+  </div>
+</header>
+
+<div class="body">
+  <div class="sidebar">
+    <div class="tabs">
+      <button class="tab active" id="tab-ramos" onclick="showTab('ramos')">🗂️ Ramos</button>
+      <button class="tab" id="tab-lista" onclick="showTab('lista')">📋 Lista</button>
+    </div>
+    <div class="searchbar">
+      <input type="text" id="q" placeholder="🔍  Buscar ramo ou estabelecimento..." oninput="onSearch()"/>
+    </div>
+
+    <!-- RAMOS PANEL -->
+    <div class="panel active" id="panel-ramos">
+      <button class="clear-btn" onclick="clearFilter()">✕ Limpar filtro — mostrar todos</button>
+      <div class="cat-header"><span>Ramo de Atividade</span><span>Qtd</span></div>
+      <div id="cat-table"></div>
+    </div>
+
+    <!-- LISTA PANEL -->
+    <div class="panel" id="panel-lista">
+      <div class="result-section">
+        <div class="rlabel" id="list-label">Selecione um ramo</div>
+        <div id="list-body"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="map"></div>
+</div>
+
+<footer>
+  <span id="status">Carregando...</span>
+  <span>© Cidade Online</span>
+</footer>
+
+<script>
+let ALL = [], filtered = [], catActive = null;
+const markerLayer = L.layerGroup();
+
+const map = L.map('map',{center:[-26.9902,-48.6356],zoom:14});
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OSM',maxZoom:19}).addTo(map);
+markerLayer.addTo(map);
+
+function pin(color){
+  return L.divIcon({className:'',html:`<div style="width:9px;height:9px;background:${color};border:2px solid rgba(255,255,255,.75);border-radius:50%;box-shadow:0 0 5px ${color}99"></div>`,iconSize:[9,9],iconAnchor:[4,4]});
+}
+
+const CAT_COLOR = {
+  'Imobiliária':'#f59e0b','Salão de Beleza':'#ec4899','Restaurante':'#ef4444',
+  'Barbearia':'#3b82f6','Farmácia':'#22c55e','Construtora':'#f97316',
+  'Clínica odontológica':'#06b6d4','Psicólogo':'#8b5cf6','Bar':'#eab308',
+  'Academia':'#22c55e','Supermercado':'#ef4444','Pet Shop':'#f97316',
+  'Padaria':'#f59e0b','Hotel 3 estrelas':'#06b6d4',
+};
+function colorFor(cat){return CAT_COLOR[cat]||'#64748b';}
+
+function buildMarkers(data){
+  markerLayer.clearLayers();
+  let shown=0;
+  data.forEach(r=>{
+    const lat=r.location?.lat, lng=r.location?.lng;
+    if(!lat||!lng) return;
+    shown++;
+    const cat=r.business?.category||'—';
+    const m=L.marker([lat,lng],{icon:pin(colorFor(cat))});
+    m._aid=r.asset_id;
+    m.bindPopup(makePopup(r),{maxWidth:270});
+    m.on('click',()=>selectCard(r.asset_id));
+    markerLayer.addLayer(m);
+  });
+  document.getElementById('shown').textContent=shown.toLocaleString('pt-BR');
+  document.getElementById('status').textContent=`${shown.toLocaleString('pt-BR')} pontos no mapa`;
+}
+
+function makePopup(r){
+  const b=r.business||{}, p=r.property||{}, t=r.territorial_quality||{}, a=r.activation||{};
+  const addr=p.official_address||'';
+  const phone=b.phone||'';
+  const url=b.google_url||'';
+  const conf=t.confidence||0;
+  const status=t.match_status==='strong_match'?'✅ Forte':(t.match_status==='probable_match'?'🟡 Provável':'🔍 Revisão');
+  return `<div class="pb">
+    <div class="pb-name">${b.name||'—'}</div>
+    <div class="pb-cat">${b.category||'—'}</div>
+    ${addr?`<div class="pb-row">📍 <strong>${addr}</strong></div>`:''}
+    ${phone?`<div class="pb-row">📞 <strong>${phone}</strong></div>`:''}
+    <div class="pb-row">🎯 ${status} &nbsp;(${conf}% confiança)</div>
+    <div class="pb-row">🏷️ ${a.claim_status==='unclaimed'?'Disponível para claim':'Reivindicado'}</div>
+    <div class="pb-actions">
+      ${url?`<a class="pb-btn prim" href="${url}" target="_blank">🗺️ Maps</a>`:''}
+      <button class="pb-btn sec" onclick="void(0)">Ver Perfil</button>
+    </div>
+  </div>`;
+}
+
+function buildCatTable(data){
+  const counts={};
+  data.forEach(r=>{
+    const c=r.business?.category||'';
+    if(c&&c!=='Nenhuma avaliação') counts[c]=(counts[c]||0)+1;
+  });
+  const sorted=Object.entries(counts).sort((a,b)=>b[1]-a[1]);
+  const max=sorted[0]?.[1]||1;
+  const tbl=document.getElementById('cat-table');
+  const q=document.getElementById('q').value.toLowerCase();
+  tbl.innerHTML='';
+  sorted.filter(([c])=>!q||c.toLowerCase().includes(q)).forEach(([cat,cnt])=>{
+    const row=document.createElement('div');
+    row.className='cat-row'+(catActive===cat?' active':'');
+    row.innerHTML=`<div class="cat-name"><span style="width:8px;height:8px;border-radius:50%;background:${colorFor(cat)};display:inline-block;flex-shrink:0"></span>${cat}</div>
+      <div class="cat-bar-wrap"><div class="cat-bar" style="width:${Math.round(cnt/max*100)}%"></div></div>
+      <div class="cat-cnt">${cnt}</div>`;
+    row.addEventListener('click',()=>selectCat(cat));
+    tbl.appendChild(row);
+  });
+}
+
+function buildList(data){
+  const body=document.getElementById('list-body');
+  const label=document.getElementById('list-label');
+  label.textContent=`${data.length.toLocaleString('pt-BR')} estabelecimentos`;
+  if(data.length>500){
+    body.innerHTML=`<div style="padding:10px;font-size:12px;color:var(--muted)">${data.length.toLocaleString('pt-BR')} registros. Filtre para ver a lista.</div>`;
+    return;
+  }
+  body.innerHTML='';
+  data.forEach(r=>{
+    const b=r.business||{}, t=r.territorial_quality||{}, a=r.activation||{};
+    const el=document.createElement('div');
+    el.className='rcard';
+    el.id='card-'+r.asset_id;
+    const bdg=t.match_status==='strong_match'?'<span class="badge badge-green">Forte</span>':
+               t.match_status==='probable_match'?'<span class="badge badge-blue">Provável</span>':
+               '<span class="badge badge-gold">Revisão</span>';
+    el.innerHTML=`<div class="rcard-name">${b.name||'—'}</div>
+      <div class="rcard-meta">${bdg}<span>${b.category||''}</span>${a.claim_status==='unclaimed'?'<span class="badge badge-blue">Disponível</span>':''}</div>`;
+    el.addEventListener('click',()=>flyTo(r));
+    body.appendChild(el);
+  });
+}
+
+function selectCat(cat){
+  catActive=cat;
+  filtered=ALL.filter(r=>r.business?.category===cat);
+  buildCatTable(ALL);
+  buildList(filtered);
+  buildMarkers(filtered);
+  showTab('lista');
+}
+
+function clearFilter(){
+  catActive=null;
+  filtered=ALL;
+  buildCatTable(ALL);
+  buildList(ALL);
+  buildMarkers(ALL);
+}
+
+function onSearch(){
+  const q=document.getElementById('q').value.toLowerCase().trim();
+  if(!q){
+    buildCatTable(ALL);
+    buildList(catActive?filtered:ALL);
+    return;
+  }
+  // Search both cats and businesses
+  buildCatTable(ALL);
+  const res=ALL.filter(r=>{
+    const name=(r.business?.name||'').toLowerCase();
+    const cat=(r.business?.category||'').toLowerCase();
+    const addr=(r.property?.official_address||'').toLowerCase();
+    return name.includes(q)||cat.includes(q)||addr.includes(q);
+  });
+  buildList(res);
+  buildMarkers(res);
+}
+
+function flyTo(r){
+  const lat=r.location?.lat, lng=r.location?.lng;
+  if(!lat||!lng) return;
+  map.flyTo([lat,lng],17,{duration:.7});
+  selectCard(r.asset_id);
+  setTimeout(()=>{
+    markerLayer.getLayers().forEach(m=>{if(m._aid===r.asset_id) m.openPopup();});
+  },750);
+}
+
+function selectCard(id){
+  document.querySelectorAll('.rcard').forEach(c=>c.classList.remove('selected'));
+  const el=document.getElementById('card-'+id);
+  if(el){el.classList.add('selected');el.scrollIntoView({behavior:'smooth',block:'nearest'});}
+}
+
+function showTab(t){
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tab-'+t).classList.add('active');
+  document.getElementById('panel-'+t).classList.add('active');
+}
+
+// Load
+fetch('city_assets.json')
+  .then(r=>r.json())
+  .then(data=>{
+    ALL=data; filtered=data;
+    buildCatTable(data);
+    buildMarkers(data);
+    document.getElementById('status').textContent=`${data.length.toLocaleString('pt-BR')} ativos carregados · 1.233 ramos`;
+    document.getElementById('list-label').textContent='Selecione um ramo no painel ←';
+  })
+  .catch(()=>{
+    document.getElementById('status').textContent='Erro ao carregar city_assets.json — rode via http-server';
+  });
+</script>
+</body>
+</html>
