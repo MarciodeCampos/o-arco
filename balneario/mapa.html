@@ -4,7 +4,6 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Cidade Online — Balneário Camboriú</title>
-  <meta name="description" content="Cidade Online — Mapa de estabelecimentos comerciais de Balneário Camboriú por ramo de atividade."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
@@ -19,55 +18,58 @@
     }
     body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);height:100vh;display:flex;flex-direction:column;overflow:hidden}
 
-    /* HEADER */
     header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 16px;height:52px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;z-index:1000}
     .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px}
     .logo-badge{width:30px;height:30px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px}
-    .hstats{display:flex;gap:10px}
+    .hstats{display:flex;gap:8px}
     .hpill{background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-size:11px;color:var(--muted)}
     .hpill strong{color:var(--accent)}
 
-    /* LAYOUT */
     .body{flex:1;display:flex;overflow:hidden}
 
-    /* SIDEBAR */
-    .sidebar{width:310px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+    .sidebar{width:320px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
 
-    /* TABS */
-    .tabs{display:flex;border-bottom:1px solid var(--border);flex-shrink:0}
-    .tab{flex:1;padding:10px;font-size:12px;font-weight:600;text-align:center;cursor:pointer;color:var(--muted);border:none;background:transparent;font-family:inherit;transition:color .15s}
-    .tab.active{color:var(--accent);border-bottom:2px solid var(--accent)}
+    /* AUTOCOMPLETE */
+    .ac-wrap{padding:12px;border-bottom:1px solid var(--border);position:relative;flex-shrink:0}
+    .ac-wrap input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;font-family:inherit;outline:none;transition:border-color .2s}
+    .ac-wrap input:focus{border-color:var(--accent)}
+    .ac-wrap input::placeholder{color:var(--muted)}
+    .ac-dropdown{position:absolute;left:12px;right:12px;top:100%;background:var(--surface3);border:1px solid rgba(59,130,246,.3);border-radius:8px;max-height:260px;overflow-y:auto;z-index:500;display:none;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+    .ac-dropdown.open{display:block}
+    .ac-item{padding:9px 12px;cursor:pointer;font-size:13px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.03)}
+    .ac-item:hover{background:rgba(59,130,246,.1)}
+    .ac-item .ac-cnt{font-size:11px;color:var(--accent);font-weight:600}
 
-    /* SEARCH */
-    .searchbar{padding:10px;border-bottom:1px solid var(--border);flex-shrink:0}
-    .searchbar input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 11px;color:var(--text);font-size:13px;font-family:inherit;outline:none;transition:border-color .2s}
-    .searchbar input:focus{border-color:var(--accent)}
-    .searchbar input::placeholder{color:var(--muted)}
+    /* RAMO PANEL */
+    .ramo-panel{padding:16px;display:none;flex-direction:column;gap:12px;border-bottom:1px solid var(--border);flex-shrink:0}
+    .ramo-panel.visible{display:flex}
+    .ramo-title{font-size:15px;font-weight:700}
+    .ramo-count{font-size:12px;color:var(--muted)}
+    .ramo-count strong{color:var(--accent)}
+    .btn-row{display:flex;gap:8px}
+    .btn{flex:1;padding:10px 8px;border-radius:8px;border:none;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:opacity .15s}
+    .btn:active{opacity:.8}
+    .btn-primary{background:var(--accent);color:#fff}
+    .btn-secondary{background:var(--surface3);color:var(--text);border:1px solid var(--border)}
+    .btn-clear{background:transparent;border:1px solid var(--border);color:var(--muted);padding:6px 10px;font-size:11px;border-radius:6px;cursor:pointer;font-family:inherit}
 
-    /* PANEL */
-    .panel{flex:1;overflow-y:auto;display:none}
-    .panel.active{display:block}
-    .panel::-webkit-scrollbar{width:3px}
-    .panel::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+    /* INITIAL SCREEN */
+    #initial-msg{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;gap:12px}
+    #initial-msg .im-icon{font-size:40px}
+    #initial-msg .im-title{font-size:15px;font-weight:600;color:var(--text)}
+    #initial-msg .im-sub{font-size:12px;color:var(--muted);line-height:1.6}
 
-    /* CATEGORY TABLE */
-    .cat-header{display:flex;justify-content:space-between;padding:8px 12px;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface);z-index:2}
-    .cat-row{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.03);transition:background .12s}
-    .cat-row:hover{background:var(--surface2)}
-    .cat-row.active{background:rgba(59,130,246,0.12);border-left:2px solid var(--accent)}
-    .cat-name{font-size:13px;display:flex;align-items:center;gap:8px}
-    .cat-bar-wrap{flex:1;margin:0 10px;background:rgba(255,255,255,0.04);border-radius:3px;height:4px;overflow:hidden}
-    .cat-bar{height:4px;border-radius:3px;background:var(--accent);opacity:.7}
-    .cat-cnt{font-size:11px;font-weight:600;color:var(--accent);min-width:28px;text-align:right}
-
-    /* RESULT LIST */
-    .result-section{padding:6px}
-    .rlabel{padding:6px 6px 4px;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
-    .rcard{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 11px;cursor:pointer;margin-bottom:5px;transition:border-color .15s,transform .1s}
-    .rcard:hover{border-color:rgba(59,130,246,.4);transform:translateX(2px)}
-    .rcard.selected{border-color:var(--accent);background:rgba(59,130,246,.08)}
+    /* LIST */
+    .list-wrap{flex:1;overflow-y:auto;display:none}
+    .list-wrap.visible{display:block}
+    .list-wrap::-webkit-scrollbar{width:3px}
+    .list-wrap::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+    .list-label{padding:8px 12px;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600;position:sticky;top:0;background:var(--surface);border-bottom:1px solid var(--border)}
+    .rcard{padding:10px 12px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.03);transition:background .12s}
+    .rcard:hover{background:var(--surface2)}
+    .rcard.selected{background:rgba(59,130,246,.08);border-left:2px solid var(--accent)}
     .rcard-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .rcard-meta{font-size:11px;color:var(--muted);margin-top:3px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+    .rcard-meta{font-size:11px;color:var(--muted);margin-top:2px;display:flex;gap:6px}
     .badge{border-radius:4px;padding:1px 6px;font-size:10px;font-weight:500}
     .badge-blue{background:rgba(59,130,246,.15);color:var(--accent)}
     .badge-green{background:rgba(34,197,94,.15);color:var(--green)}
@@ -92,13 +94,35 @@
     .pb-btn.prim{background:var(--accent);color:#fff}
     .pb-btn.sec{background:var(--surface2);color:var(--muted);border:1px solid var(--border)}
 
-    /* FOOTER */
+    /* NEAR ME indicator */
+    .user-pin{width:14px;height:14px;background:#22c55e;border:3px solid #fff;border-radius:50%;box-shadow:0 0 10px #22c55e}
+
+    /* DECISION CARD OVERLAY */
+    #decision-overlay{position:fixed;inset:0;background:rgba(5,8,18,.85);backdrop-filter:blur(6px);z-index:2000;display:none;align-items:flex-end;justify-content:center;padding-bottom:0}
+    #decision-overlay.open{display:flex}
+    .dc-sheet{background:var(--surface);border-top:1px solid rgba(59,130,246,.3);border-radius:20px 20px 0 0;width:100%;max-width:560px;padding:20px 20px 28px;display:flex;flex-direction:column;gap:14px;animation:slideUp .25s ease}
+    @keyframes slideUp{from{transform:translateY(60px);opacity:0}to{transform:translateY(0);opacity:1}}
+    .dc-header{display:flex;justify-content:space-between;align-items:center}
+    .dc-title{font-size:14px;font-weight:700}
+    .dc-sub{font-size:11px;color:var(--muted)}
+    .dc-close{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:4px 10px;color:var(--muted);font-size:12px;cursor:pointer;font-family:inherit}
+    .dc-cards{display:flex;flex-direction:column;gap:8px}
+    .dc-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:12px 14px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:border-color .15s,background .15s}
+    .dc-card:hover{border-color:var(--accent);background:rgba(59,130,246,.07)}
+    .dc-card.top1{border-color:rgba(34,197,94,.4)}
+    .dc-rank{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+    .dc-rank.r1{background:rgba(34,197,94,.2);color:var(--green)}
+    .dc-rank.r2{background:rgba(59,130,246,.2);color:var(--accent)}
+    .dc-rank.r3{background:rgba(100,116,139,.2);color:var(--muted)}
+    .dc-info{flex:1;min-width:0}
+    .dc-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .dc-addr{font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .dc-dist{font-size:11px;font-weight:700;color:var(--green);flex-shrink:0;text-align:right}
+    .dc-actions{display:flex;gap:8px;margin-top:4px}
+    .dc-more{background:transparent;border:1px solid var(--border);border-radius:8px;padding:8px;font-size:12px;color:var(--muted);cursor:pointer;font-family:inherit;text-align:center}
+
     footer{background:var(--surface);border-top:1px solid var(--border);padding:6px 16px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
     #status{color:var(--cyan)}
-
-    /* CLEAR BTN */
-    .clear-btn{margin:6px 12px;padding:6px 10px;background:var(--surface3);border:1px solid var(--border);border-radius:7px;color:var(--muted);font-size:11px;cursor:pointer;font-family:inherit;transition:color .15s}
-    .clear-btn:hover{color:var(--text)}
   </style>
 </head>
 <body>
@@ -112,196 +136,162 @@
     </div>
   </div>
   <div class="hstats">
-    <div class="hpill">1.233 ramos</div>
-    <div class="hpill"><strong id="shown">0</strong> visíveis</div>
-    <div class="hpill"><strong>12.396</strong> ativos</div>
+    <div class="hpill"><strong id="h-cats">—</strong> ramos</div>
+    <div class="hpill"><strong id="h-visible">0</strong> visíveis</div>
+    <div class="hpill"><strong id="h-total">—</strong> ativos</div>
   </div>
 </header>
 
 <div class="body">
   <div class="sidebar">
-    <div class="tabs">
-      <button class="tab active" id="tab-ramos" onclick="showTab('ramos')">🗂️ Ramos</button>
-      <button class="tab" id="tab-lista" onclick="showTab('lista')">📋 Lista</button>
-    </div>
-    <div class="searchbar">
-      <input type="text" id="q" placeholder="🔍  Buscar ramo ou estabelecimento..." oninput="onSearch()"/>
+
+    <!-- AUTOCOMPLETE -->
+    <div class="ac-wrap">
+      <input type="text" id="ac-input" placeholder="🔍  Digite um ramo de atividade..." autocomplete="off" oninput="onAcInput()"/>
+      <div class="ac-dropdown" id="ac-dropdown"></div>
     </div>
 
-    <!-- RAMOS PANEL -->
-    <div class="panel active" id="panel-ramos">
-      <button class="clear-btn" onclick="clearFilter()">✕ Limpar filtro — mostrar todos</button>
-      <div class="cat-header"><span>Ramo de Atividade</span><span>Qtd</span></div>
-      <div id="cat-table"></div>
-    </div>
-
-    <!-- LISTA PANEL -->
-    <div class="panel" id="panel-lista">
-      <div class="result-section">
-        <div class="rlabel" id="list-label">Selecione um ramo</div>
-        <div id="list-body"></div>
+    <!-- RAMO SELECTED PANEL -->
+    <div class="ramo-panel" id="ramo-panel">
+      <div>
+        <div class="ramo-title" id="ramo-title">—</div>
+        <div class="ramo-count">Total: <strong id="ramo-count">0</strong> ativos neste ramo</div>
       </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="nearMe()">📍 Perto de mim</button>
+        <button class="btn btn-secondary" onclick="showAll()">🗺️ Ver todos</button>
+      </div>
+      <button class="btn-clear" onclick="clearRamo()">✕ Escolher outro ramo</button>
     </div>
+
+    <!-- INITIAL MESSAGE -->
+    <div id="initial-msg">
+      <div class="im-icon">🗺️</div>
+      <div class="im-title">Escolha um ramo de atividade</div>
+      <div class="im-sub">Digite acima para buscar um ramo e visualizar os nós locais de Balneário Camboriú.</div>
+    </div>
+
+    <!-- RESULTS LIST -->
+    <div class="list-wrap" id="list-wrap">
+      <div class="list-label" id="list-label">Resultados</div>
+      <div id="list-body"></div>
+    </div>
+
   </div>
 
   <div id="map"></div>
 </div>
 
+<!-- DECISION CARD OVERLAY -->
+<div id="decision-overlay">
+  <div class="dc-sheet">
+    <div class="dc-header">
+      <div>
+        <div class="dc-title" id="dc-title">📍 Perto de você</div>
+        <div class="dc-sub" id="dc-sub">Opções mais próximas</div>
+      </div>
+      <button class="dc-close" onclick="closeDecision()">✕ Fechar</button>
+    </div>
+    <div class="dc-cards" id="dc-cards"></div>
+    <button class="dc-more" id="dc-more" onclick="showAllFromDecision()">Ver todos no mapa →</button>
+  </div>
+</div>
+
 <footer>
-  <span id="status">Carregando...</span>
+  <span id="status">Carregando base...</span>
   <span>© Cidade Online</span>
 </footer>
 
 <script>
-let ALL = [], filtered = [], catActive = null;
-const markerLayer = L.layerGroup();
+// ── Helpers ──────────────────────────────────────────────────────────────
+function getCategory(r){ return r?.business?.category || '—' }
+function getName(r){ return r?.business?.name || '—' }
+function getPhone(r){ return r?.business?.phone || '' }
+function getAddress(r){ return r?.property?.official_address || '' }
+function getGoogleUrl(r){ return r?.business?.google_url || '' }
+function getClaimStatus(r){ return r?.activation?.claim_status || 'unclaimed' }
+function getLatLng(r){
+  const lat = r?.location?.lat, lng = r?.location?.lng;
+  return (lat && lng) ? [lat, lng] : null;
+}
+function haversine(lat1, lng1, lat2, lng2){
+  const R=6371000, toRad=x=>x*Math.PI/180;
+  const dLat=toRad(lat2-lat1), dLng=toRad(lng2-lng1);
+  const a=Math.sin(dLat/2)**2+Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLng/2)**2;
+  return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+}
 
-const map = L.map('map',{center:[-26.9902,-48.6356],zoom:14});
+// ── State ─────────────────────────────────────────────────────────────────
+let ALL=[], catMap={}, activeRamo=null, userMarker=null;
+const markerLayer=L.layerGroup();
+
+// ── Map ────────────────────────────────────────────────────────────────────
+const map=L.map('map',{center:[-26.9902,-48.6356],zoom:14});
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OSM',maxZoom:19}).addTo(map);
 markerLayer.addTo(map);
 
-function pin(color){
-  return L.divIcon({className:'',html:`<div style="width:9px;height:9px;background:${color};border:2px solid rgba(255,255,255,.75);border-radius:50%;box-shadow:0 0 5px ${color}99"></div>`,iconSize:[9,9],iconAnchor:[4,4]});
-}
-
-const CAT_COLOR = {
-  'Imobiliária':'#f59e0b','Salão de Beleza':'#ec4899','Restaurante':'#ef4444',
-  'Barbearia':'#3b82f6','Farmácia':'#22c55e','Construtora':'#f97316',
-  'Clínica odontológica':'#06b6d4','Psicólogo':'#8b5cf6','Bar':'#eab308',
-  'Academia':'#22c55e','Supermercado':'#ef4444','Pet Shop':'#f97316',
-  'Padaria':'#f59e0b','Hotel 3 estrelas':'#06b6d4',
-};
-function colorFor(cat){return CAT_COLOR[cat]||'#64748b';}
-
-function buildMarkers(data){
-  markerLayer.clearLayers();
-  let shown=0;
-  data.forEach(r=>{
-    const lat=r.location?.lat, lng=r.location?.lng;
-    if(!lat||!lng) return;
-    shown++;
-    const cat=r.business?.category||'—';
-    const m=L.marker([lat,lng],{icon:pin(colorFor(cat))});
-    m._aid=r.asset_id;
-    m.bindPopup(makePopup(r),{maxWidth:270});
-    m.on('click',()=>selectCard(r.asset_id));
-    markerLayer.addLayer(m);
-  });
-  document.getElementById('shown').textContent=shown.toLocaleString('pt-BR');
-  document.getElementById('status').textContent=`${shown.toLocaleString('pt-BR')} pontos no mapa`;
+function pin(color='#3b82f6'){
+  return L.divIcon({className:'',html:`<div style="width:9px;height:9px;background:${color};border:2px solid rgba(255,255,255,.8);border-radius:50%;box-shadow:0 0 6px ${color}88"></div>`,iconSize:[9,9],iconAnchor:[4,4]});
 }
 
 function makePopup(r){
-  const b=r.business||{}, p=r.property||{}, t=r.territorial_quality||{}, a=r.activation||{};
-  const addr=p.official_address||'';
-  const phone=b.phone||'';
-  const url=b.google_url||'';
+  const addr=getAddress(r), phone=getPhone(r), url=getGoogleUrl(r);
+  const t=r?.territorial_quality||{};
   const conf=t.confidence||0;
   const status=t.match_status==='strong_match'?'✅ Forte':(t.match_status==='probable_match'?'🟡 Provável':'🔍 Revisão');
   return `<div class="pb">
-    <div class="pb-name">${b.name||'—'}</div>
-    <div class="pb-cat">${b.category||'—'}</div>
+    <div class="pb-name">${getName(r)}</div>
+    <div class="pb-cat">${getCategory(r)}</div>
     ${addr?`<div class="pb-row">📍 <strong>${addr}</strong></div>`:''}
     ${phone?`<div class="pb-row">📞 <strong>${phone}</strong></div>`:''}
-    <div class="pb-row">🎯 ${status} &nbsp;(${conf}% confiança)</div>
-    <div class="pb-row">🏷️ ${a.claim_status==='unclaimed'?'Disponível para claim':'Reivindicado'}</div>
+    <div class="pb-row">🎯 ${status} (${conf}%)</div>
+    <div class="pb-row">🏷️ ${getClaimStatus(r)==='unclaimed'?'Disponível para claim':'Reivindicado'}</div>
     <div class="pb-actions">
       ${url?`<a class="pb-btn prim" href="${url}" target="_blank">🗺️ Maps</a>`:''}
-      <button class="pb-btn sec" onclick="void(0)">Ver Perfil</button>
+      <button class="pb-btn sec">Ver Perfil</button>
     </div>
   </div>`;
 }
 
-function buildCatTable(data){
-  const counts={};
+function renderMarkers(data){
+  markerLayer.clearLayers();
+  let n=0;
   data.forEach(r=>{
-    const c=r.business?.category||'';
-    if(c&&c!=='Nenhuma avaliação') counts[c]=(counts[c]||0)+1;
+    const ll=getLatLng(r); if(!ll) return;
+    const m=L.marker(ll,{icon:pin('#3b82f6')});
+    m._aid=r.asset_id;
+    m.bindPopup(makePopup(r),{maxWidth:270});
+    m.on('click',()=>selectCard(r.asset_id));
+    markerLayer.addLayer(m);
+    n++;
   });
-  const sorted=Object.entries(counts).sort((a,b)=>b[1]-a[1]);
-  const max=sorted[0]?.[1]||1;
-  const tbl=document.getElementById('cat-table');
-  const q=document.getElementById('q').value.toLowerCase();
-  tbl.innerHTML='';
-  sorted.filter(([c])=>!q||c.toLowerCase().includes(q)).forEach(([cat,cnt])=>{
-    const row=document.createElement('div');
-    row.className='cat-row'+(catActive===cat?' active':'');
-    row.innerHTML=`<div class="cat-name"><span style="width:8px;height:8px;border-radius:50%;background:${colorFor(cat)};display:inline-block;flex-shrink:0"></span>${cat}</div>
-      <div class="cat-bar-wrap"><div class="cat-bar" style="width:${Math.round(cnt/max*100)}%"></div></div>
-      <div class="cat-cnt">${cnt}</div>`;
-    row.addEventListener('click',()=>selectCat(cat));
-    tbl.appendChild(row);
-  });
+  document.getElementById('h-visible').textContent=n.toLocaleString('pt-BR');
 }
 
-function buildList(data){
+function renderList(data, label){
+  const wrap=document.getElementById('list-wrap');
   const body=document.getElementById('list-body');
-  const label=document.getElementById('list-label');
-  label.textContent=`${data.length.toLocaleString('pt-BR')} estabelecimentos`;
+  const lbl=document.getElementById('list-label');
+  document.getElementById('initial-msg').style.display='none';
+  wrap.classList.add('visible');
+  lbl.textContent=label||`${data.length.toLocaleString('pt-BR')} resultados`;
   if(data.length>500){
-    body.innerHTML=`<div style="padding:10px;font-size:12px;color:var(--muted)">${data.length.toLocaleString('pt-BR')} registros. Filtre para ver a lista.</div>`;
+    body.innerHTML=`<div style="padding:12px;font-size:12px;color:var(--muted)">${data.length.toLocaleString('pt-BR')} ativos. Navegue pelo mapa.</div>`;
     return;
   }
   body.innerHTML='';
   data.forEach(r=>{
-    const b=r.business||{}, t=r.territorial_quality||{}, a=r.activation||{};
+    const t=r?.territorial_quality||{};
     const el=document.createElement('div');
-    el.className='rcard';
-    el.id='card-'+r.asset_id;
+    el.className='rcard'; el.id='card-'+r.asset_id;
     const bdg=t.match_status==='strong_match'?'<span class="badge badge-green">Forte</span>':
                t.match_status==='probable_match'?'<span class="badge badge-blue">Provável</span>':
                '<span class="badge badge-gold">Revisão</span>';
-    el.innerHTML=`<div class="rcard-name">${b.name||'—'}</div>
-      <div class="rcard-meta">${bdg}<span>${b.category||''}</span>${a.claim_status==='unclaimed'?'<span class="badge badge-blue">Disponível</span>':''}</div>`;
+    el.innerHTML=`<div class="rcard-name">${getName(r)}</div>
+      <div class="rcard-meta">${bdg}<span>${getAddress(r)}</span></div>`;
     el.addEventListener('click',()=>flyTo(r));
     body.appendChild(el);
   });
-}
-
-function selectCat(cat){
-  catActive=cat;
-  filtered=ALL.filter(r=>r.business?.category===cat);
-  buildCatTable(ALL);
-  buildList(filtered);
-  buildMarkers(filtered);
-  showTab('lista');
-}
-
-function clearFilter(){
-  catActive=null;
-  filtered=ALL;
-  buildCatTable(ALL);
-  buildList(ALL);
-  buildMarkers(ALL);
-}
-
-function onSearch(){
-  const q=document.getElementById('q').value.toLowerCase().trim();
-  if(!q){
-    buildCatTable(ALL);
-    buildList(catActive?filtered:ALL);
-    return;
-  }
-  // Search both cats and businesses
-  buildCatTable(ALL);
-  const res=ALL.filter(r=>{
-    const name=(r.business?.name||'').toLowerCase();
-    const cat=(r.business?.category||'').toLowerCase();
-    const addr=(r.property?.official_address||'').toLowerCase();
-    return name.includes(q)||cat.includes(q)||addr.includes(q);
-  });
-  buildList(res);
-  buildMarkers(res);
-}
-
-function flyTo(r){
-  const lat=r.location?.lat, lng=r.location?.lng;
-  if(!lat||!lng) return;
-  map.flyTo([lat,lng],17,{duration:.7});
-  selectCard(r.asset_id);
-  setTimeout(()=>{
-    markerLayer.getLayers().forEach(m=>{if(m._aid===r.asset_id) m.openPopup();});
-  },750);
 }
 
 function selectCard(id){
@@ -310,26 +300,174 @@ function selectCard(id){
   if(el){el.classList.add('selected');el.scrollIntoView({behavior:'smooth',block:'nearest'});}
 }
 
-function showTab(t){
-  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.getElementById('tab-'+t).classList.add('active');
-  document.getElementById('panel-'+t).classList.add('active');
+function flyTo(r){
+  const ll=getLatLng(r); if(!ll) return;
+  map.flyTo(ll,17,{duration:.7});
+  selectCard(r.asset_id);
+  setTimeout(()=>markerLayer.getLayers().forEach(m=>{if(m._aid===r.asset_id)m.openPopup();}),750);
 }
 
-// Load
+// ── Autocomplete ───────────────────────────────────────────────────────────
+function buildCatMap(data){
+  data.forEach(r=>{
+    const c=getCategory(r);
+    if(c&&c!=='—') catMap[c]=(catMap[c]||[]);
+    catMap[c].push(r);
+  });
+}
+
+function onAcInput(){
+  const q=document.getElementById('ac-input').value.toLowerCase().trim();
+  const dd=document.getElementById('ac-dropdown');
+  if(!q){dd.classList.remove('open');return;}
+  const matches=Object.entries(catMap)
+    .filter(([c])=>c.toLowerCase().includes(q))
+    .sort((a,b)=>b[1].length-a[1].length)
+    .slice(0,20);
+  if(!matches.length){dd.classList.remove('open');return;}
+  dd.innerHTML='';
+  matches.forEach(([cat,recs])=>{
+    const item=document.createElement('div');
+    item.className='ac-item';
+    item.innerHTML=`<span>${cat}</span><span class="ac-cnt">${recs.length}</span>`;
+    item.addEventListener('click',()=>selectRamo(cat));
+    dd.appendChild(item);
+  });
+  dd.classList.add('open');
+}
+
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.ac-wrap')) document.getElementById('ac-dropdown').classList.remove('open');
+});
+
+function selectRamo(cat){
+  activeRamo=cat;
+  document.getElementById('ac-input').value=cat;
+  document.getElementById('ac-dropdown').classList.remove('open');
+  document.getElementById('ramo-title').textContent=cat;
+  document.getElementById('ramo-count').textContent=(catMap[cat]||[]).length.toLocaleString('pt-BR');
+  document.getElementById('ramo-panel').classList.add('visible');
+  document.getElementById('initial-msg').style.display='none';
+  document.getElementById('list-wrap').classList.remove('visible');
+  markerLayer.clearLayers();
+  document.getElementById('h-visible').textContent='0';
+  document.getElementById('status').textContent=`Ramo selecionado: ${cat} — escolha como visualizar`;
+}
+
+function clearRamo(){
+  activeRamo=null;
+  document.getElementById('ac-input').value='';
+  document.getElementById('ramo-panel').classList.remove('visible');
+  document.getElementById('list-wrap').classList.remove('visible');
+  document.getElementById('initial-msg').style.display='flex';
+  markerLayer.clearLayers();
+  if(userMarker){map.removeLayer(userMarker);userMarker=null;}
+  document.getElementById('h-visible').textContent='0';
+}
+
+// ── Near Me + Decision Card ────────────────────────────────────────────────
+let _nearResults=[], _userLat=null, _userLng=null;
+
+function fmtDist(m){
+  return m<1000?`${Math.round(m)}m`:`${(m/1000).toFixed(1)}km`;
+}
+
+function nearMe(){
+  if(!activeRamo) return;
+  document.getElementById('status').textContent='Obtendo sua localização...';
+  navigator.geolocation.getCurrentPosition(pos=>{
+    _userLat=pos.coords.latitude; _userLng=pos.coords.longitude;
+    if(userMarker) map.removeLayer(userMarker);
+    userMarker=L.marker([_userLat,_userLng],{icon:L.divIcon({className:'',html:'<div class="user-pin"></div>',iconSize:[14,14],iconAnchor:[7,7]})})
+      .addTo(map).bindPopup('<b>Você está aqui</b>');
+    map.flyTo([_userLat,_userLng],14,{duration:.8});
+    const recs=catMap[activeRamo]||[];
+    const withGeo=recs.filter(r=>getLatLng(r));
+    _nearResults=withGeo
+      .map(r=>{const [lat,lng]=getLatLng(r);return{r,dist:haversine(_userLat,_userLng,lat,lng)};})
+      .sort((a,b)=>a.dist-b.dist)
+      .slice(0,20);
+    showDecisionCard(_nearResults);
+    document.getElementById('status').textContent=`${_nearResults.length} opções próximas — ${activeRamo}`;
+  },()=>{
+    document.getElementById('status').textContent='Geolocalização negada. Tente "Ver todos".';
+  });
+}
+
+function showDecisionCard(results){
+  const cards=document.getElementById('dc-cards');
+  document.getElementById('dc-title').textContent=`📍 Perto de você — ${activeRamo}`;
+  document.getElementById('dc-sub').textContent=`${results.length} opções encontradas`;
+  cards.innerHTML='';
+  const top3=results.slice(0,3);
+  top3.forEach(({r,dist},i)=>{
+    const rankClass=['r1','r2','r3'][i];
+    const topClass=i===0?' top1':'';
+    const phone=getPhone(r);
+    const url=getGoogleUrl(r);
+    const card=document.createElement('div');
+    card.className=`dc-card${topClass}`;
+    card.innerHTML=`
+      <div class="dc-rank ${rankClass}">${i+1}</div>
+      <div class="dc-info">
+        <div class="dc-name">${getName(r)}</div>
+        <div class="dc-addr">${getAddress(r)||'Endereço não disponível'}</div>
+        ${phone?`<div style="font-size:11px;color:var(--accent);margin-top:3px">📞 ${phone}</div>`:''}
+      </div>
+      <div class="dc-dist">${fmtDist(dist)}</div>`;
+    card.addEventListener('click',()=>{ closeDecision(); flyTo(r); });
+    cards.appendChild(card);
+  });
+  if(results.length>3){
+    document.getElementById('dc-more').textContent=`Ver todos os ${results.length} no mapa →`;
+    document.getElementById('dc-more').style.display='block';
+  } else {
+    document.getElementById('dc-more').style.display='none';
+  }
+  document.getElementById('decision-overlay').classList.add('open');
+}
+
+function closeDecision(){
+  document.getElementById('decision-overlay').classList.remove('open');
+}
+
+function showAllFromDecision(){
+  closeDecision();
+  const top=_nearResults.map(x=>x.r);
+  renderMarkers(top);
+  renderList(top,`📍 ${top.length} mais próximos de você`);
+  if(top.length){
+    const bounds=top.filter(r=>getLatLng(r)).map(r=>getLatLng(r));
+    if(bounds.length) map.fitBounds(bounds,{padding:[40,40]});
+  }
+}
+
+// ── Show All ───────────────────────────────────────────────────────────────
+function showAll(){
+  if(!activeRamo) return;
+  const recs=catMap[activeRamo]||[];
+  renderMarkers(recs);
+  renderList(recs,`🗺️ Todos (${recs.length.toLocaleString('pt-BR')}) — ${activeRamo}`);
+  const withGeo=recs.filter(r=>getLatLng(r));
+  if(withGeo.length){
+    const bounds=withGeo.map(r=>getLatLng(r));
+    map.fitBounds(bounds,{padding:[30,30]});
+  }
+  document.getElementById('status').textContent=`${recs.length.toLocaleString('pt-BR')} ativos — ${activeRamo}`;
+}
+
+// ── Load ───────────────────────────────────────────────────────────────────
 fetch('city_assets.json')
   .then(r=>r.json())
   .then(data=>{
-    ALL=data; filtered=data;
-    buildCatTable(data);
-    buildMarkers(data);
-    document.getElementById('status').textContent=`${data.length.toLocaleString('pt-BR')} ativos carregados · 1.233 ramos`;
-    document.getElementById('list-label').textContent='Selecione um ramo no painel ←';
+    ALL=data;
+    buildCatMap(data);
+    const noGeo=data.filter(r=>!getLatLng(r)).length;
+    document.getElementById('h-total').textContent=data.length.toLocaleString('pt-BR');
+    document.getElementById('h-cats').textContent=Object.keys(catMap).length.toLocaleString('pt-BR');
+    document.getElementById('status').textContent=`Base carregada — ${data.length.toLocaleString('pt-BR')} ativos · ${noGeo} sem coordenada`;
   })
-  .catch(()=>{
-    document.getElementById('status').textContent='Erro ao carregar city_assets.json — rode via http-server';
-  });
+  .catch(()=>{ document.getElementById('status').textContent='Erro ao carregar city_assets.json'; });
 </script>
 </body>
 </html>
