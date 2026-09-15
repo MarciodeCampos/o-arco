@@ -139,7 +139,7 @@ html, body { min-height:100%; background:var(--bg); color:var(--text); font-fami
 .platform-btn:hover { border-color:var(--accent); color:var(--accent); }
 .platform-btn .icon { font-size:16px; }
 
-/* Suno toggle — oculto por padrão */
+/* Suno gate — oculto por padrão */
 .suno-gate { position:relative; }
 .suno-hidden .suno-link-row { display:none; }
 .reveal-btn {
@@ -386,7 +386,7 @@ function renderTrack(arcData, track) {
       ${platforms.apple  ? `<a class="platform-btn" href="${platforms.apple}"   target="_blank"><span class="icon">🍎</span> Apple Music</a>` : ''}
     </div>`;
 
-  // ── HTML principal com o Embed da Suno ───────────────────────────
+  // ── HTML principal com recriação limpa do Embed da Suno ───────────
   document.getElementById('content').innerHTML = `
     <div class="hero">
       <div class="cover-wrap" id="cover-wrap">
@@ -407,10 +407,18 @@ function renderTrack(arcData, track) {
       </div>
     </div>
 
-    <!-- Player Incorporado Oficial da Suno -->
+    <!-- Player Incorporado Oficial da Suno (Recriado com o ID específico) -->
     <div class="player-section">
-      <div class="suno-embed-wrap">
-        <iframe src="https://suno.com/embed/${track.id}" width="100%" height="140" frameborder="0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <div class="suno-embed-wrap" id="suno-player-container">
+        <iframe src="https://suno.com/embed/${track.id}" 
+                width="100%" 
+                height="140" 
+                frameborder="0" 
+                allow="autoplay; encrypted-media; fullscreen" 
+                allowfullscreen 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
       </div>
     </div>
 
