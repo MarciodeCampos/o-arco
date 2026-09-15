@@ -82,7 +82,6 @@ html, body { min-height:100%; background:var(--bg); color:var(--text); font-fami
   background:var(--accent); opacity:0; filter:blur(20px);
   transition:opacity .4s;
 }
-.cover-wrap.playing .cover-glow { opacity:0.3; }
 
 .track-info { text-align:center; max-width:560px; }
 .track-genre {
@@ -104,43 +103,19 @@ html, body { min-height:100%; background:var(--bg); color:var(--text); font-fami
   border-radius:20px; background:var(--surface);
 }
 
-/* ── player controls ── */
+/* ── player section (Embed Suno) ── */
 .player-section {
-  display:flex; flex-direction:column; align-items:center;
-  gap:16px; padding:0 20px 32px;
+  width:100%; max-width:560px; margin:0 auto;
+  padding:0 20px 32px;
 }
-.progress-wrap {
-  display:flex; align-items:center; gap:10px;
-  width:100%; max-width:480px;
+.suno-embed-wrap {
+  width:100%;
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  background:var(--surface);
+  box-shadow:0 8px 30px rgba(0,0,0,0.5);
 }
-.time { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); width:36px; }
-.time:last-child { text-align:right; }
-.progress-bar {
-  flex:1; height:4px; background:var(--surface2);
-  border-radius:2px; cursor:pointer; position:relative;
-}
-.progress-fill {
-  height:100%; border-radius:2px; width:0%;
-  background:linear-gradient(to right, var(--accent2), var(--accent));
-  transition:width .2s linear;
-}
-.controls { display:flex; align-items:center; gap:16px; }
-.ctrl-btn {
-  background:none; border:1px solid var(--border); border-radius:50%;
-  color:var(--muted); font-size:18px; width:44px; height:44px;
-  display:flex; align-items:center; justify-content:center;
-  cursor:pointer; transition:all .2s;
-}
-.ctrl-btn:hover { border-color:var(--accent); color:var(--accent); }
-.ctrl-btn.primary {
-  width:56px; height:56px; font-size:22px;
-  border-color:var(--accent); color:var(--accent);
-  box-shadow:0 0 20px rgba(0,255,204,0.2);
-}
-.ctrl-btn.primary:hover { background:rgba(0,255,204,0.1); }
-.vol-row { display:flex; align-items:center; gap:10px; }
-.vol-row span { color:var(--muted); font-size:14px; }
-input[type=range] { accent-color:var(--accent); width:100px; }
 
 /* ── platforms section ── */
 .section {
@@ -163,6 +138,7 @@ input[type=range] { accent-color:var(--accent); width:100px; }
 }
 .platform-btn:hover { border-color:var(--accent); color:var(--accent); }
 .platform-btn .icon { font-size:16px; }
+
 /* Suno toggle — oculto por padrão */
 .suno-gate { position:relative; }
 .suno-hidden .suno-link-row { display:none; }
@@ -305,11 +281,7 @@ input[type=range] { accent-color:var(--accent); width:100px; }
   </div>
 </div>
 
-<audio id="audio" crossorigin="anonymous" preload="metadata"></audio>
-
 <script>
-const audio = document.getElementById('audio');
-let isPlaying = false;
 let currentArcData = null;
 let currentSongIdx = 0;
 const fmt = s => `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
@@ -359,9 +331,8 @@ function goToSong(idx) {
   currentSongIdx = idx;
   const s = songs[idx];
   history.pushState({}, '', `./track.html?arc=${arcNum}&id=${s.id}`);
-  audio.pause();
   renderTrack(currentArcData, s);
-  audio.play().catch(() => {});
+  
   // Update tracklist highlight
   document.querySelectorAll('.tl-item').forEach((el, i) => {
     el.classList.toggle('active', i === idx);
@@ -394,7 +365,6 @@ function renderTrack(arcData, track) {
 
   // ── Plataformas disponíveis ──────────────────────────────────────
   const platforms = track.platforms || {};
-  const hasSuno   = !!track.id;
   const sunoUrl   = `https://suno.com/song/${track.id}`;
 
   const platformsHtml = `
@@ -411,13 +381,12 @@ function renderTrack(arcData, track) {
           <button class="hide-btn" onclick="hideSuno()" title="Ocultar">✕</button>
         </div>
       </div>
-      <!-- Spotify — futuro -->
       ${platforms.spotify ? `<a class="platform-btn" href="${platforms.spotify}" target="_blank"><span class="icon">🎧</span> Spotify</a>` : ''}
       ${platforms.youtube ? `<a class="platform-btn" href="${platforms.youtube}" target="_blank"><span class="icon">▶</span> YouTube</a>` : ''}
       ${platforms.apple  ? `<a class="platform-btn" href="${platforms.apple}"   target="_blank"><span class="icon">🍎</span> Apple Music</a>` : ''}
     </div>`;
 
-  // ── HTML principal ───────────────────────────────────────────────
+  // ── HTML principal com o Embed da Suno ───────────────────────────
   document.getElementById('content').innerHTML = `
     <div class="hero">
       <div class="cover-wrap" id="cover-wrap">
@@ -438,22 +407,10 @@ function renderTrack(arcData, track) {
       </div>
     </div>
 
+    <!-- Player Incorporado Oficial da Suno -->
     <div class="player-section">
-      <div class="progress-wrap">
-        <span class="time" id="t-cur">0:00</span>
-        <div class="progress-bar" id="progress-bar">
-          <div class="progress-fill" id="progress-fill"></div>
-        </div>
-        <span class="time" id="t-dur">0:00</span>
-      </div>
-      <div class="controls">
-        <button class="ctrl-btn" id="btn-prev" title="Anterior" onclick="goToSong(currentSongIdx-1)">⏮</button>
-        <button class="ctrl-btn primary" id="btn-play" title="Play">▶</button>
-        <button class="ctrl-btn" id="btn-next" title="Próxima" onclick="goToSong(currentSongIdx+1)">⏭</button>
-      </div>
-      <div class="vol-row">
-        <span>🔊</span>
-        <input type="range" id="vol" min="0" max="1" step="0.02" value="0.85">
+      <div class="suno-embed-wrap">
+        <iframe src="https://suno.com/embed/${track.id}" width="100%" height="140" frameborder="0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
     </div>
 
@@ -500,34 +457,6 @@ function renderTrack(arcData, track) {
     </div>
   `;
 
-  // ── Audio ────────────────────────────────────────────────────────
-  audio.src = track.audio_url;
-  audio.volume = 0.85;
-  audio.load();
-
-  // ── Bind controls ────────────────────────────────────────────────
-  document.getElementById('btn-play').addEventListener('click', togglePlay);
-  document.getElementById('progress-bar').addEventListener('click', seek);
-  document.getElementById('vol').addEventListener('input', e => { audio.volume = e.target.value; });
-
-  audio.addEventListener('timeupdate', () => {
-    if (!audio.duration) return;
-    document.getElementById('progress-fill').style.width = (audio.currentTime / audio.duration * 100) + '%';
-    document.getElementById('t-cur').textContent = fmt(audio.currentTime);
-  });
-  audio.addEventListener('loadedmetadata', () => {
-    document.getElementById('t-dur').textContent = fmt(audio.duration);
-  });
-  audio.addEventListener('play',  () => setPlaying(true));
-  audio.addEventListener('pause', () => setPlaying(false));
-  audio.addEventListener('ended', () => {
-    setPlaying(false);
-    // Auto-avança para próxima
-    if (currentSongIdx < currentArcData.songs.length - 1) {
-      goToSong(currentSongIdx + 1);
-    }
-  });
-
   // ── Arc tabs — carrega index.json e monta janelas de navegação ───
   fetch('./catalog/index.json').then(r => r.json()).then(idx => {
     const tabsEl = document.getElementById('arc-tabs');
@@ -541,17 +470,8 @@ function renderTrack(arcData, track) {
 }
 
 // ── loadArcList — troca a tracklist para outro arco ───────────────
-let browsingArc = arcNum; // arco atualmente listado na tracklist
-
 async function loadArcList(num) {
-  browsingArc = num;
-  // Update tab highlight
-  document.querySelectorAll('.arc-tab').forEach(el => {
-    el.classList.toggle('active', el.textContent.includes(num === arcNum ? '✓' : '') );
-  });
-  // Rebind tabs active by re-querying
   document.querySelectorAll('.arc-tab').forEach((el, i) => {
-    // arc buttons are ordered same as index.arcs
     el.classList.toggle('active', (i + 1) === num);
   });
 
@@ -573,25 +493,6 @@ async function loadArcList(num) {
   } catch(e) {
     listEl.innerHTML = '<div style="padding:20px;color:#ff4466;font-size:11px">Erro ao carregar arco.</div>';
   }
-}
-
-
-// ── Playback ─────────────────────────────────────────────────────
-function togglePlay() {
-  if (!audio.src) return;
-  if (isPlaying) audio.pause(); else audio.play();
-}
-function setPlaying(state) {
-  isPlaying = state;
-  const btn = document.getElementById('btn-play');
-  if (btn) btn.textContent = state ? '⏸' : '▶';
-  const cw = document.getElementById('cover-wrap');
-  if (cw) cw.classList.toggle('playing', state);
-}
-function seek(e) {
-  if (!audio.duration) return;
-  const r = e.currentTarget.getBoundingClientRect();
-  audio.currentTime = ((e.clientX - r.left) / r.width) * audio.duration;
 }
 
 // ── Suno gate ────────────────────────────────────────────────────
