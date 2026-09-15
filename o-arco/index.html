@@ -82,28 +82,17 @@ html,body{height:100%;background:var(--ink);color:var(--text);font-family:'Inter
 #screen-player{position:relative;}
 #song-cover-bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:blur(40px) brightness(.25);z-index:0;}
 #screen-player .player-inner{position:relative;z-index:1;display:flex;flex-direction:column;height:100%;overflow:hidden;}
-#song-cover-img{width:min(260px,70vw);height:min(260px,70vw);border-radius:12px;object-fit:cover;box-shadow:0 16px 48px rgba(0,0,0,.7);margin:0 auto 20px;display:block;}
+#song-cover-img{width:min(220px,60vw);height:min(220px,60vw);border-radius:12px;object-fit:cover;box-shadow:0 16px 48px rgba(0,0,0,.7);margin:0 auto 12px;display:block;}
 .player-meta{text-align:center;padding:0 20px;flex-shrink:0;}
-#player-arc-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.3em;color:var(--gold);margin-bottom:6px;}
-#player-title{font-family:'Cinzel',serif;font-size:clamp(16px,3.5vw,24px);font-weight:700;color:#fff;line-height:1.2;}
-#player-ref{font-size:11px;color:var(--text-dim);margin-top:4px;}
-#player-caption{font-size:11px;color:var(--text-dim);margin-top:8px;line-height:1.6;max-width:500px;margin-left:auto;margin-right:auto;}
-.player-scroll{overflow-y:auto;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:16px 16px 0;}
-#ver-switcher{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:12px;}
+#player-arc-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.3em;color:var(--gold);margin-bottom:4px;}
+#player-title{font-family:'Cinzel',serif;font-size:clamp(15px,3vw,22px);font-weight:700;color:#fff;line-height:1.2;}
+#player-ref{font-size:11px;color:var(--text-dim);margin-top:2px;}
+#player-caption{font-size:11px;color:var(--text-dim);margin-top:6px;line-height:1.5;max-width:500px;margin-left:auto;margin-right:auto;}
+.player-scroll{overflow-y:auto;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:12px 16px 0;}
+#ver-switcher{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:10px;}
 .ver-btn{padding:4px 12px;border-radius:20px;border:1px solid var(--border);background:none;color:var(--text-dim);font-size:11px;cursor:pointer;transition:all .15s;}
 .ver-btn.active{background:var(--gold);color:var(--ink);border-color:var(--gold);}
-#audio-controls{padding:16px 20px;flex-shrink:0;}
-#progress-wrap{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
-.t-label{font-size:11px;color:var(--text-dim);width:36px;text-align:center;}
-#progress-bar{flex:1;height:4px;background:var(--surface2);border-radius:2px;cursor:pointer;position:relative;}
-#progress-fill{height:100%;background:var(--gold);border-radius:2px;width:0%;transition:width .2s linear;}
-.ctrl-row{display:flex;align-items:center;justify-content:center;gap:12px;}
-.ctrl-btn{background:none;border:none;color:var(--text-dim);font-size:20px;cursor:pointer;padding:8px;border-radius:8px;transition:color .2s;}
-.ctrl-btn:hover{color:var(--gold);}
-.ctrl-btn.primary{font-size:28px;color:var(--gold);}
-#vol-wrap{display:flex;align-items:center;gap:8px;justify-content:center;padding-bottom:8px;}
-#vol-icon{font-size:14px;color:var(--text-dim);}
-#vol-slider{width:100px;accent-color:var(--gold);}
+#audio-controls{padding:12px 20px 20px;flex-shrink:0;width:100%;max-width:640px;margin:0 auto;}
 
 /* LANG TOGGLE */
 .lang-toggle{display:flex;border:1px solid var(--border);border-radius:6px;overflow:hidden;}
@@ -195,64 +184,40 @@ html,body{height:100%;background:var(--ink);color:var(--text);font-family:'Inter
         <div id="ver-switcher"></div>
       </div>
       <div id="audio-controls">
-        <div id="progress-wrap">
-          <span class="t-label" id="t-cur">0:00</span>
-          <div id="progress-bar"><div id="progress-fill"></div></div>
-          <span class="t-label" id="t-end">0:00</span>
-        </div>
-        <div class="ctrl-row">
-          <button class="ctrl-btn" onclick="skip(-15)" title="-15s">↺15</button>
-          <button class="ctrl-btn" onclick="prevSong()" title="Anterior">⏮</button>
-          <button class="ctrl-btn primary" id="btn-play" onclick="togglePlay()">▶</button>
-          <button class="ctrl-btn" onclick="nextSong()" title="Próxima">⏭</button>
-          <button class="ctrl-btn" onclick="skip(15)" title="+15s">↻15</button>
-        </div>
-        <div id="vol-wrap">
-          <span id="vol-icon">🔊</span>
-          <input type="range" id="vol-slider" min="0" max="1" step="0.02" value="0.85">
-        </div>
+        <!-- O container onde o iframe da Suno será recriado de forma limpa -->
       </div>
     </div>
   </div>
 
 </div>
 
-<audio id="audio-el" preload="auto"></audio>
-
 <script>
 // ─── State ───────────────────────────────────────────────
-let arcsIndex = [];      // arcs.json — lightweight index
+let arcsIndex = [];       // arcs.json — lightweight index
 let currentArcData = null; // full arc data from arcXX.json
 let currentArcNum = 1;
-let currentSongIdx = 0;  // index in currentArcData.songs
+let currentSongIdx = 0;   // index in currentArcData.songs
 let currentVerIdx = 0;
-let isPlaying = false;
-let currentLang = 'pt';  // 'pt' or 'en'
+let currentLang = 'pt';   // 'pt' or 'en'
 
 // ─── Language toggle ─────────────────────────────────────
 function setLang(lang){
   currentLang = lang;
-  // update all toggle buttons
   ['arc','player'].forEach(ctx=>{
     const pt=document.getElementById('lang-pt-'+ctx);
     const en=document.getElementById('lang-en-'+ctx);
     if(pt&&en){pt.classList.toggle('active',lang==='pt');en.classList.toggle('active',lang==='en');}
   });
-  // re-render current views
   if(currentArcData) renderTracklist();
   if(document.getElementById('screen-player').classList.contains('active')) renderPlayer();
 }
 function getSong(song){
-  // returns {title, versions} respecting currentLang
   const hasEN = song.title_en && song.versions_en && song.versions_en.length>0;
   if(currentLang==='en' && hasEN) return {title:song.title_en, versions:song.versions_en};
   return {title:song.title, versions:song.versions};
 }
 
-const audio = document.getElementById('audio-el');
-
 // ─── Utils ───────────────────────────────────────────────
-function fmt(s){s=Math.floor(s||0);return `${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`;}
 function arcFile(n){return `arc${String(n).padStart(2,'0')}.json`;}
 
 // ─── Screen management ───────────────────────────────────
@@ -306,8 +271,6 @@ async function openArc(num){
 
 function renderTracklist(){
   const arc = currentArcData;
-  const arcMeta = arcsIndex.find(a=>a.num===arc.num)||{};
-
   document.getElementById('topbar-arc-name').textContent = arc.name;
   document.getElementById('topbar-arc-progress').textContent = `${arc.num}/10`;
   document.getElementById('arc-hero-img').src = arc.cover_image||'';
@@ -343,7 +306,7 @@ function navigateArc(dir){
   if(next>=1&&next<=10) openArc(next);
 }
 
-// ─── SCREEN 3: Player ────────────────────────────────────
+// ─── SCREEN 3: Player (Suno Embed) ───────────────────────
 function openSong(idx){
   currentSongIdx = idx;
   currentVerIdx = 0;
@@ -355,7 +318,6 @@ function renderPlayer(){
   const song = currentArcData.songs[currentSongIdx];
   const arc = currentArcData;
   const {title, versions} = getSong(song);
-  // clamp verIdx to valid range for current lang's versions
   if(currentVerIdx >= versions.length) currentVerIdx = 0;
   const ver = versions[currentVerIdx]||versions[0];
 
@@ -382,7 +344,8 @@ function renderPlayer(){
   document.getElementById('btn-prev-song').disabled = currentSongIdx<=0;
   document.getElementById('btn-next-song').disabled = currentSongIdx>=currentArcData.songs.length-1;
 
-  loadAudio(ver.audio_url);
+  // Recriação limpa do Embed Oficial da Suno utilizando o ID da versão específica
+  loadSunoEmbed(ver.id);
 }
 
 function switchVer(i){
@@ -390,23 +353,22 @@ function switchVer(i){
   renderPlayer();
 }
 
-function loadAudio(url){
-  audio.src=url;
-  audio.volume=parseFloat(document.getElementById('vol-slider').value)||0.85;
-  audio.play().then(()=>{isPlaying=true;updatePlayBtn();}).catch(()=>{isPlaying=false;updatePlayBtn();});
+function loadSunoEmbed(songId){
+  const controlsContainer = document.getElementById('audio-controls');
+  controlsContainer.innerHTML = `
+    <div style="width:100%; border-radius:12px; overflow:hidden; border:1px solid var(--border); background:var(--surface); box-shadow:0 8px 30px rgba(0,0,0,0.5);">
+      <iframe src="https://suno.com/embed/${songId}" 
+              width="100%" 
+              height="140" 
+              frameborder="0" 
+              allow="autoplay; encrypted-media; fullscreen" 
+              allowfullscreen 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  `;
 }
-
-function togglePlay(){
-  if(isPlaying){audio.pause();isPlaying=false;}
-  else{audio.play();isPlaying=true;}
-  updatePlayBtn();
-}
-
-function updatePlayBtn(){
-  document.getElementById('btn-play').textContent=isPlaying?'⏸':'▶';
-}
-
-function skip(s){audio.currentTime=Math.max(0,Math.min(audio.duration||0,audio.currentTime+s));}
 
 function prevSong(){
   if(currentSongIdx>0){currentSongIdx--;currentVerIdx=0;renderPlayer();}
@@ -417,28 +379,8 @@ function nextSong(){
 }
 
 function backToTracklist(){
-  audio.pause();isPlaying=false;
   showScreen('arc');
 }
-
-// ─── Audio events ─────────────────────────────────────────
-audio.addEventListener('timeupdate',()=>{
-  const d=audio.duration||0,c=audio.currentTime||0;
-  document.getElementById('progress-fill').style.width=d?(c/d*100)+'%':'0%';
-  document.getElementById('t-cur').textContent=fmt(c);
-  document.getElementById('t-end').textContent=fmt(d);
-});
-audio.addEventListener('ended',()=>{isPlaying=false;updatePlayBtn();nextSong();});
-audio.addEventListener('play',()=>{isPlaying=true;updatePlayBtn();});
-audio.addEventListener('pause',()=>{isPlaying=false;updatePlayBtn();});
-
-document.getElementById('progress-bar').addEventListener('click',e=>{
-  if(!audio.duration)return;
-  const r=e.currentTarget.getBoundingClientRect();
-  audio.currentTime=((e.clientX-r.left)/r.width)*audio.duration;
-});
-
-document.getElementById('vol-slider').addEventListener('input',e=>{audio.volume=parseFloat(e.target.value);});
 
 // ─── Hash routing ─────────────────────────────────────────
 function parseHash(){
