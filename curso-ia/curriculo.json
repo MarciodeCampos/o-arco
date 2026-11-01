@@ -105,18 +105,18 @@
       "slug": "modulo-05",
       "titulo": "MCP — Model Context Protocol",
       "horas": 28,
-      "status": "planejado",
+      "status": "pronto",
       "resumo": "O protocolo padrão para conectar modelos a ferramentas e dados. Criar e consumir servidores MCP em TypeScript e Python, expor serviços da empresa e fazer isso com segurança.",
       "unidades": [
-        "O problema que o MCP resolve e a arquitetura cliente/servidor",
-        "Primitivas: tools, resources, prompts; transportes stdio e HTTP",
-        "Criando um servidor MCP em TypeScript e em Python",
-        "Consumindo MCP em IDEs, agentes de código e na API",
-        "Expondo serviços internos (CRM, billing, suporte) via MCP",
-        "Autenticação (OAuth), escopos, rate limiting e auditoria",
-        "Riscos específicos: tool poisoning, prompt injection via ferramenta, excesso de permissões"
+        "O problema que o MCP resolve e a arquitetura (host, cliente, servidor, transportes)",
+        "As primitivas: ferramentas, recursos, prompts e anotações",
+        "Seu primeiro servidor MCP em Python (SDK 2.x)",
+        "Servidor MCP em TypeScript: o RAG vira serviço",
+        "Consumindo MCP: hosts prontos, Messages API e o seu agente",
+        "Expondo serviços internos: autenticação, limite de taxa, auditoria, OAuth",
+        "Ataques específicos de MCP: envenenamento, injeção via resultado, rug pull"
       ],
-      "projeto": "Servidor MCP de produção para um serviço real, com autenticação e testes",
+      "projeto": "A documentação do Módulo 4 como servidor MCP (stdio e HTTP), com autenticação, limite de taxa, auditoria, assistente cliente e 19 testes",
       "melhorias": [
         "Segurança de MCP com ameaças reais, não só WAF",
         "Implementação nas duas linguagens"

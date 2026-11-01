@@ -24,6 +24,7 @@ curso-ia/
 ├── modulo-02/index.html  aulas do módulo 2
 ├── modulo-03/index.html  aulas do módulo 3
 ├── modulo-04/index.html  aulas do módulo 4
+├── modulo-05/index.html  aulas do módulo 5
 └── codigo/
     ├── modulo-01/
     │   ├── python/       labs e projeto (NumPy + SDK anthropic)
@@ -38,9 +39,12 @@ curso-ia/
     │   ├── python/       labs: auditoria de dataset, avaliadores, LLM-juiz, ruído estatístico
     │   ├── dados/        dataset com problemas plantados, resumos rotulados por humanos
     │   └── projeto/      suíte de evals do extrator (TypeScript, com testes e exemplo de CI)
-    └── modulo-04/
-        ├── python/       labs: BM25 do zero, vetores e escala
-        └── projeto/      RAG com PGlite + pgvector, busca híbrida, citações e evals
+    ├── modulo-04/
+    │   ├── python/       labs: BM25 do zero, vetores e escala
+    │   └── projeto/      RAG com PGlite + pgvector, busca híbrida, citações e evals
+    └── modulo-05/
+        ├── python/       servidor e cliente MCP, testes, servidor envenenado e verificador
+        └── projeto/      o RAG do módulo 4 como servidor MCP (stdio e HTTP), com proteções
 ```
 
 ## Status
@@ -51,7 +55,8 @@ curso-ia/
 | 02 · APIs de LLM e Engenharia de Contexto | ✅ pronto |
 | 03 · Avaliação (Evals) e Testes | ✅ pronto |
 | 04 · RAG de Ponta a Ponta | ✅ pronto |
-| 05 – 15 | planejados (ver `curriculo.json`) |
+| 05 · MCP — Model Context Protocol | ✅ pronto |
+| 06 – 15 | planejados (ver `curriculo.json`) |
 
 ## Rodando os labs do Módulo 1
 
@@ -106,6 +111,19 @@ npm test                                   # 16 testes, offline (Postgres em mem
 npm run indexar                            # embedder local; use --embedder hash para offline
 npm run avaliar:busca                      # sem API
 npm run perguntar -- "Posso usar o purificador na varanda?"   # precisa de ANTHROPIC_API_KEY
+```
+
+## Rodando o Módulo 5
+
+```bash
+cd curso-ia/codigo/modulo-05/python
+pip install -r requirements.txt
+python cliente_loja.py                     # sem API
+python verificar_servidor.py servidor_envenenado.py
+
+cd ../projeto && npm install               # instala também o projeto do módulo 4
+npm test                                   # 19 testes, offline
+npm run servidor:stdio                     # precisa do índice do módulo 4 (npm run indexar lá)
 ```
 
 ## Como adicionar um módulo

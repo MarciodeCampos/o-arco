@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050508">
+<meta name="description" content="Módulo 5 — MCP (Model Context Protocol): arquitetura, primitivas, servidores em Python e TypeScript, clientes, autenticação, limites e segurança.">
+<title>Módulo 5 · MCP — Model Context Protocol — Engenharia de IA Aplicada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/curso.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="/">◈ TRIADIC.LIFE</a>
+  <span class="crumbs">/ <a href="../">Engenharia de IA</a> / Módulo 5</span>
+  <span class="spacer"></span>
+  <span class="progress-pill">0/9 aulas</span>
+</header>
+
+<div class="layout">
+
+  <aside class="toc">
+    <button class="toc-toggle" type="button">☰ Aulas do módulo</button>
+    <h2>Módulo 5</h2>
+    <nav>
+      <ol>
+        <li><a href="#inicio"><span class="chk"></span>Visão geral</a></li>
+        <li><a href="#aula-1"><span class="chk"></span>5.1 O problema e a arquitetura</a></li>
+        <li><a href="#aula-2"><span class="chk"></span>5.2 As primitivas</a></li>
+        <li><a href="#aula-3"><span class="chk"></span>5.3 Servidor em Python</a></li>
+        <li><a href="#aula-4"><span class="chk"></span>5.4 Servidor em TypeScript</a></li>
+        <li><a href="#aula-5"><span class="chk"></span>5.5 Consumindo MCP</a></li>
+        <li><a href="#aula-6"><span class="chk"></span>5.6 Expondo com segurança</a></li>
+        <li><a href="#aula-7"><span class="chk"></span>5.7 Ataques e defesas</a></li>
+        <li><a href="#projeto"><span class="chk"></span>Projeto do módulo</a></li>
+        <li><a href="#recursos"><span class="chk"></span>Recursos</a></li>
+      </ol>
+    </nav>
+  </aside>
+
+  <main class="content" data-modulo="modulo-05">
+
+    <!-- ============================================================ VISÃO GERAL -->
+    <section id="inicio">
+      <header>
+        <div class="eyebrow">Módulo 05 · 28h estimadas</div>
+        <h1>MCP — Model Context Protocol</h1>
+      </header>
+      <p class="lede">
+        No Módulo 2 você deu ferramentas a um modelo escrevendo código específico para a sua aplicação.
+        O MCP padroniza isso: você escreve o servidor uma vez, e qualquer cliente compatível (Claude Code,
+        Claude Desktop, IDEs, agentes de outros times) passa a usar suas ferramentas e dados. Neste
+        módulo, o RAG do Módulo 4 vira um servidor MCP pronto para a rede, com autenticação e auditoria.
+      </p>
+      <div class="meta">
+        <span class="tag">7 aulas</span>
+        <span class="tag">3 labs + projeto</span>
+        <span class="tag">SDKs oficiais: Python 2.x e TypeScript</span>
+        <span class="tag">Pré-requisitos: Módulos 2 e 4</span>
+      </div>
+
+      <h3>Ao final do módulo você vai</h3>
+      <ul>
+        <li>Explicar a arquitetura do MCP e quando ele vale mais que ferramentas próprias.</li>
+        <li>Criar servidores com ferramentas, recursos e prompts em Python e TypeScript.</li>
+        <li>Testar servidores MCP em memória, sem rede e sem chave de API.</li>
+        <li>Conectar servidores a clientes prontos e ao seu próprio agente.</li>
+        <li>Expor um servidor pela rede com autenticação, limite de taxa e auditoria.</li>
+        <li>Reconhecer e mitigar envenenamento de ferramentas e injeção via resultados.</li>
+      </ul>
+
+      <h3>Preparando o ambiente</h3>
+<pre data-lang="bash"><code>cd o-arco/curso-ia/codigo/modulo-05
+
+pip install -r python/requirements.txt     # SDK MCP para Python (2.x)
+cd projeto &amp;&amp; npm install                  # instala também o projeto do Módulo 4
+cd ../../modulo-04/projeto &amp;&amp; npm run indexar   # o servidor MCP usa este índice</code></pre>
+      <div class="callout warn">
+        <b>Versões dos SDKs</b>
+        O SDK Python 2.x renomeou <code>FastMCP</code> para <code>MCPServer</code> e passou a usar nomes em
+        snake_case nos objetos (<code>input_schema</code>, <code>destructive_hint</code>). Muitos tutoriais na
+        internet ainda mostram a versão 1.x. Os labs fixam <code>mcp&gt;=2.3,&lt;3</code>.
+      </div>
+    </section>
+
+    <!-- ============================================================ AULA 1 -->
+    <section class="lesson" id="aula-1">
+      <h2>5.1 O problema que o MCP resolve e a arquitetura</h2>
+      <div class="lesson-meta">Leitura · 40 min</div>
+
+      <p>
+        Sem um padrão, cada combinação de aplicação de IA com sistema externo exige uma integração própria:
+        5 assistentes e 10 sistemas são 50 integrações, cada uma com seu formato de ferramenta. O MCP é um
+        protocolo aberto (lançado pela Anthropic em 2024 e adotado por boa parte do mercado) que transforma
+        isso em 5 clientes + 10 servidores.
+      </p>
+      <div class="flow">
+        <span><b>Host</b>: a aplicação (Claude Code, IDE, seu agente)</span><i>→</i>
+        <span><b>Cliente MCP</b>: uma conexão por servidor</span><i>↔</i>
+        <span><b>Servidor MCP</b>: expõe ferramentas, recursos e prompts</span><i>→</i>
+        <span>Seu sistema: banco, API, arquivos</span>
+      </div>
+      <ul>
+        <li><strong>Mensagens:</strong> JSON-RPC 2.0. O cliente faz <code>initialize</code>, descobre o que existe (<code>tools/list</code>, <code>resources/list</code>…) e chama (<code>tools/call</code>).</li>
+        <li><strong>Transporte stdio:</strong> o host inicia o servidor como subprocesso e conversa por stdin/stdout. Para ferramentas locais.</li>
+        <li><strong>Transporte Streamable HTTP:</strong> o servidor é um serviço web com um endpoint (<code>/mcp</code>). Para servidores remotos e compartilhados.</li>
+      </ul>
+
+      <h3>MCP ou ferramentas próprias?</h3>
+      <table>
+        <tr><th>Situação</th><th>Recomendação</th></tr>
+        <tr><td>Uma aplicação, ferramentas que só ela usa</td><td>Ferramentas direto na API (Módulo 2): menos peças</td></tr>
+        <tr><td>Quer usar no Claude Code, Desktop ou IDE</td><td>MCP</td></tr>
+        <tr><td>Vários agentes e times consumindo o mesmo sistema</td><td>MCP: um servidor, muitos clientes</td></tr>
+        <tr><td>Expor um produto para agentes de clientes externos</td><td>MCP remoto com OAuth</td></tr>
+      </table>
+
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Seu time quer que o Claude Code, o agente de suporte e o bot do Slack consultem o mesmo CRM. A melhor abordagem?</p>
+          <button type="button">Escrever a integração três vezes, uma por aplicação</button>
+          <button type="button" data-certa>Um servidor MCP do CRM, consumido pelos três</button>
+          <button type="button">Dar acesso direto ao banco do CRM aos três</button>
+          <p class="why">É o caso típico do MCP: uma integração, vários consumidores, e um ponto único para autenticação e auditoria.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ AULA 2 -->
+    <section class="lesson" id="aula-2">
+      <h2>5.2 As primitivas: ferramentas, recursos e prompts</h2>
+      <div class="lesson-meta">Leitura · 1h</div>
+
+      <table>
+        <tr><th>Primitiva</th><th>Quem decide usar</th><th>Para quê</th><th>Exemplo</th></tr>
+        <tr><td><strong>Ferramenta</strong> (tool)</td><td>O <em>modelo</em></td><td>Ações e consultas</td><td><code>buscar_documentacao</code>, <code>cancelar_pedido</code></td></tr>
+        <tr><td><strong>Recurso</strong> (resource)</td><td>A <em>aplicação</em> (ou o usuário)</td><td>Dados para pôr no contexto, identificados por URI</td><td><code>docs://entregas</code></td></tr>
+        <tr><td><strong>Prompt</strong></td><td>O <em>usuário</em></td><td>Modelos de mensagem reutilizáveis</td><td>"Atender cliente", que aparece como comando no host</td></tr>
+      </table>
+
+      <h3>Anotações de ferramentas</h3>
+      <p>
+        Ferramentas podem declarar dicas para o cliente: <code>readOnlyHint</code> (só lê),
+        <code>destructiveHint</code> (pode destruir algo), <code>idempotentHint</code> (repetir é seguro),
+        <code>openWorldHint</code> (fala com o mundo externo). Clientes usam isso para pedir confirmação
+        antes de ações perigosas. São <strong>dicas</strong>: um servidor malicioso pode mentir, então elas
+        nunca substituem as permissões no servidor.
+      </p>
+      <h3>Outras capacidades do protocolo</h3>
+      <ul>
+        <li><strong>Saída estruturada</strong> (<code>outputSchema</code> + <code>structuredContent</code>): o resultado vem como texto para o modelo e como JSON tipado para o código.</li>
+        <li><strong>Elicitation:</strong> o servidor pede um dado ao usuário no meio da operação ("qual dos 3 clientes chamados João?").</li>
+        <li><strong>Sampling:</strong> o servidor pede ao cliente que faça uma chamada ao LLM em seu nome, sem ter a própria chave.</li>
+        <li><strong>Notificações de progresso e logs</strong>, para operações longas.</li>
+      </ul>
+
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Você quer que o usuário escolha "anexar o contrato do cliente X" ao contexto antes de perguntar. Qual primitiva?</p>
+          <button type="button">Ferramenta</button>
+          <button type="button" data-certa>Recurso</button>
+          <button type="button">Prompt</button>
+          <p class="why">Recursos são dados que a aplicação ou o usuário colocam no contexto. Ferramentas são acionadas pelo modelo.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ AULA 3 -->
+    <section class="lesson" id="aula-3">
+      <h2>5.3 Seu primeiro servidor MCP, em Python</h2>
+      <div class="lesson-meta">Lab · 3h</div>
+
+      <p>As ferramentas da loja do Módulo 2, agora como servidor MCP:</p>
+<pre data-lang="python"><code>from mcp.server import MCPServer
+from mcp.server.mcpserver.exceptions import ToolError
+from mcp.types import ToolAnnotations
+
+loja = MCPServer(name="loja-exemplo")
+
+@loja.tool(annotations=ToolAnnotations(read_only_hint=True))
+def calcular_frete(cep: str, peso_kg: float) -> dict:
+    """Calcula valor (em reais) e prazo (em dias úteis) de frete para um CEP e um peso em kg."""
+    digitos = "".join(c for c in cep if c.isdigit())
+    if len(digitos) != 8:
+        raise ToolError("CEP deve ter 8 dígitos")   # erro previsto: a mensagem chega ao modelo
+    ...
+
+@loja.resource("loja://politicas/trocas", mime_type="text/markdown")
+def politica_de_trocas() -&gt; str: ...
+
+@loja.prompt(title="Responder reclamação")
+def responder_reclamacao(numero_pedido: str, reclamacao: str) -&gt; str: ...
+
+loja.run()   # stdio</code></pre>
+      <p>
+        A docstring vira a descrição que o modelo lê, e os tipos viram o JSON Schema dos parâmetros.
+        Repare no <code>ToolError</code>: erros <em>previstos</em> chegam ao cliente com a mensagem, para o
+        modelo se corrigir. Qualquer outra exceção vira uma mensagem genérica, para não vazar detalhes
+        internos (caminhos, SQL, stack traces).
+      </p>
+
+      <div class="exercise">
+        <h4>LAB 5.3 — Servidor, cliente e testes</h4>
+<pre data-lang="bash"><code>cd python
+python cliente_loja.py          # inicia o servidor por stdio e explora tudo
+python test_servidor_loja.py    # testa o servidor em memória
+npx @modelcontextprotocol/inspector python servidor_loja.py   # interface web para explorar</code></pre>
+<pre data-lang="saída"><code>FERRAMENTAS
+  • consultar_pedido
+    Busca um pedido pelo número. Devolve cliente, quantidade de itens, peso total em kg e status.
+  • calcular_frete
+  • cancelar_pedido  ⚠ destrutiva
+RECURSOS
+  • loja://politicas/trocas  (text/markdown)
+  • loja://pedidos/{numero}  (modelo)
+CHAMADAS
+  consultar_pedido(4821) → {"cliente": "Ana Souza", "itens": 3, "peso_kg": 2.4, "status": "separando"}
+  calcular_frete(...)    → {"regiao": "MG", "valor_reais": 44.6, "prazo_dias": 6}
+  consultar_pedido(9999) → erro=True: Error executing tool consultar_pedido: Pedido 9999 não encontrado</code></pre>
+        <ol>
+          <li>Troque um <code>ToolError</code> por <code>ValueError</code> e rode o cliente. O que chega ao modelo agora?</li>
+          <li>Adicione a ferramenta <code>rastrear_pedido</code> e um teste para ela.</li>
+          <li>Abra o Inspector e chame o prompt <code>responder_reclamacao</code>. Onde ele apareceria num host como o Claude Desktop?</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============================================================ AULA 4 -->
+    <section class="lesson" id="aula-4">
+      <h2>5.4 Servidor MCP em TypeScript: o RAG vira serviço</h2>
+      <div class="lesson-meta">Leitura + prática · 4h</div>
+
+      <p>
+        No projeto, o RAG do Módulo 4 ganha uma porta MCP sem que uma linha dele seja reescrita. O
+        servidor expõe três ferramentas, um modelo de recurso e um prompt:
+      </p>
+<pre data-lang="typescript"><code>servidor.registerTool(
+  "buscar_documentacao",
+  {
+    description: "Busca trechos da documentação da Brisa relevantes para uma pergunta...",
+    inputSchema: {
+      pergunta: z.string().min(3).describe("A dúvida do cliente"),
+      k: z.number().int().min(1).max(10).default(5),
+    },
+    outputSchema: { resultados: z.array(z.object({ id: z.string(), texto: z.string(), /* ... */ })) },
+    annotations: { readOnlyHint: true },
+  },
+  async ({ pergunta, k }) =&gt; {
+    const achados = await buscar(indice.banco, indice.embedder, pergunta, "hibrida", k);
+    return {
+      content: [{ type: "text", text: /* trechos com [id] */ }],   // para o modelo
+      structuredContent: { resultados: /* ... */ },                // para código
+    };
+  },
+);
+
+servidor.registerResource("documento", new ResourceTemplate("docs://{documento}", { list: ... }), ...);
+servidor.registerPrompt("atendimento", { argsSchema: { pergunta: z.string() } }, ...);</code></pre>
+      <h3>Boas práticas de design de servidor</h3>
+      <ul>
+        <li><strong>Ferramentas no nível da tarefa, não da tabela.</strong> <code>buscar_documentacao</code> é melhor que <code>select_from_trechos</code>. O modelo pensa em tarefas.</li>
+        <li><strong>Poucas ferramentas, bem descritas.</strong> Cada ferramenta ocupa contexto e compete pela escolha do modelo.</li>
+        <li><strong>Limites nos parâmetros</strong> (<code>max(10)</code>): o schema é a primeira barreira contra uso abusivo.</li>
+        <li><strong>Erros que ensinam:</strong> "Seção entregas#prazo não existe. Ids parecidos: entregas#prazos-de-entrega" permite ao modelo se corrigir sozinho.</li>
+        <li><strong>Resultados enxutos:</strong> devolva o necessário. 10 mil linhas de JSON poluem o contexto (Módulo 2, aula 2.3).</li>
+        <li><strong>No stdio, nunca escreva no stdout.</strong> Ele é o canal do protocolo; um <code>console.log</code> corrompe a comunicação. Use <code>console.error</code>.</li>
+      </ul>
+      <h3>Testando em memória</h3>
+<pre data-lang="typescript"><code>const [ladoCliente, ladoServidor] = InMemoryTransport.createLinkedPair();
+await criarServidor(indice).connect(ladoServidor);
+const cliente = new Client({ name: "teste", version: "0" });
+await cliente.connect(ladoCliente);
+
+const r = await cliente.callTool({ name: "ler_secao", arguments: { id: "entregas#prazo" } });
+assert.equal(r.isError, true);</code></pre>
+    </section>
+
+    <!-- ============================================================ AULA 5 -->
+    <section class="lesson" id="aula-5">
+      <h2>5.5 Consumindo MCP: hosts prontos, a API e o seu agente</h2>
+      <div class="lesson-meta">Leitura + prática · 3h</div>
+
+      <h3>Em hosts prontos</h3>
+<pre data-lang="bash"><code># Claude Code, servidor local (stdio)
+claude mcp add documentacao-brisa -- npx tsx /caminho/modulo-05/projeto/src/stdio.ts
+
+# Claude Code, servidor remoto (HTTP) com token
+claude mcp add --transport http documentacao-brisa http://localhost:3333/mcp \
+  --header "Authorization: Bearer $TOKEN"</code></pre>
+<pre data-lang="json (Claude Desktop)"><code>{
+  "mcpServers": {
+    "documentacao-brisa": {
+      "command": "npx",
+      "args": ["tsx", "/caminho/modulo-05/projeto/src/stdio.ts"]
+    }
+  }
+}</code></pre>
+      <p>A sintaxe exata muda entre versões: confira a documentação do host que você usa.</p>
+
+      <h3>Pela Messages API (servidor remoto)</h3>
+      <p>
+        Se o servidor estiver acessível pela internet, a própria API pode se conectar a ele, sem loop de
+        ferramentas no seu código:
+      </p>
+<pre data-lang="python"><code>client.beta.messages.create(
+    model="claude-opus-5-5", max_tokens=4000,
+    betas=["mcp-client-2025-11-20"],
+    mcp_servers=[{"type": "url", "url": "https://mcp.suaempresa.com/mcp",
+                  "name": "docs", "authorization_token": TOKEN}],
+    tools=[{"type": "mcp_toolset", "mcp_server_name": "docs"}],
+    messages=[{"role": "user", "content": "Qual o prazo para o interior de MG?"}],
+)</code></pre>
+
+      <h3>No seu próprio agente</h3>
+      <p>
+        O <code>src/assistente.ts</code> do projeto inicia o servidor por stdio, lista as ferramentas,
+        converte cada uma para o formato da API e faz o loop de tool calling do Módulo 2, mandando cada
+        chamada para o servidor MCP. O assistente não sabe nada de RAG, só de protocolo: trocar o servidor
+        por outro não muda uma linha dele.
+      </p>
+<pre data-lang="typescript"><code>const { tools } = await mcp.listTools();
+const ferramentas = tools.map((f) =&gt; ({ name: f.name, description: f.description, input_schema: f.inputSchema }));
+// ... loop: quando o modelo pede uma ferramenta:
+const r = await mcp.callTool({ name: bloco.name, arguments: bloco.input });</code></pre>
+
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Para o conector MCP da Messages API funcionar com o seu servidor, o servidor precisa…</p>
+          <button type="button">Rodar por stdio na sua máquina</button>
+          <button type="button" data-certa>Estar acessível por HTTP pela internet, com autenticação</button>
+          <button type="button">Ser escrito em Python</button>
+          <p class="why">Quem se conecta é a infraestrutura do provedor, então o servidor precisa ser remoto. Para servidores locais, o seu código faz a ponte (como o assistente do projeto).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ AULA 6 -->
+    <section class="lesson" id="aula-6">
+      <h2>5.6 Expondo serviços internos com segurança</h2>
+      <div class="lesson-meta">Leitura + prática · 4h</div>
+
+      <p>
+        Um servidor MCP na rede é uma API, e quem a chama é um agente que pode entrar em loop, ser
+        manipulado ou simplesmente errar. O <code>src/http.ts</code> do projeto aplica as proteções em
+        camadas, nesta ordem:
+      </p>
+      <ol>
+        <li><strong>Escuta só em localhost por padrão.</strong> Expor para a rede é uma decisão explícita.</li>
+        <li><strong>Autenticação antes de qualquer trabalho:</strong> token no cabeçalho <code>Authorization: Bearer</code>, comparado em tempo constante e guardado só como hash.</li>
+        <li><strong>Limite de taxa por cliente</strong> (balde de fichas): um agente em loop recebe 429 com <code>Retry-After</code>, em vez de derrubar o serviço ou estourar o orçamento.</li>
+        <li><strong>Limite de tamanho do corpo</strong> (64 KB).</li>
+        <li><strong>Modo sem sessão</strong> (stateless): um servidor novo por requisição, sem estado entre clientes, fácil de escalar horizontalmente.</li>
+        <li><strong>Identidade propagada:</strong> o id do cliente chega às ferramentas (<code>extra.authInfo</code>), o que permite filtrar dados por cliente.</li>
+        <li><strong>Auditoria</strong> em JSON Lines: quem, qual ferramenta, quais argumentos, sucesso ou falha, quanto tempo.</li>
+      </ol>
+<pre data-lang="bash"><code>MCP_TOKENS="$(openssl rand -hex 24):time-suporte" npm run servidor:http
+curl -X POST localhost:3333/mcp           # → 401 Não autorizado</code></pre>
+      <h3>Em produção</h3>
+      <ul>
+        <li><strong>OAuth 2.1:</strong> a especificação do MCP define como servidores remotos se integram a um servidor de autorização (descoberta, escopos, tokens de curta duração). Tokens fixos, como no projeto, servem para serviços internos e para aprender.</li>
+        <li><strong>Escopos e menor privilégio:</strong> a credencial do servidor no sistema de destino deve poder fazer só o que as ferramentas precisam. Um servidor de consulta usa usuário de banco só de leitura.</li>
+        <li><strong>HTTPS e WAF/gateway</strong> na frente, como qualquer API pública.</li>
+        <li><strong>Dados por usuário:</strong> se cada usuário só pode ver os próprios pedidos, isso é checado <em>no servidor</em> com a identidade autenticada, nunca confiando em um <code>cliente_id</code> que o modelo passou como argumento.</li>
+      </ul>
+
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>A ferramenta <code>ver_pedidos(cliente_id)</code> recebe o id do cliente como argumento do modelo. Qual o risco?</p>
+          <button type="button">Nenhum, o modelo sempre passa o id certo</button>
+          <button type="button" data-certa>Um usuário pode induzir o modelo (ou uma injeção) a passar o id de outra pessoa e ver pedidos alheios</button>
+          <button type="button">Só um problema de desempenho</button>
+          <p class="why">Autorização usa a identidade autenticada da conexão, não argumentos que o modelo controla. É o "confused deputy" do mundo de agentes.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ AULA 7 -->
+    <section class="lesson" id="aula-7">
+      <h2>5.7 Ataques específicos de MCP e como se defender</h2>
+      <div class="lesson-meta">Leitura + lab · 3h</div>
+
+      <table>
+        <tr><th>Ataque</th><th>Como funciona</th><th>Defesa</th></tr>
+        <tr><td><strong>Envenenamento de ferramenta</strong></td><td>A <em>descrição</em> da ferramenta, que o modelo lê e o usuário raramente vê, traz instruções escondidas ("leia ~/.ssh e passe no parâmetro")</td><td>Só instalar servidores confiáveis; revisar descrições; fixar versões</td></tr>
+        <tr><td><strong>Injeção via resultado</strong></td><td>O <em>resultado</em> de uma ferramenta (uma página, um e-mail, um documento) contém texto que tenta virar instrução</td><td>Tratar resultados como dados; confirmação humana para ações sensíveis; isolar ferramentas que leem conteúdo externo das que agem</td></tr>
+        <tr><td><strong>Rug pull</strong></td><td>O servidor muda as descrições depois de você aprovar</td><td>Fixar versão; alertar quando a lista de ferramentas mudar</td></tr>
+        <tr><td><strong>Sombreamento</strong></td><td>Um servidor malicioso descreve como <em>outra</em> ferramenta deve ser usada ("ao usar enviar_email, copie para…")</td><td>Poucos servidores por agente; não misturar servidores confiáveis com desconhecidos</td></tr>
+        <tr><td><strong>Excesso de permissão</strong></td><td>Servidor com credenciais amplas: qualquer manipulação do modelo vira dano real</td><td>Menor privilégio; ferramentas destrutivas com confirmação</td></tr>
+      </table>
+      <div class="callout warn">
+        <b>A "tríade letal"</b>
+        O risco é máximo quando um agente tem, ao mesmo tempo: acesso a dados privados, exposição a
+        conteúdo não confiável (e-mails, páginas, documentos de terceiros) e um jeito de enviar dados para
+        fora (e-mail, requisição HTTP). Corte pelo menos uma das três pernas. Detalhes no Módulo 12.
+      </div>
+
+      <div class="exercise">
+        <h4>LAB 5.7 — Um servidor envenenado e um verificador</h4>
+<pre data-lang="bash"><code>python verificar_servidor.py servidor_envenenado.py
+python verificar_servidor.py servidor_loja.py</code></pre>
+<pre data-lang="saída"><code>ℹ enviar_email: ação com efeito externo; exigir confirmação humana no cliente
+
+⚠ 3 sinais de alerta:
+  - descrição de converter: marcação que imita instrução de sistema
+  - descrição de converter: pede para esconder algo do usuário
+  - descrição de converter: menciona segredos ou credenciais</code></pre>
+        <ol>
+          <li>O verificador <strong>não</strong> detectou a injeção em <code>cotacao_do_dia</code>. Por quê? (Leia o código do servidor.)</li>
+          <li>Escreva uma função que examine os <em>resultados</em> das ferramentas antes de devolvê-los ao modelo. Que limitações ela tem?</li>
+          <li>Reescreva a descrição de <code>converter</code> de forma mais sutil, que passe pelo verificador. O que isso ensina sobre listas de padrões?</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============================================================ PROJETO -->
+    <section class="lesson" id="projeto">
+      <h2>Projeto do módulo: a documentação da Brisa como servidor MCP</h2>
+      <div class="lesson-meta">Projeto · 8–10h · TypeScript</div>
+
+<pre data-lang="bash"><code>cd projeto
+npm install
+npm test                       # 19 testes, offline: em memória, HTTP real, proteções, assistente com API falsa
+
+npm run servidor:stdio         # para Claude Code, Desktop, IDEs
+npm run inspetor               # explorar no MCP Inspector
+MCP_TOKENS="$(openssl rand -hex 24):eu" npm run servidor:http
+npm run assistente -- "Posso pausar a assinatura durante uma viagem?"</code></pre>
+
+      <h3>Arquitetura</h3>
+      <table>
+        <tr><th>Arquivo</th><th>Responsabilidade</th></tr>
+        <tr><td><code>src/indice.ts</code></td><td>Abre o índice do Módulo 4 (ou cria um em memória para testes)</td></tr>
+        <tr><td><code>src/servidor.ts</code></td><td>O servidor: 3 ferramentas, recurso <code>docs://{documento}</code>, prompt <code>atendimento</code>, auditoria por chamada</td></tr>
+        <tr><td><code>src/stdio.ts</code></td><td>Transporte local</td></tr>
+        <tr><td><code>src/http.ts</code></td><td>Transporte HTTP sem sessão, com autenticação, limite de taxa, limite de corpo e auditoria</td></tr>
+        <tr><td><code>src/protecoes.ts</code></td><td>Tokens com hash e comparação em tempo constante, balde de fichas, log JSONL</td></tr>
+        <tr><td><code>src/assistente.ts</code></td><td>Agente que usa o servidor MCP como fonte de ferramentas</td></tr>
+      </table>
+
+      <h3>Entregáveis</h3>
+      <ol>
+        <li>Conecte o servidor ao Claude Code (ou outro host) e faça 5 perguntas reais. Registre quais ferramentas o modelo escolheu.</li>
+        <li>Adicione escopos: um token com <code>docs:ler</code> e outro com <code>docs:admin</code>, e uma ferramenta <code>reindexar</code> disponível só para o segundo.</li>
+        <li>Adicione uma ferramenta que exige confirmação humana (por exemplo, <code>abrir_chamado_suporte</code>, que usa elicitation ou devolve um pedido de confirmação).</li>
+        <li>Rode o <code>verificar_servidor.py</code> adaptado contra o seu servidor e corrija o que aparecer.</li>
+        <li>Escreva um README de segurança: o que o servidor pode fazer, com que credenciais, o que é auditado e como revogar um token.</li>
+      </ol>
+      <h3>Critérios de avaliação</h3>
+      <table>
+        <tr><th>Critério</th><th>Peso</th></tr>
+        <tr><td>Servidor funcionando num host real</td><td>20%</td></tr>
+        <tr><td>Escopos aplicados no servidor, com testes</td><td>25%</td></tr>
+        <tr><td>Fluxo com confirmação humana</td><td>20%</td></tr>
+        <tr><td>Verificação de segurança e correções</td><td>15%</td></tr>
+        <tr><td>README de segurança</td><td>20%</td></tr>
+      </table>
+    </section>
+
+    <!-- ============================================================ RECURSOS -->
+    <section class="lesson" id="recursos">
+      <h2>Recursos para aprofundar</h2>
+      <div class="lesson-meta">Todos gratuitos</div>
+      <ul class="resources">
+        <li><a href="https://modelcontextprotocol.io" target="_blank" rel="noopener">modelcontextprotocol.io</a> <small>· especificação, conceitos e lista de SDKs</small></li>
+        <li><a href="https://github.com/modelcontextprotocol/typescript-sdk" target="_blank" rel="noopener">SDK TypeScript</a> e <a href="https://github.com/modelcontextprotocol/python-sdk" target="_blank" rel="noopener">SDK Python</a> <small>· exemplos oficiais e guia de migração da v2 do Python</small></li>
+        <li><a href="https://github.com/modelcontextprotocol/inspector" target="_blank" rel="noopener">MCP Inspector</a> <small>· ferramenta visual para testar servidores</small></li>
+        <li><a href="https://github.com/modelcontextprotocol/servers" target="_blank" rel="noopener">Servidores de referência</a> <small>· implementações para estudar</small></li>
+        <li><a href="https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/" target="_blank" rel="noopener">Simon Willison — The lethal trifecta</a> <small>· o modelo mental de risco para agentes com ferramentas</small></li>
+      </ul>
+
+      <nav class="pager">
+        <a href="../modulo-04/"><small>← Módulo anterior</small>4 · RAG de Ponta a Ponta</a>
+        <a class="next" href="../"><small>Próximo módulo (em produção)</small>6 · Agentes de IA</a>
+      </nav>
+    </section>
+
+  </main>
+</div>
+
+<footer class="foot">
+  <a href="/">triadic.life</a> · <a href="../">Engenharia de IA Aplicada</a> · <a href="https://github.com/MarciodeCampos/o-arco/tree/main/curso-ia/codigo/modulo-05" target="_blank" rel="noopener">código do módulo</a>
+</footer>
+
+<script src="../assets/curso.js"></script>
+</body>
+</html>
