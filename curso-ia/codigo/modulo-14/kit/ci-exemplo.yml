@@ -1,0 +1,31 @@
+# Copie para .github/workflows/ci.yml no SEU projeto.
+# Roda testes (sem chave), o verificador do curso e, em PRs, as evals com limiar.
+name: ci
+on: [push, pull_request]
+jobs:
+  testes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm ci && npm test
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Verificador do Projeto Integrador
+        run: |
+          curl -fsSL -o verificar_projeto.py \
+            https://raw.githubusercontent.com/MarciodeCampos/o-arco/main/curso-ia/codigo/modulo-14/kit/verificar_projeto.py
+          python verificar_projeto.py .
+  evals:
+    if: github.event_name == 'pull_request'
+    needs: testes
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm ci
+      - name: Evals (falha abaixo do limiar)
+        env: { ANTHROPIC_API_KEY: "${{ secrets.ANTHROPIC_API_KEY }}" }
+        run: npm run evals -- --limiar 0.85

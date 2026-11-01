@@ -304,7 +304,7 @@
       "slug": "modulo-14",
       "titulo": "Projeto Integrador: Micro-SaaS com IA",
       "horas": 40,
-      "status": "planejado",
+      "status": "pronto",
       "resumo": "Do problema ao deploy: um Micro-SaaS com RAG, agente, MCP, evals, segurança e CI/CD, com entregas parciais e defesa técnica.",
       "unidades": [
         "Ideação, proposta de valor e arquitetura",

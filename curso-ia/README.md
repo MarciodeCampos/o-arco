@@ -33,6 +33,7 @@ curso-ia/
 ├── modulo-11/index.html  aulas do módulo 11
 ├── modulo-12/index.html  aulas do módulo 12
 ├── modulo-13/index.html  aulas do módulo 13
+├── modulo-14/index.html  aulas do módulo 14
 └── codigo/
     ├── modulo-01/
     │   ├── python/       labs e projeto (NumPy + SDK anthropic)
@@ -78,9 +79,11 @@ curso-ia/
     │   ├── python/       labs: injeção indireta numa página, ficha do sistema de IA (LGPD/AI Act)
     │   ├── dados/        página envenenada e questionário de governança
     │   └── projeto/      guardrails (PII com validação, saída, tríade letal) e red team automatizado
-    └── modulo-13/
-        ├── python/       labs: reunião→tarefas com citação verificada, RICE com sensibilidade, previsão Monte Carlo
-        └── dados/        transcrição de reunião, backlog e histórico de vazão do time
+    ├── modulo-13/
+    │   ├── python/       labs: reunião→tarefas com citação verificada, RICE com sensibilidade, previsão Monte Carlo
+    │   └── dados/        transcrição de reunião, backlog e histórico de vazão do time
+    └── modulo-14/
+        └── kit/          verificador de entrega, modelos de README e arquitetura, checklist de produção, CI
 ```
 
 ## Status
@@ -100,7 +103,8 @@ curso-ia/
 | 11 · Modelos Abertos, Fine-Tuning e Destilação | ✅ pronto |
 | 12 · Segurança, Privacidade e Governança | ✅ pronto |
 | 13 · IA para Produto e Gestão | ✅ pronto |
-| 14 – 15 | planejados (ver `curriculo.json`) |
+| 14 · Projeto Integrador | ✅ pronto |
+| 15 – 15 | planejados (ver `curriculo.json`) |
 
 ## Rodando os labs do Módulo 1
 
