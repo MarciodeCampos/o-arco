@@ -241,18 +241,18 @@
       "slug": "modulo-11",
       "titulo": "Modelos Abertos, Fine-Tuning e Destilação",
       "horas": 32,
-      "status": "planejado",
+      "status": "pronto",
       "resumo": "Quando ajustar um modelo e quando não. Modelos abertos rodando local, preparação de dados, LoRA/QLoRA em Python, destilação de um modelo grande para um pequeno e avaliação.",
       "unidades": [
-        "Framework de decisão: prompt → RAG → fine-tuning → treinar do zero",
-        "Modelos abertos vs. proprietários; rodando local com Ollama, llama.cpp e vLLM",
-        "Preparando datasets: coleta, limpeza, formato JSONL, dados sintéticos",
+        "Quando ajustar um modelo (e quando não)",
+        "Modelos abertos e inferência local",
+        "Preparando datasets de ajuste",
         "Fine-tuning gerenciado por API",
-        "LoRA e QLoRA na prática com Hugging Face PEFT (Python)",
-        "Destilação: usar um modelo grande para treinar um pequeno",
-        "Avaliação, overfitting e versionamento de modelos"
+        "LoRA e QLoRA, por dentro",
+        "Destilação e cascata",
+        "Avaliar, comparar e versionar modelos"
       ],
-      "projeto": "Modelo pequeno especializado em um domínio, comparado com o modelo grande em custo e qualidade",
+      "projeto": "Modelo pequeno especializado: dataset limpo, aluno destilado, adaptador LoRA e cascata, comparados com o modelo grande dentro e fora da distribuição do treino",
       "melhorias": [
         "Corrige a unidade 1 copiada por engano na ementa original",
         "LoRA em Python, onde o ecossistema realmente está",

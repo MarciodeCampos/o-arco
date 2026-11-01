@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050508">
+<meta name="description" content="Módulo 11 — Modelos Abertos, Fine-Tuning e Destilação: quando ajustar, modelos locais, preparação de dados, LoRA do zero, destilação com cascata e avaliação.">
+<title>Módulo 11 · Modelos Abertos, Fine-Tuning e Destilação — Engenharia de IA Aplicada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/curso.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/">◈ TRIADIC.LIFE</a>
+  <span class="crumbs">/ <a href="../">Engenharia de IA</a> / Módulo 11</span>
+  <span class="spacer"></span>
+  <span class="progress-pill">0/9 aulas</span>
+</header>
+<div class="layout">
+  <aside class="toc">
+    <button class="toc-toggle" type="button">☰ Aulas do módulo</button>
+    <h2>Módulo 11</h2>
+    <nav><ol>
+      <li><a href="#inicio"><span class="chk"></span>Visão geral</a></li>
+      <li><a href="#aula-1"><span class="chk"></span>11.1 Quando ajustar um modelo</a></li>
+      <li><a href="#aula-2"><span class="chk"></span>11.2 Modelos abertos e locais</a></li>
+      <li><a href="#aula-3"><span class="chk"></span>11.3 Preparando datasets</a></li>
+      <li><a href="#aula-4"><span class="chk"></span>11.4 Fine-tuning gerenciado</a></li>
+      <li><a href="#aula-5"><span class="chk"></span>11.5 LoRA e QLoRA</a></li>
+      <li><a href="#aula-6"><span class="chk"></span>11.6 Destilação e cascata</a></li>
+      <li><a href="#aula-7"><span class="chk"></span>11.7 Avaliar e versionar modelos</a></li>
+      <li><a href="#projeto"><span class="chk"></span>Projeto do módulo</a></li>
+      <li><a href="#recursos"><span class="chk"></span>Recursos</a></li>
+    </ol></nav>
+  </aside>
+  <main class="content" data-modulo="modulo-11">
+    <section id="inicio">
+      <header><div class="eyebrow">Módulo 11 · 32h estimadas</div><h1>Modelos Abertos, Fine-Tuning e Destilação</h1></header>
+      <p class="lede">
+        Ajustar um modelo parece o caminho natural para "ensinar a empresa à IA", e quase nunca é o
+        primeiro. Este módulo ensina quando vale a pena, como preparar os dados (a parte que decide o
+        resultado), como o LoRA funciona por dentro, como um modelo grande ensina um pequeno e como medir se
+        tudo isso compensou.
+      </p>
+      <div class="meta"><span class="tag">7 aulas</span><span class="tag">3 labs offline + 1 para Colab</span><span class="tag">Python</span><span class="tag">Pré-requisitos: Módulos 1 e 3</span></div>
+      <h3>Ao final do módulo você vai</h3>
+      <ul>
+        <li>Decidir entre prompt, RAG, ajuste fino e modelos próprios com critérios claros.</li>
+        <li>Rodar modelos abertos localmente e entender quantização e licenças.</li>
+        <li>Preparar datasets de ajuste limpos, sem dados pessoais e sem vazamento.</li>
+        <li>Explicar e implementar LoRA, e aplicá-lo com bibliotecas reais.</li>
+        <li>Destilar um modelo grande num pequeno e combiná-los numa cascata.</li>
+        <li>Avaliar modelos ajustados contra os genéricos, inclusive fora da distribuição do treino.</li>
+      </ul>
+<pre data-lang="bash"><code>cd o-arco/curso-ia/codigo/modulo-11/python
+pip install -r requirements.txt
+python 01_preparar_dataset.py &amp;&amp; python 02_lora_do_zero.py &amp;&amp; python 03_destilacao.py</code></pre>
+    </section>
+
+    <section class="lesson" id="aula-1">
+      <h2>11.1 Quando ajustar um modelo (e quando não)</h2>
+      <div class="lesson-meta">Leitura · 1h</div>
+      <p>Suba os degraus na ordem, e só quando o anterior comprovadamente não bastar (medido no seu eval):</p>
+      <table>
+        <tr><th>Degrau</th><th>Resolve</th><th>Não resolve</th></tr>
+        <tr><td><strong>1. Prompt + exemplos</strong></td><td>Formato, tom, regras, a maioria das tarefas</td><td>Volume altíssimo com custo apertado</td></tr>
+        <tr><td><strong>2. RAG</strong> (Módulo 4)</td><td>Conhecimento da empresa, fatos que mudam, citações</td><td>Estilo ou comportamento muito específico</td></tr>
+        <tr><td><strong>3. Modelo menor + bom prompt</strong></td><td>Custo e latência</td><td>Tarefas que o modelo menor não domina</td></tr>
+        <tr><td><strong>4. Ajuste fino / destilação</strong></td><td>Tarefa estreita, repetitiva, em alto volume; formato muito rígido; modelo pequeno ou local que precisa chegar perto do grande</td><td>Injetar conhecimento que muda (desatualiza e não cita fonte)</td></tr>
+        <tr><td><strong>5. Treinar do zero</strong></td><td>Quase nunca faz sentido fora de laboratórios de pesquisa</td><td>—</td></tr>
+      </table>
+      <div class="callout warn"><b>O erro mais comum</b>Ajustar um modelo para ele "saber" os produtos ou políticas da empresa. Fatos mudam, o modelo ajustado fica desatualizado, alucina com mais confiança e não cita a fonte. Fatos pertencem ao RAG; o ajuste ensina <em>comportamento</em>.</div>
+    </section>
+
+    <section class="lesson" id="aula-2">
+      <h2>11.2 Modelos abertos e inferência local</h2>
+      <div class="lesson-meta">Leitura · 3h</div>
+      <ul>
+        <li><strong>Famílias de pesos abertos:</strong> Llama, Qwen, Mistral, Gemma, DeepSeek e outras, de menos de 1 bilhão a centenas de bilhões de parâmetros. Compare pelo seu eval, não pelo ranking.</li>
+        <li><strong>Licenças:</strong> "aberto" nem sempre é livre para uso comercial; algumas licenças limitam escala de usuários ou usos. Leia antes de construir em cima.</li>
+        <li><strong>Quantização:</strong> guardar pesos em 8 ou 4 bits em vez de 16 reduz memória (um modelo de 7B cai de ~14 GB para ~4 GB) com perda pequena de qualidade, a ser medida.</li>
+        <li><strong>Para rodar:</strong> Ollama e llama.cpp (notebook e desenvolvimento), vLLM e servidores de inferência (produção, alto volume, GPUs).</li>
+      </ul>
+<pre data-lang="bash"><code># Ollama: baixar e rodar um modelo pequeno localmente
+ollama pull qwen2.5:3b
+ollama run qwen2.5:3b "Classifique: 'cobraram duas vezes no cartão' → cobranca, entrega, defeito ou duvida?"
+# API local em http://localhost:11434, para usar do seu código</code></pre>
+      <table>
+        <tr><th></th><th>API de modelo proprietário</th><th>Modelo aberto próprio</th></tr>
+        <tr><td>Capacidade</td><td>Em geral, a maior</td><td>Menor, mas suficiente para muitas tarefas estreitas</td></tr>
+        <tr><td>Custo</td><td>Por token, sem custo fixo</td><td>GPU fixa; barato só com volume alto e constante</td></tr>
+        <tr><td>Dados</td><td>Saem para o provedor (com contrato)</td><td>Ficam na sua infraestrutura</td></tr>
+        <tr><td>Operação</td><td>Nenhuma</td><td>Sua: escala, atualização, monitoramento, segurança</td></tr>
+      </table>
+    </section>
+
+    <section class="lesson" id="aula-3">
+      <h2>11.3 Preparando datasets de ajuste</h2>
+      <div class="lesson-meta">Leitura + lab · 4h</div>
+      <p>A qualidade do ajuste é a qualidade dos dados. O lab transforma uma exportação bruta de chamados num dataset pronto:</p>
+      <div class="exercise">
+        <h4>LAB 11.3 — Da exportação bruta ao JSONL</h4>
+<pre data-lang="bash"><code>python 01_preparar_dataset.py</code></pre>
+<pre data-lang="saída"><code>LIMPEZA
+  lidos                        428
+  mascarado [CPF]              103
+  mascarado [EMAIL]            93
+  mascarado [TELEFONE]         93
+  descartado: sem rótulo       1
+  descartado: duplicata        172
+  descartado: vazio ou curto   2
+  exemplos finais              253
+
+DIVISÃO (estratificada)
+  treino      175  cobranca=58  defeito=37  duvida=12  entrega=68
+  validacao    39  cobranca=13  defeito=8  duvida=3  entrega=15
+  teste        39  cobranca=13  defeito=8  duvida=3  entrega=15</code></pre>
+        <p>
+          Repare nas 172 duplicatas: muitas só apareceram <em>depois</em> do mascaramento, porque eram o mesmo
+          chamado com CPFs diferentes. Deduplicar antes de dividir evita que o mesmo texto esteja no treino e
+          no teste, o que inflaria a nota. O script confere isso com um <code>assert</code>.
+        </p>
+      </div>
+      <ul>
+        <li><strong>Formato de conversa</strong> (<code>{"messages": [system, user, assistant]}</code>), o mais comum nas APIs e bibliotecas.</li>
+        <li><strong>Dados pessoais fora:</strong> um modelo ajustado pode repetir trechos do treino.</li>
+        <li><strong>Equilíbrio:</strong> 12 exemplos de "duvida" contra 68 de "entrega" fazem o modelo errar justamente a classe rara. Colete mais ou gere exemplos sintéticos (revisados).</li>
+        <li><strong>Diversidade importa mais que volume:</strong> centenas de exemplos variados e corretos valem mais que milhares repetitivos.</li>
+      </ul>
+    </section>
+
+    <section class="lesson" id="aula-4">
+      <h2>11.4 Fine-tuning gerenciado por API</h2>
+      <div class="lesson-meta">Leitura · 2h</div>
+      <p>
+        Vários provedores e nuvens oferecem ajuste fino gerenciado: você envia o JSONL, escolhe alguns
+        hiperparâmetros e recebe um modelo ajustado, hospedado por eles. A disponibilidade muda por modelo e
+        por provedor; confira a documentação de quem você usa.
+      </p>
+      <div class="flow"><span>Enviar treino e validação</span><i>→</i><span>Criar o job (épocas, taxa de aprendizado)</span><i>→</i><span>Acompanhar a perda de treino e de validação</span><i>→</i><span>Avaliar o modelo ajustado no seu eval</span><i>→</i><span>Versionar e implantar</span></div>
+      <ul>
+        <li><strong>Épocas:</strong> poucas (1 a 3) para datasets médios. Validação subindo enquanto o treino cai é overfitting (você viu isso no Módulo 1).</li>
+        <li><strong>Custo:</strong> treino cobrado por token processado (tokens × épocas), mais o uso do modelo ajustado, às vezes com preço diferente do modelo base.</li>
+        <li><strong>Dependência:</strong> o modelo ajustado vive no provedor e pode ser descontinuado junto com o modelo base. Guarde os dados e o processo para refazer.</li>
+      </ul>
+    </section>
+
+    <section class="lesson" id="aula-5">
+      <h2>11.5 LoRA e QLoRA, por dentro</h2>
+      <div class="lesson-meta">Leitura + lab · 5h</div>
+      <p>
+        Em vez de ajustar todos os pesos <em>W</em>, o LoRA congela <em>W</em> e treina duas matrizes
+        pequenas <em>A</em> (d×r) e <em>B</em> (r×k): <code>W' = W + (α/r)·A·B</code>. Com posto <em>r</em>
+        pequeno, o número de parâmetros treinados cai para uma fração. A hipótese por trás: a mudança
+        necessária para adaptar um modelo a uma tarefa nova tem dimensão baixa.
+      </p>
+      <div class="exercise">
+        <h4>LAB 11.5 — LoRA do zero, em NumPy</h4>
+<pre data-lang="bash"><code>python 02_lora_do_zero.py      # ~2 segundos, sem GPU</code></pre>
+<pre data-lang="saída"><code>Modelo base: 17.668 parâmetros · acerto na tarefa A: 88.8%
+
+abordagem                   treinados % do total  acerto B  acerto A depois
+sem ajuste (base)                   0       0.0%     63.3%            88.8%
+ajuste completo                17.668     100.0%     80.3%            65.1%
+LoRA r=1 (só em W1)               320       1.8%     82.3%            88.8%
+LoRA r=2 (só em W1)               640       3.6%     86.3%            88.8%
+LoRA r=4 (só em W1)             1.280       7.2%     85.6%            88.8%
+LoRA r=8 (só em W1)             2.560      14.5%     84.0%            88.8%</code></pre>
+        <ul>
+          <li><strong>Esquecimento catastrófico:</strong> o ajuste completo aprendeu a tarefa B e caiu de 88,8% para 65,1% na A. Com LoRA, a base fica intacta: tirando o adaptador, a tarefa A volta inteira.</li>
+          <li><strong>O melhor posto foi r=2</strong>, exatamente a dimensão da mudança entre as tarefas (o experimento foi construído assim). Na vida real você não conhece essa dimensão: <em>r</em> é um hiperparâmetro a medir.</li>
+          <li><strong>Vários adaptadores, uma base:</strong> um adaptador por cliente ou por tarefa, trocados na hora, sobre o mesmo modelo carregado.</li>
+        </ul>
+      </div>
+      <p>
+        <strong>QLoRA</strong> é o mesmo com a base quantizada em 4 bits, o que permite ajustar modelos de
+        bilhões de parâmetros numa única GPU modesta. O <code>04_lora_peft_colab.py</code> aplica LoRA com a
+        biblioteca PEFT num modelo aberto de 0,5 B de parâmetros, com a perda calculada só na resposta. Ele
+        precisa de GPU (o Colab gratuito serve) e não roda no ambiente de testes do curso; lá passa só por
+        checagem de sintaxe.
+      </p>
+    </section>
+
+    <section class="lesson" id="aula-6">
+      <h2>11.6 Destilação e cascata</h2>
+      <div class="lesson-meta">Leitura + lab · 4h</div>
+      <p>
+        <strong>Destilação:</strong> um modelo grande (professor) rotula muitos exemplos; um modelo pequeno
+        (aluno) aprende com esses rótulos. Na <strong>cascata</strong>, o aluno responde quando está
+        confiante e passa para o professor quando não está.
+      </p>
+      <div class="exercise">
+        <h4>LAB 11.6 — Aluno, professor e o mundo real</h4>
+<pre data-lang="bash"><code>python 03_destilacao.py                   # offline
+python 03_destilacao.py --professor api   # o claude-opus-5-5 rotula o treino</code></pre>
+<pre data-lang="saída"><code>Acerto do aluno:
+  teste (mesma origem do treino)                39/39  = 100%   confiança média 0.96
+  chamados novos (escritos de outro jeito)       8/20  =  40%   confiança média 0.56
+
+CASCATA nos chamados novos: o aluno responde se estiver confiante; senão, o professor.
+   limiar  vai p/ professor  acerto*
+      0.0                0%      40%
+      0.5               40%      70%
+      0.7               85%     100%
+      0.9              100%     100%</code></pre>
+        <p>
+          A lição mais importante do módulo está aqui. O aluno tirou <strong>100%</strong> no teste que veio da
+          mesma origem do treino e <strong>40%</strong> em 20 chamados escritos à mão com outro vocabulário. Ele
+          aprendeu as palavras do treino, não o problema. Um eval só com dados parecidos com o treino teria
+          aprovado um modelo que falha no mundo real. Por sorte, a confiança dele cai junto, e a cascata usa
+          isso. (No modo offline, os rótulos do dataset fazem o papel do professor; o acerto da cascata supõe
+          que o professor acerta os casos que recebe, o que você deve medir.)
+        </p>
+      </div>
+    </section>
+
+    <section class="lesson" id="aula-7">
+      <h2>11.7 Avaliar, comparar e versionar modelos</h2>
+      <div class="lesson-meta">Leitura · 2h</div>
+      <ul>
+        <li><strong>Compare com a linha de base certa:</strong> modelo ajustado contra o modelo grande com um bom prompt, no mesmo eval (Módulo 3), em qualidade, custo por tarefa e latência.</li>
+        <li><strong>Teste fora da distribuição:</strong> dados reais recentes, escritos por outras pessoas, com outros formatos. É onde modelos ajustados quebram.</li>
+        <li><strong>Regressões em outras capacidades:</strong> o ajuste pode piorar o que o modelo fazia bem (esquecimento). Mantenha alguns casos gerais no eval.</li>
+        <li><strong>Versione tudo junto:</strong> dataset (com hash), código de preparação, hiperparâmetros, modelo base, adaptador e resultado do eval. Sem isso, não dá para reproduzir nem fazer rollback.</li>
+        <li><strong>Lance como qualquer mudança de modelo:</strong> canário pelo gateway (Módulo 9), monitoramento e caminho de volta.</li>
+      </ul>
+    </section>
+
+    <section class="lesson" id="projeto">
+      <h2>Projeto do módulo: modelo pequeno especializado</h2>
+      <div class="lesson-meta">Projeto · 10h · Python</div>
+      <p>Escolha uma tarefa estreita do seu contexto (classificação, extração, roteamento) e entregue:</p>
+      <ol>
+        <li>Dataset preparado com o pipeline do lab 11.3: limpeza, mascaramento, deduplicação, divisão estratificada, checagem de vazamento.</li>
+        <li>Um conjunto "mundo real" separado, escrito ou coletado de forma independente do treino.</li>
+        <li>Três concorrentes no mesmo eval: modelo grande com prompt, aluno destilado (lab 11.6) e modelo aberto ajustado com LoRA (lab 11.5b, no Colab).</li>
+        <li>Uma cascata com limiar escolhido na validação.</li>
+        <li>Recomendação final com números: qual usar, em que volume compensa, e o plano de reajuste quando os dados mudarem.</li>
+      </ol>
+      <h3>Critérios de avaliação</h3>
+      <table>
+        <tr><th>Critério</th><th>Peso</th></tr>
+        <tr><td>Pipeline de dados com checagens</td><td>25%</td></tr>
+        <tr><td>Avaliação fora da distribuição</td><td>20%</td></tr>
+        <tr><td>Comparação justa dos três concorrentes</td><td>25%</td></tr>
+        <tr><td>Cascata com limiar justificado</td><td>15%</td></tr>
+        <tr><td>Recomendação e plano de manutenção</td><td>15%</td></tr>
+      </table>
+    </section>
+
+    <section class="lesson" id="recursos">
+      <h2>Recursos para aprofundar</h2>
+      <div class="lesson-meta">Todos gratuitos</div>
+      <ul class="resources">
+        <li><a href="https://arxiv.org/abs/2106.09685" target="_blank" rel="noopener">LoRA (2021)</a> e <a href="https://arxiv.org/abs/2305.14314" target="_blank" rel="noopener">QLoRA (2023)</a> <small>· os artigos originais</small></li>
+        <li><a href="https://huggingface.co/docs/peft" target="_blank" rel="noopener">Hugging Face PEFT</a> <small>· a biblioteca usada no lab para Colab</small></li>
+        <li><a href="https://ollama.com" target="_blank" rel="noopener">Ollama</a>, <a href="https://github.com/ggml-org/llama.cpp" target="_blank" rel="noopener">llama.cpp</a> e <a href="https://docs.vllm.ai" target="_blank" rel="noopener">vLLM</a> <small>· inferência local e em servidor</small></li>
+        <li><a href="https://arxiv.org/abs/1503.02531" target="_blank" rel="noopener">Distilling the Knowledge in a Neural Network (2015)</a> <small>· o artigo clássico de destilação</small></li>
+      </ul>
+      <nav class="pager">
+        <a href="../modulo-10/"><small>← Módulo anterior</small>10 · IA para DevOps e SRE</a>
+        <a class="next" href="../modulo-12/"><small>Próximo módulo →</small>12 · Segurança e Governança</a>
+      </nav>
+    </section>
+  </main>
+</div>
+<footer class="foot"><a href="/">triadic.life</a> · <a href="../">Engenharia de IA Aplicada</a> · <a href="https://github.com/MarciodeCampos/o-arco/tree/main/curso-ia/codigo/modulo-11" target="_blank" rel="noopener">código do módulo</a></footer>
+<script src="../assets/curso.js"></script>
+</body>
+</html>

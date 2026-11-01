@@ -1,0 +1,428 @@
+{"id": "ch0213", "texto": "A fatura veio com valor errado, cobraram R$ 203,92. Meu CPF é 286.706.793-31", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0128", "texto": "A fatura veio com valor errado, cobraram R$ 118,85", "categoria": "cobranca", "atendente": "humano"}
+{"id": "semcat", "texto": "Meu pedido não chegou", "categoria": null, "atendente": "humano"}
+{"id": "ch0176", "texto": "A fatura veio com valor errado, cobraram R$ 358,75. Meu CPF é 353.653.194-20", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0018", "texto": "O purificador parou de ligar depois de 12 dias. Meu CPF é 608.459.957-15", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0229", "texto": "Quero mudar o endereço de entrega do pedido 14385. Contato: diego80@exemplo.com, tel (31) 97155-3673", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0344", "texto": "Posso pagar em 10 vezes?", "categoria": "duvida", "atendente": "humano"}
+{"id": "ch0398", "texto": "MEU BOLETO VENCEU E NÃO CONSIGO GERAR OUTRO", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0328", "texto": "A transportadora disse que eu não estava em casa, mas eu estava. Contato: bruno11@exemplo.com, tel (31) 99314-4651", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0033", "texto": "Como faço para trocar o filtro?. Contato: ana34@exemplo.com, tel (31) 97355-2589", "categoria": "duvida", "atendente": "humano"}
+{"id": "ch0154", "texto": "A transportadora disse que eu não estava em casa, mas eu estava", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0017", "texto": "O rastreio do pedido 96506 não atualiza", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0248", "texto": "Entregaram no endereço errado", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0138", "texto": "Qual o prazo de entrega para Recife?", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0035", "texto": "Meu pedido 90394 está atrasado há 18 dias. Contato: ana27@exemplo.com, tel (31) 93826-3589", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0005", "texto": "O RASTREIO DO PEDIDO 50790 NÃO ATUALIZA", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0098", "texto": "Meu boleto venceu e não consigo gerar outro", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0266", "texto": "MEU PEDIDO 18395 ESTÁ ATRASADO HÁ 11 DIAS", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0097", "texto": "Qual o prazo de entrega para Manaus?. Contato: bruno47@exemplo.com, tel (31) 96059-6522", "categoria": "entrega", "atendente": "humano"}
+{"id": "dup011", "texto": "A fatura veio com valor errado, cobraram R$ 786,71", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0214", "texto": "O purificador parou de ligar depois de 17 dias", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0144", "texto": "Tem desconto para comprar dois?. Meu CPF é 158.168.573-93", "categoria": "duvida", "atendente": "humano"}
+{"id": "ch0069", "texto": "Tem desconto para comprar dois?. Meu CPF é 417.380.676-70", "categoria": "duvida", "atendente": "humano"}
+{"id": "ch0173", "texto": "A transportadora disse que eu não estava em casa, mas eu estava", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0078", "texto": "Cobraram a assinatura depois que cancelei", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0332", "texto": "Veio faltando uma peça no pedido 30445", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0202", "texto": "O purificador parou de ligar depois de 16 dias", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0012", "texto": "O rastreio do pedido 69027 não atualiza", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0101", "texto": "QUAL O PRAZO DE ENTREGA PARA MANAUS?", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0310", "texto": "Cobraram a assinatura depois que cancelei", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0264", "texto": "O produto do pedido 58324 chegou quebrado. Contato: fábio80@exemplo.com, tel (31) 97253-6512", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0363", "texto": "  A tela do aparelho está piscando. Contato: fábio96@exemplo.com, tel (31) 98321-9237   ", "categoria": "defeito", "atendente": "bot"}
+{"id": "ch0140", "texto": "Quero mudar o endereço de entrega do pedido 36047. Meu CPF é 755.165.475-63", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0331", "texto": "COBRARAM A ASSINATURA DEPOIS QUE CANCELEI", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0148", "texto": "O rastreio do pedido 23697 não atualiza. Contato: elisa20@exemplo.com, tel (31) 93358-9601", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0016", "texto": "Fui cobrado duas vezes no cartão final 8879", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0345", "texto": "Paguei via PIX e o pedido continua aguardando pagamento. Contato: ana91@exemplo.com, tel (31) 99123-5423", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0042", "texto": "O produto do pedido 60581 chegou quebrado", "categoria": "defeito", "atendente": "bot"}
+{"id": "ch0085", "texto": "O produto do pedido 83378 chegou quebrado. Contato: ana84@exemplo.com, tel (31) 92738-6014", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0244", "texto": "Posso pagar em 10 vezes?. Contato: diego69@exemplo.com, tel (31) 92301-3468", "categoria": "duvida", "atendente": "humano"}
+{"id": "ch0326", "texto": "Meu boleto venceu e não consigo gerar outro", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0072", "texto": "Entregaram no endereço errado", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0275", "texto": "Cobraram a assinatura depois que cancelei", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0348", "texto": "A fatura veio com valor errado, cobraram R$ 597,95", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0083", "texto": "  A FATURA VEIO COM VALOR ERRADO, COBRARAM R$ 501,67   ", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0036", "texto": "O rastreio do pedido 52837 não atualiza", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0366", "texto": "Fui cobrado duas vezes no cartão final 3300. Meu CPF é 588.943.981-36", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0089", "texto": "Quero o estorno da cobrança de R$ 79,33", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0087", "texto": "  O aparelho faz um barulho alto desde que chegou   ", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0217", "texto": "Quero o estorno da cobrança de R$ 476,85. Meu CPF é 966.198.580-96", "categoria": "cobranca", "atendente": "bot"}
+{"id": "curto1", "texto": "ok", "categoria": "duvida", "atendente": "humano"}
+{"id": "ch0335", "texto": "A transportadora disse que eu não estava em casa, mas eu estava", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0197", "texto": "Paguei via PIX e o pedido continua aguardando pagamento. Contato: diego56@exemplo.com, tel (31) 98798-7814", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0252", "texto": "Qual o prazo de entrega para Curitiba?", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0333", "texto": "  Como faço para trocar o filtro?   ", "categoria": "duvida", "atendente": "humano"}
+{"id": "ch0155", "texto": "O purificador parou de ligar depois de 13 dias. Meu CPF é 685.796.199-20", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0311", "texto": "O aparelho faz um barulho alto desde que chegou. Meu CPF é 905.665.710-40", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0347", "texto": "Paguei via PIX e o pedido continua aguardando pagamento", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0262", "texto": "Quero mudar o endereço de entrega do pedido 72099. Meu CPF é 391.763.967-78", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0191", "texto": "Posso pagar em 10 vezes?", "categoria": "duvida", "atendente": "humano"}
+{"id": "ch0145", "texto": "O rastreio do pedido 20949 não atualiza", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0014", "texto": "Meu boleto venceu e não consigo gerar outro", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0354", "texto": "Qual o prazo de entrega para Recife?", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0158", "texto": "A TELA DO APARELHO ESTÁ PISCANDO", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0059", "texto": "  Veio faltando uma peça no pedido 31266. Meu CPF é 309.498.535-77   ", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0136", "texto": "Entregaram no endereço errado", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0156", "texto": "  A fatura veio com valor errado, cobraram R$ 707,46. Contato: bruno44@exemplo.com, tel (31) 91366-4465   ", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0285", "texto": "FUI COBRADO DUAS VEZES NO CARTÃO FINAL 6005", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0122", "texto": "A transportadora disse que eu não estava em casa, mas eu estava", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0304", "texto": "Veio faltando uma peça no pedido 59594. Contato: ana73@exemplo.com, tel (31) 97683-3378", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0183", "texto": "Meu boleto venceu e não consigo gerar outro. Meu CPF é 115.270.411-15", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0249", "texto": "Vocês entregam em Porto Alegre?. Contato: elisa67@exemplo.com, tel (31) 96200-3759", "categoria": "duvida", "atendente": "humano"}
+{"id": "ch0330", "texto": "Entregaram no endereço errado. Meu CPF é 593.407.624-28", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0076", "texto": "MEU PEDIDO 57662 ESTÁ ATRASADO HÁ 9 DIAS. CONTATO: ELISA71@EXEMPLO.COM, TEL (31) 92249-8444", "categoria": "entrega", "atendente": "humano"}
+{"id": "dup020", "texto": "Veio faltando uma peça no pedido 56782", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0320", "texto": "Meu boleto venceu e não consigo gerar outro", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0343", "texto": "Veio faltando uma peça no pedido 96302", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0272", "texto": "Quero mudar o endereço de entrega do pedido 77615", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0260", "texto": "A transportadora disse que eu não estava em casa, mas eu estava. Contato: bruno77@exemplo.com, tel (31) 94236-9731", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0013", "texto": "Entregaram no endereço errado. Meu CPF é 418.426.239-19. Contato: elisa48@exemplo.com, tel (31) 91728-3122", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0131", "texto": "Quero mudar o endereço de entrega do pedido 16050. Meu CPF é 579.436.362-89", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0135", "texto": "O PRODUTO DO PEDIDO 60938 CHEGOU QUEBRADO", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0314", "texto": "A transportadora disse que eu não estava em casa, mas eu estava", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0056", "texto": "POSSO PAGAR EM 10 VEZES?. MEU CPF É 183.380.854-23", "categoria": "duvida", "atendente": "humano"}
+{"id": "ch0011", "texto": "MEU BOLETO VENCEU E NÃO CONSIGO GERAR OUTRO", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0188", "texto": "  QUERO O ESTORNO DA COBRANÇA DE R$ 290,84. MEU CPF É 748.616.204-64   ", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0216", "texto": "Entregaram no endereço errado", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0294", "texto": "O aparelho faz um barulho alto desde que chegou", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0054", "texto": "Qual o prazo de entrega para Curitiba?. Meu CPF é 847.628.354-20", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0015", "texto": "FUI COBRADO DUAS VEZES NO CARTÃO FINAL 5214", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0002", "texto": "A transportadora disse que eu não estava em casa, mas eu estava. Meu CPF é 575.434.551-85", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0082", "texto": "VEIO FALTANDO UMA PEÇA NO PEDIDO 65256. CONTATO: BRUNO16@EXEMPLO.COM, TEL (31) 99807-8424", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0063", "texto": "A fatura veio com valor errado, cobraram R$ 590,76", "categoria": "cobranca", "atendente": "bot"}
+{"id": "dup010", "texto": "Vocês entregam em Porto Alegre?. Contato: elisa67@exemplo.com, tel (31) 96200-3759", "categoria": "duvida", "atendente": "humano"}
+{"id": "ch0359", "texto": "Entregaram no endereço errado", "categoria": "entrega", "atendente": "humano"}
+{"id": "dup001", "texto": "Vocês entregam em Salvador?. Contato: carla99@exemplo.com, tel (31) 91960-7877", "categoria": "duvida", "atendente": "humano"}
+{"id": "ch0383", "texto": "  A transportadora disse que eu não estava em casa, mas eu estava   ", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0399", "texto": "Quero mudar o endereço de entrega do pedido 46486. Contato: ana79@exemplo.com, tel (31) 92490-1624", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0289", "texto": "  Cobraram a assinatura depois que cancelei   ", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0206", "texto": "Cobraram a assinatura depois que cancelei", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0379", "texto": "Quero mudar o endereço de entrega do pedido 47312. Meu CPF é 997.249.385-28", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0163", "texto": "Tem desconto para comprar dois?. Meu CPF é 413.612.967-29. Contato: fábio46@exemplo.com, tel (31) 93614-9031", "categoria": "duvida", "atendente": "humano"}
+{"id": "ch0045", "texto": "A fatura veio com valor errado, cobraram R$ 786,71", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0230", "texto": "MEU PEDIDO 90628 ESTÁ ATRASADO HÁ 3 DIAS. MEU CPF É 762.490.248-21", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0268", "texto": "Meu pedido 42177 está atrasado há 14 dias", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0024", "texto": "Qual o prazo de entrega para Manaus?", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0180", "texto": "Fui cobrado duas vezes no cartão final 4028. Contato: ana36@exemplo.com, tel (31) 99632-9552", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0120", "texto": "O rastreio do pedido 82900 não atualiza. Contato: ana35@exemplo.com, tel (31) 93353-5485", "categoria": "entrega", "atendente": "humano"}
+{"id": "dup023", "texto": "Qual o prazo de entrega para Manaus?", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0117", "texto": "A fatura veio com valor errado, cobraram R$ 533,84", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0281", "texto": "O rastreio do pedido 99204 não atualiza. Meu CPF é 103.507.350-39. Contato: diego89@exemplo.com, tel (31) 93194-1339", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0212", "texto": "Entregaram no endereço errado", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0397", "texto": "FUI COBRADO DUAS VEZES NO CARTÃO FINAL 6515. CONTATO: ELISA27@EXEMPLO.COM, TEL (31) 97737-6220", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0280", "texto": "O purificador parou de ligar depois de 3 dias", "categoria": "defeito", "atendente": "bot"}
+{"id": "ch0387", "texto": "A tela do aparelho está piscando", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0322", "texto": "A transportadora disse que eu não estava em casa, mas eu estava", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0086", "texto": "O filtro novo não encaixa no aparelho. Meu CPF é 982.414.223-98. Contato: bruno93@exemplo.com, tel (31) 94857-9215", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0246", "texto": "O FILTRO NOVO NÃO ENCAIXA NO APARELHO", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0389", "texto": "  O aparelho faz um barulho alto desde que chegou. Meu CPF é 755.974.252-79. Contato: diego5@exemplo.com, tel (31) 94913-5833   ", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0316", "texto": "TEM DESCONTO PARA COMPRAR DOIS?", "categoria": "duvida", "atendente": "bot"}
+{"id": "ch0104", "texto": "Meu boleto venceu e não consigo gerar outro. Contato: elisa46@exemplo.com, tel (31) 94703-2681", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0207", "texto": "Paguei via PIX e o pedido continua aguardando pagamento", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0094", "texto": "Meu pedido 51203 está atrasado há 18 dias", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0241", "texto": "Cobraram a assinatura depois que cancelei", "categoria": "cobranca", "atendente": "humano"}
+{"id": "dup019", "texto": "Entregaram no endereço errado. Contato: bruno19@exemplo.com, tel (31) 92108-4368", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0068", "texto": "Meu pedido 41126 está atrasado há 11 dias. Meu CPF é 890.110.976-36", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0369", "texto": "A tela do aparelho está piscando", "categoria": "defeito", "atendente": "bot"}
+{"id": "ch0227", "texto": "  Quero mudar o endereço de entrega do pedido 25742. Contato: diego63@exemplo.com, tel (31) 97292-2999   ", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0147", "texto": "O produto do pedido 26330 chegou quebrado. Meu CPF é 778.190.621-75", "categoria": "defeito", "atendente": "bot"}
+{"id": "ch0102", "texto": "QUERO O ESTORNO DA COBRANÇA DE R$ 510,20", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0334", "texto": "Meu pedido 34236 está atrasado há 9 dias", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0192", "texto": "Qual a garantia do purificador?", "categoria": "duvida", "atendente": "bot"}
+{"id": "ch0201", "texto": "  O aparelho faz um barulho alto desde que chegou   ", "categoria": "defeito", "atendente": "bot"}
+{"id": "ch0265", "texto": "O rastreio do pedido 36198 não atualiza", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0263", "texto": "Veio faltando uma peça no pedido 84298. Meu CPF é 496.676.467-14", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0315", "texto": "Entregaram no endereço errado", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0077", "texto": "Paguei via PIX e o pedido continua aguardando pagamento. Meu CPF é 579.133.246-77", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0341", "texto": "O rastreio do pedido 18372 não atualiza", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0308", "texto": "A tela do aparelho está piscando. Meu CPF é 915.762.138-49", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0203", "texto": "Entregaram no endereço errado", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0319", "texto": "O PRODUTO DO PEDIDO 88500 CHEGOU QUEBRADO", "categoria": "defeito", "atendente": "bot"}
+{"id": "ch0346", "texto": "Meu boleto venceu e não consigo gerar outro. Contato: diego10@exemplo.com, tel (31) 97927-1160", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0110", "texto": "O filtro novo não encaixa no aparelho", "categoria": "defeito", "atendente": "bot"}
+{"id": "ch0021", "texto": "Meu pedido 16152 está atrasado há 5 dias. Meu CPF é 648.770.755-57", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0113", "texto": "Fui cobrado duas vezes no cartão final 1317. Contato: elisa89@exemplo.com, tel (31) 99038-5811", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0234", "texto": "Entregaram no endereço errado", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0378", "texto": "O rastreio do pedido 37870 não atualiza", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0107", "texto": "O rastreio do pedido 78215 não atualiza", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0240", "texto": "Entregaram no endereço errado. Contato: bruno13@exemplo.com, tel (31) 91488-3647", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0222", "texto": "O produto do pedido 87533 chegou quebrado. Meu CPF é 826.277.170-69", "categoria": "defeito", "atendente": "bot"}
+{"id": "ch0242", "texto": "Quero o estorno da cobrança de R$ 529,37", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0114", "texto": "A fatura veio com valor errado, cobraram R$ 382,32", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0371", "texto": "MEU PEDIDO 94843 ESTÁ ATRASADO HÁ 11 DIAS", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0006", "texto": "Meu boleto venceu e não consigo gerar outro", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0009", "texto": "O purificador parou de ligar depois de 11 dias. Contato: bruno21@exemplo.com, tel (31) 94220-7360", "categoria": "defeito", "atendente": "bot"}
+{"id": "ch0157", "texto": "Qual o prazo de entrega para Belo Horizonte?", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0112", "texto": "Tem desconto para comprar dois?", "categoria": "duvida", "atendente": "humano"}
+{"id": "ch0146", "texto": "O PRODUTO DO PEDIDO 12070 CHEGOU QUEBRADO", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0108", "texto": "O produto do pedido 18249 chegou quebrado. Meu CPF é 607.967.699-48", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0305", "texto": "Fui cobrado duas vezes no cartão final 7962. Meu CPF é 555.666.796-30", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0365", "texto": "Qual o prazo de entrega para Manaus?", "categoria": "entrega", "atendente": "humano"}
+{"id": "dup006", "texto": "Veio faltando uma peça no pedido 37563", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0211", "texto": "Meu pedido 74108 está atrasado há 3 dias", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0143", "texto": "O rastreio do pedido 32336 não atualiza", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0020", "texto": "Fui cobrado duas vezes no cartão final 5556", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0081", "texto": "Quero mudar o endereço de entrega do pedido 23811", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0357", "texto": "Fui cobrado duas vezes no cartão final 7746", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0390", "texto": "  Quero o estorno da cobrança de R$ 142,17   ", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0251", "texto": "Cobraram a assinatura depois que cancelei", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0375", "texto": "Paguei via PIX e o pedido continua aguardando pagamento. Contato: fábio66@exemplo.com, tel (31) 96842-2143", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0282", "texto": "O aparelho faz um barulho alto desde que chegou. Contato: fábio71@exemplo.com, tel (31) 91861-8648", "categoria": "defeito", "atendente": "bot"}
+{"id": "ch0003", "texto": "Fui cobrado duas vezes no cartão final 8492", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0062", "texto": "A transportadora disse que eu não estava em casa, mas eu estava", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0261", "texto": "Veio faltando uma peça no pedido 67688", "categoria": "defeito", "atendente": "humano"}
+{"id": "dup016", "texto": "Qual o prazo de entrega para Porto Alegre?", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0141", "texto": "Paguei via PIX e o pedido continua aguardando pagamento", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0374", "texto": "A transportadora disse que eu não estava em casa, mas eu estava", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0164", "texto": "O produto do pedido 38637 chegou quebrado", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0057", "texto": "Paguei via PIX e o pedido continua aguardando pagamento", "categoria": "cobranca", "atendente": "humano"}
+{"id": "vazio1", "texto": "", "categoria": "duvida", "atendente": "humano"}
+{"id": "ch0243", "texto": "A fatura veio com valor errado, cobraram R$ 671,56", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0388", "texto": "Paguei via PIX e o pedido continua aguardando pagamento", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0185", "texto": "Cobraram a assinatura depois que cancelei", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0302", "texto": "O purificador parou de ligar depois de 13 dias. Meu CPF é 882.569.584-66", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0055", "texto": "O rastreio do pedido 80852 não atualiza. Contato: diego37@exemplo.com, tel (31) 91364-4624", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0309", "texto": "Fui cobrado duas vezes no cartão final 4127. Meu CPF é 101.948.743-32", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0121", "texto": "A fatura veio com valor errado, cobraram R$ 614,43. Meu CPF é 878.416.786-20. Contato: carla62@exemplo.com, tel (31) 93289-4312", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0376", "texto": "Entregaram no endereço errado. Meu CPF é 397.742.137-22", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0393", "texto": "Tem desconto para comprar dois?", "categoria": "duvida", "atendente": "bot"}
+{"id": "ch0380", "texto": "Entregaram no endereço errado. Meu CPF é 724.593.426-39", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0030", "texto": "Meu boleto venceu e não consigo gerar outro. Meu CPF é 366.232.818-12. Contato: bruno30@exemplo.com, tel (31) 91193-5654", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0116", "texto": "A fatura veio com valor errado, cobraram R$ 631,63", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0338", "texto": "Quero mudar o endereço de entrega do pedido 51140", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0232", "texto": "Quero mudar o endereço de entrega do pedido 13683", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0231", "texto": "O rastreio do pedido 69022 não atualiza. Meu CPF é 755.634.272-19. Contato: elisa49@exemplo.com, tel (31) 97713-3451", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0236", "texto": "Meu boleto venceu e não consigo gerar outro", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0367", "texto": "Cobraram a assinatura depois que cancelei", "categoria": "cobranca", "atendente": "bot"}
+{"id": "dup000", "texto": "Quero mudar o endereço de entrega do pedido 51140", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0196", "texto": "  PAGUEI VIA PIX E O PEDIDO CONTINUA AGUARDANDO PAGAMENTO. MEU CPF É 694.472.347-65   ", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0394", "texto": "Quero o estorno da cobrança de R$ 264,40. Meu CPF é 457.530.593-92", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0103", "texto": "O rastreio do pedido 26729 não atualiza", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0256", "texto": "O rastreio do pedido 85281 não atualiza", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0050", "texto": "O filtro novo não encaixa no aparelho. Contato: carla64@exemplo.com, tel (31) 93185-2218", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0317", "texto": "Veio faltando uma peça no pedido 49072. Contato: fábio24@exemplo.com, tel (31) 93786-9471", "categoria": "defeito", "atendente": "bot"}
+{"id": "ch0238", "texto": "O purificador parou de ligar depois de 10 dias. Contato: fábio95@exemplo.com, tel (31) 98585-9821", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0270", "texto": "Quero o estorno da cobrança de R$ 167,40. Meu CPF é 129.468.107-66", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0127", "texto": "Quero o estorno da cobrança de R$ 236,65", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0129", "texto": "O produto do pedido 56817 chegou quebrado. Meu CPF é 749.778.487-92. Contato: elisa79@exemplo.com, tel (31) 96645-8200", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0029", "texto": "Quero mudar o endereço de entrega do pedido 25981. Contato: elisa59@exemplo.com, tel (31) 97779-7621", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0312", "texto": "Como faço para trocar o filtro?. Meu CPF é 908.726.187-98. Contato: carla26@exemplo.com, tel (31) 91122-4168", "categoria": "duvida", "atendente": "humano"}
+{"id": "ch0022", "texto": "Paguei via PIX e o pedido continua aguardando pagamento. Meu CPF é 897.454.652-99", "categoria": "cobranca", "atendente": "humano"}
+{"id": "dup007", "texto": "Meu pedido 71755 está atrasado há 2 dias", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0292", "texto": "A tela do aparelho está piscando", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0058", "texto": "A transportadora disse que eu não estava em casa, mas eu estava. Contato: diego12@exemplo.com, tel (31) 98612-9869", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0074", "texto": "O RASTREIO DO PEDIDO 84366 NÃO ATUALIZA", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0215", "texto": "  Fui cobrado duas vezes no cartão final 6784. Meu CPF é 204.527.121-99   ", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0372", "texto": "Veio faltando uma peça no pedido 56782", "categoria": "defeito", "atendente": "humano"}
+{"id": "dup008", "texto": "O rastreio do pedido 39931 não atualiza", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0351", "texto": "Meu pedido 30272 está atrasado há 4 dias", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0095", "texto": "A fatura veio com valor errado, cobraram R$ 757,94", "categoria": "cobranca", "atendente": "humano"}
+{"id": "dup024", "texto": "MEU BOLETO VENCEU E NÃO CONSIGO GERAR OUTRO", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0273", "texto": "  A transportadora disse que eu não estava em casa, mas eu estava   ", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0123", "texto": "TEM DESCONTO PARA COMPRAR DOIS?", "categoria": "duvida", "atendente": "humano"}
+{"id": "ch0337", "texto": "A TELA DO APARELHO ESTÁ PISCANDO", "categoria": "defeito", "atendente": "bot"}
+{"id": "ch0178", "texto": "Entregaram no endereço errado. Contato: bruno19@exemplo.com, tel (31) 92108-4368", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0209", "texto": "A transportadora disse que eu não estava em casa, mas eu estava. Contato: carla70@exemplo.com, tel (31) 93755-6954", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0301", "texto": "A fatura veio com valor errado, cobraram R$ 658,42. Contato: diego67@exemplo.com, tel (31) 91464-3614", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0325", "texto": "MEU PEDIDO 57378 ESTÁ ATRASADO HÁ 17 DIAS. MEU CPF É 537.594.329-35. CONTATO: DIEGO35@EXEMPLO.COM, TEL (31) 94805-1951", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0298", "texto": "COBRARAM A ASSINATURA DEPOIS QUE CANCELEI", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0350", "texto": "A fatura veio com valor errado, cobraram R$ 213,48", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0096", "texto": "Cobraram a assinatura depois que cancelei. Meu CPF é 638.244.193-60", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0133", "texto": "A tela do aparelho está piscando. Meu CPF é 537.300.600-45", "categoria": "defeito", "atendente": "bot"}
+{"id": "ch0008", "texto": "Cobraram a assinatura depois que cancelei. Meu CPF é 696.751.348-11", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0092", "texto": "A transportadora disse que eu não estava em casa, mas eu estava", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0179", "texto": "Como faço para trocar o filtro?. Meu CPF é 818.794.342-95", "categoria": "duvida", "atendente": "humano"}
+{"id": "ch0007", "texto": "MEU BOLETO VENCEU E NÃO CONSIGO GERAR OUTRO. MEU CPF É 503.974.716-92", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0004", "texto": "Meu pedido 60661 está atrasado há 4 dias. Contato: bruno7@exemplo.com, tel (31) 98700-7151", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0167", "texto": "Meu boleto venceu e não consigo gerar outro", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0153", "texto": "MEU BOLETO VENCEU E NÃO CONSIGO GERAR OUTRO", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0093", "texto": "O aparelho faz um barulho alto desde que chegou", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0186", "texto": "Fui cobrado duas vezes no cartão final 1052", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0060", "texto": "A TELA DO APARELHO ESTÁ PISCANDO", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0075", "texto": "Entregaram no endereço errado. Contato: elisa70@exemplo.com, tel (31) 99948-2041", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0358", "texto": "Meu pedido 70290 está atrasado há 8 dias", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0336", "texto": "Meu pedido 90264 está atrasado há 6 dias", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0037", "texto": "O purificador parou de ligar depois de 14 dias. Contato: ana42@exemplo.com, tel (31) 92389-7627", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0090", "texto": "Fui cobrado duas vezes no cartão final 6892", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0235", "texto": "Tem desconto para comprar dois?. Contato: fábio8@exemplo.com, tel (31) 98115-5582", "categoria": "duvida", "atendente": "bot"}
+{"id": "ch0267", "texto": "A fatura veio com valor errado, cobraram R$ 519,48. Contato: diego66@exemplo.com, tel (31) 91550-1829", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0174", "texto": "O purificador parou de ligar depois de 18 dias", "categoria": "defeito", "atendente": "bot"}
+{"id": "ch0340", "texto": "Vocês entregam em Salvador?. Contato: carla99@exemplo.com, tel (31) 91960-7877", "categoria": "duvida", "atendente": "humano"}
+{"id": "ch0166", "texto": "Entregaram no endereço errado. Meu CPF é 980.657.975-26", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0119", "texto": "FUI COBRADO DUAS VEZES NO CARTÃO FINAL 6065", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0283", "texto": "Meu pedido 57624 está atrasado há 3 dias", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0306", "texto": "Quero o estorno da cobrança de R$ 148,27. Meu CPF é 322.672.452-62", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0321", "texto": "O rastreio do pedido 81618 não atualiza", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0377", "texto": "O RASTREIO DO PEDIDO 81677 NÃO ATUALIZA", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0288", "texto": "  A TRANSPORTADORA DISSE QUE EU NÃO ESTAVA EM CASA, MAS EU ESTAVA. MEU CPF É 550.494.941-18   ", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0277", "texto": "Fui cobrado duas vezes no cartão final 3121. Meu CPF é 905.183.995-43", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0327", "texto": "PAGUEI VIA PIX E O PEDIDO CONTINUA AGUARDANDO PAGAMENTO. MEU CPF É 369.914.885-85", "categoria": "cobranca", "atendente": "humano"}
+{"id": "dup021", "texto": "O produto do pedido 38637 chegou quebrado", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0000", "texto": "A transportadora disse que eu não estava em casa, mas eu estava", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0132", "texto": "  A fatura veio com valor errado, cobraram R$ 163,39   ", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0184", "texto": "Paguei via PIX e o pedido continua aguardando pagamento", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0279", "texto": "A TELA DO APARELHO ESTÁ PISCANDO", "categoria": "defeito", "atendente": "bot"}
+{"id": "ch0032", "texto": "Qual o prazo de entrega para Porto Alegre?", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0168", "texto": "ENTREGARAM NO ENDEREÇO ERRADO", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0339", "texto": "O filtro novo não encaixa no aparelho. Contato: bruno9@exemplo.com, tel (31) 95887-6690", "categoria": "defeito", "atendente": "humano"}
+{"id": "dup003", "texto": "A fatura veio com valor errado, cobraram R$ 597,95", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0177", "texto": "O rastreio do pedido 19161 não atualiza", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0200", "texto": "  QUAL O PRAZO DE ENTREGA PARA RECIFE?. CONTATO: ANA74@EXEMPLO.COM, TEL (31) 98760-7596   ", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0303", "texto": "A tela do aparelho está piscando", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0286", "texto": "Entregaram no endereço errado", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0137", "texto": "  O rastreio do pedido 86092 não atualiza. Meu CPF é 218.364.452-88   ", "categoria": "entrega", "atendente": "humano"}
+{"id": "dup014", "texto": "Fui cobrado duas vezes no cartão final 9825", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0239", "texto": "Cobraram a assinatura depois que cancelei. Contato: fábio87@exemplo.com, tel (31) 96877-1954", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0038", "texto": "A tela do aparelho está piscando", "categoria": "defeito", "atendente": "bot"}
+{"id": "ch0051", "texto": "Qual o prazo de entrega para Salvador?", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0373", "texto": "A transportadora disse que eu não estava em casa, mas eu estava. Contato: ana16@exemplo.com, tel (31) 92176-2691", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0382", "texto": "Meu pedido 71755 está atrasado há 2 dias", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0106", "texto": "Paguei via PIX e o pedido continua aguardando pagamento. Meu CPF é 492.436.391-73", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0139", "texto": "Fui cobrado duas vezes no cartão final 2557", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0276", "texto": "O rastreio do pedido 39931 não atualiza", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0199", "texto": "QUERO MUDAR O ENDEREÇO DE ENTREGA DO PEDIDO 43112. MEU CPF É 375.575.811-88", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0019", "texto": "Meu boleto venceu e não consigo gerar outro", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0356", "texto": "  Quero mudar o endereço de entrega do pedido 32163. Contato: ana65@exemplo.com, tel (31) 98471-2297   ", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0195", "texto": "Como faço para trocar o filtro?", "categoria": "duvida", "atendente": "humano"}
+{"id": "ch0287", "texto": "Entregaram no endereço errado. Contato: bruno32@exemplo.com, tel (31) 92583-9761", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0084", "texto": "MEU BOLETO VENCEU E NÃO CONSIGO GERAR OUTRO", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0355", "texto": "O rastreio do pedido 91737 não atualiza", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0307", "texto": "Fui cobrado duas vezes no cartão final 2519. Contato: elisa26@exemplo.com, tel (31) 99661-5587", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0052", "texto": "Entregaram no endereço errado", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0269", "texto": "A transportadora disse que eu não estava em casa, mas eu estava. Meu CPF é 790.146.443-84", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0181", "texto": "Vocês entregam em Manaus?. Meu CPF é 438.753.682-23", "categoria": "duvida", "atendente": "bot"}
+{"id": "ch0125", "texto": "Tem desconto para comprar dois?. Contato: diego93@exemplo.com, tel (31) 97050-9293", "categoria": "duvida", "atendente": "humano"}
+{"id": "ch0175", "texto": "A fatura veio com valor errado, cobraram R$ 309,67. Meu CPF é 794.770.724-43", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0027", "texto": "Tem desconto para comprar dois?", "categoria": "duvida", "atendente": "humano"}
+{"id": "dup005", "texto": "Quero mudar o endereço de entrega do pedido 29376", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0142", "texto": "Cobraram a assinatura depois que cancelei. Meu CPF é 472.116.483-13", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0049", "texto": "O PURIFICADOR PAROU DE LIGAR DEPOIS DE 3 DIAS. MEU CPF É 377.365.535-13", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0258", "texto": "O rastreio do pedido 77563 não atualiza. Meu CPF é 248.863.148-30", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0151", "texto": "A transportadora disse que eu não estava em casa, mas eu estava. Contato: ana55@exemplo.com, tel (31) 98813-7302", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0221", "texto": "COBRARAM A ASSINATURA DEPOIS QUE CANCELEI. MEU CPF É 396.629.465-19", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0043", "texto": "A transportadora disse que eu não estava em casa, mas eu estava", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0169", "texto": "Quero o estorno da cobrança de R$ 412,28. Meu CPF é 684.246.801-76", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0161", "texto": "Quero mudar o endereço de entrega do pedido 29376", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0233", "texto": "Qual o prazo de entrega para Salvador?. Meu CPF é 391.404.399-41", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0118", "texto": "Paguei via PIX e o pedido continua aguardando pagamento", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0028", "texto": "  Meu boleto venceu e não consigo gerar outro. Contato: elisa15@exemplo.com, tel (31) 99244-1080   ", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0297", "texto": "O PRODUTO FUNCIONA EM 220V?. MEU CPF É 201.927.857-43", "categoria": "duvida", "atendente": "humano"}
+{"id": "ch0364", "texto": "  Qual o prazo de entrega para Belo Horizonte?   ", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0210", "texto": "Cobraram a assinatura depois que cancelei. Contato: carla81@exemplo.com, tel (31) 95091-4385", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0126", "texto": "Quero mudar o endereço de entrega do pedido 18738. Meu CPF é 442.318.859-33. Contato: fábio17@exemplo.com, tel (31) 99949-5988", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0259", "texto": "A TRANSPORTADORA DISSE QUE EU NÃO ESTAVA EM CASA, MAS EU ESTAVA. CONTATO: ELISA49@EXEMPLO.COM, TEL (31) 92525-4467", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0091", "texto": "O rastreio do pedido 40847 não atualiza", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0253", "texto": "Veio faltando uma peça no pedido 51336. Contato: carla76@exemplo.com, tel (31) 97198-2917", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0313", "texto": "Qual o prazo de entrega para Porto Alegre?", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0171", "texto": "A fatura veio com valor errado, cobraram R$ 204,79", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0396", "texto": "Quero o estorno da cobrança de R$ 827,29. Meu CPF é 107.420.680-75", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0025", "texto": "Paguei via PIX e o pedido continua aguardando pagamento", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0226", "texto": "  O purificador parou de ligar depois de 9 dias   ", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0080", "texto": "Cobraram a assinatura depois que cancelei", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0220", "texto": "Qual o prazo de entrega para Manaus?", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0065", "texto": "A FATURA VEIO COM VALOR ERRADO, COBRARAM R$ 259,29", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0039", "texto": "A fatura veio com valor errado, cobraram R$ 866,53. Meu CPF é 464.754.738-16. Contato: fábio39@exemplo.com, tel (31) 96534-4539", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0386", "texto": "Qual o prazo de entrega para Porto Alegre?. Meu CPF é 598.400.615-49", "categoria": "entrega", "atendente": "humano"}
+{"id": "dup004", "texto": "Quero o estorno da cobrança de R$ 113,30", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0105", "texto": "FUI COBRADO DUAS VEZES NO CARTÃO FINAL 8910", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0274", "texto": "VEIO FALTANDO UMA PEÇA NO PEDIDO 70508", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0023", "texto": "Qual o prazo de entrega para Belo Horizonte?", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0041", "texto": "  Quero o estorno da cobrança de R$ 332,53   ", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0124", "texto": "Meu pedido 11445 está atrasado há 18 dias", "categoria": "entrega", "atendente": "humano"}
+{"id": "dup013", "texto": "O purificador parou de ligar depois de 7 dias", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0190", "texto": "O filtro novo não encaixa no aparelho. Contato: ana66@exemplo.com, tel (31) 96622-8715", "categoria": "defeito", "atendente": "bot"}
+{"id": "ch0073", "texto": "Quero o estorno da cobrança de R$ 894,23", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0053", "texto": "A fatura veio com valor errado, cobraram R$ 761,48. Contato: fábio93@exemplo.com, tel (31) 96358-7003", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0250", "texto": "Meu boleto venceu e não consigo gerar outro. Meu CPF é 349.946.531-73", "categoria": "cobranca", "atendente": "humano"}
+{"id": "dup022", "texto": "A transportadora disse que eu não estava em casa, mas eu estava", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0349", "texto": "Qual o prazo de entrega para Belo Horizonte?. Contato: ana87@exemplo.com, tel (31) 99593-3613", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0046", "texto": "Meu pedido 69728 está atrasado há 5 dias", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0204", "texto": "O produto do pedido 89191 chegou quebrado. Meu CPF é 405.331.715-20", "categoria": "defeito", "atendente": "bot"}
+{"id": "ch0165", "texto": "A tela do aparelho está piscando. Meu CPF é 120.276.650-42", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0109", "texto": "Quero o estorno da cobrança de R$ 629,48", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0362", "texto": "O purificador parou de ligar depois de 7 dias", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0299", "texto": "  Meu pedido 64610 está atrasado há 3 dias. Meu CPF é 746.969.573-59   ", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0255", "texto": "Paguei via PIX e o pedido continua aguardando pagamento. Meu CPF é 911.866.717-80. Contato: diego60@exemplo.com, tel (31) 98992-6232", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0329", "texto": "QUERO O ESTORNO DA COBRANÇA DE R$ 885,96", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0149", "texto": "Meu pedido 59355 está atrasado há 7 dias. Contato: ana64@exemplo.com, tel (31) 95927-9899", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0026", "texto": "O produto do pedido 32661 chegou quebrado", "categoria": "defeito", "atendente": "bot"}
+{"id": "dup002", "texto": "MEU BOLETO VENCEU E NÃO CONSIGO GERAR OUTRO", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0071", "texto": "Meu pedido 77051 está atrasado há 6 dias. Meu CPF é 251.940.807-59", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0099", "texto": "Quero o estorno da cobrança de R$ 238,80", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0385", "texto": "A transportadora disse que eu não estava em casa, mas eu estava. Contato: diego76@exemplo.com, tel (31) 94708-8953", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0360", "texto": "  O filtro novo não encaixa no aparelho   ", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0323", "texto": "O produto do pedido 78999 chegou quebrado", "categoria": "defeito", "atendente": "bot"}
+{"id": "ch0162", "texto": "Quero mudar o endereço de entrega do pedido 43397", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0237", "texto": "  O produto do pedido 92213 chegou quebrado   ", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0194", "texto": "A transportadora disse que eu não estava em casa, mas eu estava", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0223", "texto": "Entregaram no endereço errado. Meu CPF é 880.418.441-32", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0061", "texto": "A transportadora disse que eu não estava em casa, mas eu estava", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0047", "texto": "Quero mudar o endereço de entrega do pedido 99391", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0224", "texto": "Paguei via PIX e o pedido continua aguardando pagamento", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0293", "texto": "Entregaram no endereço errado. Contato: elisa54@exemplo.com, tel (31) 97780-7029", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0170", "texto": "  Entregaram no endereço errado. Meu CPF é 810.598.130-81   ", "categoria": "entrega", "atendente": "humano"}
+{"id": "dup015", "texto": "  O aparelho faz um barulho alto desde que chegou   ", "categoria": "defeito", "atendente": "bot"}
+{"id": "ch0152", "texto": "Quero o estorno da cobrança de R$ 113,30", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0044", "texto": "A FATURA VEIO COM VALOR ERRADO, COBRARAM R$ 698,30", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0010", "texto": "Fui cobrado duas vezes no cartão final 1634", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0079", "texto": "Veio faltando uma peça no pedido 66879. Meu CPF é 638.438.637-76", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0111", "texto": "A fatura veio com valor errado, cobraram R$ 329,49. Contato: bruno35@exemplo.com, tel (31) 94743-5229", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0159", "texto": "A transportadora disse que eu não estava em casa, mas eu estava. Meu CPF é 542.486.305-96", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0361", "texto": "  O aparelho faz um barulho alto desde que chegou   ", "categoria": "defeito", "atendente": "bot"}
+{"id": "ch0070", "texto": "  COBRARAM A ASSINATURA DEPOIS QUE CANCELEI. MEU CPF É 137.957.574-85   ", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0291", "texto": "Cobraram a assinatura depois que cancelei. Meu CPF é 524.437.836-84. Contato: elisa68@exemplo.com, tel (31) 95516-5704", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0034", "texto": "Paguei via PIX e o pedido continua aguardando pagamento. Meu CPF é 617.749.876-53", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0115", "texto": "Qual o prazo de entrega para Belo Horizonte?. Meu CPF é 359.506.619-98", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0187", "texto": "Quero mudar o endereço de entrega do pedido 51877", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0189", "texto": "Quero o estorno da cobrança de R$ 565,53", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0160", "texto": "Quero mudar o endereço de entrega do pedido 86784. Meu CPF é 943.267.767-54", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0352", "texto": "Quero mudar o endereço de entrega do pedido 69895. Contato: elisa15@exemplo.com, tel (31) 97397-8849", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0198", "texto": "Quero mudar o endereço de entrega do pedido 34821. Contato: carla93@exemplo.com, tel (31) 96231-5393", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0295", "texto": "  Qual o prazo de entrega para Belo Horizonte?   ", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0290", "texto": "A transportadora disse que eu não estava em casa, mas eu estava. Meu CPF é 888.938.851-73", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0368", "texto": "Meu boleto venceu e não consigo gerar outro. Contato: elisa65@exemplo.com, tel (31) 97168-9696", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0228", "texto": "  A transportadora disse que eu não estava em casa, mas eu estava   ", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0254", "texto": "Quero mudar o endereço de entrega do pedido 56242", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0392", "texto": "MEU PEDIDO 56596 ESTÁ ATRASADO HÁ 2 DIAS. CONTATO: CARLA30@EXEMPLO.COM, TEL (31) 99522-8751", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0342", "texto": "O aparelho faz um barulho alto desde que chegou. Meu CPF é 664.694.528-29", "categoria": "defeito", "atendente": "bot"}
+{"id": "ch0247", "texto": "Veio faltando uma peça no pedido 14872", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0066", "texto": "Paguei via PIX e o pedido continua aguardando pagamento. Meu CPF é 798.193.900-66. Contato: elisa53@exemplo.com, tel (31) 99612-9096", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0100", "texto": "Posso pagar em 10 vezes?. Meu CPF é 807.383.471-45", "categoria": "duvida", "atendente": "bot"}
+{"id": "ch0300", "texto": "O produto funciona em 220V?", "categoria": "duvida", "atendente": "humano"}
+{"id": "ch0182", "texto": "Quero mudar o endereço de entrega do pedido 29318. Meu CPF é 881.698.510-79. Contato: bruno6@exemplo.com, tel (31) 93834-7573", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0088", "texto": "A transportadora disse que eu não estava em casa, mas eu estava", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0278", "texto": "Quero o estorno da cobrança de R$ 831,44. Contato: bruno23@exemplo.com, tel (31) 94707-2896", "categoria": "cobranca", "atendente": "bot"}
+{"id": "dup017", "texto": "Quero o estorno da cobrança de R$ 236,65", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0040", "texto": "Quero mudar o endereço de entrega do pedido 61822. Meu CPF é 210.856.342-42", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0271", "texto": "O aparelho faz um barulho alto desde que chegou", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0384", "texto": "Meu boleto venceu e não consigo gerar outro", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0353", "texto": "Entregaram no endereço errado", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0130", "texto": "  Paguei via PIX e o pedido continua aguardando pagamento   ", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0225", "texto": "O filtro novo não encaixa no aparelho. Meu CPF é 106.800.144-82", "categoria": "defeito", "atendente": "bot"}
+{"id": "dup012", "texto": "A transportadora disse que eu não estava em casa, mas eu estava. Meu CPF é 790.146.443-84", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0381", "texto": "  Entregaram no endereço errado   ", "categoria": "entrega", "atendente": "bot"}
+{"id": "ch0172", "texto": "  VOCÊS ENTREGAM EM CURITIBA?   ", "categoria": "duvida", "atendente": "humano"}
+{"id": "ch0284", "texto": "O aparelho faz um barulho alto desde que chegou", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0193", "texto": "Quero mudar o endereço de entrega do pedido 15120", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0257", "texto": "Cobraram a assinatura depois que cancelei", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0064", "texto": "O filtro novo não encaixa no aparelho. Meu CPF é 990.929.628-26", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0318", "texto": "A fatura veio com valor errado, cobraram R$ 129,91", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0296", "texto": "O PURIFICADOR PAROU DE LIGAR DEPOIS DE 3 DIAS", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0218", "texto": "A transportadora disse que eu não estava em casa, mas eu estava", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0208", "texto": "  Quero mudar o endereço de entrega do pedido 74808   ", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0048", "texto": "Fui cobrado duas vezes no cartão final 9240", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0150", "texto": "Entregaram no endereço errado", "categoria": "entrega", "atendente": "humano"}
+{"id": "ch0395", "texto": "Veio faltando uma peça no pedido 37563", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0391", "texto": "Posso pagar em 10 vezes?", "categoria": "duvida", "atendente": "humano"}
+{"id": "ch0134", "texto": "VEIO FALTANDO UMA PEÇA NO PEDIDO 17332. CONTATO: CARLA23@EXEMPLO.COM, TEL (31) 92643-6468", "categoria": "defeito", "atendente": "humano"}
+{"id": "ch0031", "texto": "Paguei via PIX e o pedido continua aguardando pagamento", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0067", "texto": "Meu boleto venceu e não consigo gerar outro. Meu CPF é 243.208.783-60", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0245", "texto": "O RASTREIO DO PEDIDO 50739 NÃO ATUALIZA. CONTATO: ANA1@EXEMPLO.COM, TEL (31) 93765-8912", "categoria": "entrega", "atendente": "humano"}
+{"id": "dup009", "texto": "Paguei via PIX e o pedido continua aguardando pagamento. Meu CPF é 911.866.717-80. Contato: diego60@exemplo.com, tel (31) 98992-6232", "categoria": "cobranca", "atendente": "bot"}
+{"id": "dup018", "texto": "Quero o estorno da cobrança de R$ 79,33", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0219", "texto": "Quero o estorno da cobrança de R$ 451,14", "categoria": "cobranca", "atendente": "bot"}
+{"id": "ch0370", "texto": "Quero o estorno da cobrança de R$ 298,24", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0001", "texto": "Fui cobrado duas vezes no cartão final 9825", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0324", "texto": "A fatura veio com valor errado, cobraram R$ 63,97", "categoria": "cobranca", "atendente": "humano"}
+{"id": "ch0205", "texto": "Meu boleto venceu e não consigo gerar outro", "categoria": "cobranca", "atendente": "bot"}
