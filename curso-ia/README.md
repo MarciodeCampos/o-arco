@@ -34,6 +34,7 @@ curso-ia/
 ├── modulo-12/index.html  aulas do módulo 12
 ├── modulo-13/index.html  aulas do módulo 13
 ├── modulo-14/index.html  aulas do módulo 14
+├── modulo-15/index.html  aulas do módulo 15
 └── codigo/
     ├── modulo-01/
     │   ├── python/       labs e projeto (NumPy + SDK anthropic)
@@ -82,8 +83,11 @@ curso-ia/
     ├── modulo-13/
     │   ├── python/       labs: reunião→tarefas com citação verificada, RICE com sensibilidade, previsão Monte Carlo
     │   └── dados/        transcrição de reunião, backlog e histórico de vazão do time
-    └── modulo-14/
-        └── kit/          verificador de entrega, modelos de README e arquitetura, checklist de produção, CI
+    ├── modulo-14/
+    │   └── kit/          verificador de entrega, modelos de README e arquitetura, checklist de produção, CI
+    └── modulo-15/
+        ├── python/       labs: mapa de competências por nível, simulador de entrevista de system design
+        └── dados/        questões de system design com pontos esperados, autoavaliação de exemplo
 ```
 
 ## Status
@@ -104,7 +108,7 @@ curso-ia/
 | 12 · Segurança, Privacidade e Governança | ✅ pronto |
 | 13 · IA para Produto e Gestão | ✅ pronto |
 | 14 · Projeto Integrador | ✅ pronto |
-| 15 – 15 | planejados (ver `curriculo.json`) |
+| 15 · Carreira em Engenharia de IA | ✅ pronto |
 
 ## Rodando os labs do Módulo 1
 

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050508">
+<meta name="description" content="Módulo 15 — Carreira em Engenharia de IA: expectativas por nível, portfólio, entrevistas técnicas, system design de sistemas com IA e negociação.">
+<title>Módulo 15 · Carreira em Engenharia de IA — Engenharia de IA Aplicada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/curso.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/">◈ TRIADIC.LIFE</a>
+  <span class="crumbs">/ <a href="../">Engenharia de IA</a> / Módulo 15</span>
+  <span class="spacer"></span>
+  <span class="progress-pill">0/7 aulas</span>
+</header>
+<div class="layout">
+  <aside class="toc">
+    <button class="toc-toggle" type="button">☰ Aulas do módulo</button>
+    <h2>Módulo 15</h2>
+    <nav><ol>
+      <li><a href="#inicio"><span class="chk"></span>Visão geral</a></li>
+      <li><a href="#aula-1"><span class="chk"></span>15.1 Expectativas por nível</a></li>
+      <li><a href="#aula-2"><span class="chk"></span>15.2 Portfólio e marca</a></li>
+      <li><a href="#aula-3"><span class="chk"></span>15.3 Entrevista técnica</a></li>
+      <li><a href="#aula-4"><span class="chk"></span>15.4 System design de IA</a></li>
+      <li><a href="#aula-5"><span class="chk"></span>15.5 Negociação e promoção</a></li>
+      <li><a href="#projeto"><span class="chk"></span>Projeto do módulo</a></li>
+      <li><a href="#recursos"><span class="chk"></span>Recursos</a></li>
+    </ol></nav>
+  </aside>
+  <main class="content" data-modulo="modulo-15">
+    <section id="inicio">
+      <header><div class="eyebrow">Módulo 15 · 12h estimadas</div><h1>Carreira em Engenharia de IA</h1></header>
+      <p class="lede">
+        O mercado de IA muda depressa, mas o que contrata e promove engenheiros muda devagar: resolver
+        problemas reais, medir o que faz e explicar as decisões. Este módulo transforma o que você
+        construiu no curso em evidência de carreira e treina a entrevista que mais diferencia nessa área,
+        a de system design de sistemas com IA.
+      </p>
+      <div class="meta"><span class="tag">5 aulas</span><span class="tag">2 labs</span><span class="tag">Python</span><span class="tag">Pré-requisito: Módulo 14</span></div>
+<pre data-lang="bash"><code>cd o-arco/curso-ia/codigo/modulo-15/python
+pip install -r requirements.txt
+python 01_mapa_de_competencias.py                 # sem API
+python 02_simulador_system_design.py suporte-rag  # com API: entrevista simulada</code></pre>
+    </section>
+
+    <section class="lesson" id="aula-1">
+      <h2>15.1 O que o mercado espera de cada nível</h2>
+      <div class="lesson-meta">Leitura + lab · 2h</div>
+      <table>
+        <tr><th>Nível</th><th>Escopo típico</th><th>Sinal de que está pronto para o próximo</th></tr>
+        <tr><td>Júnior</td><td>Tarefas bem definidas: integrar uma API, um endpoint, um ajuste de prompt com eval existente</td><td>Entrega sem retrabalho e já pergunta "como vamos medir isso?"</td></tr>
+        <tr><td>Pleno</td><td>Uma funcionalidade inteira: RAG de um domínio, um agente com ferramentas, com evals e custos</td><td>Decide entre alternativas com dados e antecipa falhas em produção</td></tr>
+        <tr><td>Sênior</td><td>Um sistema: arquitetura, operação, segurança e qualidade de um produto com IA</td><td>Outras pessoas e times passam a usar o que você definiu</td></tr>
+        <tr><td>Staff / principal</td><td>Vários times: plataforma de LLM, padrões de avaliação e governança, estratégia de modelos</td><td>Muda a forma como a organização constrói, não só o que constrói</td></tr>
+      </table>
+      <p>O lab compara uma autoavaliação com essas expectativas e sugere, para cada lacuna, um módulo do curso e uma peça de portfólio:</p>
+<pre data-lang="saída"><code>área                     nota    esperado (pleno)
+avaliacao                   1                   3  ▼ 2
+rag                         2                   3  ▼ 1
+producao_e_llmops           1                   2  ▼ 1
+...
+Nível estimado hoje: junior · alvo: pleno
+
+Plano (maiores lacunas primeiro):
+1. avaliacao (+2): revisar Módulo 3; peça de portfólio: suíte de evals com IC 95% rodando no CI
+2. rag (+1): revisar Módulo 4; peça de portfólio: RAG com busca híbrida, citações e métricas de recuperação</code></pre>
+      <p>Copie <code>dados/autoavaliacao_exemplo.json</code>, dê suas notas e rode <code>python 01_mapa_de_competencias.py sua.json senior</code>. As expectativas são uma referência para conversar com sua liderança, não uma régua oficial; cada empresa tem a sua.</p>
+    </section>
+
+    <section class="lesson" id="aula-2">
+      <h2>15.2 Portfólio no GitHub e marca pessoal</h2>
+      <div class="lesson-meta">Leitura + prática · 2h</div>
+      <ul>
+        <li><strong>Dois ou três projetos profundos valem mais que vinte tutoriais.</strong> O Projeto Integrador é a peça principal; escolha mais um ou dois projetos de módulo e leve-os ao nível de produção.</li>
+        <li><strong>O README é a entrevista antes da entrevista:</strong> problema, arquitetura, como rodar, números de qualidade e custo, decisões e limitações (modelo no <a href="../modulo-14/">Módulo 14</a>). Recrutadores leem os primeiros parágrafos; engenheiros procuram os testes e as evals.</li>
+        <li><strong>Mostre o processo:</strong> issues e PRs com descrições claras, histórico de commits legível, um relatório de evals antes e depois de uma mudança.</li>
+        <li><strong>Escreva:</strong> um texto curto por projeto ("como reduzi o custo por chamado em 70% com destilação, e onde ela falhou") no LinkedIn ou num blog. Conteúdo com números e erros honestos se destaca no meio de muito entusiasmo genérico.</li>
+        <li><strong>Contribua:</strong> correções em bibliotecas que você usou (SDKs, servidores MCP, ferramentas de evals) são evidência pública de que você lê e melhora código alheio.</li>
+      </ul>
+      <div class="callout"><b>Cuidado com dados</b>Projetos de portfólio feitos no trabalho só vão a público com autorização e sem dados de clientes. Recrie o problema com dados sintéticos, como os labs do curso fazem.</div>
+    </section>
+
+    <section class="lesson" id="aula-3">
+      <h2>15.3 Entrevista técnica: live coding e perguntas específicas de IA</h2>
+      <div class="lesson-meta">Leitura + prática · 3h</div>
+      <p>Muitas empresas ainda fazem live coding tradicional; pratique estruturas de dados e leitura de código. Em vagas de IA aparecem também exercícios como "implemente a chamada com ferramentas e trate erros" ou "escreva uma eval para esta função". Pense em voz alta, escreva testes e trate o caso de erro antes de ser perguntado.</p>
+      <h3>Perguntas frequentes e o que uma boa resposta inclui</h3>
+      <details>
+        <summary>"Como você sabe que um prompt novo é melhor que o antigo?"</summary>
+        <p>Dataset com gabarito, várias repetições por caso, intervalo de confiança e teste pareado; olhar as regressões caso a caso, não só a média; rodar no CI (Módulo 3).</p>
+      </details>
+      <details>
+        <summary>"RAG ou fine-tuning?"</summary>
+        <p>RAG para conhecimento que muda e precisa de citação; fine-tuning ou destilação para formato, estilo ou uma tarefa estreita em volume alto. Muitas vezes, nenhum dos dois: um prompt melhor com exemplos resolve. Decida com eval e custo (Módulos 4 e 11).</p>
+      </details>
+      <details>
+        <summary>"O que é prompt injection e como você se defende?"</summary>
+        <p>Instruções vindas de conteúdo não confiável. Não existe filtro perfeito: delimitar o conteúdo, limitar ferramentas, exigir aprovação em ações irreversíveis, limpar a saída e quebrar a tríade letal (Módulo 12).</p>
+      </details>
+      <details>
+        <summary>"Quando usar um agente e quando um workflow?"</summary>
+        <p>Workflow quando os passos são conhecidos: mais barato, previsível e testável. Agente quando o caminho depende do que for descoberto, com orçamento, detecção de laço e avaliação de trajetória (Módulo 6).</p>
+      </details>
+      <details>
+        <summary>"Como reduzir o custo de um sistema com LLM?"</summary>
+        <p>Medir primeiro (custo por tarefa, por rota); depois cache de prompt, modelo menor por rota, batch para o que não é interativo, cortar contexto desnecessário e, em volume alto, destilação. Cada alavanca validada com eval (Módulos 2, 9 e 11).</p>
+      </details>
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>O entrevistador pergunta algo que você não sabe. Qual é a melhor resposta?</p>
+          <button type="button">Dar um número aproximado com confiança para não parecer inseguro</button>
+          <button type="button" data-certa>Dizer o que sabe, o que não sabe e como descobriria ou mediria</button>
+          <button type="button">Mudar de assunto para algo que domina</button>
+          <p class="why">Em engenharia de IA, separar o medido do suposto é exatamente a competência que está sendo avaliada.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="lesson" id="aula-4">
+      <h2>15.4 System design de sistemas com IA</h2>
+      <div class="lesson-meta">Leitura + lab · 3h</div>
+      <p>Um roteiro para 45 minutos, adaptado do system design clássico:</p>
+      <ol>
+        <li><strong>Requisitos (5 min):</strong> usuários, volume, latência, o que pode dar errado e qual erro é pior (falso positivo ou falso negativo).</li>
+        <li><strong>Estimativas (5 min):</strong> requisições por segundo, tokens por requisição, custo por dia, limites de taxa (Módulo 9.1).</li>
+        <li><strong>Desenho de alto nível (10 min):</strong> onde entra o modelo, onde entra código determinístico, RAG, ferramentas, filas.</li>
+        <li><strong>Qualidade (10 min):</strong> como avaliar antes e depois do lançamento; dataset, métricas, revisão humana, deriva.</li>
+        <li><strong>Falhas, segurança e custos (10 min):</strong> provedor fora, injeção, dados pessoais, orçamento, aprovação humana.</li>
+        <li><strong>Evolução (5 min):</strong> o que muda com 10 vezes mais volume; quando destilar ou trocar de modelo.</li>
+      </ol>
+      <div class="exercise">
+        <h4>LAB 15.4 — Entrevista simulada com avaliação verificável</h4>
+        <p>O modelo faz o papel de entrevistador: responde às suas perguntas de esclarecimento com números consistentes e aprofunda onde a resposta foi rasa, sem entregar a solução. Digite <code>fim</code> para receber a avaliação contra os pontos esperados da questão. Cada ponto marcado como coberto precisa citar uma frase sua, e o código confere que a frase existe. Elogio sem evidência é descartado, a mesma regra das atas do Módulo 13.</p>
+<pre data-lang="bash"><code>python 02_simulador_system_design.py                 # questão aleatória
+python 02_simulador_system_design.py moderacao       # suporte-rag, agente-financeiro ou moderacao
+python 02_simulador_system_design.py moderacao --respostas respostas.txt   # repetir com as mesmas respostas</code></pre>
+        <p>Uma simulação típica custa alguns centavos de dólar; o script mostra o custo real no final. Treine a mesma questão duas vezes e compare a cobertura. Depois, escreva uma questão nova no JSON a partir de um sistema que você conhece.</p>
+      </div>
+    </section>
+
+    <section class="lesson" id="aula-5">
+      <h2>15.5 Negociação, aumento e promoção</h2>
+      <div class="lesson-meta">Leitura · 2h</div>
+      <ul>
+        <li><strong>Pesquise a faixa antes:</strong> pesquisas salariais de mercado, comunidades da área, vagas que publicam faixa e conversas com pessoas do nível desejado. Faixas mudam rápido em IA; use dados do ano corrente e da sua região ou modalidade (CLT, PJ, remoto internacional).</li>
+        <li><strong>Compare o pacote inteiro:</strong> salário, bônus, participação, benefícios, regime de contratação e impostos, flexibilidade e tempo para estudar.</li>
+        <li><strong>Negocie com evidência, não com necessidade:</strong> "liderei a redução de 40% no custo por atendimento mantendo a qualidade dentro do intervalo de confiança" é melhor que "o custo de vida subiu".</li>
+        <li><strong>Promoção é escopo demonstrado:</strong> combine com sua liderança o que precisa estar visível para o próximo nível (use o mapa da aula 15.1), registre entregas com números ao longo do ciclo e peça feedback cedo, não só na avaliação.</li>
+        <li><strong>Diga o número primeiro só quando ele for bom para você.</strong> Se perguntarem a pretensão, uma faixa baseada em dados de mercado, ancorada no topo do que é razoável, funciona melhor que um número único.</li>
+      </ul>
+    </section>
+
+    <section class="lesson" id="projeto">
+      <h2>Projeto do módulo: portfólio publicado e entrevista simulada</h2>
+      <div class="lesson-meta">Projeto · 2h+</div>
+      <ol>
+        <li>Rode o mapa de competências para o nível desejado e escolha duas lacunas para trabalhar.</li>
+        <li>Publique o Projeto Integrador e mais um projeto com README no padrão do Módulo 14, passando no <code>verificar_projeto.py</code>.</li>
+        <li>Escreva um texto curto sobre uma decisão técnica de um dos projetos, com números.</li>
+        <li>Faça três simulações de system design, uma de cada questão, e registre a cobertura de cada uma. Repita a pior.</li>
+      </ol>
+      <h3>Critérios de avaliação</h3>
+      <table>
+        <tr><th>Critério</th><th>Peso</th></tr>
+        <tr><td>Projetos publicados com README completo e números reproduzíveis</td><td>40%</td></tr>
+        <tr><td>Texto técnico com decisão e evidência</td><td>20%</td></tr>
+        <tr><td>Simulações registradas e evolução na repetição</td><td>25%</td></tr>
+        <tr><td>Plano de desenvolvimento a partir do mapa de competências</td><td>15%</td></tr>
+      </table>
+    </section>
+
+    <section class="lesson" id="recursos">
+      <h2>Recursos para aprofundar</h2>
+      <div class="lesson-meta">Gratuitos</div>
+      <ul class="resources">
+        <li><a href="https://github.com/donnemartin/system-design-primer" target="_blank" rel="noopener">System Design Primer</a> <small>· fundamentos de system design clássico</small></li>
+        <li><a href="https://staffeng.com/guides/" target="_blank" rel="noopener">StaffEng guides</a> <small>· como funcionam os níveis staff e principal</small></li>
+        <li><a href="https://www.anthropic.com/engineering" target="_blank" rel="noopener">Anthropic Engineering</a> <small>· textos técnicos sobre agentes, evals e ferramentas</small></li>
+      </ul>
+      <div class="callout"><b>Fim do curso</b>Você passou por fundamentos, APIs, avaliação, RAG, MCP, agentes, código, front-end, produção, DevOps, modelos abertos, segurança, produto, um projeto integrador e carreira. A área vai mudar; o hábito de medir, proteger e explicar decisões continua valendo.</div>
+      <nav class="pager">
+        <a href="../modulo-14/"><small>← Módulo anterior</small>14 · Projeto Integrador</a>
+        <a class="next" href="../"><small>Voltar ao início</small>Todos os módulos</a>
+      </nav>
+    </section>
+  </main>
+</div>
+<footer class="foot"><a href="/">triadic.life</a> · <a href="../">Engenharia de IA Aplicada</a> · <a href="https://github.com/MarciodeCampos/o-arco/tree/main/curso-ia/codigo/modulo-15" target="_blank" rel="noopener">código do módulo</a></footer>
+<script src="../assets/curso.js"></script>
+</body>
+</html>
