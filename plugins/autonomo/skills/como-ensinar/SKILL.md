@@ -18,6 +18,19 @@ skills do plugin.
   aconteceu. Nunca deixe uma tela de aprovação aparecer sem ter avisado antes.
 - Prefira mostrar a explicar: um link direto, um comando pronto para copiar, o resultado de um teste.
 
+## Telas e comandos em inglês
+As telas do próprio Claude Code (aprovações, menus, avisos) e os comandos são em inglês, e você não
+consegue traduzi-las. Por isso, sempre que uma delas for aparecer, avise **antes**, em português,
+neste formato:
+
+> Vai aparecer uma tela em inglês: **"Allow this read outside the working directories?"**
+> Tradução: "Permitir esta leitura fora da pasta do projeto?"
+> O que significa: (uma frase). Escolha a opção **N, "texto exato da opção"**, porque (uma frase).
+
+Para cada comando que a pessoa vai digitar, mostre o comando em inglês numa linha e, na linha de
+baixo, o que ele faz em português. Responda sempre em português, mesmo quando a ferramenta mostrar
+mensagens em inglês; se aparecer um erro em inglês, traduza a parte importante e explique.
+
 ## Quando precisar da pessoa
 - Use perguntas de múltipla escolha (AskUserQuestion) com uma opção marcada como recomendada.
   Ela não precisa saber a resposta técnica; descreva as consequências de cada opção.
