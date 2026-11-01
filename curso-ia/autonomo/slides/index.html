@@ -56,7 +56,7 @@ a:hover { color: var(--gold); }
 .stage { flex: 1; min-height: 0; position: relative; }
 .slide {
   position: absolute; inset: 0; display: none; overflow-y: auto;
-  padding: 36px 20px 28px;
+  padding: 28px 20px 24px;
 }
 .slide.on { display: block; animation: entra .25s ease; }
 @keyframes entra { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
@@ -91,7 +91,7 @@ kbd {
 .card ul { padding-left: 18px; }
 .card li { margin: 4px 0; }
 .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-.grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
 .callout {
   margin-top: 18px; padding: 12px 16px; border-left: 3px solid var(--cyan);
   background: rgba(74,201,201,.06); border-radius: 0 8px 8px 0; font-size: 15px;
@@ -102,8 +102,8 @@ kbd {
 
 /* caixa de comando com botão copiar */
 .cmd {
-  display: flex; align-items: center; gap: 10px; margin: 10px 0;
-  background: #0d0d14; border: 1px solid var(--border); border-radius: 10px; padding: 10px 10px 10px 14px;
+  display: flex; align-items: center; gap: 10px; margin: 8px 0;
+  background: #0d0d14; border: 1px solid var(--border); border-radius: 10px; padding: 7px 8px 7px 14px;
 }
 .cmd code { background: none; padding: 0; font-size: 15px; color: #fff; flex: 1; overflow-x: auto; white-space: nowrap; }
 .cmd .where { font: 600 10px "Inter", sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-dim); flex: none; }
@@ -134,9 +134,13 @@ kbd {
 .caption { font-size: 13px; color: var(--text-dim); margin-top: 8px; }
 
 /* tradução lado a lado */
-.trad { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; font-size: 15px; }
-.trad dt { font-family: var(--mono); font-size: 13px; color: #fff; white-space: nowrap; }
-.trad dd { color: var(--text-dim); }
+/* inglês em cima, português embaixo */
+.trad { display: block; font-size: 15px; }
+.trad dt { font-family: var(--mono); font-size: 13px; color: #fff; border-left: 2px solid var(--gold-dim); padding-left: 10px; margin-top: 10px; }
+.trad dt:first-child { margin-top: 0; }
+.trad dd { color: var(--text-dim); border-left: 2px solid var(--gold-dim); padding-left: 10px; }
+.trad dd b { color: var(--text); font-weight: 600; }
+.trad.compact dt { margin-top: 6px; }
 
 /* escolha do sistema */
 .os-pick { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 10px; }
@@ -189,8 +193,6 @@ body.os-windows div[data-os~="windows"], body.os-mac div[data-os~="mac"], body.o
   .nav { padding: 10px 16px; }
   .term { font-size: 12px; }
   .cmd code { font-size: 13px; white-space: normal; overflow-wrap: anywhere; }
-  .trad { grid-template-columns: 1fr; gap: 0; }
-  .trad dd { margin-bottom: 8px; }
 }
 @media (prefers-reduced-motion: reduce) { .slide.on { animation: none; } .t-cursor { animation: none; } }
 </style>
@@ -328,7 +330,8 @@ Copyright (C) Microsoft Corporation. Todos os direitos reservados.
   <div class="cols" style="margin-top:14px">
     <div>
       <ol class="steps">
-        <li>Espere até aparecer a mensagem de instalação concluída (<em>successfully installed</em>).</li>
+        <li>Espere até aparecer a mensagem de instalação concluída:
+          <dl class="trad" style="margin:6px 0"><dt>Claude Code successfully installed!</dt><dd><b>Claude Code instalado com sucesso!</b></dd></dl></li>
         <li><b>Feche o terminal e abra de novo.</b> Assim ele passa a reconhecer o comando <code>claude</code>.</li>
         <li>Para conferir, digite <code>claude --version</code>. Deve aparecer um número de versão.</li>
       </ol>
@@ -379,9 +382,10 @@ válido nesta versão.</span></div></div>
       <div class="cmd"><code>claude</code><button class="copy" type="button">Copiar</button></div>
       <p class="dim">Na primeira vez, aparece uma tela de boas-vindas com avisos de segurança. Em português:</p>
       <dl class="trad" style="margin-top:10px">
-        <dt>Claude can make mistakes</dt><dd>O Claude pode errar: confira o que ele faz, principalmente quando roda código.</dd>
-        <dt>prompt injection</dt><dd>Textos maliciosos escondidos em arquivos podem tentar enganá-lo. Use com código em que você confia.</dd>
-        <dt>Press Enter to continue</dt><dd>Aperte <kbd>Enter</kbd> para continuar.</dd>
+        <dt>Welcome to Claude Code</dt><dd><b>Bem-vindo ao Claude Code</b></dd>
+        <dt>Claude can make mistakes</dt><dd><b>O Claude pode errar.</b> Confira o que ele faz, principalmente quando roda código.</dd>
+        <dt>Due to prompt injection risks, only use it with code you trust</dt><dd><b>Por causa do risco de injeção de instruções, use só com código em que você confia.</b> Textos maliciosos escondidos em arquivos podem tentar enganá-lo.</dd>
+        <dt>Press Enter to continue…</dt><dd><b>Aperte Enter para continuar.</b></dd>
       </dl>
     </div>
     <div>
@@ -409,12 +413,12 @@ válido nesta versão.</span></div></div>
   <div class="cols wide-left">
     <div>
       <p>O Claude pergunta qual estilo de texto fica melhor no seu terminal. Use as setas <kbd>↑</kbd> <kbd>↓</kbd> e aperte <kbd>Enter</kbd>.</p>
-      <dl class="trad" style="margin-top:12px">
-        <dt>Auto</dt><dd>acompanha as cores do terminal</dd>
-        <dt>Dark mode</dt><dd>fundo escuro (o mais comum)</dd>
-        <dt>Light mode</dt><dd>fundo claro</dd>
-        <dt>colorblind-friendly</dt><dd>cores pensadas para daltonismo</dd>
-        <dt>ANSI colors only</dt><dd>só as cores básicas, para terminais antigos</dd>
+      <dl class="trad compact" style="margin-top:12px">
+        <dt>Choose the text style that looks best with your terminal</dt><dd><b>Escolha o estilo de texto que fica melhor no seu terminal</b></dd>
+        <dt>Auto (match terminal)</dt><dd><b>Automático</b>: acompanha as cores do terminal</dd>
+        <dt>Dark mode / Light mode</dt><dd><b>Modo escuro / modo claro</b>: fundo escuro ou claro</dd>
+        <dt>colorblind-friendly</dt><dd><b>para daltonismo</b>: cores que se distinguem melhor</dd>
+        <dt>ANSI colors only</dt><dd><b>só cores básicas</b>: para terminais antigos</dd>
       </dl>
       <p class="dim small" style="margin-top:12px">Na dúvida, escolha <b>Dark mode</b>. Dá para mudar depois com o comando <code>/theme</code>.</p>
     </div>
@@ -457,8 +461,12 @@ with your terminal</span>
      <span class="t-dim">Pro, Max, Team, or Enterprise</span>
   2. Anthropic Console account
      <span class="t-dim">API usage billing</span></div></div>
-      <div class="term" style="margin-top:12px"><div class="bar">claude</div><div class="body"><span class="t-dim">Logged in as voce@email.com</span>
-<span class="t-ok">Login successful. Press Enter to continue…</span></div></div>
+      <dl class="trad compact" style="margin-top:12px">
+        <dt>Select login method</dt><dd><b>Escolha como entrar</b></dd>
+        <dt>Claude account with subscription</dt><dd><b>Conta Claude com assinatura</b> (Pro, Max, Team ou Enterprise). <b>Escolha esta.</b></dd>
+        <dt>Anthropic Console account · API usage billing</dt><dd><b>Conta do Console da Anthropic, cobrada por uso da API.</b> Para programadores; não é o seu caso.</dd>
+        <dt>Logged in as … · Login successful</dt><dd><b>Conectado como … · Login feito com sucesso</b></dd>
+      </dl>
     </div>
   </div>
 </div></section>
@@ -484,6 +492,11 @@ files contained in this directory.</span>
 <span class="t-sel">❯ 1. Yes, proceed</span>
   2. No, exit</div></div>
       <p class="caption">O texto exato pode variar um pouco conforme a versão.</p>
+      <dl class="trad compact" style="margin-top:12px">
+        <dt>Do you trust the files in this folder?</dt><dd><b>Você confia nos arquivos desta pasta?</b></dd>
+        <dt>Claude Code may read, write, or execute files contained in this directory.</dt><dd><b>O Claude Code poderá ler, escrever ou executar arquivos desta pasta.</b></dd>
+        <dt>Yes, proceed / No, exit</dt><dd><b>Sim, continuar / Não, sair</b></dd>
+      </dl>
     </div>
   </div>
 </div></section>
@@ -510,6 +523,11 @@ Checking for updates...
 <span class="t-ok">Successfully updated to version 2.1.316</span>
 <span class="t-ps">meu-primeiro-projeto&gt; </span><span class="t-cmd">claude</span></div></div>
       <p class="caption">Os números de versão são um exemplo. O Claude Code também se atualiza sozinho com o tempo.</p>
+      <dl class="trad compact" style="margin-top:12px">
+        <dt>Checking for updates… · Successfully updated</dt><dd><b>Procurando atualizações… · Atualizado com sucesso</b></dd>
+        <dt>Updated to latest. Got 53 features, 386 bugfixes…</dt><dd><b>Atualizado para a versão mais nova</b>, com a lista de novidades e correções. Aparece ao abrir o Claude.</dd>
+        <dt>Auto mode is now Claude Code's default permission mode.</dt><dd><b>O modo auto agora é o modo de permissão padrão.</b> Um segundo modelo confere cada ação antes de executar: roda as de baixo risco e bloqueia as perigosas. O plugin explica e configura isso com você.</dd>
+      </dl>
     </div>
   </div>
 </div></section>
@@ -518,19 +536,29 @@ Checking for updates...
 <section class="slide" data-title="Instalar o plugin"><div class="inner">
   <div class="eyebrow">Passo 9 de 9</div>
   <h2>Instale o plugin <span>autonomo</span></h2>
-  <p class="lede">Agora dentro do Claude Code (na caixa com <code>&gt;</code>), digite um comando de cada vez:</p>
+  <p>Agora dentro do Claude Code (na caixa com <code>&gt;</code>), digite um comando de cada vez:</p>
   <div class="cmd"><span class="where">1º · catálogo</span><code>/plugin marketplace add MarciodeCampos/o-arco</code><button class="copy" type="button">Copiar</button></div>
   <div class="cmd"><span class="where">2º · plugin</span><code>/plugin install autonomo@o-arco</code><button class="copy" type="button">Copiar</button></div>
   <div class="cmd"><span class="where">3º · ativar</span><code>/reload-plugins</code><button class="copy" type="button">Copiar</button></div>
   <div class="cols" style="margin-top:12px">
-    <dl class="trad">
-      <dt>marketplace add</dt><dd>adiciona o catálogo de plugins do curso, que fica no GitHub.</dd>
-      <dt>install</dt><dd>instala o plugin. Abre um painel com os detalhes: confirme.</dd>
-      <dt>reload-plugins</dt><dd>ativa o plugin sem precisar fechar o Claude.</dd>
-    </dl>
-    <div class="callout warn" style="margin-top:0"><b>Apareceu "Unknown command"?</b> O Claude Code está desatualizado. Volte ao slide anterior e rode <code>claude update</code>.</div>
+    <div>
+      <div class="term"><div class="bar">claude</div><div class="body"><span class="t-b">&gt; /plugin marketplace add MarciodeCampos/o-arco</span>
+  ⎿ Successfully added marketplace: o-arco
+<span class="t-b">&gt; /plugin install autonomo@o-arco</span>
+  ⎿ <span class="t-ok">✓</span> Installed autonomo. Plugin is now active.
+<span class="t-b">&gt; /reload-plugins</span>
+  ⎿ Reloaded: 1 plugin · 6 skills · 6 agents</div></div>
+      <p class="caption">Tela real, no Windows. O plugin fica instalado no computador todo: nos próximos projetos, não precisa repetir.</p>
+    </div>
+    <div>
+      <dl class="trad compact">
+        <dt>Successfully added marketplace: o-arco</dt><dd><b>Catálogo o-arco adicionado com sucesso.</b> É a lista de plugins do curso, no GitHub.</dd>
+        <dt>Installed autonomo. Plugin is now active.</dt><dd><b>autonomo instalado. O plugin já está ativo.</b> Se abrir um painel com detalhes, confirme.</dd>
+        <dt>Reloaded: 1 plugin · 6 skills</dt><dd><b>Recarregado: 1 plugin, 6 habilidades.</b> As 6 habilidades são os comandos <code>/autonomo:…</code>.</dd>
+      </dl>
+      <div class="callout warn"><b>"Unknown command"</b> (comando desconhecido)? O Claude Code está desatualizado: rode <code>claude update</code> (slide anterior).</div>
+    </div>
   </div>
-  <p class="dim small" style="margin-top:14px">O plugin fica instalado no computador todo. Nos próximos projetos, você não precisa repetir este passo.</p>
 </div></section>
 
 <!-- 14 · começar -->
@@ -549,7 +577,48 @@ Checking for updates...
   <div class="callout"><b>Você continua no comando.</b> O Claude pede aprovação antes de mudar as próprias permissões, antes de gastar dinheiro e antes de publicar na internet. Uma tela de aprovação vai aparecer quando ele for mudar as configurações: ele avisa antes.</div>
 </div></section>
 
-<!-- 15 · problemas -->
+<!-- 15 · responder -->
+<section class="slide" data-title="Responder ao Claude"><div class="inner">
+  <div class="eyebrow">Durante a conversa</div>
+  <h2>Como <span>responder</span> ao Claude</h2>
+  <div class="cols wide-left">
+    <div>
+      <p>O Claude conversa em português, mas os botões e avisos do programa continuam em inglês.</p>
+      <div class="term" style="margin-top:12px"><div class="bar">claude</div><div class="body">← <span class="t-blue">☐ Objetivo</span>  ☐ Experiência  ✔ Submit →
+
+<span class="t-b">O que você quer construir primeiro?</span>
+
+<span class="t-blue">❯ 1. Site ou página pessoal (Recomendado)</span>
+  2. Aplicativo web
+  3. Automatizar uma tarefa
+  4. Ainda não sei
+  5. Type something.
+<span class="t-dim">──────────────</span>
+  6. Chat about this
+
+<span class="t-dim">Enter to select · Tab/Arrow keys to navigate · Esc to cancel</span></div></div>
+      <p class="caption">Pergunta de múltipla escolha do <code>/autonomo:comecar</code>, no Windows.</p>
+      <div class="callout"><b>Na dúvida, não aprove ainda.</b> Escolha "Chat about this" ou aperte <kbd>Esc</kbd> e pergunte: "o que isso significa?".</div>
+    </div>
+    <div>
+      <h3>Perguntas de múltipla escolha</h3>
+      <dl class="trad compact">
+        <dt>Submit · Type something.</dt><dd><b>Enviar · Escreva outra coisa</b> (sua própria resposta)</dd>
+        <dt>Chat about this</dt><dd><b>Conversar sobre isto:</b> tirar dúvidas antes de escolher.</dd>
+        <dt>Enter to select · Tab/Arrow keys to navigate · Esc to cancel</dt><dd><b>Enter escolhe · Tab ou setas mudam de opção · Esc cancela</b></dd>
+      </dl>
+      <h3 style="margin-top:18px">Pedidos de permissão</h3>
+      <dl class="trad compact">
+        <dt>Do you want to proceed? / Allow …?</dt><dd><b>Quer continuar? / Permitir …?</b> O Claude quer fazer algo que precisa do seu sim.</dd>
+        <dt>Yes</dt><dd><b>Sim</b>, só desta vez.</dd>
+        <dt>Yes, and don't ask again …</dt><dd><b>Sim, e não pergunte de novo</b> para este tipo de ação.</dd>
+        <dt>No, and tell Claude what to do differently</dt><dd><b>Não, e diga ao Claude o que fazer diferente.</b></dd>
+      </dl>
+    </div>
+  </div>
+</div></section>
+
+<!-- 16 · problemas -->
 <section class="slide" data-title="Se algo der errado"><div class="inner">
   <div class="eyebrow">Problemas comuns</div>
   <h2>Se algo <span>der errado</span></h2>
@@ -560,10 +629,12 @@ Checking for updates...
     <div class="card"><h3>"Unknown command: /plugin"</h3><p class="dim small">Saia com <code>/exit</code>, rode <code>claude update</code> e abra de novo.</p></div>
     <div class="card"><h3>Fechei o terminal. E agora?</h3><p class="dim small">Abra o terminal, entre na pasta com <code>cd ~/meu-primeiro-projeto</code> e digite <code>claude</code>. Tudo continua instalado.</p></div>
     <div class="card"><h3>Travou ou não entendi</h3><p class="dim small">Pergunte ao próprio Claude, em português: "o que aconteceu?" ou "explique o que você está fazendo".</p></div>
+    <div class="card"><h3>Atualizar o plugin</h3><p class="dim small">No terminal, fora do Claude, rode um de cada vez: <code>claude plugin marketplace update o-arco</code> e <code>claude plugin update autonomo@o-arco</code>. Depois abra o <code>claude</code> de novo.</p></div>
+    <div class="card"><h3>Uma tela em inglês que não está aqui</h3><p class="dim small">Copie o texto e pergunte ao Claude: "traduza e explique esta tela". Ele traduz e explica antes de você decidir.</p></div>
   </div>
 </div></section>
 
-<!-- 16 · resumo -->
+<!-- 17 · resumo -->
 <section class="slide" data-title="Resumo"><div class="inner">
   <div class="eyebrow">Cola · todos os comandos em ordem</div>
   <h2>Resumo para <span>guardar</span></h2>
@@ -595,7 +666,7 @@ Checking for updates...
   <button class="prev" type="button" id="prev">← Voltar</button>
   <div class="bar-wrap">
     <div class="progress"><i id="prog"></i></div>
-    <span class="count" id="count">1 / 16</span>
+    <span class="count" id="count">1 / 17</span>
     <span class="hint">setas ← → para navegar</span>
   </div>
   <button type="button" id="next">Avançar →</button>
