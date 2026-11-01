@@ -22,6 +22,7 @@ comandos de produção mais comuns; ainda assim, sempre pergunte antes com suas 
 Recomende pelo tipo de projeto e confirme (AskUserQuestion):
 | Projeto | Plataforma recomendada | Custo inicial |
 |---|---|---|
+| Site estático com domínio na Cloudflare, ou repositório privado | Cloudflare Pages (`wrangler pages deploy <pasta>`; prévia com `--branch previa`) | Gratuito para sites estáticos |
 | Site estático | GitHub Pages | Gratuito em repositório público; repositório privado exige plano pago do GitHub |
 | Aplicativo Next.js ou front-end com build | Vercel | Plano gratuito para uso pessoal |
 | API ou serviço em Python ou Node | Render | Plano gratuito com limitações |
@@ -29,9 +30,8 @@ Diga claramente se a plataforma escolhida pode gerar cobrança e onde a pessoa a
 
 ## 3. Conta e login (a pessoa faz, você orienta)
 - Mande o link de cadastro da plataforma (skill `autonomo:links`) e espere ela confirmar.
-- Logins que abrem o navegador (`vercel login`, `gh auth login`) são interativos: peça para ela rodar
-  num terminal separado, ou na própria sessão com `!` na frente (por exemplo `! vercel login`), e
-  diga o que vai aparecer.
+- Logins que abrem o navegador (`vercel login`, `gh auth login`): siga a seção "Logins pelo
+  navegador" da skill `autonomo:como-ensinar` (no Windows, numa janela separada do PowerShell).
 
 ## 4. Segredos
 Se o projeto usa chaves (API, banco de dados), elas vão no painel da plataforma, nunca no código nem
@@ -59,11 +59,15 @@ confirmar que colou o valor lá.
 Pergunte: "A prévia está em <url>. Posso publicar em produção?" Só depois do sim:
 - Vercel: `vercel --prod` (o Claude Code também vai pedir confirmação: é uma regra `ask`).
 - GitHub Pages: merge do pull request na `main` (`gh pr merge`).
+- Cloudflare Pages: `wrangler pages deploy <pasta> --project-name <projeto> --branch main`. O
+  domínio próprio se liga no painel (Custom domains → Set up a custom domain): mande o link e os passos.
 Verifique de novo o endereço final e registre-o no README.
 
 ## 8. Caminho de volta
 Explique e anote no README como desfazer:
 - Vercel: `vercel rollback` ou promover a implantação anterior pelo painel.
 - GitHub Pages e Render: `git revert` do commit problemático e push.
+- Cloudflare Pages: no painel, Workers & Pages → o projeto → Deployments → "Rollback to this deployment".
 Termine com o resumo: endereço publicado, onde ficam os segredos, como atualizar (pedir ao Claude
-"publique a nova versão") e como desfazer.
+"publique a nova versão"), como desfazer e como reabrir o projeto (`cd <pasta>` e depois `claude`,
+em duas linhas: o PowerShell do Windows não aceita `&&`).

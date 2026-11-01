@@ -19,9 +19,9 @@ Explique em até quatro frases:
 - Nada será instalado ou alterado sem você avisar antes.
 - No fim, ela terá um projeto funcionando e um ambiente em que você pode trabalhar sozinho com segurança.
 
-Pergunte (AskUserQuestion) o que ela quer construir primeiro, com opções como: um site ou página
-pessoal; um aplicativo web; automatizar uma tarefa repetitiva (planilhas, arquivos, e-mails); ainda
-não sei, quero aprender. Pergunte também, em outra questão, quanta experiência ela tem: nunca
+Pergunte (AskUserQuestion) o que ela quer fazer primeiro, com opções como: **organizar e evoluir
+projetos que já tenho**; um site ou página pessoal; um aplicativo web; automatizar uma tarefa
+repetitiva (planilhas, arquivos, e-mails); ainda não sei, quero aprender. Pergunte também, em outra questão, quanta experiência ela tem: nunca
 programei; já programei um pouco; sou desenvolvedor. Guarde as respostas: elas definem o
 {{PERFIL}} do CLAUDE.md e o projeto da etapa 5.
 
@@ -47,10 +47,14 @@ Para cada item necessário que falta, um por vez:
 
 Configure a identidade do git se faltar: pergunte o nome e o e-mail que ela quer que apareçam no
 histórico (pode ser o e-mail do GitHub) e rode `git config --global user.name` e `user.email`.
+Faça essa pergunta em texto normal, não com AskUserQuestion: nome e e-mail são texto livre, e o menu
+de opções obriga a pessoa a achar "Other", o que confunde. Escreva, por exemplo: "Digite abaixo o
+nome e o e-mail que vão aparecer no histórico, assim: Meu nome é Ana Souza, e-mail ana@exemplo.com".
+Se você já sabe um e-mail provável, sugira-o na frase.
 
-**GitHub:** se ela não tem conta, mande o link https://github.com/signup e espere. Depois rode
-`gh auth login --web`, e explique antes: vai aparecer um código de 8 letras no terminal; ela copia,
-abre o link que aparece, cola o código e autoriza. Confira com `gh auth status`.
+**GitHub:** se ela não tem conta, mande o link https://github.com/signup e espere. Depois, o login
+com `gh auth login --web`, seguindo a seção "Logins pelo navegador" da skill `autonomo:como-ensinar`.
+Confira com `gh auth status`.
 
 ## Etapa 4 · Autonomia com barreiras
 
@@ -59,7 +63,12 @@ autonomia é segura.
 
 ## Etapa 5 · Primeiro projeto
 
-Carregue e siga a skill `autonomo:novo-projeto` (ferramenta Skill) com o objetivo
+Se na etapa 1 ela disse que já tem projetos, comece pela skill `autonomo:mapear-projetos`
+(ferramenta Skill): ela encontra os projetos no computador e no GitHub e gera o `projetos.json`.
+Depois, pergunte o que ela quer fazer com eles (por exemplo, uma página que mostra o mapa, ou
+colocar testes e proteção de segredos num deles) e siga a skill adequada.
+
+Caso contrário, carregue e siga a skill `autonomo:novo-projeto` (ferramenta Skill) com o objetivo
 escolhido na etapa 1. Para quem nunca programou, escolha algo que dá para ver funcionando no
 navegador em poucos minutos.
 
@@ -72,6 +81,10 @@ Faça um resumo com:
   PowerShell do Windows não aceita `&&`);
 - três próximos pedidos que ela pode fazer, escritos como ela diria, por exemplo:
   "Adicione uma página de contato ao meu site e publique".
+
+Se ela tem vários projetos, ofereça a skill `autonomo:central` (cuidar de todos a partir de uma
+pasta, pedindo pelo nome). Ofereça, numa frase, a skill `autonomo:skills-recomendadas`: uma seleção de plugins oficiais que
+ampliam o que você sabe fazer para o tipo de projeto dela.
 
 Lembre que, a partir de agora, o `~/.claude/CLAUDE.md` faz você trabalhar assim em toda sessão, e
 que `/autonomo:diagnostico` confere o ambiente a qualquer momento.

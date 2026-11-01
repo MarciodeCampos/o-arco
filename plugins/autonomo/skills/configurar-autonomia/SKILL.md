@@ -27,6 +27,16 @@ Os arquivos de configuração do Claude ficam numa pasta protegida. Diga antes:
 **Yes, and allow Claude to edit files in its ~/.claude folder for this session**."
 Isso é esperado e é uma proteção: o Claude não pode mudar as próprias regras sem você.
 
+Antes disso, ainda pode aparecer outra tela, porque `~/.claude/settings.json` fica fora da pasta do
+projeto. Avise em português, no formato da skill `autonomo:como-ensinar`:
+"Vai aparecer **Allow this read outside the working directories?** ('Permitir esta leitura fora da
+pasta do projeto?'). Escolha **4, 'Yes, but ask again next time'**: libera só esta leitura." Não
+recomende a opção 1 (libera leituras fora da pasta para sempre) nem a 2 (bloqueia de vez e impede
+este passo).
+
+Leia cada arquivo (`settings.json`, `CLAUDE.md`) com Read antes de gravá-lo: o Write recusa um arquivo
+existente que não foi lido, e o erro "Error writing file" assusta a pessoa.
+
 ## 4. Backup
 Se `~/.claude/settings.json` existir, copie para `~/.claude/settings.json.backup-AAAAMMDD-HHMM` (data e
 hora atuais) e diga o caminho à pessoa. Faça o mesmo com `~/.claude/CLAUDE.md`.
@@ -70,8 +80,14 @@ Rode `claude doctor` e confira que não há "Invalid settings". Se houver, corri
 novo. Mostre à pessoa a linha que confirma.
 
 ## 9. Aplicar e provar
-- Explique que o novo modo vale a partir da próxima sessão. Peça para ela digitar `/exit` e abrir de
-  novo com `claude --continue` (retoma esta conversa) na mesma pasta.
+- Explique que o novo modo vale a partir da próxima sessão. Dê os passos separados, deixando claro
+  onde cada um é digitado:
+  1. Aqui, no Claude: `/exit` (fecha o Claude Code e volta para o terminal).
+  2. No terminal (PowerShell no Windows), na mesma pasta: `claude --continue` (abre o Claude de novo
+     e retoma esta conversa). Avise que escrever só "continue" dentro do Claude não funciona: abre
+     uma conversa nova, sem o que fizemos até aqui.
+  Se mesmo assim ela voltar numa conversa nova, retome pelo comando `/autonomo:verificar-barreiras`
+  e depois `/autonomo:novo-projeto`.
 - Na sessão nova, confira o modo no rodapé da tela. No Nível 2 deve aparecer **auto mode**. Se
   aparecer Manual, o modo auto não está disponível para a conta ou o modelo; ofereça o Nível 1 e
   explique a diferença.

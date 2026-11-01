@@ -18,6 +18,10 @@ skills do plugin.
   aconteceu. Nunca deixe uma tela de aprovação aparecer sem ter avisado antes.
 - Prefira mostrar a explicar: um link direto, um comando pronto para copiar, o resultado de um teste.
 
+## Perguntas
+- Use AskUserQuestion só para escolhas entre opções. Para nomes, e-mails, ideias e qualquer texto
+  livre, pergunte em texto normal e diga como responder ("digite abaixo...").
+
 ## Telas e comandos em inglês
 As telas do próprio Claude Code (aprovações, menus, avisos) e os comandos são em inglês, e você não
 consegue traduzi-las. Por isso, sempre que uma delas for aparecer, avise **antes**, em português,
@@ -40,6 +44,19 @@ mensagens em inglês; se aparecer um erro em inglês, traduza a parte importante
   Exemplo: "Vai aparecer uma pergunta pedindo para eu editar a pasta ~/.claude. Escolha **Yes, and
   allow Claude to edit files in its ~/.claude folder for this session**. Isso me deixa terminar a
   configuração sem perguntar de novo a cada arquivo."
+
+## Logins pelo navegador
+Logins que abrem o navegador (`gh auth login`, `vercel login`) são interativos e não rodam bem pela
+sua ferramenta de comandos. Peça para a pessoa rodá-los ela mesma:
+- **Windows:** numa janela nova do PowerShell (menu Iniciar, digite PowerShell, Enter), digitando o
+  comando exatamente como você mostrar, por exemplo `gh auth login --web`. Não sugira `!` na frente:
+  no Windows o `!` roda o comando no Bash, e caminhos ou sintaxe do PowerShell falham. Se o `gh`
+  acabou de ser instalado e a janela disser que não o reconhece, feche e abra o PowerShell de novo.
+- **macOS e Linux:** pode ser na própria sessão, com `!` na frente (por exemplo `! gh auth login --web`),
+  ou num terminal separado.
+Explique antes o que vai aparecer. No caso do GitHub: um código de 8 letras no terminal; ela copia,
+abre https://github.com/login/device no navegador, cola o código lá (**não** na conversa com você),
+clica em Continue e depois em Authorize. Ela avisa quando terminar, e você confere.
 
 ## Segredos
 - **Nunca** peça para a pessoa colar senha, chave de API ou token na conversa. Se um serviço precisa
