@@ -152,18 +152,18 @@
       "slug": "modulo-07",
       "titulo": "Agentes de Código e IA no Fluxo do Dev",
       "horas": 20,
-      "status": "planejado",
+      "status": "pronto",
       "resumo": "Trabalhar com agentes de código no terminal e na IDE: escolher ferramenta, escrever arquivos de instruções, criar skills, hooks e subagentes, revisar o que a IA produz.",
       "unidades": [
-        "Panorama: IDEs com IA vs. agentes de terminal (Claude Code, Codex, Gemini CLI, Cursor e outros)",
-        "Arquivos de contexto do projeto (CLAUDE.md, AGENTS.md, regras) e o que colocar neles",
-        "Desenvolvimento guiado por especificação e por testes com agentes",
-        "Skills, comandos, hooks e subagentes",
-        "Agentes rodando no CI: revisão de PR e correção automática",
-        "Revisão crítica do código gerado: segurança, dívida técnica, licenças",
-        "Vibe coding com responsabilidade: onde funciona e onde quebra"
+        "Panorama: IDEs com IA e agentes de terminal",
+        "Arquivos de contexto do projeto (CLAUDE.md, AGENTS.md)",
+        "Desenvolvimento guiado por especificação e por testes",
+        "Permissões, hooks, skills e subagentes",
+        "Agentes no CI: verificação e revisão de PR",
+        "Revisão crítica do código gerado",
+        "Vibe coding com responsabilidade"
       ],
-      "projeto": "Configurar um repositório para trabalho com agentes e entregar uma feature completa com eles",
+      "projeto": "Repositório-modelo pronto para agentes: arquivos de contexto, permissões, hooks, skill, subagente revisor, definição de pronto e uma spec para implementar com agente",
       "melhorias": [
         "Neutro em fornecedor",
         "Inclui os agentes de terminal ausentes na ementa original"

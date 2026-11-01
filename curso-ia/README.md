@@ -26,6 +26,7 @@ curso-ia/
 ├── modulo-04/index.html  aulas do módulo 4
 ├── modulo-05/index.html  aulas do módulo 5
 ├── modulo-06/index.html  aulas do módulo 6
+├── modulo-07/index.html  aulas do módulo 7
 └── codigo/
     ├── modulo-01/
     │   ├── python/       labs e projeto (NumPy + SDK anthropic)
@@ -46,9 +47,11 @@ curso-ia/
     ├── modulo-05/
     │   ├── python/       servidor e cliente MCP, testes, servidor envenenado e verificador
     │   └── projeto/      o RAG do módulo 4 como servidor MCP (stdio e HTTP), com proteções
-    └── modulo-06/
-        ├── python/       labs: padrões de workflow, tool runner, custo de agentes
-        └── projeto/      agente do zero, supervisor multiagente, memória e evals de trajetória
+    ├── modulo-06/
+    │   ├── python/       labs: padrões de workflow, tool runner, custo de agentes
+    │   └── projeto/      agente do zero, supervisor multiagente, memória e evals de trajetória
+    └── modulo-07/
+        └── python/       verificador de código gerado, revisor de diff com LLM
 ```
 
 ## Status
@@ -61,7 +64,8 @@ curso-ia/
 | 04 · RAG de Ponta a Ponta | ✅ pronto |
 | 05 · MCP — Model Context Protocol | ✅ pronto |
 | 06 · Agentes de IA | ✅ pronto |
-| 07 – 15 | planejados (ver `curriculo.json`) |
+| 07 · Agentes de Código | ✅ pronto |
+| 08 – 15 | planejados (ver `curriculo.json`) |
 
 ## Rodando os labs do Módulo 1
 
