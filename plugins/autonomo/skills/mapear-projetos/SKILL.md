@@ -87,7 +87,9 @@ Para cada projeto, colete sem alterar nada (rode cada comando git sozinho):
 - uma descrição de uma linha, pelo `README` ou pelo `description` do `package.json`.
 
 ## 4. Procurar no GitHub
-Se o `gh` estiver logado (`gh auth status`), liste os repositórios da pessoa e das organizações dela:
+Se o comando `gh` não for encontrado logo depois de instalado (no Windows, o terminal aberto antes
+da instalação não o enxerga), use o caminho completo `"/c/Program Files/GitHub CLI/gh.exe"` ou peça
+para a pessoa reabrir o terminal. Se o `gh` estiver logado (`gh auth status`), liste os repositórios da pessoa e das organizações dela:
 
 ```
 gh repo list --limit 300 --json name,nameWithOwner,description,url,homepageUrl,isPrivate,isArchived,pushedAt
