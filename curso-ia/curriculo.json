@@ -83,18 +83,18 @@
       "slug": "modulo-04",
       "titulo": "RAG de Ponta a Ponta",
       "horas": 32,
-      "status": "planejado",
+      "status": "pronto",
       "resumo": "Embeddings, bancos vetoriais e busca semântica até RAG de produção: chunking, busca híbrida, reranking, citações, RAG agêntico e como avaliar recuperação e resposta.",
       "unidades": [
-        "Embeddings e similaridade: busca por significado",
-        "Bancos vetoriais: pgvector, alternativas gerenciadas e quando não usar um",
-        "Ingestão: parsing de PDF/HTML, chunking e metadados",
-        "Busca híbrida (BM25 + vetorial) e reranking",
-        "Geração com citações e controle de alucinação",
-        "RAG agêntico e contexto longo: quando a janela de 1M tokens substitui o RAG",
-        "Avaliando RAG: recall de recuperação, fidelidade, relevância"
+        "O que é RAG e quando usar (vs. contexto longo e ajuste fino)",
+        "Embeddings e busca vetorial",
+        "Busca por palavras: BM25 e por que ela ainda importa",
+        "Ingestão e chunking, com cabeçalho de contexto",
+        "Postgres + pgvector, busca híbrida (RRF) e reranking",
+        "Geração com citações e o direito de dizer \"não sei\"",
+        "Avaliando RAG: recuperação e respostas; RAG agêntico"
       ],
-      "projeto": "Assistente de documentação técnica com Postgres + pgvector, citações e evals",
+      "projeto": "Assistente de documentação com PGlite + pgvector, busca híbrida, reranking, citações e evals de recuperação e de respostas",
       "melhorias": [
         "Unifica o RAG que aparecia em 5 módulos diferentes",
         "Inclui busca híbrida, reranking e avaliação"

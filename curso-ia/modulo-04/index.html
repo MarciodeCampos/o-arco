@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050508">
+<meta name="description" content="Módulo 4 — RAG de Ponta a Ponta: embeddings, BM25, chunking, Postgres com pgvector, busca híbrida, reranking, citações e avaliação.">
+<title>Módulo 4 · RAG de Ponta a Ponta — Engenharia de IA Aplicada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/curso.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="/">◈ TRIADIC.LIFE</a>
+  <span class="crumbs">/ <a href="../">Engenharia de IA</a> / Módulo 4</span>
+  <span class="spacer"></span>
+  <span class="progress-pill">0/9 aulas</span>
+</header>
+
+<div class="layout">
+
+  <aside class="toc">
+    <button class="toc-toggle" type="button">☰ Aulas do módulo</button>
+    <h2>Módulo 4</h2>
+    <nav>
+      <ol>
+        <li><a href="#inicio"><span class="chk"></span>Visão geral</a></li>
+        <li><a href="#aula-1"><span class="chk"></span>4.1 O que é RAG e quando usar</a></li>
+        <li><a href="#aula-2"><span class="chk"></span>4.2 Embeddings e vetores</a></li>
+        <li><a href="#aula-3"><span class="chk"></span>4.3 Busca por palavras (BM25)</a></li>
+        <li><a href="#aula-4"><span class="chk"></span>4.4 Ingestão e chunking</a></li>
+        <li><a href="#aula-5"><span class="chk"></span>4.5 pgvector, híbrida e rerank</a></li>
+        <li><a href="#aula-6"><span class="chk"></span>4.6 Respostas com citações</a></li>
+        <li><a href="#aula-7"><span class="chk"></span>4.7 Avaliando RAG</a></li>
+        <li><a href="#projeto"><span class="chk"></span>Projeto do módulo</a></li>
+        <li><a href="#recursos"><span class="chk"></span>Recursos</a></li>
+      </ol>
+    </nav>
+  </aside>
+
+  <main class="content" data-modulo="modulo-04">
+
+    <!-- ============================================================ VISÃO GERAL -->
+    <section id="inicio">
+      <header>
+        <div class="eyebrow">Módulo 04 · 32h estimadas</div>
+        <h1>RAG de Ponta a Ponta</h1>
+      </header>
+      <p class="lede">
+        O modelo não conhece os documentos da sua empresa, e o que ele sabe tem data de corte. RAG
+        (<em>Retrieval-Augmented Generation</em>) resolve isso buscando os trechos certos e entregando-os
+        ao modelo na hora de responder. Neste módulo você constrói um assistente de documentação
+        completo, com banco vetorial, busca híbrida, citações e avaliação de cada etapa.
+      </p>
+      <div class="meta">
+        <span class="tag">7 aulas</span>
+        <span class="tag">2 labs + projeto</span>
+        <span class="tag">Postgres + pgvector (sem instalar nada)</span>
+        <span class="tag">Pré-requisitos: Módulos 2 e 3</span>
+      </div>
+
+      <h3>Ao final do módulo você vai</h3>
+      <ul>
+        <li>Decidir entre RAG, contexto longo e ajuste fino para um problema.</li>
+        <li>Explicar embeddings e busca vetorial, e saber quando a busca por palavras vence.</li>
+        <li>Dividir documentos em trechos que recuperam bem.</li>
+        <li>Indexar em Postgres com pgvector e combinar busca vetorial, textual e reranking.</li>
+        <li>Gerar respostas com citações verificáveis e que admitem "não encontrei".</li>
+        <li>Medir recuperação e respostas separadamente, para saber qual etapa melhorar.</li>
+      </ul>
+
+      <h3>Preparando o ambiente</h3>
+<pre data-lang="bash"><code>cd o-arco/curso-ia/codigo/modulo-04
+
+pip install -r python/requirements.txt     # só numpy: os labs não chamam API
+cd projeto &amp;&amp; npm install                  # inclui o PGlite: Postgres + pgvector dentro do Node</code></pre>
+      <div class="callout">
+        <b>Postgres sem instalar Postgres</b>
+        O projeto usa o <strong>PGlite</strong>, um Postgres completo compilado para WebAssembly, com a
+        extensão <strong>pgvector</strong>. O SQL é o mesmo de um Postgres de produção (Supabase, Neon,
+        RDS, Cloud SQL): para migrar, troque só a conexão.
+      </div>
+    </section>
+
+    <!-- ============================================================ AULA 1 -->
+    <section class="lesson" id="aula-1">
+      <h2>4.1 O que é RAG e quando usar</h2>
+      <div class="lesson-meta">Leitura · 40 min</div>
+
+      <div class="flow">
+        <span>Pergunta</span><i>→</i><span>Buscar trechos relevantes</span><i>→</i>
+        <span>Montar o contexto: instruções + trechos + pergunta</span><i>→</i><span>LLM responde citando os trechos</span>
+      </div>
+      <p>
+        RAG não ensina nada ao modelo: ele só <strong>coloca a informação certa no contexto</strong> na
+        hora da pergunta. Por isso é barato de atualizar (mudou o documento, reindexe) e auditável (dá
+        para mostrar de onde veio cada afirmação).
+      </p>
+
+      <h3>RAG, contexto longo ou ajuste fino?</h3>
+      <table>
+        <tr><th>Abordagem</th><th>Quando faz sentido</th><th>Limites</th></tr>
+        <tr><td><strong>Contexto longo</strong> (mandar tudo)</td><td>Acervo pequeno (até algumas centenas de milhares de tokens), com cache de prompt</td><td>Custo e latência crescem com o acervo; ruído atrapalha</td></tr>
+        <tr><td><strong>RAG</strong></td><td>Acervo grande ou que muda com frequência; precisa de citações; permissões por documento</td><td>Se a busca falha, a resposta falha; mais peças para operar</td></tr>
+        <tr><td><strong>Ajuste fino</strong></td><td>Ensinar formato, estilo ou uma tarefa específica (Módulo 11)</td><td>Péssimo para injetar fatos que mudam; não cita fontes</td></tr>
+      </table>
+      <div class="callout warn">
+        <b>Comece pelo mais simples</b>
+        Com janelas de contexto de um milhão de tokens e cache de prompt, um acervo pequeno pode ir
+        inteiro no contexto. O projeto deste módulo tem a opção <code>--contexto-completo</code> exatamente
+        para você comparar as duas abordagens com números, em vez de assumir que RAG é sempre necessário.
+      </div>
+
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>A política de trocas da empresa muda todo mês e o assistente precisa citar a versão vigente. Melhor abordagem?</p>
+          <button type="button">Ajuste fino do modelo a cada mês</button>
+          <button type="button" data-certa>RAG (ou contexto longo, se o acervo for pequeno), reindexando a cada mudança</button>
+          <button type="button">Confiar no conhecimento do modelo</button>
+          <p class="why">Fatos que mudam pertencem ao contexto, não aos pesos do modelo. E só o contexto permite citar a fonte.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ AULA 2 -->
+    <section class="lesson" id="aula-2">
+      <h2>4.2 Embeddings e busca vetorial</h2>
+      <div class="lesson-meta">Leitura + lab · 3h</div>
+
+      <p>
+        Um modelo de <strong>embedding</strong> transforma um texto num vetor de centenas ou milhares de
+        números, de modo que textos de significado parecido fiquem próximos. "Vou viajar, preciso pagar o
+        plano?" e "Pausar a assinatura" quase não têm palavras em comum, mas ficam perto nesse espaço. A
+        busca vetorial é: transformar a pergunta em vetor e pegar os trechos mais próximos.
+      </p>
+      <h3>Escolhendo um modelo de embedding</h3>
+      <ul>
+        <li><strong>Idioma:</strong> use um modelo multilíngue ou treinado em português. Modelos só de inglês vão mal em PT-BR.</li>
+        <li><strong>Local ou API:</strong> modelos locais (via transformers.js, sentence-transformers) são grátis e privados; APIs (Voyage, OpenAI, Google, Cohere…) costumam ter mais qualidade e nenhuma infraestrutura. Rankings públicos como o MTEB ajudam a fazer a primeira lista.</li>
+        <li><strong>Consulta ≠ documento:</strong> muitos modelos pedem que você diga se o texto é uma consulta ou um documento (prefixos como <code>query:</code>/<code>passage:</code>, ou um parâmetro <code>input_type</code>).</li>
+        <li><strong>O mesmo modelo dos dois lados:</strong> vetores de modelos diferentes não são comparáveis. Trocou de modelo, reindexe tudo.</li>
+      </ul>
+      <p>
+        O projeto traz três embedders atrás da mesma interface: <code>local</code> (modelo multilíngue E5
+        rodando na sua máquina, padrão), <code>voyage</code> (API) e <code>hash</code>, um "embedding de
+        brinquedo" por pedaços de letras que roda offline e <em>não entende significado</em>. Ele serve
+        para testes e como contraste: você vai ver na prática a diferença entre parecer e significar.
+      </p>
+
+      <div class="exercise">
+        <h4>LAB 4.1 — Similaridade e escala</h4>
+<pre data-lang="bash"><code>python python/02_vetores_e_escala.py</code></pre>
+<pre data-lang="saída"><code>documento               cosseno  produto  euclid.
+prazo de entrega          0.969    0.690    0.265
+frete e transporte        0.990    0.680    0.173
+...
+Repare: pelo cosseno, 'frete e transporte' fica em 1º; pelo produto interno, 'prazo de entrega'.
+
+PARTE 2 — busca exata ('força bruta') conforme a base cresce
+     10.000 vetores × 384 dim ·      15 MB ·     1.1 ms por consulta
+    100.000 vetores × 384 dim ·     154 MB ·     6.0 ms por consulta
+  1.000.000 vetores × 384 dim ·    1536 MB ·    55.7 ms por consulta</code></pre>
+        <p>
+          Duas lições: normalize os vetores (aí cosseno e produto interno concordam) e, até dezenas de
+          milhares de trechos, a busca exata já é rápida. Índices aproximados como HNSW passam a valer a
+          pena com milhões de vetores ou muitas consultas por segundo. (Os tempos variam com a máquina.)
+        </p>
+      </div>
+
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Você indexou os documentos com o modelo A e agora quer gerar o vetor das perguntas com o modelo B, mais barato. Funciona?</p>
+          <button type="button">Sim, se os dois tiverem a mesma dimensão</button>
+          <button type="button" data-certa>Não: cada modelo cria seu próprio espaço; os vetores não são comparáveis</button>
+          <button type="button">Sim, depois de normalizar</button>
+          <p class="why">Mesmo com a mesma dimensão, o "significado" de cada eixo é diferente. Trocou de modelo, reindexe.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ AULA 3 -->
+    <section class="lesson" id="aula-3">
+      <h2>4.3 Busca por palavras: BM25 e por que ela ainda importa</h2>
+      <div class="lesson-meta">Leitura + lab · 2h</div>
+
+      <p>
+        Antes dos embeddings, buscadores ranqueavam por palavras com <strong>BM25</strong>: termos raros
+        pesam mais (IDF), repetir uma palavra ajuda mas satura, e documentos longos não ganham só por serem
+        longos. É rápido, não precisa de modelo, e é <strong>imbatível em termos exatos</strong>: códigos
+        de produto (BX2-F), nomes próprios, números, siglas, mensagens de erro.
+      </p>
+
+      <div class="exercise">
+        <h4>LAB 4.2 — BM25 do zero</h4>
+<pre data-lang="bash"><code>python python/01_bm25_do_zero.py
+python python/01_bm25_do_zero.py "como cancelo a assinatura"</code></pre>
+<pre data-lang="saída"><code>"posso pausar o plano durante uma viagem"  →  termos: ['posso', 'pausar', 'plano', 'durante', 'viagem']
+   14.52  plano-filtro-em-dia#Pausar a assinatura
+    2.64  plano-filtro-em-dia#O que é
+
+"vou viajar dois meses, tenho que continuar pagando?"  →  termos: ['vou', 'viajar', 'doi', 'mese', ...]
+    4.32  plano-filtro-em-dia#Mais de um aparelho
+    3.33  app-brisa-casa#Problemas de conexão
+    2.27  garantia-e-trocas#Garantia
+
+"barulho no modo de dormir"  →  termos: ['barulho', 'modo', 'dormir']
+    4.23  manual-brisa-x2#9. Solução de problemas
+    2.11  manual-brisa-x2#5. Modos de operação</code></pre>
+        <p>
+          Mesma necessidade, palavras diferentes: "viajar" não é "viagem" para um radicalizador simples, e
+          "pagar" não aparece na seção certa. O documento fala em "ruído" e modo "Sono", o cliente fala em
+          "barulho" e "dormir". É o <em>descompasso de vocabulário</em>, que embeddings resolvem.
+        </p>
+        <ol>
+          <li>Mude <code>k1</code> e <code>b</code> e observe o efeito nas notas.</li>
+          <li>Adicione sinônimos à consulta ("ruído", "sono"). Por que isso não escala como solução?</li>
+        </ol>
+      </div>
+
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>O cliente pergunta pelo filtro "BX2-F". Qual busca tende a acertar?</p>
+          <button type="button">Só a vetorial</button>
+          <button type="button" data-certa>A textual (BM25): códigos exatos são o forte dela</button>
+          <button type="button">Nenhuma das duas</button>
+          <p class="why">Embeddings podem achar "algum filtro parecido"; a busca por termos acha exatamente o código. Por isso a combinação (híbrida) é o padrão.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ AULA 4 -->
+    <section class="lesson" id="aula-4">
+      <h2>4.4 Ingestão e chunking</h2>
+      <div class="lesson-meta">Leitura + prática · 3h</div>
+
+      <p>A qualidade do RAG é decidida na ingestão. Lixo indexado é lixo recuperado.</p>
+      <h3>Etapas da ingestão</h3>
+      <ol>
+        <li><strong>Extrair texto</strong> preservando estrutura: títulos, listas e tabelas. PDF é o formato mais traiçoeiro (colunas, cabeçalhos repetidos, tabelas quebradas). Converta para Markdown quando possível.</li>
+        <li><strong>Limpar:</strong> menus, rodapés, avisos legais repetidos em toda página.</li>
+        <li><strong>Dividir em trechos</strong> (chunking).</li>
+        <li><strong>Enriquecer com metadados:</strong> documento, seção, data, produto, permissões. Servem para filtrar e para citar.</li>
+        <li><strong>Gerar embeddings e indexar.</strong></li>
+      </ol>
+      <h3>Estratégias de chunking</h3>
+      <table>
+        <tr><th>Estratégia</th><th>Prós</th><th>Contras</th></tr>
+        <tr><td>Tamanho fixo (ex.: 500 tokens)</td><td>Simples, previsível</td><td>Corta no meio de frases, tabelas e listas</td></tr>
+        <tr><td>Por estrutura (títulos, parágrafos)</td><td>Trechos com sentido completo; ids legíveis</td><td>Seções podem ser grandes ou minúsculas demais</td></tr>
+        <tr><td>Estrutura + limite + sobreposição</td><td>O melhor dos dois</td><td>Um pouco mais de código</td></tr>
+        <tr><td>Semântico (corta onde o assunto muda)</td><td>Bom para textos sem estrutura</td><td>Mais caro e menos previsível</td></tr>
+      </table>
+      <p>
+        O projeto usa a terceira: um trecho por seção (<code>##</code>), quebrando seções longas por
+        parágrafo com um parágrafo de sobreposição, sem nunca cortar uma tabela.
+      </p>
+      <h3>O truque do cabeçalho de contexto</h3>
+      <p>
+        Um trecho que diz só "Não há fidelidade. Pode ser cancelada a qualquer momento" não diz <em>do
+        quê</em>. Antes de gerar o embedding, o projeto prefixa cada trecho com o título do documento e da
+        seção: <code>Plano Filtro em Dia — Fidelidade e cancelamento</code>. O texto citado ao usuário
+        continua limpo. Técnicas mais elaboradas usam um LLM para escrever esse contexto por trecho.
+      </p>
+<pre data-lang="saída"><code>$ npm run indexar -- --embedder hash
+6 documentos → 41 trechos
+tamanho dos trechos: mín 84 · mediana 237 · máx 691 caracteres</code></pre>
+
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Por que ids como <code>entregas#frete-gratis</code> em vez de números sequenciais?</p>
+          <button type="button">Ocupam menos espaço</button>
+          <button type="button" data-certa>São estáveis entre reindexações e legíveis: o gabarito do eval e as citações continuam valendo</button>
+          <button type="button">O pgvector exige</button>
+          <p class="why">Com ids sequenciais, qualquer documento novo desloca todos os números e quebra o dataset de avaliação.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ AULA 5 -->
+    <section class="lesson" id="aula-5">
+      <h2>4.5 Postgres + pgvector, busca híbrida e reranking</h2>
+      <div class="lesson-meta">Leitura + prática · 4h</div>
+
+      <h3>Por que Postgres</h3>
+      <p>
+        Bancos vetoriais dedicados existem (Pinecone, Qdrant, Weaviate, Milvus…), mas para a maioria dos
+        projetos o Postgres com <strong>pgvector</strong> basta e simplifica a vida: vetores, texto,
+        metadados, permissões e transações no mesmo banco que você já opera. Considere um dedicado quando a
+        escala (centenas de milhões de vetores) ou recursos específicos justificarem.
+      </p>
+<pre data-lang="sql"><code>CREATE TABLE trechos (
+  id         text PRIMARY KEY,
+  doc        text NOT NULL,
+  secao      text NOT NULL,
+  texto      text NOT NULL,
+  indexado   text NOT NULL,             -- texto com cabeçalho de contexto
+  emb        vector(384) NOT NULL,      -- o embedding
+  tsv        tsvector GENERATED ALWAYS AS (to_tsvector('portuguese', indexado)) STORED
+);
+CREATE INDEX ON trechos USING hnsw (emb vector_cosine_ops);  -- busca vetorial aproximada
+CREATE INDEX ON trechos USING gin (tsv);                     -- busca textual
+
+-- vetorial: menor distância de cosseno (operador &lt;=&gt;)
+SELECT id, 1 - (emb &lt;=&gt; $1) AS similaridade FROM trechos ORDER BY emb &lt;=&gt; $1 LIMIT 5;
+
+-- textual: dicionário português (radicais e stopwords)
+SELECT id, ts_rank_cd(tsv, websearch_to_tsquery('portuguese', $1)) AS nota
+  FROM trechos WHERE tsv @@ websearch_to_tsquery('portuguese', $1) ORDER BY nota DESC LIMIT 5;</code></pre>
+
+      <h3>Busca híbrida com RRF</h3>
+      <p>
+        As notas da busca vetorial (similaridade de 0 a 1) e da textual (rank do Postgres) não estão na
+        mesma escala, então não dá para somar. O <strong>Reciprocal Rank Fusion</strong> usa só a
+        <em>posição</em>: cada lista dá <code>1/(60 + posição)</code> a cada trecho, e somamos. Quem aparece
+        bem nas duas listas sobe.
+      </p>
+      <h3>Reranking</h3>
+      <p>
+        Busque mais candidatos do que precisa (ex.: 20) com métodos baratos, e use um modelo mais
+        cuidadoso para reordená-los e ficar com os 5 melhores. Pode ser um modelo <em>cross-encoder</em>
+        especializado ou, como no projeto, um LLM pequeno (<code>claude-haiku-5-5</code>) dando nota de 0 a 3
+        para cada trecho. Custa uma chamada a mais por pergunta; meça se o ganho compensa.
+      </p>
+
+<pre data-lang="bash"><code>npm run perguntar -- --so-busca "Vou viajar dois meses, preciso pagar o plano?"
+npm run perguntar -- --modo vetorial --so-busca "..."
+npm run perguntar -- --rerank "..."</code></pre>
+
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Por que não somar diretamente a similaridade vetorial com a nota do BM25?</p>
+          <button type="button" data-certa>Estão em escalas diferentes; uma dominaria a outra arbitrariamente</button>
+          <button type="button">Porque o Postgres não permite</button>
+          <button type="button">Porque a soma é lenta</button>
+          <p class="why">O RRF contorna isso usando só a posição em cada lista, sem calibrar escalas.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ AULA 6 -->
+    <section class="lesson" id="aula-6">
+      <h2>4.6 Geração com citações e o direito de dizer "não sei"</h2>
+      <div class="lesson-meta">Leitura + prática · 3h</div>
+
+      <p>
+        Recuperar é metade do trabalho. A outra metade é fazer o modelo responder <strong>só</strong> com
+        base nos trechos e <strong>mostrar de onde</strong> tirou cada afirmação. A API da Anthropic aceita
+        os trechos como blocos <code>search_result</code> com citações ativadas, e devolve o texto já
+        ligado às fontes:
+      </p>
+<pre data-lang="typescript"><code>const resultados = trechos.map((t) =&gt; ({
+  type: "search_result" as const,
+  source: t.id,                                  // ex.: "entregas#frete-gratis"
+  title: `${t.tituloDoc} — ${t.secao}`,
+  content: [{ type: "text" as const, text: t.texto }],
+  citations: { enabled: true },
+}));
+
+const r = await client.messages.create({
+  model: "claude-opus-5-5",
+  max_tokens: 4000,
+  system: SISTEMA,                               // "use SOMENTE os resultados..."
+  messages: [{ role: "user", content: [...resultados, { type: "text", text: pergunta }] }],
+});
+
+for (const bloco of r.content) {
+  if (bloco.type === "text")
+    for (const c of bloco.citations ?? [])
+      if (c.type === "search_result_location") console.log(c.source, c.cited_text);
+}</code></pre>
+      <h3>Instruções que importam</h3>
+      <ul>
+        <li><strong>Use só os resultados.</strong> E explique por quê: um prazo inventado vira promessa feita ao cliente.</li>
+        <li><strong>Uma frase exata para "não encontrei"</strong>: fica fácil de detectar no código e de avaliar.</li>
+        <li><strong>Trechos são dados, não instruções.</strong> Documentos indexados podem conter texto malicioso (Módulo 12).</li>
+      </ul>
+      <p>
+        Outros provedores têm recursos parecidos, ou você pode pedir citações no formato que quiser com
+        saída estruturada. O importante é que a citação seja <em>verificável</em> pelo código, não só texto
+        bonito.
+      </p>
+
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>A pergunta não tem resposta na documentação. Qual o melhor comportamento?</p>
+          <button type="button">Responder com conhecimento geral do modelo, para não frustrar o cliente</button>
+          <button type="button" data-certa>Dizer que não encontrou e oferecer o suporte humano</button>
+          <button type="button">Citar o trecho mais parecido, mesmo que não responda</button>
+          <p class="why">Num assistente de empresa, uma resposta inventada é pior que nenhuma. O eval de respostas cobra isso nos dois sentidos.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ AULA 7 -->
+    <section class="lesson" id="aula-7">
+      <h2>4.7 Avaliando RAG: recuperação e respostas</h2>
+      <div class="lesson-meta">Leitura + prática · 4h</div>
+
+      <p>
+        Quando uma resposta sai errada, a culpa pode ser da busca (o trecho certo nem chegou ao modelo)
+        ou da geração (chegou, mas o modelo errou). Avalie as duas etapas separadamente.
+      </p>
+      <h3>Métricas de recuperação</h3>
+      <table>
+        <tr><th>Métrica</th><th>Pergunta</th></tr>
+        <tr><td><strong>acerto@k</strong></td><td>Pelo menos um trecho relevante veio entre os k primeiros?</td></tr>
+        <tr><td><strong>recall@k</strong></td><td>Que fração dos trechos relevantes veio entre os k primeiros?</td></tr>
+        <tr><td><strong>MRR</strong></td><td>Em que posição veio o primeiro relevante? (1 = primeiro lugar)</td></tr>
+        <tr><td><strong>nDCG@k</strong></td><td>Os relevantes estão no topo ou espalhados no fim?</td></tr>
+      </table>
+      <h3>Métricas de resposta</h3>
+      <ul>
+        <li><strong>Fidelidade:</strong> tudo o que foi dito está nos trechos? (citações verificáveis ajudam; um LLM-juiz completa)</li>
+        <li><strong>Correção:</strong> contém os fatos-chave esperados?</li>
+        <li><strong>Abstenção correta</strong>, nos dois sentidos: diz "não encontrei" quando não há resposta, e <em>não</em> diz quando há.</li>
+      </ul>
+
+      <div class="exercise">
+        <h4>Na prática: comparando os modos de busca</h4>
+        <p>
+          O projeto tem 24 perguntas com gabarito (<code>avaliacao/perguntas.jsonl</code>): perguntas com as
+          mesmas palavras dos documentos, perguntas com outras palavras, perguntas que exigem dois
+          documentos e 3 perguntas sem resposta. Resultado real com o <strong>embedder de brinquedo
+          (<code>hash</code>)</strong>:
+        </p>
+<pre data-lang="saída"><code>$ npm run avaliar:busca
+21 perguntas · k = 5 · embedder hash
+
+modo              acerto@k  recall@k    MRR  nDCG@k
+textual               0.90      0.84   0.75    0.75
+vetorial              0.67      0.60   0.57    0.56
+hibrida               0.86      0.79   0.64    0.65</code></pre>
+        <p>
+          Com um "embedding" que só compara grafia, a busca vetorial perde para a textual, e a híbrida fica
+          <em>pior</em> que a textual sozinha: o componente ruim puxa o resultado para baixo. Lição: híbrida
+          só ajuda se os dois componentes forem bons, e só a medição diz se são.
+        </p>
+        <p><strong>Sua vez:</strong></p>
+        <ol>
+          <li>Reindexe com o embedder semântico (<code>npm run indexar</code>, padrão <code>local</code>) e rode de novo. Anote a tabela. As perguntas reformuladas (q12, q13, q15, q16) passam a ser encontradas?</li>
+          <li>Rode <code>npm run avaliar:busca -- --rerank</code>. O reranking melhora o MRR?</li>
+          <li>Rode <code>npm run avaliar:respostas</code> e depois com <code>--contexto-completo</code>. Compare acertos e custo por pergunta. Para este acervo, você usaria RAG?</li>
+        </ol>
+      </div>
+
+      <h3>RAG agêntico</h3>
+      <p>
+        No RAG clássico, o código busca uma vez e entrega ao modelo. No <strong>RAG agêntico</strong>, a
+        busca vira uma <em>ferramenta</em> (Módulo 2, aula 2.5): o modelo decide o que buscar, reformula,
+        busca de novo e combina resultados, o que é ótimo para perguntas que cruzam documentos (como a q05).
+        O custo é mais chamadas e mais latência. Você vai construir isso no Módulo 6.
+      </p>
+    </section>
+
+    <!-- ============================================================ PROJETO -->
+    <section class="lesson" id="projeto">
+      <h2>Projeto do módulo: assistente de documentação com RAG</h2>
+      <div class="lesson-meta">Projeto · 10–12h · TypeScript</div>
+
+      <p>
+        Um assistente que responde dúvidas de clientes da Brisa (empresa fictícia de purificadores de ar)
+        com base em 6 documentos: manual, garantia, entregas, assinatura, aplicativo e privacidade.
+      </p>
+<pre data-lang="bash"><code>cd projeto
+npm install
+npm test                                       # 16 testes, offline (inclui Postgres em memória)
+
+npm run indexar                                # embedder local (baixa o modelo na 1ª vez)
+npm run indexar -- --embedder hash             # alternativa offline
+
+npm run perguntar -- "Posso usar o purificador na varanda?"
+npm run avaliar:busca                          # eval de recuperação (sem API)
+npm run avaliar:respostas                      # eval ponta a ponta (com API)</code></pre>
+
+      <h3>Arquitetura</h3>
+      <table>
+        <tr><th>Arquivo</th><th>Responsabilidade</th></tr>
+        <tr><td><code>src/chunking.ts</code></td><td>Divisão por seção, limite com sobreposição, cabeçalho de contexto, ids estáveis</td></tr>
+        <tr><td><code>src/embeddings.ts</code></td><td>Interface única com embedders <code>local</code>, <code>voyage</code> e <code>hash</code></td></tr>
+        <tr><td><code>src/banco.ts</code></td><td>PGlite + pgvector: tabela, índices HNSW e GIN, buscas vetorial e textual</td></tr>
+        <tr><td><code>src/busca.ts</code></td><td>Modos vetorial, textual e híbrido (RRF) e reranking com LLM</td></tr>
+        <tr><td><code>src/resposta.ts</code></td><td>Geração com blocos <code>search_result</code> e citações; detecção de "não encontrei"</td></tr>
+        <tr><td><code>src/avaliar-*.ts</code></td><td>Evals de recuperação (acerto, recall, MRR, nDCG) e de respostas (fatos, citação, abstenção)</td></tr>
+      </table>
+
+      <h3>Entregáveis</h3>
+      <ol>
+        <li>Rode o eval de recuperação com <code>hash</code>, <code>local</code> e, se puder, <code>voyage</code>. Monte a tabela comparativa.</li>
+        <li>Adicione 2 documentos novos (por exemplo, uma FAQ e uma tabela de preços de acessórios) e 10 perguntas com gabarito, incluindo 2 sem resposta.</li>
+        <li>Teste duas configurações de chunking (por exemplo, <code>--max 400</code> e <code>--max 1200</code>) e mostre o efeito nas métricas.</li>
+        <li>Compare RAG e <code>--contexto-completo</code> em acertos, custo e latência, e escreva sua recomendação.</li>
+        <li>Adicione um filtro por documento (por exemplo, só perguntas sobre entrega buscam em <code>entregas</code>) usando a coluna <code>doc</code>.</li>
+      </ol>
+      <h3>Critérios de avaliação</h3>
+      <table>
+        <tr><th>Critério</th><th>Peso</th></tr>
+        <tr><td>Comparação de embedders e de modos de busca com métricas</td><td>25%</td></tr>
+        <tr><td>Acervo e gabarito ampliados, com perguntas sem resposta</td><td>20%</td></tr>
+        <tr><td>Experimento de chunking</td><td>15%</td></tr>
+        <tr><td>RAG × contexto completo, com recomendação justificada</td><td>25%</td></tr>
+        <tr><td>Filtro por metadados</td><td>15%</td></tr>
+      </table>
+    </section>
+
+    <!-- ============================================================ RECURSOS -->
+    <section class="lesson" id="recursos">
+      <h2>Recursos para aprofundar</h2>
+      <div class="lesson-meta">Todos gratuitos</div>
+      <ul class="resources">
+        <li><a href="https://github.com/pgvector/pgvector" target="_blank" rel="noopener">pgvector</a> <small>· documentação da extensão: índices, operadores e ajuste do HNSW</small></li>
+        <li><a href="https://pglite.dev" target="_blank" rel="noopener">PGlite</a> <small>· Postgres em WebAssembly, usado no projeto</small></li>
+        <li><a href="https://www.anthropic.com/news/contextual-retrieval" target="_blank" rel="noopener">Contextual Retrieval</a> <small>· a técnica de adicionar contexto a cada trecho, com resultados medidos</small></li>
+        <li><a href="https://huggingface.co/spaces/mteb/leaderboard" target="_blank" rel="noopener">MTEB Leaderboard</a> <small>· ranking público de modelos de embedding (filtre por idioma)</small></li>
+        <li><a href="https://plg.uwaterloo.ca/~gvcormac/cormacksigir09-rrf.pdf" target="_blank" rel="noopener">Reciprocal Rank Fusion (2009)</a> <small>· o artigo original do RRF</small></li>
+        <li><a href="https://platform.claude.com/docs" target="_blank" rel="noopener">Documentação da API da Anthropic</a> <small>· citações e blocos de resultado de busca</small></li>
+      </ul>
+
+      <nav class="pager">
+        <a href="../modulo-03/"><small>← Módulo anterior</small>3 · Avaliação (Evals) e Testes</a>
+        <a class="next" href="../"><small>Próximo módulo (em produção)</small>5 · MCP — Model Context Protocol</a>
+      </nav>
+    </section>
+
+  </main>
+</div>
+
+<footer class="foot">
+  <a href="/">triadic.life</a> · <a href="../">Engenharia de IA Aplicada</a> · <a href="https://github.com/MarciodeCampos/o-arco/tree/main/curso-ia/codigo/modulo-04" target="_blank" rel="noopener">código do módulo</a>
+</footer>
+
+<script src="../assets/curso.js"></script>
+</body>
+</html>

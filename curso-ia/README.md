@@ -23,6 +23,7 @@ curso-ia/
 ├── modulo-01/index.html  aulas do módulo 1
 ├── modulo-02/index.html  aulas do módulo 2
 ├── modulo-03/index.html  aulas do módulo 3
+├── modulo-04/index.html  aulas do módulo 4
 └── codigo/
     ├── modulo-01/
     │   ├── python/       labs e projeto (NumPy + SDK anthropic)
@@ -33,10 +34,13 @@ curso-ia/
     │   ├── typescript/   labs: chat, saída estruturada, ferramentas, streaming, erros
     │   ├── dados/        e-mails, manual de produto, avaliações
     │   └── projeto/      extrator de recibos (TypeScript, com testes)
-    └── modulo-03/
-        ├── python/       labs: auditoria de dataset, avaliadores, LLM-juiz, ruído estatístico
-        ├── dados/        dataset com problemas plantados, resumos rotulados por humanos
-        └── projeto/      suíte de evals do extrator (TypeScript, com testes e exemplo de CI)
+    ├── modulo-03/
+    │   ├── python/       labs: auditoria de dataset, avaliadores, LLM-juiz, ruído estatístico
+    │   ├── dados/        dataset com problemas plantados, resumos rotulados por humanos
+    │   └── projeto/      suíte de evals do extrator (TypeScript, com testes e exemplo de CI)
+    └── modulo-04/
+        ├── python/       labs: BM25 do zero, vetores e escala
+        └── projeto/      RAG com PGlite + pgvector, busca híbrida, citações e evals
 ```
 
 ## Status
@@ -46,7 +50,8 @@ curso-ia/
 | 01 · Fundamentos de IA e LLMs para Devs | ✅ pronto |
 | 02 · APIs de LLM e Engenharia de Contexto | ✅ pronto |
 | 03 · Avaliação (Evals) e Testes | ✅ pronto |
-| 04 – 15 | planejados (ver `curriculo.json`) |
+| 04 · RAG de Ponta a Ponta | ✅ pronto |
+| 05 – 15 | planejados (ver `curriculo.json`) |
 
 ## Rodando os labs do Módulo 1
 
@@ -88,6 +93,19 @@ python python/04_ruido_estatistico.py
 cd projeto && npm install                  # instala também o projeto do módulo 2
 npm test                                   # 14 testes, sem chamar a API
 npm run eval -- --reps 3                   # precisa de ANTHROPIC_API_KEY
+```
+
+## Rodando o Módulo 4
+
+```bash
+cd curso-ia/codigo/modulo-04
+python python/01_bm25_do_zero.py           # labs sem API
+
+cd projeto && npm install
+npm test                                   # 16 testes, offline (Postgres em memória)
+npm run indexar                            # embedder local; use --embedder hash para offline
+npm run avaliar:busca                      # sem API
+npm run perguntar -- "Posso usar o purificador na varanda?"   # precisa de ANTHROPIC_API_KEY
 ```
 
 ## Como adicionar um módulo
