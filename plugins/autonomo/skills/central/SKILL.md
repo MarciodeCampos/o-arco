@@ -61,6 +61,9 @@ Quando a pessoa perguntar "como estão meus projetos", sem alterar nada:
 Sugira começar pelos projetos **publicados que ainda não têm repositório no GitHub**: são os que mais
 correm risco de perder trabalho. Para o projeto escolhido, mostre o plano e peça ok antes de começar:
 
+0. **Liberar a pasta**: antes de tudo, peça para a pessoa digitar `/add-dir <pasta do projeto>`.
+   Sem isso, cada leitura ali dispara a pergunta "Read outside the working directories".
+
 1. **Git**: se não tem, `git init` na pasta e primeiro commit. Antes, crie o `.gitignore` com `.env`,
    `.env.*`, `node_modules/`, `.venv/`, chaves (`*.pem`) e **pastas de dados grandes ou com dados
    pessoais** (CSV de clientes, bases da Receita Federal, backups). Rode `git status` e mostre à
