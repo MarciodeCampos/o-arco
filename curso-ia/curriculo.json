@@ -3,7 +3,10 @@
   "versao": "2026.11",
   "atualizado": "2026-11-01",
   "cargaHorariaTotal": 420,
-  "stack": ["TypeScript", "Python"],
+  "stack": [
+    "TypeScript",
+    "Python"
+  ],
   "modulos": [
     {
       "numero": 1,
@@ -23,14 +26,18 @@
         "Limites: alucinação, data de corte e não determinismo"
       ],
       "projeto": "Modelo de linguagem de caracteres do zero, por contagem e por rede neural",
-      "melhorias": ["Removida a prévia de RAG/MCP/Agentes (agora cada tema tem módulo próprio)", "Labs executáveis em Python e TypeScript", "Modelos de raciocínio e custo por token desde o início"]
+      "melhorias": [
+        "Removida a prévia de RAG/MCP/Agentes (agora cada tema tem módulo próprio)",
+        "Labs executáveis em Python e TypeScript",
+        "Modelos de raciocínio e custo por token desde o início"
+      ]
     },
     {
       "numero": 2,
       "slug": "modulo-02",
       "titulo": "APIs de LLM e Engenharia de Contexto",
       "horas": 32,
-      "status": "planejado",
+      "status": "pronto",
       "resumo": "Provedores, SDKs e tudo que vai em uma requisição: prompts de sistema, saídas estruturadas, tool calling básico, streaming, cache de prompt, batch e controle de custo.",
       "unidades": [
         "Panorama de provedores e como escolher modelo (custo × qualidade × latência)",
@@ -43,8 +50,11 @@
         "Erros, retries, timeouts e limites de taxa",
         "Gateways e roteamento entre provedores (OpenRouter e similares)"
       ],
-      "projeto": "Extrator de dados de documentos com saída estruturada, validação e relatório de custo",
-      "melhorias": ["Saídas estruturadas e context engineering ganham unidade própria", "Prompt chaining sai daqui e vai para Agentes"]
+      "projeto": "Extrator de recibos com saída estruturada, validação de regras de negócio, autocorreção e relatório de custo",
+      "melhorias": [
+        "Saídas estruturadas e context engineering ganham unidade própria",
+        "Prompt chaining sai daqui e vai para Agentes"
+      ]
     },
     {
       "numero": 3,
@@ -64,7 +74,9 @@
         "Avaliação online: feedback de usuário, amostragem e monitoramento de qualidade"
       ],
       "projeto": "Suíte de evals para o extrator do Módulo 2, rodando no GitHub Actions",
-      "melhorias": ["Módulo inexistente na ementa original e hoje central para o cargo"]
+      "melhorias": [
+        "Módulo inexistente na ementa original e hoje central para o cargo"
+      ]
     },
     {
       "numero": 4,
@@ -83,7 +95,10 @@
         "Avaliando RAG: recall de recuperação, fidelidade, relevância"
       ],
       "projeto": "Assistente de documentação técnica com Postgres + pgvector, citações e evals",
-      "melhorias": ["Unifica o RAG que aparecia em 5 módulos diferentes", "Inclui busca híbrida, reranking e avaliação"]
+      "melhorias": [
+        "Unifica o RAG que aparecia em 5 módulos diferentes",
+        "Inclui busca híbrida, reranking e avaliação"
+      ]
     },
     {
       "numero": 5,
@@ -102,7 +117,10 @@
         "Riscos específicos: tool poisoning, prompt injection via ferramenta, excesso de permissões"
       ],
       "projeto": "Servidor MCP de produção para um serviço real, com autenticação e testes",
-      "melhorias": ["Segurança de MCP com ameaças reais, não só WAF", "Implementação nas duas linguagens"]
+      "melhorias": [
+        "Segurança de MCP com ameaças reais, não só WAF",
+        "Implementação nas duas linguagens"
+      ]
     },
     {
       "numero": 6,
@@ -123,7 +141,11 @@
         "Observabilidade e avaliação de agentes (trajetória, não só resposta final)"
       ],
       "projeto": "Agente que automatiza uma tarefa real de ponta a ponta, com logs, aprovação humana e evals",
-      "melhorias": ["Junta os módulos 4 e parte do 8 originais", "Remove casos de referência vagos", "Avaliação de trajetória de agentes"]
+      "melhorias": [
+        "Junta os módulos 4 e parte do 8 originais",
+        "Remove casos de referência vagos",
+        "Avaliação de trajetória de agentes"
+      ]
     },
     {
       "numero": 7,
@@ -142,7 +164,10 @@
         "Vibe coding com responsabilidade: onde funciona e onde quebra"
       ],
       "projeto": "Configurar um repositório para trabalho com agentes e entregar uma feature completa com eles",
-      "melhorias": ["Neutro em fornecedor", "Inclui os agentes de terminal ausentes na ementa original"]
+      "melhorias": [
+        "Neutro em fornecedor",
+        "Inclui os agentes de terminal ausentes na ementa original"
+      ]
     },
     {
       "numero": 8,
@@ -161,7 +186,10 @@
         "Testes E2E com agentes"
       ],
       "projeto": "App web multimodal: envie uma foto/áudio e receba análise estruturada em streaming",
-      "melhorias": ["Junta Multimodal (Mód. 2) e UX/UI (Mód. 5) originais", "Sem dependência de um único provedor de nuvem"]
+      "melhorias": [
+        "Junta Multimodal (Mód. 2) e UX/UI (Mód. 5) originais",
+        "Sem dependência de um único provedor de nuvem"
+      ]
     },
     {
       "numero": 9,
@@ -180,7 +208,10 @@
         "Versionamento de prompts e modelos, rollout gradual e rollback"
       ],
       "projeto": "Gateway de LLM com roteamento, cache, limites por cliente e painel de custos",
-      "melhorias": ["Remove sobreposição com o módulo de agentes", "Adiciona versionamento de prompts e OpenTelemetry"]
+      "melhorias": [
+        "Remove sobreposição com o módulo de agentes",
+        "Adiciona versionamento de prompts e OpenTelemetry"
+      ]
     },
     {
       "numero": 10,
@@ -200,7 +231,10 @@
         "FinOps com IA"
       ],
       "projeto": "Bot de ChatOps que diagnostica um pod com problema e propõe correção com aprovação",
-      "melhorias": ["Condensado de 12 para 8 unidades, mantendo as práticas", "Fundamentos repetidos foram removidos"]
+      "melhorias": [
+        "Condensado de 12 para 8 unidades, mantendo as práticas",
+        "Fundamentos repetidos foram removidos"
+      ]
     },
     {
       "numero": 11,
@@ -219,7 +253,11 @@
         "Avaliação, overfitting e versionamento de modelos"
       ],
       "projeto": "Modelo pequeno especializado em um domínio, comparado com o modelo grande em custo e qualidade",
-      "melhorias": ["Corrige a unidade 1 copiada por engano na ementa original", "LoRA em Python, onde o ecossistema realmente está", "Destilação e inferência local"]
+      "melhorias": [
+        "Corrige a unidade 1 copiada por engano na ementa original",
+        "LoRA em Python, onde o ecossistema realmente está",
+        "Destilação e inferência local"
+      ]
     },
     {
       "numero": 12,
@@ -238,7 +276,9 @@
         "Regulação e normas: LGPD, EU AI Act, PL 2338 (Brasil), ISO/IEC 42001"
       ],
       "projeto": "Red team de um app do curso: relatório de vulnerabilidades e correções aplicadas",
-      "melhorias": ["Substitui a lista genérica de 7 tópicos por conteúdo técnico prático"]
+      "melhorias": [
+        "Substitui a lista genérica de 7 tópicos por conteúdo técnico prático"
+      ]
     },
     {
       "numero": 13,
@@ -255,7 +295,9 @@
         "Bots de automação para ferramentas de gestão"
       ],
       "projeto": "Bot que transforma notas de reunião em tarefas priorizadas no seu board",
-      "melhorias": ["Condensado de 10 para 5 unidades: mais prático, menos teórico"]
+      "melhorias": [
+        "Condensado de 10 para 5 unidades: mais prático, menos teórico"
+      ]
     },
     {
       "numero": 14,
@@ -273,7 +315,10 @@
         "Apresentação, documentação e defesa técnica"
       ],
       "projeto": "Micro-SaaS publicado, com README, diagrama de arquitetura e painel de evals",
-      "melhorias": ["Evals e segurança viram critérios de avaliação", "Front-end em React ou Angular, à escolha"]
+      "melhorias": [
+        "Evals e segurança viram critérios de avaliação",
+        "Front-end em React ou Angular, à escolha"
+      ]
     },
     {
       "numero": 15,
@@ -290,7 +335,9 @@
         "Negociação, aumento e promoção"
       ],
       "projeto": "Portfólio publicado e simulação de entrevista de system design",
-      "melhorias": ["Mantido, com system design de IA mais aprofundado"]
+      "melhorias": [
+        "Mantido, com system design de IA mais aprofundado"
+      ]
     }
   ]
 }

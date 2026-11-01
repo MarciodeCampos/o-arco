@@ -21,11 +21,17 @@ curso-ia/
 │   ├── curso.css         estilos (paleta do portal triadic.life)
 │   └── curso.js          currículo, quiz, copiar código, progresso local
 ├── modulo-01/index.html  aulas do módulo 1
+├── modulo-02/index.html  aulas do módulo 2
 └── codigo/
-    └── modulo-01/
-        ├── python/       labs e projeto (NumPy + SDK anthropic)
-        ├── typescript/   labs (sem dependências + SDK @anthropic-ai/sdk)
-        └── dados/        corpus do projeto
+    ├── modulo-01/
+    │   ├── python/       labs e projeto (NumPy + SDK anthropic)
+    │   ├── typescript/   labs (sem dependências + SDK @anthropic-ai/sdk)
+    │   └── dados/        corpus do projeto
+    └── modulo-02/
+        ├── python/       labs: chat, saída estruturada, ferramentas, cache, batch
+        ├── typescript/   labs: chat, saída estruturada, ferramentas, streaming, erros
+        ├── dados/        e-mails, manual de produto, avaliações
+        └── projeto/      extrator de recibos (TypeScript, com testes)
 ```
 
 ## Status
@@ -33,7 +39,8 @@ curso-ia/
 | Módulo | Status |
 |---|---|
 | 01 · Fundamentos de IA e LLMs para Devs | ✅ pronto |
-| 02 – 15 | planejados (ver `curriculo.json`) |
+| 02 · APIs de LLM e Engenharia de Contexto | ✅ pronto |
+| 03 – 15 | planejados (ver `curriculo.json`) |
 
 ## Rodando os labs do Módulo 1
 
@@ -51,6 +58,18 @@ python python/04_primeira_chamada.py
 cd typescript && npm install
 npx tsx 01-rede-neural-xor.ts
 npx tsx 04-primeira-chamada.ts
+```
+
+## Rodando os labs do Módulo 2
+
+```bash
+cd curso-ia/codigo/modulo-02
+pip install -r python/requirements.txt
+python python/02_saida_estruturada.py      # todos os labs do módulo 2 precisam de ANTHROPIC_API_KEY
+
+cd projeto && npm install
+npm test                                   # 14 testes, sem chamar a API
+npm run extrair
 ```
 
 ## Como adicionar um módulo

@@ -1,0 +1,12 @@
+Drogaria Saúde & Vida
+CNPJ: 45.678.912/0001-55
+Data: 20/10/2026  Hora: 18:15
+
+Item                          Qtd   Unit     Total
+Dipirona 500mg 10cp            1    12,49    12,49
+Protetor solar FPS50           1    59,90    59,90
+Escova dental macia            2     8,75    17,50
+                                    Subtotal  89,89
+                       Desconto convênio      -8,99
+                                    TOTAL     80,90
+Forma de pagamento: Cartão de débito
