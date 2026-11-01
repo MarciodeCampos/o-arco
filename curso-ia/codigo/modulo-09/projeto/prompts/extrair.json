@@ -1,0 +1,10 @@
+{
+  "estavel": "v1",
+  "versoes": {
+    "v1": {
+      "sistema": "Extraia os dados pedidos do texto. Use só o que está escrito; campos ausentes ficam nulos.",
+      "criadoEm": "2026-09-02",
+      "nota": "versão inicial"
+    }
+  }
+}

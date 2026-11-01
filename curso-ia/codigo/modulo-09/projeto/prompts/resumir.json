@@ -1,0 +1,10 @@
+{
+  "estavel": "v1",
+  "versoes": {
+    "v1": {
+      "sistema": "Resuma o texto em até 3 frases para um gerente que lê no celular. Mantenha números, prazos e pedidos explícitos.",
+      "criadoEm": "2026-09-02",
+      "nota": "versão inicial"
+    }
+  }
+}

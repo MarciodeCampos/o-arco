@@ -196,18 +196,18 @@
       "slug": "modulo-09",
       "titulo": "Arquitetura e LLMOps em Produção",
       "horas": 28,
-      "status": "planejado",
+      "status": "pronto",
       "resumo": "Desenhar sistemas de IA que escalam e não quebram o orçamento: gateway, roteamento de modelos, cache semântico, filas, observabilidade de prompts e custos.",
       "unidades": [
-        "IA vs. regras determinísticas: um framework de decisão",
-        "Arquitetura de referência: gateway, orquestração, serviços, observabilidade",
-        "Roteamento de modelos e tiering para custo e latência",
-        "Cache de prompt, cache semântico e respostas em streaming",
-        "Processamento assíncrono: filas, batch e jobs longos",
-        "Observabilidade: traces com OpenTelemetry, logs de prompt, métricas de custo",
-        "Versionamento de prompts e modelos, rollout gradual e rollback"
+        "IA ou regra determinística?",
+        "Arquitetura de referência",
+        "Roteamento de modelos e tiering",
+        "Camadas de cache",
+        "Capacidade, filas e processamento assíncrono",
+        "Observabilidade: logs, traces, métricas de custo",
+        "Versionamento de prompts, canário e rollback"
       ],
-      "projeto": "Gateway de LLM com roteamento, cache, limites por cliente e painel de custos",
+      "projeto": "Gateway de LLM com roteamento por tarefa, cadeia de reserva, cache, cotas por cliente, prompts versionados com canário e painel de custos",
       "melhorias": [
         "Remove sobreposição com o módulo de agentes",
         "Adiciona versionamento de prompts e OpenTelemetry"

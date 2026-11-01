@@ -1,0 +1,17 @@
+{
+  "estavel": "v1",
+  "candidata": "v2",
+  "fracaoCandidata": 0.1,
+  "versoes": {
+    "v1": {
+      "sistema": "Classifique a mensagem do cliente em exatamente uma categoria: cobranca, entrega, defeito, duvida, elogio. Responda só a categoria.",
+      "criadoEm": "2026-09-02",
+      "nota": "versão inicial"
+    },
+    "v2": {
+      "sistema": "Você classifica mensagens de clientes de uma loja online para roteamento ao time certo.\nCategorias: cobranca (pagamento, estorno, fatura), entrega (prazo, rastreio, endereço), defeito (produto quebrado ou com falha), duvida (perguntas antes ou depois da compra), elogio.\nSe a mensagem tiver mais de um assunto, escolha o que exige ação mais urgente. Responda só a categoria.",
+      "criadoEm": "2026-10-20",
+      "nota": "define cada categoria e o desempate; em canário 10%"
+    }
+  }
+}

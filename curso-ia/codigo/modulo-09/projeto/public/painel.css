@@ -1,0 +1,13 @@
+:root { --f: #f6f7f9; --p: #fff; --t: #1d2330; --s: #5b6476; --b: #dde1e8; --a: #2457d6; }
+@media (prefers-color-scheme: dark) { :root { --f: #11141a; --p: #1a1f28; --t: #e7eaf0; --s: #9aa3b5; --b: #2c3442; --a: #7aa2ff; } }
+body { margin: 0; font: 15px/1.5 system-ui, sans-serif; background: var(--f); color: var(--t); }
+main { max-width: 1000px; margin: 0 auto; padding: 20px 16px; }
+h1 { font-size: 20px; margin: 0 0 4px; } .s { color: var(--s); margin: 0 0 16px; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.kpi { background: var(--p); border: 1px solid var(--b); border-radius: 10px; padding: 12px; }
+.kpi b { display: block; font-size: 22px; } .kpi span { color: var(--s); font-size: 13px; }
+section { background: var(--p); border: 1px solid var(--b); border-radius: 10px; padding: 12px 14px; margin-bottom: 12px; overflow-x: auto; }
+h2 { font-size: 15px; margin: 0 0 8px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; } th, td { text-align: left; padding: 6px; border-bottom: 1px solid var(--b); }
+td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; }
+.barra { height: 8px; background: var(--a); border-radius: 4px; min-width: 2px; }

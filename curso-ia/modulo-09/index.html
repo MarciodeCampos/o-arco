@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050508">
+<meta name="description" content="Módulo 9 — Arquitetura e LLMOps em Produção: IA ou regra, arquitetura de referência, roteamento de modelos, cache, capacidade, observabilidade e versionamento de prompts.">
+<title>Módulo 9 · Arquitetura e LLMOps — Engenharia de IA Aplicada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/curso.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/">◈ TRIADIC.LIFE</a>
+  <span class="crumbs">/ <a href="../">Engenharia de IA</a> / Módulo 9</span>
+  <span class="spacer"></span>
+  <span class="progress-pill">0/9 aulas</span>
+</header>
+<div class="layout">
+  <aside class="toc">
+    <button class="toc-toggle" type="button">☰ Aulas do módulo</button>
+    <h2>Módulo 9</h2>
+    <nav><ol>
+      <li><a href="#inicio"><span class="chk"></span>Visão geral</a></li>
+      <li><a href="#aula-1"><span class="chk"></span>9.1 IA ou regra?</a></li>
+      <li><a href="#aula-2"><span class="chk"></span>9.2 Arquitetura de referência</a></li>
+      <li><a href="#aula-3"><span class="chk"></span>9.3 Roteamento de modelos</a></li>
+      <li><a href="#aula-4"><span class="chk"></span>9.4 Camadas de cache</a></li>
+      <li><a href="#aula-5"><span class="chk"></span>9.5 Capacidade e filas</a></li>
+      <li><a href="#aula-6"><span class="chk"></span>9.6 Observabilidade</a></li>
+      <li><a href="#aula-7"><span class="chk"></span>9.7 Versionar e lançar</a></li>
+      <li><a href="#projeto"><span class="chk"></span>Projeto do módulo</a></li>
+      <li><a href="#recursos"><span class="chk"></span>Recursos</a></li>
+    </ol></nav>
+  </aside>
+  <main class="content" data-modulo="modulo-09">
+    <section id="inicio">
+      <header><div class="eyebrow">Módulo 09 · 28h estimadas</div><h1>Arquitetura e LLMOps em Produção</h1></header>
+      <p class="lede">
+        Um protótipo chama a API direto. Uma empresa com dez aplicações de IA precisa de algo melhor: um
+        ponto único que escolhe o modelo certo para cada tarefa, sobrevive a falhas do provedor, controla o
+        orçamento de cada time, guarda versões de prompt e mostra para onde vai cada centavo. Este módulo
+        constrói essa peça, o gateway de LLM, e as práticas de operação em volta dela.
+      </p>
+      <div class="meta"><span class="tag">7 aulas</span><span class="tag">1 lab + gateway completo</span><span class="tag">13 testes offline</span><span class="tag">Pré-requisitos: Módulos 2 e 3</span></div>
+      <h3>Ao final do módulo você vai</h3>
+      <ul>
+        <li>Decidir onde usar IA e onde usar regras determinísticas.</li>
+        <li>Desenhar a arquitetura de um sistema de IA de produção.</li>
+        <li>Implementar roteamento por tarefa, cadeias de reserva e cotas de custo.</li>
+        <li>Combinar camadas de cache sem servir respostas erradas.</li>
+        <li>Planejar capacidade frente aos limites do provedor.</li>
+        <li>Observar custo, latência e qualidade, e lançar mudanças de prompt com canário.</li>
+      </ul>
+<pre data-lang="bash"><code>cd o-arco/curso-ia/codigo/modulo-09
+python python/01_capacidade.py
+cd projeto &amp;&amp; npm install &amp;&amp; npm test</code></pre>
+    </section>
+
+    <section class="lesson" id="aula-1">
+      <h2>9.1 IA ou regra determinística?</h2>
+      <div class="lesson-meta">Leitura · 1h</div>
+      <table>
+        <tr><th>Use regra/código quando</th><th>Use LLM quando</th></tr>
+        <tr><td>A regra é conhecida e cabe em poucas linhas (validar CPF, calcular frete)</td><td>As regras são incontáveis ou difusas (entender a intenção de um e-mail)</td></tr>
+        <tr><td>Precisa ser 100% previsível e auditável</td><td>Algum erro é tolerável e detectável</td></tr>
+        <tr><td>Latência de milissegundos, volume enorme</td><td>Segundos são aceitáveis</td></tr>
+        <tr><td>O custo por chamada importa mais que a flexibilidade</td><td>O valor por chamada paga o custo</td></tr>
+      </table>
+      <p>
+        Os melhores sistemas misturam: o LLM interpreta (texto → dados estruturados), o código decide e
+        executa (regras de negócio, cálculos, permissões). Você viu isso no extrator de recibos: o modelo
+        lê, o código valida a soma e os dígitos do CNPJ.
+      </p>
+    </section>
+
+    <section class="lesson" id="aula-2">
+      <h2>9.2 Arquitetura de referência</h2>
+      <div class="lesson-meta">Leitura · 2h</div>
+      <div class="flow"><span>Aplicações</span><i>→</i><span><b>Gateway de LLM</b>: auth, cotas, roteamento, cache, prompts, logs</span><i>→</i><span>Provedores e modelos próprios</span></div>
+      <div class="flow"><span>Serviços compartilhados: RAG/busca, servidores MCP, filas, avaliação</span><i>·</i><span>Observabilidade: logs, traces, métricas, custo</span></div>
+      <h3>Princípios</h3>
+      <ul>
+        <li><strong>Baixo acoplamento:</strong> aplicações falam com o gateway e com serviços internos por interfaces estáveis; trocar de modelo ou provedor não exige mudar as aplicações.</li>
+        <li><strong>Políticas como dados:</strong> rotas, cotas e prompts ficam em configuração versionada (o <code>politicas.ts</code> e a pasta <code>prompts/</code> do projeto).</li>
+        <li><strong>Segurança no centro:</strong> chaves dos provedores só no gateway; aplicações recebem chaves próprias, revogáveis, com cota.</li>
+        <li><strong>Onde rodar:</strong> serverless (escala a zero, bom para tráfego irregular, cuidado com tempo máximo de execução em respostas longas), contêineres/Kubernetes (controle e conexões longas de streaming), edge (latência, mas ambiente limitado).</li>
+      </ul>
+    </section>
+
+    <section class="lesson" id="aula-3">
+      <h2>9.3 Roteamento de modelos e tiering</h2>
+      <div class="lesson-meta">Leitura + prática · 4h</div>
+<pre data-lang="typescript"><code>export const ROTAS: Record&lt;Tarefa, string[]&gt; = {
+  classificar: ["claude-haiku-5-5", "claude-sonnet-5-5"],   // barato primeiro, reserva depois
+  extrair:     ["claude-sonnet-5-5", "claude-opus-5-5"],
+  resumir:     ["claude-sonnet-5-5", "claude-haiku-5-5"],
+  geral:       ["claude-opus-5-5", "claude-sonnet-5-5"],
+};</code></pre>
+      <ul>
+        <li><strong>Roteamento por tarefa</strong> (o do projeto): a aplicação declara a tarefa; o gateway escolhe o modelo. Simples e previsível.</li>
+        <li><strong>Roteamento por intenção ou dificuldade:</strong> um classificador barato decide se a pergunta precisa do modelo grande. Economiza mais, mas o classificador também erra; meça.</li>
+        <li><strong>Cadeia de reserva:</strong> em erro transitório (429, 5xx, conexão) ou recusa, tenta o próximo modelo. Em erro do pedido (400), <em>não</em>: o problema não é o modelo.</li>
+        <li><strong>Esforço por rota:</strong> o mesmo modelo com esforço baixo pode bastar para tarefas simples; compare isso antes de trocar de modelo.</li>
+      </ul>
+      <div class="callout warn"><b>Toda rota precisa de eval</b>Mandar 60% do tráfego para o modelo pequeno economiza muito, desde que a qualidade dessas tarefas tenha sido medida com o modelo pequeno (Módulo 3). Sem eval, roteamento é economia às cegas.</div>
+    </section>
+
+    <section class="lesson" id="aula-4">
+      <h2>9.4 Camadas de cache</h2>
+      <div class="lesson-meta">Leitura · 2h</div>
+      <table>
+        <tr><th>Camada</th><th>O que reaproveita</th><th>Risco</th></tr>
+        <tr><td><strong>Cache de prompt do provedor</strong></td><td>O processamento do prefixo repetido (Módulo 2)</td><td>Nenhum: a resposta é nova; só o prefixo é barateado</td></tr>
+        <tr><td><strong>Cache exato de respostas</strong> (no projeto)</td><td>A resposta inteira para o mesmo pedido (tarefa + versão do prompt + mensagens)</td><td>Resposta desatualizada se o mundo mudou; use TTL e desligue para dados dinâmicos</td></tr>
+        <tr><td><strong>Cache semântico</strong></td><td>A resposta de um pedido <em>parecido</em> (por embeddings)</td><td>Alto: "cancelar o pedido 123" e "cancelar o pedido 124" são parecidos e têm respostas diferentes</td></tr>
+      </table>
+      <p>
+        Repare que a chave do cache do projeto inclui a <strong>versão do prompt</strong>: lançar um prompt
+        novo invalida automaticamente as respostas antigas. Cache semântico só em casos controlados (FAQ sem
+        dados pessoais, com limiar de similaridade alto e avaliado).
+      </p>
+    </section>
+
+    <section class="lesson" id="aula-5">
+      <h2>9.5 Capacidade, filas e processamento assíncrono</h2>
+      <div class="lesson-meta">Leitura + lab · 3h</div>
+      <div class="exercise">
+        <h4>LAB 9.5 — Planejando para o lançamento</h4>
+<pre data-lang="bash"><code>python python/01_capacidade.py</code></pre>
+<pre data-lang="saída"><code>TRÁFEGO
+  chamadas por dia:                 120.000
+  média / pico por segundo:         2.8 / 11.1
+  chamadas simultâneas no pico:      67   (lei de Little: taxa × latência)
+
+LIMITES DO PROVEDOR (no pico)
+  requisições/min                 667 de      4.000 (17%)
+  tokens de entrada/min     2.000.000 de  2.000.000 (100%)  ⚠ NO LIMITE OU ACIMA: vai receber 429 no pico
+
+CUSTO MENSAL (30 dias)
+  tudo no claude-opus-5-5                      US$   72.000/mês  (100%)
+  tudo no claude-sonnet-5-5                    US$   36.000/mês  (50%)
+  roteado: 60% haiku, 30% sonnet, 10% opus     US$   19.080/mês  (26%)
+  roteado + 50% da entrada vinda do cache      US$   13.928/mês  (19%)</code></pre>
+        <p>
+          O gargalo é o limite de <strong>tokens</strong> por minuto, não o de requisições: com 3 mil tokens de
+          entrada por chamada, o pico bate exatamente no teto. Prompts menores e cache resolvem as duas
+          coisas, custo e capacidade. Os limites do exemplo são ilustrativos: consulte os do seu plano.
+        </p>
+      </div>
+      <ul>
+        <li><strong>Lei de Little:</strong> chamadas simultâneas = taxa de chegada × latência. Latências de segundos geram muita concorrência, o que pede pools de conexão e servidores preparados para conexões longas.</li>
+        <li><strong>Filas</strong> para o que não precisa de resposta imediata: absorvem picos e permitem retentativas com controle.</li>
+        <li><strong>Batch</strong> (50% mais barato) para processamento noturno.</li>
+        <li><strong>Tempo máximo por requisição</strong> e cancelamento quando o usuário desiste (Módulo 8).</li>
+      </ul>
+    </section>
+
+    <section class="lesson" id="aula-6">
+      <h2>9.6 Observabilidade</h2>
+      <div class="lesson-meta">Leitura + prática · 3h</div>
+      <p>O gateway grava uma linha JSON por requisição (<code>gateway.jsonl</code>):</p>
+<pre data-lang="json (exemplo)"><code>{"id":"req-118","cliente":"app-suporte","tarefa":"geral","versaoPrompt":"v1",
+ "modelo":"claude-sonnet-5-5","tentativas":[{"modelo":"claude-opus-5-5","erro":"RateLimitError"},{"modelo":"claude-sonnet-5-5"}],
+ "cache":false,"tokensEntrada":2400,"tokensSaida":150,"custoUsd":0.0063,"latenciaMs":1840,"status":"ok"}</code></pre>
+      <ul>
+        <li><strong>Métricas de operação:</strong> custo por cliente, modelo e versão de prompt; taxa de cache; latência p50/p95; uso de reserva; erros; recusas por cota. É o que o painel do projeto mostra.</li>
+        <li><strong>Traces distribuídos</strong> (OpenTelemetry): uma requisição de usuário que passa por RAG, três chamadas de modelo e duas ferramentas vira um trace com todos os passos e tempos. Os SDKs dos provedores e várias plataformas de observabilidade de LLM já emitem esses spans.</li>
+        <li><strong>Prompts e respostas nos logs:</strong> essenciais para depurar, e são dados pessoais. Decida o que registrar, por quanto tempo e quem acessa; mascare dados sensíveis.</li>
+        <li><strong>Qualidade em produção:</strong> amostras avaliadas pelo LLM-juiz calibrado e sinais dos usuários (Módulo 3) entram no mesmo painel.</li>
+      </ul>
+    </section>
+
+    <section class="lesson" id="aula-7">
+      <h2>9.7 Versionamento de prompts, canário e rollback</h2>
+      <div class="lesson-meta">Leitura + prática · 2h</div>
+<pre data-lang="json (prompts/classificar.json)"><code>{
+  "estavel": "v1",
+  "candidata": "v2",
+  "fracaoCandidata": 0.1,
+  "versoes": {
+    "v1": { "sistema": "Classifique ...", "criadoEm": "2026-09-02", "nota": "versão inicial" },
+    "v2": { "sistema": "Você classifica ... desempate ...", "criadoEm": "2026-10-20", "nota": "em canário 10%" }
+  }
+}</code></pre>
+      <ol>
+        <li>A versão nova passa no eval offline (Módulo 3).</li>
+        <li>Entra como <em>candidata</em> com 5–10% do tráfego. A escolha é determinística pelo id da requisição.</li>
+        <li>O painel compara custo e qualidade de <code>classificar@v1</code> e <code>classificar@v2</code>.</li>
+        <li>Promove (vira <em>estável</em>) ou faz rollback (remove a candidata), mudando um arquivo, sem deploy das aplicações.</li>
+      </ol>
+      <p>O mesmo vale para trocar de modelo: uma rota nova em canário, medida, e então promovida.</p>
+    </section>
+
+    <section class="lesson" id="projeto">
+      <h2>Projeto do módulo: gateway de LLM</h2>
+      <div class="lesson-meta">Projeto · 10h · TypeScript</div>
+<pre data-lang="bash"><code>cd projeto &amp;&amp; npm install &amp;&amp; npm test       # 13 testes com provedor falso
+GATEWAY_CLIENTES="$(openssl rand -hex 16):app-suporte:5" npm run gateway
+# painel em http://127.0.0.1:8787/</code></pre>
+      <table>
+        <tr><th>Arquivo</th><th>Responsabilidade</th></tr>
+        <tr><td><code>src/politicas.ts</code></td><td>Rotas por tarefa, esforço, preços, clientes</td></tr>
+        <tr><td><code>src/prompts.ts</code> + <code>prompts/</code></td><td>Prompts versionados com canário determinístico</td></tr>
+        <tr><td><code>src/gateway.ts</code></td><td>Autorização, cota diária, cache, cadeia de reserva, registro</td></tr>
+        <tr><td><code>src/metricas.ts</code></td><td>Agregação para o painel</td></tr>
+        <tr><td><code>src/servidor.ts</code> + <code>public/</code></td><td>API HTTP com chave por cliente e painel de custos com CSP</td></tr>
+      </table>
+      <p>
+        Os testes usam um provedor falso em que cada modelo se comporta como configurado (sucesso, 429, 500,
+        400 ou recusa) e provam: roteamento, reserva só em erro transitório, cache e TTL, cota diária com
+        virada de dia, autorização por tarefa, proporção do canário e as métricas.
+      </p>
+      <h3>Entregáveis</h3>
+      <ol>
+        <li>Coloque duas aplicações suas (ou os projetos dos Módulos 2 e 4) para chamar o gateway em vez da API.</li>
+        <li>Adicione streaming (SSE) ao gateway, com registro de custo ao fim do stream.</li>
+        <li>Implemente roteamento por dificuldade com um classificador barato e compare custo e qualidade com o roteamento por tarefa usando a suíte do Módulo 3.</li>
+        <li>Exporte traces com OpenTelemetry para uma ferramenta de sua escolha.</li>
+        <li>Faça um canário real de uma versão de prompt e escreva a decisão de promover ou não, com números.</li>
+      </ol>
+      <h3>Critérios de avaliação</h3>
+      <table>
+        <tr><th>Critério</th><th>Peso</th></tr>
+        <tr><td>Aplicações integradas ao gateway</td><td>20%</td></tr>
+        <tr><td>Streaming com custo registrado</td><td>20%</td></tr>
+        <tr><td>Roteamento por dificuldade medido</td><td>25%</td></tr>
+        <tr><td>Traces</td><td>15%</td></tr>
+        <tr><td>Canário com decisão documentada</td><td>20%</td></tr>
+      </table>
+    </section>
+
+    <section class="lesson" id="recursos">
+      <h2>Recursos para aprofundar</h2>
+      <div class="lesson-meta">Todos gratuitos</div>
+      <ul class="resources">
+        <li><a href="https://opentelemetry.io/docs/" target="_blank" rel="noopener">OpenTelemetry</a> <small>· traces, métricas e logs; veja as convenções semânticas para IA generativa</small></li>
+        <li><a href="https://docs.litellm.ai" target="_blank" rel="noopener">LiteLLM</a> <small>· um gateway aberto, para comparar com o seu</small></li>
+        <li><a href="https://platform.claude.com/docs" target="_blank" rel="noopener">Documentação da API</a> <small>· limites de taxa, cache de prompt e batch</small></li>
+        <li><a href="https://sre.google/books/" target="_blank" rel="noopener">Livros de SRE do Google</a> <small>· fundamentos de operação que valem para sistemas com IA</small></li>
+      </ul>
+      <nav class="pager">
+        <a href="../modulo-08/"><small>← Módulo anterior</small>8 · Front-end, UX e Multimodal</a>
+        <a class="next" href="../modulo-10/"><small>Próximo módulo →</small>10 · IA para DevOps e SRE</a>
+      </nav>
+    </section>
+  </main>
+</div>
+<footer class="foot"><a href="/">triadic.life</a> · <a href="../">Engenharia de IA Aplicada</a> · <a href="https://github.com/MarciodeCampos/o-arco/tree/main/curso-ia/codigo/modulo-09" target="_blank" rel="noopener">código do módulo</a></footer>
+<script src="../assets/curso.js"></script>
+</body>
+</html>

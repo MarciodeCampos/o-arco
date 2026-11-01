@@ -28,6 +28,7 @@ curso-ia/
 ├── modulo-06/index.html  aulas do módulo 6
 ├── modulo-07/index.html  aulas do módulo 7
 ├── modulo-08/index.html  aulas do módulo 8
+├── modulo-09/index.html  aulas do módulo 9
 └── codigo/
     ├── modulo-01/
     │   ├── python/       labs e projeto (NumPy + SDK anthropic)
@@ -55,10 +56,13 @@ curso-ia/
     │   ├── python/       verificador de código gerado, revisor de diff com LLM
     │   ├── modelo-repo/  repositório pronto para agentes (CLAUDE.md, hooks, skill, subagente, spec)
     │   └── solucao-referencia/  implementação de referência da spec de cupons
-    └── modulo-08/
-        ├── python/       labs: visão (foto de cupom) e PDF com citações
-        ├── dados/        foto de cupom e contrato em PDF de exemplo
-        └── projeto/      app multimodal: chat com streaming, análise de imagem, testes E2E
+    ├── modulo-08/
+    │   ├── python/       labs: visão (foto de cupom) e PDF com citações
+    │   ├── dados/        foto de cupom e contrato em PDF de exemplo
+    │   └── projeto/      app multimodal: chat com streaming, análise de imagem, testes E2E
+    └── modulo-09/
+        ├── python/       lab: planejamento de capacidade e custo
+        └── projeto/      gateway de LLM: roteamento, reserva, cache, cotas, prompts versionados, painel
 ```
 
 ## Status
@@ -73,7 +77,8 @@ curso-ia/
 | 06 · Agentes de IA | ✅ pronto |
 | 07 · Agentes de Código | ✅ pronto |
 | 08 · IA no Front-end, UX e Multimodal | ✅ pronto |
-| 09 – 15 | planejados (ver `curriculo.json`) |
+| 09 · Arquitetura e LLMOps | ✅ pronto |
+| 10 – 15 | planejados (ver `curriculo.json`) |
 
 ## Rodando os labs do Módulo 1
 
