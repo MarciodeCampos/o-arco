@@ -5,8 +5,8 @@ description: Configura quanto o Claude pode fazer sem pedir aprovação (níveis
 
 # Configurar a autonomia
 
-Leia antes: `${CLAUDE_PLUGIN_ROOT}/referencia/como-ensinar.md` e
-`${CLAUDE_PLUGIN_ROOT}/referencia/niveis.md`.
+Carregue antes, com a ferramenta Skill: `autonomo:como-ensinar` (se ainda não carregou nesta sessão)
+e `autonomo:niveis`. Nunca leia arquivos do plugin com Read.
 
 ## 1. Saber onde estamos
 Se o diagnóstico ainda não rodou nesta sessão, rode `bash "${CLAUDE_PLUGIN_ROOT}/skills/diagnostico/diagnostico.sh"`
@@ -32,7 +32,7 @@ Se `~/.claude/settings.json` existir, copie para `~/.claude/settings.json.backup
 hora atuais) e diga o caminho à pessoa. Faça o mesmo com `~/.claude/CLAUDE.md`.
 
 ## 5. Mesclar a configuração do nível
-Modelos em `${CLAUDE_PLUGIN_ROOT}/modelos/`:
+Modelos na skill `autonomo:modelos` (carregue com a ferramenta Skill):
 - Nível 1: `usuario-nivel-1-assistido.json`
 - Nível 2: `usuario-nivel-2-autonomo.json`
 - Nível 3: `usuario-nivel-2-autonomo.json` também (as regras de bloqueio continuam valendo dentro do
@@ -59,7 +59,7 @@ ou siga com as regras de bloqueio sem sandbox, dizendo que leituras indiretas de
 cobertas.
 
 ## 7. Instruções permanentes
-Pegue `${CLAUDE_PLUGIN_ROOT}/modelos/claude-md-usuario.md`, preencha `{{PERFIL}}` (por exemplo
+Pegue o modelo `claude-md-usuario.md` da skill `autonomo:modelos`, preencha `{{PERFIL}}` (por exemplo
 "iniciante em programação" ou "desenvolvedora experiente"), `{{IDIOMA}}`, `{{NIVEL}}` e `{{DATA}}`,
 e grave em `~/.claude/CLAUDE.md`:
 - se já houver um bloco entre `<!-- autonomo:inicio` e `<!-- autonomo:fim -->`, substitua só ele;
@@ -75,7 +75,7 @@ novo. Mostre à pessoa a linha que confirma.
 - Na sessão nova, confira o modo no rodapé da tela. No Nível 2 deve aparecer **auto mode**. Se
   aparecer Manual, o modo auto não está disponível para a conta ou o modelo; ofereça o Nível 1 e
   explique a diferença.
-- Rode a skill `verificar-barreiras` e mostre o resultado.
+- Carregue e siga a skill `autonomo:verificar-barreiras` e mostre o resultado.
 
 ## Nível 3 (só ambiente isolado)
 - Sessão na nuvem: https://claude.ai/code roda num contêiner da Anthropic; a pessoa conecta o GitHub

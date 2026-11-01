@@ -5,7 +5,8 @@ description: Publica o projeto na internet com segurança - escolhe a plataforma
 
 # Implantar com portões
 
-Leia `${CLAUDE_PLUGIN_ROOT}/referencia/como-ensinar.md` e `${CLAUDE_PLUGIN_ROOT}/referencia/links.md`.
+Carregue, com a ferramenta Skill, `autonomo:como-ensinar` (se ainda não carregou nesta sessão) e
+`autonomo:links`. Nunca leia arquivos do plugin com Read.
 
 Regra central: **prévia é automática; produção pede a aprovação da pessoa**, depois que ela viu a
 prévia funcionando. As regras `ask` do Nível 2 já fazem o Claude Code pedir confirmação para os
@@ -27,7 +28,7 @@ Recomende pelo tipo de projeto e confirme (AskUserQuestion):
 Diga claramente se a plataforma escolhida pode gerar cobrança e onde a pessoa acompanha isso.
 
 ## 3. Conta e login (a pessoa faz, você orienta)
-- Mande o link de cadastro da plataforma (`links.md`) e espere ela confirmar.
+- Mande o link de cadastro da plataforma (skill `autonomo:links`) e espere ela confirmar.
 - Logins que abrem o navegador (`vercel login`, `gh auth login`) são interativos: peça para ela rodar
   num terminal separado, ou na própria sessão com `!` na frente (por exemplo `! vercel login`), e
   diga o que vai aparecer.

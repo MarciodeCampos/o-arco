@@ -1,6 +1,6 @@
 {
   "name": "autonomo",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Ensina o Claude a preparar o computador de qualquer pessoa, configurar autonomia com barreiras de segurança testadas, criar projetos e publicá-los, explicando cada passo em linguagem simples.",
   "author": { "name": "Marcio de Campos", "url": "https://triadic.life" },
   "homepage": "https://triadic.life/curso-ia/autonomo/",
