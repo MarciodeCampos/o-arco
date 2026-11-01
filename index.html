@@ -98,7 +98,7 @@ body::before {
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 24px;
   width: 100%;
-  max-width: 760px;
+  max-width: 1120px;
 }
 
 .card {
@@ -203,6 +203,13 @@ body::before {
 .card-cta-arrow { font-size: 16px; transition: transform 0.2s; }
 .card:hover .card-cta-arrow { transform: translateX(4px); }
 
+.card-curso:hover { border-color: var(--gold-light); box-shadow: 0 20px 60px rgba(232,201,122,0.12); }
+.card-curso .card-bar { background: linear-gradient(to right, var(--cyan-dim), var(--gold), var(--cyan-dim)); }
+.card-curso .card-sym { color: var(--gold-light); }
+.card-curso .card-label { color: var(--gold-dim); }
+.card-curso .card-tag { color: var(--gold-light); border-color: rgba(232,201,122,0.3); }
+.card-curso .card-cta { color: var(--gold-dim); }
+
 /* Footer */
 .portal-footer {
   margin-top: 64px;
@@ -281,6 +288,29 @@ body::before {
       </div>
       <div class="card-cta">
         <span>ACESSAR PLAYER</span>
+        <span class="card-cta-arrow">→</span>
+      </div>
+    </a>
+
+    <!-- Curso de Engenharia de IA Aplicada -->
+    <a class="card card-curso" href="/curso-ia/" id="card-curso-ia">
+      <div class="card-bar"></div>
+      <div class="card-body">
+        <div class="card-sym">◇</div>
+        <div class="card-label">Curso</div>
+        <div class="card-title">ENGENHARIA<br>DE IA APLICADA</div>
+        <div class="card-desc">
+          LLMs, APIs, evals, RAG, MCP, agentes, LLMOps, segurança e fine-tuning.
+          15 módulos com labs em TypeScript e Python e um projeto por módulo.
+        </div>
+        <div class="card-meta">
+          <span class="card-tag">15 Módulos</span>
+          <span class="card-tag">420h</span>
+          <span class="card-tag">TS + Python</span>
+        </div>
+      </div>
+      <div class="card-cta">
+        <span>COMEÇAR O CURSO</span>
         <span class="card-cta-arrow">→</span>
       </div>
     </a>

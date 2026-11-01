@@ -1,0 +1,296 @@
+{
+  "titulo": "Engenharia de IA Aplicada",
+  "versao": "2026.11",
+  "atualizado": "2026-11-01",
+  "cargaHorariaTotal": 420,
+  "stack": ["TypeScript", "Python"],
+  "modulos": [
+    {
+      "numero": 1,
+      "slug": "modulo-01",
+      "titulo": "Fundamentos de IA e LLMs para Devs",
+      "horas": 24,
+      "status": "pronto",
+      "resumo": "De Turing ao Transformer: o que é IA, como redes neurais aprendem e como um LLM gera texto. Você treina uma rede do zero e faz a primeira chamada de API medindo tokens e custo.",
+      "unidades": [
+        "Breve história da IA",
+        "O mapa: IA, ML, Deep Learning e LLMs",
+        "Tensores e redes neurais (lab: XOR do zero em Python e TS)",
+        "Como um LLM funciona: tokens, embeddings e atenção (lab)",
+        "Do modelo base ao assistente: pré-treino, ajuste fino, RLHF, raciocínio",
+        "Gerando texto: amostragem, temperatura e janela de contexto (lab)",
+        "Sua primeira chamada de API: tokens e custo (lab)",
+        "Limites: alucinação, data de corte e não determinismo"
+      ],
+      "projeto": "Modelo de linguagem de caracteres do zero, por contagem e por rede neural",
+      "melhorias": ["Removida a prévia de RAG/MCP/Agentes (agora cada tema tem módulo próprio)", "Labs executáveis em Python e TypeScript", "Modelos de raciocínio e custo por token desde o início"]
+    },
+    {
+      "numero": 2,
+      "slug": "modulo-02",
+      "titulo": "APIs de LLM e Engenharia de Contexto",
+      "horas": 32,
+      "status": "planejado",
+      "resumo": "Provedores, SDKs e tudo que vai em uma requisição: prompts de sistema, saídas estruturadas, tool calling básico, streaming, cache de prompt, batch e controle de custo.",
+      "unidades": [
+        "Panorama de provedores e como escolher modelo (custo × qualidade × latência)",
+        "Anatomia de uma requisição: system, mensagens, parâmetros, esforço de raciocínio",
+        "Prompt engineering e context engineering: o que mudou com modelos de raciocínio",
+        "Saídas estruturadas com JSON Schema / Zod / Pydantic",
+        "Tool calling: o modelo pedindo para seu código agir",
+        "Streaming e UX de resposta progressiva",
+        "Cache de prompt, batch e redução de tokens",
+        "Erros, retries, timeouts e limites de taxa",
+        "Gateways e roteamento entre provedores (OpenRouter e similares)"
+      ],
+      "projeto": "Extrator de dados de documentos com saída estruturada, validação e relatório de custo",
+      "melhorias": ["Saídas estruturadas e context engineering ganham unidade própria", "Prompt chaining sai daqui e vai para Agentes"]
+    },
+    {
+      "numero": 3,
+      "slug": "modulo-03",
+      "titulo": "Avaliação (Evals) e Testes de Sistemas com LLM",
+      "horas": 24,
+      "status": "planejado",
+      "novo": true,
+      "resumo": "Como saber se uma mudança de prompt ou de modelo melhorou ou piorou o sistema. Datasets de avaliação, LLM como juiz, testes de regressão e avaliação em produção.",
+      "unidades": [
+        "Por que \"parece bom\" não é métrica",
+        "Montando um dataset de avaliação: casos reais, casos sintéticos, casos de borda",
+        "Avaliadores: código, regex, comparação exata, LLM como juiz, humano",
+        "Calibrando o LLM-juiz contra notas humanas",
+        "Evals no CI: testes de regressão de prompt",
+        "Comparando modelos e esforço de raciocínio pelo custo por tarefa concluída",
+        "Avaliação online: feedback de usuário, amostragem e monitoramento de qualidade"
+      ],
+      "projeto": "Suíte de evals para o extrator do Módulo 2, rodando no GitHub Actions",
+      "melhorias": ["Módulo inexistente na ementa original e hoje central para o cargo"]
+    },
+    {
+      "numero": 4,
+      "slug": "modulo-04",
+      "titulo": "RAG de Ponta a Ponta",
+      "horas": 32,
+      "status": "planejado",
+      "resumo": "Embeddings, bancos vetoriais e busca semântica até RAG de produção: chunking, busca híbrida, reranking, citações, RAG agêntico e como avaliar recuperação e resposta.",
+      "unidades": [
+        "Embeddings e similaridade: busca por significado",
+        "Bancos vetoriais: pgvector, alternativas gerenciadas e quando não usar um",
+        "Ingestão: parsing de PDF/HTML, chunking e metadados",
+        "Busca híbrida (BM25 + vetorial) e reranking",
+        "Geração com citações e controle de alucinação",
+        "RAG agêntico e contexto longo: quando a janela de 1M tokens substitui o RAG",
+        "Avaliando RAG: recall de recuperação, fidelidade, relevância"
+      ],
+      "projeto": "Assistente de documentação técnica com Postgres + pgvector, citações e evals",
+      "melhorias": ["Unifica o RAG que aparecia em 5 módulos diferentes", "Inclui busca híbrida, reranking e avaliação"]
+    },
+    {
+      "numero": 5,
+      "slug": "modulo-05",
+      "titulo": "MCP — Model Context Protocol",
+      "horas": 28,
+      "status": "planejado",
+      "resumo": "O protocolo padrão para conectar modelos a ferramentas e dados. Criar e consumir servidores MCP em TypeScript e Python, expor serviços da empresa e fazer isso com segurança.",
+      "unidades": [
+        "O problema que o MCP resolve e a arquitetura cliente/servidor",
+        "Primitivas: tools, resources, prompts; transportes stdio e HTTP",
+        "Criando um servidor MCP em TypeScript e em Python",
+        "Consumindo MCP em IDEs, agentes de código e na API",
+        "Expondo serviços internos (CRM, billing, suporte) via MCP",
+        "Autenticação (OAuth), escopos, rate limiting e auditoria",
+        "Riscos específicos: tool poisoning, prompt injection via ferramenta, excesso de permissões"
+      ],
+      "projeto": "Servidor MCP de produção para um serviço real, com autenticação e testes",
+      "melhorias": ["Segurança de MCP com ameaças reais, não só WAF", "Implementação nas duas linguagens"]
+    },
+    {
+      "numero": 6,
+      "slug": "modulo-06",
+      "titulo": "Agentes de IA",
+      "horas": 44,
+      "status": "planejado",
+      "resumo": "Do loop de ferramentas aos sistemas multiagente: padrões de raciocínio, memória, gerenciamento de contexto, orquestração em grafo, guardrails e limites de autonomia.",
+      "unidades": [
+        "Quando NÃO usar um agente: chamada única, workflow ou agente",
+        "O loop agêntico: percepção → raciocínio → ação → feedback",
+        "Padrões: ReAct, Plan-and-Execute, Reflection, prompt chaining, roteamento",
+        "Design de ferramentas: schemas, descrições, erros e idempotência",
+        "Memória: curta, longa, episódica; compactação e edição de contexto",
+        "Orquestração com grafos (LangGraph) e SDKs de agentes dos provedores",
+        "Multiagente: supervisor, hierárquico, handoff, paralelismo",
+        "Guardrails, human-in-the-loop, orçamento de tokens e prevenção de loops",
+        "Observabilidade e avaliação de agentes (trajetória, não só resposta final)"
+      ],
+      "projeto": "Agente que automatiza uma tarefa real de ponta a ponta, com logs, aprovação humana e evals",
+      "melhorias": ["Junta os módulos 4 e parte do 8 originais", "Remove casos de referência vagos", "Avaliação de trajetória de agentes"]
+    },
+    {
+      "numero": 7,
+      "slug": "modulo-07",
+      "titulo": "Agentes de Código e IA no Fluxo do Dev",
+      "horas": 20,
+      "status": "planejado",
+      "resumo": "Trabalhar com agentes de código no terminal e na IDE: escolher ferramenta, escrever arquivos de instruções, criar skills, hooks e subagentes, revisar o que a IA produz.",
+      "unidades": [
+        "Panorama: IDEs com IA vs. agentes de terminal (Claude Code, Codex, Gemini CLI, Cursor e outros)",
+        "Arquivos de contexto do projeto (CLAUDE.md, AGENTS.md, regras) e o que colocar neles",
+        "Desenvolvimento guiado por especificação e por testes com agentes",
+        "Skills, comandos, hooks e subagentes",
+        "Agentes rodando no CI: revisão de PR e correção automática",
+        "Revisão crítica do código gerado: segurança, dívida técnica, licenças",
+        "Vibe coding com responsabilidade: onde funciona e onde quebra"
+      ],
+      "projeto": "Configurar um repositório para trabalho com agentes e entregar uma feature completa com eles",
+      "melhorias": ["Neutro em fornecedor", "Inclui os agentes de terminal ausentes na ementa original"]
+    },
+    {
+      "numero": 8,
+      "slug": "modulo-08",
+      "titulo": "IA no Front-end, UX e Multimodal",
+      "horas": 28,
+      "status": "planejado",
+      "resumo": "Interfaces que conversam: chat com streaming, UI generativa, visão, áudio e voz, ML no navegador e prototipação assistida por IA.",
+      "unidades": [
+        "Padrões de UX para IA: streaming, incerteza, citações, desfazer",
+        "Chat e UI generativa no front-end (React/Angular) com back-end seguro",
+        "Visão: OCR inteligente, análise de imagem e de documentos",
+        "Áudio e voz: transcrição, síntese e agentes de voz em tempo real",
+        "ML no navegador (TensorFlow.js, Transformers.js, WebGPU)",
+        "Prototipação e design assistidos por IA (texto→UI, Figma→código)",
+        "Testes E2E com agentes"
+      ],
+      "projeto": "App web multimodal: envie uma foto/áudio e receba análise estruturada em streaming",
+      "melhorias": ["Junta Multimodal (Mód. 2) e UX/UI (Mód. 5) originais", "Sem dependência de um único provedor de nuvem"]
+    },
+    {
+      "numero": 9,
+      "slug": "modulo-09",
+      "titulo": "Arquitetura e LLMOps em Produção",
+      "horas": 28,
+      "status": "planejado",
+      "resumo": "Desenhar sistemas de IA que escalam e não quebram o orçamento: gateway, roteamento de modelos, cache semântico, filas, observabilidade de prompts e custos.",
+      "unidades": [
+        "IA vs. regras determinísticas: um framework de decisão",
+        "Arquitetura de referência: gateway, orquestração, serviços, observabilidade",
+        "Roteamento de modelos e tiering para custo e latência",
+        "Cache de prompt, cache semântico e respostas em streaming",
+        "Processamento assíncrono: filas, batch e jobs longos",
+        "Observabilidade: traces com OpenTelemetry, logs de prompt, métricas de custo",
+        "Versionamento de prompts e modelos, rollout gradual e rollback"
+      ],
+      "projeto": "Gateway de LLM com roteamento, cache, limites por cliente e painel de custos",
+      "melhorias": ["Remove sobreposição com o módulo de agentes", "Adiciona versionamento de prompts e OpenTelemetry"]
+    },
+    {
+      "numero": 10,
+      "slug": "modulo-10",
+      "titulo": "IA para DevOps e SRE",
+      "horas": 32,
+      "status": "planejado",
+      "resumo": "IaC gerado e validado por IA, agentes para Kubernetes, diagnóstico de incidentes, AIOps, ChatOps com aprovação e auto-remediação com guardrails.",
+      "unidades": [
+        "Copilot de IaC: Terraform/Pulumi gerado, validado e com policy-as-code",
+        "Agentes para Kubernetes: manifests, autoscaling, rollout e GitOps",
+        "Troubleshooting com ReAct: CrashLoopBackOff, OOMKilled, latência",
+        "AIOps: PromQL/LogQL a partir de linguagem natural e detecção de anomalias",
+        "ChatOps com RBAC, aprovação humana e auditoria",
+        "RAG de runbooks e post-mortem automático",
+        "Auto-remediação segura: dry-run, circuit breakers, human-in-the-loop",
+        "FinOps com IA"
+      ],
+      "projeto": "Bot de ChatOps que diagnostica um pod com problema e propõe correção com aprovação",
+      "melhorias": ["Condensado de 12 para 8 unidades, mantendo as práticas", "Fundamentos repetidos foram removidos"]
+    },
+    {
+      "numero": 11,
+      "slug": "modulo-11",
+      "titulo": "Modelos Abertos, Fine-Tuning e Destilação",
+      "horas": 32,
+      "status": "planejado",
+      "resumo": "Quando ajustar um modelo e quando não. Modelos abertos rodando local, preparação de dados, LoRA/QLoRA em Python, destilação de um modelo grande para um pequeno e avaliação.",
+      "unidades": [
+        "Framework de decisão: prompt → RAG → fine-tuning → treinar do zero",
+        "Modelos abertos vs. proprietários; rodando local com Ollama, llama.cpp e vLLM",
+        "Preparando datasets: coleta, limpeza, formato JSONL, dados sintéticos",
+        "Fine-tuning gerenciado por API",
+        "LoRA e QLoRA na prática com Hugging Face PEFT (Python)",
+        "Destilação: usar um modelo grande para treinar um pequeno",
+        "Avaliação, overfitting e versionamento de modelos"
+      ],
+      "projeto": "Modelo pequeno especializado em um domínio, comparado com o modelo grande em custo e qualidade",
+      "melhorias": ["Corrige a unidade 1 copiada por engano na ementa original", "LoRA em Python, onde o ecossistema realmente está", "Destilação e inferência local"]
+    },
+    {
+      "numero": 12,
+      "slug": "modulo-12",
+      "titulo": "Segurança, Privacidade e Governança de IA",
+      "horas": 28,
+      "status": "planejado",
+      "resumo": "Ataques reais contra aplicações com LLM e como se defender, mais governança: OWASP Top 10 para LLMs, prompt injection, red teaming, LGPD, AI Act e ISO 42001.",
+      "unidades": [
+        "OWASP Top 10 para aplicações com LLM e agentes",
+        "Prompt injection direta e indireta (documentos, e-mails, páginas web)",
+        "Segurança de ferramentas e agentes: menor privilégio, sandbox, aprovação",
+        "Vazamento de dados, PII e segredos no contexto",
+        "Red teaming e testes adversariais automatizados",
+        "Vieses, explicabilidade e uso responsável",
+        "Regulação e normas: LGPD, EU AI Act, PL 2338 (Brasil), ISO/IEC 42001"
+      ],
+      "projeto": "Red team de um app do curso: relatório de vulnerabilidades e correções aplicadas",
+      "melhorias": ["Substitui a lista genérica de 7 tópicos por conteúdo técnico prático"]
+    },
+    {
+      "numero": 13,
+      "slug": "modulo-13",
+      "titulo": "IA para Produto e Gestão de Projetos",
+      "horas": 16,
+      "status": "planejado",
+      "resumo": "Usar IA para levantar requisitos, priorizar backlog, estimar, resumir reuniões e automatizar Jira/Linear/Notion/Slack, sem perder o julgamento humano.",
+      "unidades": [
+        "Requisitos e histórias de usuário a partir de linguagem natural",
+        "Priorização (RICE, WSJF) e estimativas com Monte Carlo",
+        "Reuniões: transcrição, decisões e follow-ups automáticos",
+        "Relatórios de status para públicos diferentes",
+        "Bots de automação para ferramentas de gestão"
+      ],
+      "projeto": "Bot que transforma notas de reunião em tarefas priorizadas no seu board",
+      "melhorias": ["Condensado de 10 para 5 unidades: mais prático, menos teórico"]
+    },
+    {
+      "numero": 14,
+      "slug": "modulo-14",
+      "titulo": "Projeto Integrador: Micro-SaaS com IA",
+      "horas": 40,
+      "status": "planejado",
+      "resumo": "Do problema ao deploy: um Micro-SaaS com RAG, agente, MCP, evals, segurança e CI/CD, com entregas parciais e defesa técnica.",
+      "unidades": [
+        "Ideação, proposta de valor e arquitetura",
+        "Entrega 1: núcleo de RAG + agente com evals (CLI)",
+        "Entrega 2: API do back-end e servidor MCP",
+        "Entrega 3: front-end, deploy, observabilidade e custos",
+        "Revisão de segurança (red team do próprio projeto)",
+        "Apresentação, documentação e defesa técnica"
+      ],
+      "projeto": "Micro-SaaS publicado, com README, diagrama de arquitetura e painel de evals",
+      "melhorias": ["Evals e segurança viram critérios de avaliação", "Front-end em React ou Angular, à escolha"]
+    },
+    {
+      "numero": 15,
+      "slug": "modulo-15",
+      "titulo": "Carreira em Engenharia de IA",
+      "horas": 12,
+      "status": "planejado",
+      "resumo": "Portfólio, LinkedIn, entrevistas técnicas e de system design para IA, negociação e expectativas por nível.",
+      "unidades": [
+        "O que o mercado espera de cada nível (júnior a principal)",
+        "Portfólio no GitHub e marca pessoal",
+        "Entrevista técnica: live coding e perguntas específicas de IA",
+        "System design de sistemas com IA",
+        "Negociação, aumento e promoção"
+      ],
+      "projeto": "Portfólio publicado e simulação de entrevista de system design",
+      "melhorias": ["Mantido, com system design de IA mais aprofundado"]
+    }
+  ]
+}
