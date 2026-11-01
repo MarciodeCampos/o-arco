@@ -46,8 +46,7 @@
     set("stat-horas", dados.cargaHorariaTotal + "h");
     set("stat-prontos", dados.modulos.filter((m) => m.status === "pronto").length);
 
-    alvo.innerHTML = dados.modulos
-      .map((m) => {
+    const cartao = (m, rotulo) => {
         const pronto = m.status === "pronto";
         const feitas = Object.keys(progresso).filter((k) => k.startsWith(m.slug + "/")).length;
         const titulo = pronto ? `<a href="${m.slug}/">${esc(m.titulo)}</a>` : esc(m.titulo);
@@ -57,22 +56,30 @@
           m.novo ? '<span class="tag new">Novo</span>' : "",
           pronto && feitas ? `<span class="tag ok">${feitas}/${m.aulas || m.unidades.length} aulas feitas</span>` : "",
         ].join("");
+        const melhorias = m.melhorias && m.melhorias.length
+          ? `<p class="melh">Melhorias em relação à ementa original: ${m.melhorias.map(esc).join("; ")}.</p>` : "";
         return `
         <article class="mod${pronto ? " ready" : ""}">
-          <div class="mod-num">${String(m.numero).padStart(2, "0")}</div>
+          <div class="mod-num">${esc(rotulo)}</div>
           <div>
             <h3>${titulo}</h3>
             <div class="tags">${tags}</div>
             <p>${esc(m.resumo)}</p>
             <details class="units">
-              <summary>${m.unidades.length} unidades · projeto · o que mudou</summary>
+              <summary>${m.unidades.length} unidades · projeto${melhorias ? " · o que mudou" : ""}</summary>
               <ol>${m.unidades.map((u) => `<li>${esc(u)}</li>`).join("")}</ol>
               <p class="proj"><b>Projeto:</b> ${esc(m.projeto)}</p>
-              <p class="melh">Melhorias em relação à ementa original: ${m.melhorias.map(esc).join("; ")}.</p>
+              ${melhorias}
             </details>
           </div>
         </article>`;
-      })
+    };
+    const pre = document.getElementById("preliminares");
+    if (pre && dados.preliminares) {
+      pre.innerHTML = dados.preliminares.map((m) => cartao(m, "P" + m.numero)).join("");
+    }
+    alvo.innerHTML = dados.modulos
+      .map((m) => cartao(m, String(m.numero).padStart(2, "0")))
       .join("");
   }
 

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050508">
+<meta name="description" content="Módulo P1 — IA sem mistério e o ecossistema Claude: o que é um modelo de linguagem, os modelos Fable, Opus, Sonnet e Haiku, onde o Claude roda, custos, privacidade e como pedir bem.">
+<title>P1 · IA sem mistério e o ecossistema Claude — Engenharia de IA Aplicada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/curso.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/">◈ TRIADIC.LIFE</a>
+  <span class="crumbs">/ <a href="../">Engenharia de IA</a> / Trilha preliminar / P1</span>
+  <span class="spacer"></span>
+  <span class="progress-pill">0/8 aulas</span>
+</header>
+<div class="layout">
+  <aside class="toc">
+    <button class="toc-toggle" type="button">☰ Aulas do módulo</button>
+    <h2>Módulo P1</h2>
+    <nav><ol>
+      <li><a href="#inicio"><span class="chk"></span>Visão geral</a></li>
+      <li><a href="#aula-1"><span class="chk"></span>P1.1 O que é um modelo</a></li>
+      <li><a href="#aula-2"><span class="chk"></span>P1.2 A família Claude</a></li>
+      <li><a href="#aula-3"><span class="chk"></span>P1.3 Onde o Claude roda</a></li>
+      <li><a href="#aula-4"><span class="chk"></span>P1.4 Tokens, limites e custos</a></li>
+      <li><a href="#aula-5"><span class="chk"></span>P1.5 Privacidade e dados</a></li>
+      <li><a href="#aula-6"><span class="chk"></span>P1.6 Como pedir bem</a></li>
+      <li><a href="#projeto"><span class="chk"></span>Projeto do módulo</a></li>
+      <li><a href="#recursos"><span class="chk"></span>Recursos</a></li>
+    </ol></nav>
+  </aside>
+  <main class="content" data-modulo="pre-01">
+    <section id="inicio">
+      <header><div class="eyebrow">Trilha preliminar · Módulo P1 · 8h estimadas</div><h1>IA sem mistério e o ecossistema Claude</h1></header>
+      <p class="lede">
+        Para quem nunca trabalhou com IA. Antes de dar autonomia a um agente, é preciso entender o que ele
+        é: um programa muito bom em linguagem, que erra com confiança quando não tem como verificar o que
+        fez. Este módulo explica isso sem matemática, apresenta os modelos e os lugares onde o Claude roda,
+        e ensina a pedir de um jeito que dá para conferir.
+      </p>
+      <div class="meta"><span class="tag">6 aulas</span><span class="tag">sem pré-requisito</span><span class="tag">sem programação</span></div>
+      <div class="callout"><b>Palavra nova?</b>Todo termo da trilha está no <a href="../glossario/">mapa de componentes e glossário</a>, com link para a documentação oficial.</div>
+    </section>
+
+    <section class="lesson" id="aula-1">
+      <h2>P1.1 O que é um modelo de linguagem, sem matemática</h2>
+      <div class="lesson-meta">Leitura · 1h30</div>
+      <p>
+        Um modelo de linguagem é um programa que aprendeu, lendo uma quantidade enorme de texto, a prever
+        qual pedaço de texto vem a seguir. Repetindo essa previsão milhares de vezes, ele escreve respostas,
+        resume documentos, traduz e escreve código. O Módulo 1 do curso principal mostra isso por dentro;
+        aqui basta guardar quatro ideias:
+      </p>
+      <ul>
+        <li><strong>Ele não consulta um banco de fatos.</strong> Gera o texto mais plausível. Na maioria das vezes plausível é correto; às vezes é uma invenção bem escrita, a chamada alucinação.</li>
+        <li><strong>Ele não lembra de você entre conversas</strong>, a menos que alguém guarde e devolva essa informação (Módulo P3).</li>
+        <li><strong>Com ferramentas, ele age.</strong> Se pode ler arquivos, rodar comandos e ver o resultado, deixa de só falar e passa a fazer. Isso é um agente, e o Claude Code é um.</li>
+        <li><strong>Com um jeito de conferir, ele se corrige.</strong> Um agente que roda os testes depois de mudar o código vê o erro e conserta. Esse ciclo de verificação é a base de toda autonomia segura.</li>
+      </ul>
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Por que um agente com testes automáticos é mais confiável do que um chat que só escreve código?</p>
+          <button type="button">Porque usa um modelo maior</button>
+          <button type="button" data-certa>Porque vê o resultado do que fez e pode corrigir antes de entregar</button>
+          <button type="button">Porque não alucina</button>
+          <p class="why">O modelo continua podendo errar. A diferença é que o agente tem como perceber o erro e corrigir sozinho.</p>
+        </div>
+        <div class="q">
+          <p>O que é uma alucinação?</p>
+          <button type="button">Um erro de conexão com o servidor</button>
+          <button type="button">Uma resposta recusada por segurança</button>
+          <button type="button" data-certa>Um conteúdo plausível e bem escrito, mas falso</button>
+          <p class="why">Por isso fatos importantes devem ser conferidos, ou o modelo deve trabalhar com fontes que ele cita.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="lesson" id="aula-2">
+      <h2>P1.2 A família Claude: qual modelo usar</h2>
+      <div class="lesson-meta">Leitura · 1h</div>
+      <p>A Anthropic oferece modelos de tamanhos diferentes. Mais capaz significa melhor em problemas difíceis, mais lento e mais caro.</p>
+      <table>
+        <tr><th>Modelo</th><th>Perfil</th><th>Bom para</th><th>Preço na API (US$ por milhão de tokens, entrada / saída)</th></tr>
+        <tr><td><strong>Fable 5.1</strong></td><td>O mais capaz</td><td>Raciocínio muito difícil, tarefas longas e autônomas</td><td>10 / 50</td></tr>
+        <tr><td><strong>Opus 5.5</strong></td><td>Muito capaz, padrão para trabalho sério</td><td>Programação, agentes, análise</td><td>4 / 20</td></tr>
+        <tr><td><strong>Sonnet 5.5</strong></td><td>Rápido e capaz</td><td>Dia a dia, grande volume, subagentes</td><td>2 / 10</td></tr>
+        <tr><td><strong>Haiku 5.5</strong></td><td>O mais rápido e barato</td><td>Classificar, extrair, tarefas simples em massa</td><td>0,10 / 0,50</td></tr>
+      </table>
+      <p>
+        Todos têm janela de contexto de 1 milhão de tokens. No Claude Code você troca de modelo com
+        <code>/model</code> e escolhe quanto ele raciocina com <code>/effort</code> (low, medium, high,
+        xhigh, max). Regra prática: comece no modelo padrão; troque só quando medir que precisa.
+      </p>
+      <p><small>Preços de outubro de 2026, para quem usa a API e paga por uso. Quem usa uma assinatura paga um valor fixo com limites de uso. Confira a <a href="https://claude.com/pricing" target="_blank" rel="noopener">página de preços</a>, que muda com frequência.</small></p>
+    </section>
+
+    <section class="lesson" id="aula-3">
+      <h2>P1.3 Onde o Claude roda</h2>
+      <div class="lesson-meta">Leitura · 1h30</div>
+      <p>O mesmo Claude aparece em vários lugares, chamados de <em>superfícies</em>. A diferença está no que ele consegue fazer em cada uma:</p>
+      <table>
+        <tr><th>Superfície</th><th>O que é</th><th>Pode agir sobre seus arquivos?</th></tr>
+        <tr><td>claude.ai, app desktop e app de celular (chat)</td><td>Conversa, documentos, artefatos e conectores (Gmail, Drive…)</td><td>Só pelo que você conectar</td></tr>
+        <tr><td>Claude Code no terminal</td><td>O agente de código completo, na sua máquina</td><td>Sim, com as permissões que você der</td></tr>
+        <tr><td>Claude Code no VS Code ou JetBrains</td><td>O mesmo agente dentro do editor</td><td>Sim</td></tr>
+        <tr><td>Claude Code no app desktop</td><td>Sessões com interface gráfica, várias em paralelo</td><td>Sim</td></tr>
+        <tr><td>Claude Code na nuvem (claude.ai/code e celular)</td><td>Sessões que rodam em um contêiner da Anthropic e continuam com o computador desligado</td><td>No clone do repositório, dentro do contêiner</td></tr>
+        <tr><td>GitHub Actions, Slack, Chrome</td><td>Integrações para pipelines, conversas do time e navegador</td><td>Dentro do que cada integração permite</td></tr>
+      </table>
+      <p>A trilha usa principalmente o Claude Code, porque é nele que estão a autonomia, os testes e as implantações. Todas as superfícies usam o mesmo motor: o que você aprende no terminal vale no editor e na nuvem.</p>
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Você quer que o Claude continue uma tarefa longa com o notebook fechado. Qual superfície?</p>
+          <button type="button">O chat no claude.ai</button>
+          <button type="button" data-certa>Uma sessão do Claude Code na nuvem</button>
+          <button type="button">O Claude Code no terminal local</button>
+          <p class="why">Sessões na nuvem rodam na infraestrutura da Anthropic. Uma sessão local para quando a máquina dorme; Remote Control só deixa você acompanhá-la de outro aparelho.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="lesson" id="aula-4">
+      <h2>P1.4 Contexto, tokens, limites e custos</h2>
+      <div class="lesson-meta">Leitura + prática · 1h30</div>
+      <ul>
+        <li><strong>Token</strong> é o pedaço de texto que o modelo lê e escreve, em média menor que uma palavra. Preço, limites e memória de trabalho são medidos em tokens.</li>
+        <li><strong>Janela de contexto</strong> é tudo que o modelo enxerga de uma vez: a conversa, os arquivos lidos, as saídas de comandos e as instruções. Quando enche, o Claude Code resume a conversa (compactação). <code>/context</code> mostra o que está ocupando espaço.</li>
+        <li><strong>Assinatura ou API:</strong> nos planos (Free, Pro, Max, Team, Enterprise) você paga um valor fixo e tem limites de uso; <code>/usage</code> mostra quanto já usou. Pela API, paga por token consumido.</li>
+        <li><strong>Saída custa mais que entrada:</strong> cinco vezes mais, em todos os modelos da tabela acima. Pedir respostas mais curtas economiza.</li>
+      </ul>
+      <div class="exercise">
+        <h4>Calculadora: quanto custaria pela API?</h4>
+        <form id="calc" class="calc">
+          <p><label>Palavras que o modelo lê por tarefa <input name="entrada" type="number" min="0" value="3000"></label></p>
+          <p><label>Palavras que ele escreve por tarefa <input name="resposta" type="number" min="0" value="500"></label></p>
+          <p><label>Tarefas por dia útil <input name="tarefas" type="number" min="0" value="40"></label></p>
+        </form>
+        <table>
+          <thead><tr><th>Modelo</th><th>Por tarefa</th><th>Por mês (22 dias)</th></tr></thead>
+          <tbody id="calc-saida"></tbody>
+        </table>
+        <p><small>Estimativa grosseira, contando cerca de 1,5 token por palavra; a contagem real depende do idioma e do texto. Agentes leem muito mais do que você digita: arquivos, saídas de comandos e o histórico entram a cada passo. No Haiku, prompts acima de 100 mil tokens custam mais. No Claude Code, <code>/usage</code> mostra o consumo real.</small></p>
+      </div>
+    </section>
+
+    <section class="lesson" id="aula-5">
+      <h2>P1.5 Privacidade, uso de dados e o que nunca colar</h2>
+      <div class="lesson-meta">Leitura · 1h</div>
+      <table>
+        <tr><th>Tipo de conta</th><th>Treinamento de modelos</th><th>Retenção padrão</th></tr>
+        <tr><td>Pessoal (Free, Pro, Max, Ultra)</td><td>Só se você permitir, nas configurações de privacidade</td><td>30 dias sem permissão; 5 anos com permissão</td></tr>
+        <tr><td>Comercial (Team, Enterprise, API)</td><td>Não treina com seus prompts e código, salvo adesão explícita</td><td>30 dias; retenção zero disponível para contas qualificadas</td></tr>
+      </table>
+      <p>Além disso, o Claude Code guarda as transcrições das sessões no seu computador, em texto, por 30 dias por padrão, para permitir retomar conversas.</p>
+      <h3>Nunca cole numa conversa</h3>
+      <ul>
+        <li>Senhas, chaves de API, tokens de acesso. Use variáveis de ambiente e cofres de segredos (Módulo P4).</li>
+        <li>Dados pessoais de clientes sem base legal e contrato adequado (Módulo 12 do curso principal).</li>
+        <li>Informação sigilosa de terceiros que você não tem autorização para compartilhar.</li>
+      </ul>
+      <div class="callout"><b>Fonte</b>Política de <a href="https://code.claude.com/docs/pt/data-usage" target="_blank" rel="noopener">uso de dados do Claude Code</a>, consultada em novembro de 2026. Confira a versão atual antes de decidir algo sensível; no Claude Code, <code>/privacy-settings</code> mostra suas opções.</div>
+    </section>
+
+    <section class="lesson" id="aula-6">
+      <h2>P1.6 Como pedir bem: tarefa, contexto e critério de pronto</h2>
+      <div class="lesson-meta">Leitura + prática · 1h30</div>
+      <p>A maior parte dos resultados ruins vem de pedidos vagos. Um bom pedido tem quatro partes:</p>
+      <ol>
+        <li><strong>Tarefa:</strong> o que fazer, com verbo. "Corrija", "compare", "escreva", "investigue".</li>
+        <li><strong>Contexto:</strong> para quem, por quê, onde estão os dados, o que já foi tentado.</li>
+        <li><strong>Critério de pronto:</strong> como você e o Claude vão saber que terminou. "Os testes passam", "a planilha soma igual ao extrato", "cabe numa página".</li>
+        <li><strong>Limites:</strong> o que não pode. "Não mude a API pública", "não envie nada sem me mostrar".</li>
+      </ol>
+      <table>
+        <tr><th>Pedido vago</th><th>Pedido verificável</th></tr>
+        <tr><td>"Melhora o site."</td><td>"A página inicial leva 6 segundos para carregar no celular. Descubra o que mais pesa, proponha 3 mudanças e implemente a de maior ganho. Pronto quando o Lighthouse mobile passar de 85. Não mude o visual."</td></tr>
+        <tr><td>"Arruma esse bug."</td><td>"Ao salvar um pedido sem CEP, o sistema dá erro 500. Escreva primeiro um teste que reproduz o erro, depois corrija até o teste passar, sem quebrar os outros."</td></tr>
+      </table>
+      <p>O critério de pronto é o que torna a autonomia possível: com ele, o Claude pode trabalhar sozinho até atingir a meta, e você confere uma coisa só no final. Os Módulos P2 e P6 mostram como transformar isso em <code>/goal</code> e em testes.</p>
+    </section>
+
+    <section class="lesson" id="projeto">
+      <h2>Projeto do módulo: diagnóstico de delegação</h2>
+      <div class="lesson-meta">Projeto · 1h</div>
+      <p>Escolha três tarefas reais do seu trabalho que você gostaria de delegar ao Claude. Para cada uma, preencha:</p>
+      <table>
+        <tr><th>Campo</th><th>Exemplo</th></tr>
+        <tr><td>Tarefa (com verbo)</td><td>Atualizar as dependências do projeto e corrigir o que quebrar</td></tr>
+        <tr><td>Contexto que o Claude precisa</td><td>Repositório X, comando de teste <code>npm test</code>, Node 22</td></tr>
+        <tr><td>Critério de pronto</td><td>Todos os testes passam e o build gera os arquivos sem aviso</td></tr>
+        <tr><td>O que pode dar errado</td><td>Mudança de comportamento não coberta por testes; atualização que exige migração de dados</td></tr>
+        <tr><td>Nível de autonomia desejado</td><td>Trabalhar sozinho numa branch; eu reviso antes do merge</td></tr>
+        <tr><td>Superfície</td><td>Claude Code na nuvem</td></tr>
+      </table>
+      <p>Guarde esse diagnóstico: ele é a entrada do Módulo P4, onde cada nível de autonomia vira uma configuração.</p>
+    </section>
+
+    <section class="lesson" id="recursos">
+      <h2>Recursos para aprofundar</h2>
+      <div class="lesson-meta">Gratuitos</div>
+      <ul class="resources">
+        <li><a href="https://code.claude.com/docs/pt/overview" target="_blank" rel="noopener">Visão geral do Claude Code</a> <small>· documentação oficial em português</small></li>
+        <li><a href="https://code.claude.com/docs/pt/how-claude-code-works" target="_blank" rel="noopener">Como o Claude Code funciona</a> <small>· o ciclo agêntico e as ferramentas</small></li>
+        <li><a href="https://platform.claude.com/docs/pt-BR/about-claude/glossary" target="_blank" rel="noopener">Glossário da plataforma</a> <small>· tokens, contexto, temperatura, RAG</small></li>
+        <li><a href="../modulo-01/">Módulo 1 do curso principal</a> <small>· como um modelo de linguagem funciona por dentro, com código</small></li>
+      </ul>
+      <nav class="pager">
+        <a href="../glossario/"><small>← Referência</small>Mapa e glossário</a>
+        <a class="next" href="../"><small>Próximo módulo (em produção)</small>P2 · Primeiros passos no Claude Code</a>
+      </nav>
+    </section>
+  </main>
+</div>
+<footer class="foot"><a href="/">triadic.life</a> · <a href="../">Engenharia de IA Aplicada</a> · <a href="../glossario/">Mapa e glossário</a></footer>
+<script src="../assets/curso.js"></script>
+<script src="calculadora.js"></script>
+</body>
+</html>

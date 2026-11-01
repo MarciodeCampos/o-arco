@@ -20,6 +20,8 @@ curso-ia/
 ├── assets/
 │   ├── curso.css         estilos (paleta do portal triadic.life)
 │   └── curso.js          currículo, quiz, copiar código, progresso local
+├── glossario/           mapa de componentes e glossário do Claude (gerado por gerar.py)
+├── pre-01/index.html     trilha preliminar: módulo P1 (calculadora de custo em calculadora.js)
 ├── modulo-01/index.html  aulas do módulo 1
 ├── modulo-02/index.html  aulas do módulo 2
 ├── modulo-03/index.html  aulas do módulo 3
@@ -89,6 +91,21 @@ curso-ia/
         ├── python/       labs: mapa de competências por nível, simulador de entrevista de system design
         └── dados/        questões de system design com pontos esperados, autoavaliação de exemplo
 ```
+
+## Trilha preliminar: Claude do zero à autonomia
+
+Oito módulos (P1 a P8, 70h) para quem ainda não trabalha com IA, do primeiro uso a um ambiente em
+que o Claude Code testa e implanta com autonomia, com as barreiras certas. O currículo fica em
+`curriculo.json`, na chave `preliminares`.
+
+| Módulo | Status |
+|---|---|
+| P1 · IA sem mistério e o ecossistema Claude | ✅ pronto |
+| P2 – P8 | planejados (ver `curriculo.json`) |
+
+O glossário é gerado: edite os dados em `glossario/gerar.py` e rode `python3 glossario/gerar.py`
+(também ao publicar um módulo P, para os links dele aparecerem). As informações vêm da documentação
+oficial do Claude Code (code.claude.com/docs), consultada em novembro de 2026 com a versão 2.1.316.
 
 ## Status
 

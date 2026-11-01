@@ -402,3 +402,18 @@ footer.foot a { color: var(--gold-dim); }
 
 details > summary { cursor: pointer; color: var(--gold-light); }
 .exercise details { margin-top: 8px; }
+
+/* ---------- glossário e calculadora (trilha preliminar) ---------- */
+.glossario dl { margin: 0 0 18px; }
+.glossario dt { font-weight: 600; color: var(--gold-light); margin-top: 14px; }
+.glossario dt small, .glossario dd small { color: var(--text-dim); font-weight: 400; }
+.glossario dd { margin: 4px 0 0; padding-left: 14px; border-left: 2px solid var(--border); }
+.glossario h3 { margin-top: 26px; color: var(--gold); }
+input[type="search"], input[type="number"] {
+  background: var(--surface2); color: var(--text); border: 1px solid var(--border);
+  border-radius: 6px; padding: 6px 10px; font: inherit; max-width: 100%;
+}
+input[type="search"] { width: 280px; }
+input:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+.calc label { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; max-width: 460px; }
+.calc input { width: 120px; }

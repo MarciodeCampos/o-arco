@@ -354,5 +354,157 @@
       ],
       "aulas": 7
     }
-  ]
+  ],
+  "preliminares": [
+    {
+      "numero": 1,
+      "slug": "pre-01",
+      "titulo": "IA sem mistério e o ecossistema Claude",
+      "horas": 8,
+      "status": "pronto",
+      "resumo": "Para quem nunca usou IA: o que é um modelo de linguagem, o que ele faz bem e mal, e onde o Claude roda (app, desktop, celular, terminal, IDE, nuvem). Planos, modelos, custos e privacidade.",
+      "unidades": [
+        "O que é um modelo de linguagem, sem matemática",
+        "Família Claude: Fable, Opus, Sonnet e Haiku; quando usar cada um",
+        "Superfícies: claude.ai, desktop, celular, Claude Code no terminal, IDE e nuvem",
+        "Contexto, tokens, limites de uso e custos",
+        "Privacidade, uso de dados e o que nunca colar numa conversa",
+        "Como pedir bem: tarefa, contexto, critério de pronto"
+      ],
+      "projeto": "Diagnóstico do seu trabalho: três tarefas para delegar ao Claude, com critério de pronto e riscos",
+      "melhorias": [],
+      "aulas": 8
+    },
+    {
+      "numero": 2,
+      "slug": "pre-02",
+      "titulo": "Primeiros passos no Claude Code",
+      "horas": 8,
+      "status": "planejado",
+      "resumo": "Instalar, entrar na conta e trabalhar com um agente que lê arquivos, roda comandos e verifica o próprio trabalho. O ciclo agêntico, as ferramentas, os comandos de barra e como desfazer qualquer coisa.",
+      "unidades": [
+        "Instalação, login e /doctor",
+        "O ciclo agêntico: coletar contexto, agir, verificar",
+        "Ferramentas embutidas (Read, Edit, Bash, Web, Agent…)",
+        "Comandos de barra essenciais: /init, /context, /compact, /model, /effort, /usage",
+        "Sessões: retomar, nomear, ramificar e exportar",
+        "Checkpoints e /rewind: errar sem medo",
+        "Modo plano: pensar antes de mexer"
+      ],
+      "projeto": "Primeiro projeto feito com o Claude Code, do plano ao commit, com o histórico da sessão comentado",
+      "melhorias": []
+    },
+    {
+      "numero": 3,
+      "slug": "pre-03",
+      "titulo": "Memória, instruções e configuração",
+      "horas": 6,
+      "status": "planejado",
+      "resumo": "Ensinar o Claude uma vez e não repetir: CLAUDE.md, AGENTS.md, regras por caminho, memória automática, estilos de saída e as camadas de configuração do settings.json.",
+      "unidades": [
+        "CLAUDE.md e AGENTS.md: o que escrever e o que não escrever",
+        "Regras em .claude/rules com escopo por caminho",
+        "Memória automática e /memory",
+        "Estilos de saída",
+        "Camadas de configuração: gerenciada, flag, local, projeto, usuário",
+        "Variáveis de ambiente e /config"
+      ],
+      "projeto": "Repositório com CLAUDE.md, regras e settings comentados, validado com claude doctor",
+      "melhorias": []
+    },
+    {
+      "numero": 4,
+      "slug": "pre-04",
+      "titulo": "Permissões, sandbox e autonomia segura",
+      "horas": 10,
+      "status": "planejado",
+      "resumo": "O módulo central para quem quer o máximo de autonomia: a escada de modos de permissão, regras allow/ask/deny, sandbox de Bash, modo auto e seu classificador, contêineres e quando, e só quando, pular todas as checagens.",
+      "unidades": [
+        "A escada da autonomia: manual, acceptEdits, plano, auto, dontAsk, bypassPermissions",
+        "Regras de permissão: sintaxe, precedência e limites",
+        "Caminhos protegidos e remoções críticas",
+        "Sandbox de Bash: arquivos e rede",
+        "Modo auto: classificador, autoMode.environment e /auto-mode-setup",
+        "Contêineres, dev containers e sessões na nuvem",
+        "Kit de autonomia: configuração pronta e testada para testes e implantações"
+      ],
+      "projeto": "Ambiente com autonomia máxima e segura: kit de settings, hooks de proteção e prova de que as barreiras funcionam",
+      "melhorias": []
+    },
+    {
+      "numero": 5,
+      "slug": "pre-05",
+      "titulo": "Extensões: MCP, skills, subagentes, hooks e plugins",
+      "horas": 12,
+      "status": "planejado",
+      "resumo": "Tornar o ambiente produtivo: conectar ferramentas externas por MCP, empacotar procedimentos em skills, delegar a subagentes, automatizar com hooks e distribuir tudo como plugin.",
+      "unidades": [
+        "MCP: servidores, conectores, escopos e .mcp.json",
+        "Skills: embutidas, pessoais, de projeto; frontmatter e invocação",
+        "Subagentes: Explore, Plan, general-purpose e os seus",
+        "Hooks: eventos, matchers e handlers",
+        "Plugins e marketplaces",
+        "Inteligência de código (LSP), linha de status e atalhos",
+        "Quando usar cada extensão"
+      ],
+      "projeto": "Plugin próprio com uma skill, um subagente, um hook e um servidor MCP, testado com claude plugin eval",
+      "melhorias": []
+    },
+    {
+      "numero": 6,
+      "slug": "pre-06",
+      "titulo": "Trabalho paralelo, em segundo plano e remoto",
+      "horas": 8,
+      "status": "planejado",
+      "resumo": "Vários agentes ao mesmo tempo sem que um atrapalhe o outro: worktrees, sessões em segundo plano, equipes de agentes, fluxos dinâmicos, metas, laços e acesso pelo celular.",
+      "unidades": [
+        "Worktrees: isolamento de trabalho paralelo",
+        "Sessões em segundo plano e claude agents",
+        "Equipes de agentes e mensagens entre sessões",
+        "/goal e /loop: trabalhar até concluir",
+        "Sessões na nuvem, Remote Control, celular e teleport",
+        "Canais e notificações"
+      ],
+      "projeto": "Três tarefas em paralelo em worktrees, acompanhadas do celular, com relatório final de cada uma",
+      "melhorias": []
+    },
+    {
+      "numero": 7,
+      "slug": "pre-07",
+      "titulo": "Testes e implantações autônomas",
+      "horas": 10,
+      "status": "planejado",
+      "resumo": "Colocar o Claude no pipeline: modo não interativo, saída estruturada, orçamento, GitHub Actions, revisão de código, tarefas agendadas e implantações com portões de aprovação.",
+      "unidades": [
+        "claude -p: modo não interativo, JSON e --json-schema",
+        "Orçamento e limites: --max-budget-usd, --max-turns e modo bare",
+        "GitHub Actions e GitLab CI com Claude Code",
+        "Code Review, /code-review, /security-review e ultrareview",
+        "Tarefas agendadas e rotinas na nuvem",
+        "Implantação com portões: staging automático, produção com aprovação",
+        "Ambientes de nuvem: rede, segredos e script de setup"
+      ],
+      "projeto": "Pipeline em que o Claude corrige testes quebrados, abre PR, revisa e implanta em staging sozinho, com produção sob aprovação",
+      "melhorias": []
+    },
+    {
+      "numero": 8,
+      "slug": "pre-08",
+      "titulo": "Agent SDK, custos, observabilidade e governança",
+      "horas": 8,
+      "status": "planejado",
+      "resumo": "Levar o mesmo motor para os seus produtos com o Agent SDK, medir uso e custo, exportar telemetria e configurar regras para um time ou empresa.",
+      "unidades": [
+        "Agent SDK em TypeScript e Python",
+        "Custos: /usage, limites e como reduzir",
+        "OpenTelemetry e análise de uso",
+        "Configurações gerenciadas para organizações",
+        "Segurança, uso de dados e retenção zero",
+        "Plano de adoção para um time"
+      ],
+      "projeto": "Agente próprio com o Agent SDK, com permissões, orçamento e telemetria, mais a política do time em managed settings",
+      "melhorias": []
+    }
+  ],
+  "cargaHorariaPreliminares": 70
 }
