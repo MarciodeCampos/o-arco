@@ -22,16 +22,21 @@ curso-ia/
 │   └── curso.js          currículo, quiz, copiar código, progresso local
 ├── modulo-01/index.html  aulas do módulo 1
 ├── modulo-02/index.html  aulas do módulo 2
+├── modulo-03/index.html  aulas do módulo 3
 └── codigo/
     ├── modulo-01/
     │   ├── python/       labs e projeto (NumPy + SDK anthropic)
     │   ├── typescript/   labs (sem dependências + SDK @anthropic-ai/sdk)
     │   └── dados/        corpus do projeto
-    └── modulo-02/
-        ├── python/       labs: chat, saída estruturada, ferramentas, cache, batch
-        ├── typescript/   labs: chat, saída estruturada, ferramentas, streaming, erros
-        ├── dados/        e-mails, manual de produto, avaliações
-        └── projeto/      extrator de recibos (TypeScript, com testes)
+    ├── modulo-02/
+    │   ├── python/       labs: chat, saída estruturada, ferramentas, cache, batch
+    │   ├── typescript/   labs: chat, saída estruturada, ferramentas, streaming, erros
+    │   ├── dados/        e-mails, manual de produto, avaliações
+    │   └── projeto/      extrator de recibos (TypeScript, com testes)
+    └── modulo-03/
+        ├── python/       labs: auditoria de dataset, avaliadores, LLM-juiz, ruído estatístico
+        ├── dados/        dataset com problemas plantados, resumos rotulados por humanos
+        └── projeto/      suíte de evals do extrator (TypeScript, com testes e exemplo de CI)
 ```
 
 ## Status
@@ -40,7 +45,8 @@ curso-ia/
 |---|---|
 | 01 · Fundamentos de IA e LLMs para Devs | ✅ pronto |
 | 02 · APIs de LLM e Engenharia de Contexto | ✅ pronto |
-| 03 – 15 | planejados (ver `curriculo.json`) |
+| 03 · Avaliação (Evals) e Testes | ✅ pronto |
+| 04 – 15 | planejados (ver `curriculo.json`) |
 
 ## Rodando os labs do Módulo 1
 
@@ -70,6 +76,18 @@ python python/02_saida_estruturada.py      # todos os labs do módulo 2 precisam
 cd projeto && npm install
 npm test                                   # 14 testes, sem chamar a API
 npm run extrair
+```
+
+## Rodando o Módulo 3
+
+```bash
+cd curso-ia/codigo/modulo-03
+python python/01_auditar_dataset.py        # 01, 02 e 04 rodam sem API
+python python/04_ruido_estatistico.py
+
+cd projeto && npm install                  # instala também o projeto do módulo 2
+npm test                                   # 14 testes, sem chamar a API
+npm run eval -- --reps 3                   # precisa de ANTHROPIC_API_KEY
 ```
 
 ## Como adicionar um módulo

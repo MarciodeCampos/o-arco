@@ -1,0 +1,12 @@
+{"id": "r01", "resumo": "Cliente cobrado em dobro (R$ 189,90 x2) no dia 03; exige estorno até sexta ou cancela.", "humano_aprova": true, "motivo_humano": "completo e fiel"}
+{"id": "r02", "resumo": "Cliente com problema de cobrança.", "humano_aprova": false, "motivo_humano": "vago: omite valor, prazo e ameaça de cancelar"}
+{"id": "r03", "resumo": "Cliente cobrado em dobro e com o app travando ao exportar PDF; pede estorno até sexta.", "humano_aprova": true, "motivo_humano": "fiel; menciona os dois assuntos"}
+{"id": "r04", "resumo": "Cliente quer cancelar porque o app é lento.", "humano_aprova": false, "motivo_humano": "inventa motivo: não é isso que o e-mail diz"}
+{"id": "r05", "resumo": "Cobrança duplicada de R$ 189,90 no cartão; pede estorno até sexta, senão cancela a assinatura.", "humano_aprova": true, "motivo_humano": "completo"}
+{"id": "r06", "resumo": "A cliente Carla relata uma situação de cobrança em duplicidade que aconteceu pela segunda vez neste ano em seu cartão de crédito referente à assinatura do plano Pro, no valor de R$ 189,90 cobrado duas vezes no dia 03, e menciona ainda que o aplicativo de relatórios trava ao exportar PDF, embora considere isso secundário, e finaliza dizendo que quer o estorno até sexta-feira, caso contrário cancelará tudo.", "humano_aprova": false, "motivo_humano": "fiel, mas longo demais para o formato pedido (até 2 frases curtas)"}
+{"id": "r07", "resumo": "Cliente cobrado duas vezes (R$ 189,90); pede estorno com prazo de sexta.", "humano_aprova": true, "motivo_humano": "omite a ameaça de cancelar, mas o essencial está lá"}
+{"id": "r08", "resumo": "Cliente elogia o produto e pede desconto.", "humano_aprova": false, "motivo_humano": "errado"}
+{"id": "r09", "resumo": "Estorno de cobrança duplicada (R$ 189,90) solicitado até sexta; ameaça cancelar.", "humano_aprova": true, "motivo_humano": "completo"}
+{"id": "r10", "resumo": "Cliente cobrado em dobro de R$ 1.899,00.", "humano_aprova": false, "motivo_humano": "valor errado"}
+{"id": "r11", "resumo": "Problema com o app de relatórios.", "humano_aprova": false, "motivo_humano": "foca no assunto secundário e omite o principal"}
+{"id": "r12", "resumo": "Cobrança em dobro do plano Pro; cliente pede estorno até sexta e diz que cancelará se não for atendido.", "humano_aprova": true, "motivo_humano": "completo"}

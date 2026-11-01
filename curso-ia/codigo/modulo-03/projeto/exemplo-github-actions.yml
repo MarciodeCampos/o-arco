@@ -1,0 +1,48 @@
+# Exemplo de workflow de evals no CI.
+# Para usar no seu repositório: copie para .github/workflows/evals.yml, ajuste os
+# caminhos e cadastre o segredo ANTHROPIC_API_KEY em Settings → Secrets → Actions.
+name: evals-extrator
+
+on:
+  pull_request:
+    paths:
+      - "curso-ia/codigo/modulo-02/projeto/**"   # o sistema avaliado
+      - "curso-ia/codigo/modulo-03/projeto/**"   # o próprio eval
+  schedule:
+    - cron: "17 6 * * *"                        # suíte completa todo dia, 03:17 em Brasília
+  workflow_dispatch:
+
+jobs:
+  testes-rapidos:
+    # Sem chamar a API: validação, custo, avaliadores, oráculo e linha de base nula.
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: curso-ia/codigo/modulo-03/projeto } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm install
+      - run: npm test
+      - run: npm --prefix ../../modulo-02/projeto test
+
+  eval:
+    needs: testes-rapidos
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: curso-ia/codigo/modulo-03/projeto } }
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm install
+      # Em PR: 1 repetição, falha se cair abaixo de 90%. À noite: 3 repetições e o juiz.
+      - if: github.event_name == 'pull_request'
+        run: npm run eval -- --reps 1 --limiar 0.9
+      - if: github.event_name != 'pull_request'
+        run: npm run eval -- --reps 3 --juiz --limiar 0.9
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: resultados-eval
+          path: curso-ia/codigo/modulo-03/projeto/resultados/

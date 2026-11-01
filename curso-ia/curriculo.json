@@ -61,7 +61,7 @@
       "slug": "modulo-03",
       "titulo": "Avaliação (Evals) e Testes de Sistemas com LLM",
       "horas": 24,
-      "status": "planejado",
+      "status": "pronto",
       "novo": true,
       "resumo": "Como saber se uma mudança de prompt ou de modelo melhorou ou piorou o sistema. Datasets de avaliação, LLM como juiz, testes de regressão e avaliação em produção.",
       "unidades": [
@@ -73,7 +73,7 @@
         "Comparando modelos e esforço de raciocínio pelo custo por tarefa concluída",
         "Avaliação online: feedback de usuário, amostragem e monitoramento de qualidade"
       ],
-      "projeto": "Suíte de evals para o extrator do Módulo 2, rodando no GitHub Actions",
+      "projeto": "Suíte de evals para o extrator do Módulo 2: checagens atômicas, LLM-juiz, comparação pareada e workflow de CI",
       "melhorias": [
         "Módulo inexistente na ementa original e hoje central para o cargo"
       ]

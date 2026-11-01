@@ -22,6 +22,9 @@ export interface ResultadoExtracao {
   problemas: string[];
   tentativas: number;
   usos: Uso[];
+  /** Modelo que de fato respondeu cada chamada e por que parou (úteis para evals e logs). */
+  modelosServidos: string[];
+  motivosParada: (string | null)[];
 }
 
 /**
@@ -38,6 +41,14 @@ export async function extrairRecibo(
     { role: "user", content: `<nota>\n${texto}\n</nota>\n\nExtraia os dados desta nota.` },
   ];
   const usos: Uso[] = [];
+  const modelosServidos: string[] = [];
+  const motivosParada: (string | null)[] = [];
+  const fim = (r: Pick<ResultadoExtracao, "recibo" | "problemas" | "tentativas">): ResultadoExtracao => ({
+    ...r,
+    usos,
+    modelosServidos,
+    motivosParada,
+  });
   let recibo: Recibo | null = null;
   let problemas: string[] = [];
 
@@ -50,18 +61,20 @@ export async function extrairRecibo(
       output_config: { effort: "low", format: zodOutputFormat(Recibo) },
     });
     usos.push(resposta.usage);
+    modelosServidos.push(resposta.model);
+    motivosParada.push(resposta.stop_reason);
 
     if (resposta.stop_reason === "refusal") {
-      return { recibo: null, problemas: ["O modelo recusou a extração"], tentativas: tentativa, usos };
+      return fim({ recibo: null, problemas: ["O modelo recusou a extração"], tentativas: tentativa });
     }
     recibo = resposta.parsed_output;
     if (!recibo) {
-      return { recibo: null, problemas: ["Resposta não pôde ser interpretada"], tentativas: tentativa, usos };
+      return fim({ recibo: null, problemas: ["Resposta não pôde ser interpretada"], tentativas: tentativa });
     }
 
     problemas = validarRecibo(recibo);
     if (problemas.length === 0 || tentativa === maxTentativas) {
-      return { recibo, problemas, tentativas: tentativa, usos };
+      return fim({ recibo, problemas, tentativas: tentativa });
     }
 
     // Devolve a resposta e os problemas encontrados pelo código para o modelo revisar.
@@ -75,5 +88,5 @@ export async function extrairRecibo(
         "mantenha os valores impressos, use confianca \"baixa\" e explique em observacoes.",
     });
   }
-  return { recibo, problemas, tentativas: maxTentativas, usos };
+  return fim({ recibo, problemas, tentativas: maxTentativas });
 }
