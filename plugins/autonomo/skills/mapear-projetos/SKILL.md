@@ -54,8 +54,11 @@ Drive). Leia **só** os itens abaixo, nunca outros arquivos dessas pastas (algum
   `%APPDATA%\<Editor>\User\workspaceStorage\*\` (Windows), `~/Library/Application Support/<Editor>/User/workspaceStorage/*/`
   (macOS) ou `~/.config/<Editor>/User/workspaceStorage/*/` (Linux). `<Editor>` é `Code`, `Cursor`,
   `Windsurf` ou `Antigravity`.
-- **Antigravity:** os nomes das pastas em `~/.gemini/antigravity/` e em `~/.gemini/antigravity/playground/`
-  (só nomes; não abra `~/.gemini` além disso).
+- **Antigravity:** as pastas em `~/.gemini/antigravity/` e em `~/.gemini/antigravity/playground/`.
+  Muitos projetos moram ali dentro: trate cada subpasta que tenha marcador de projeto (passo 3) como
+  um projeto comum e leia o README e a configuração dela. Não abra os arquivos soltos de
+  `~/.gemini` (logins como `oauth_creds.json`, `settings.json`, `google_accounts.json`) nem pastas de
+  sistema da ferramenta.
 - **Codex:** os nomes das pastas em `~/Documents/Codex/`.
 Diga à pessoa de onde veio cada pista ("o VS Code lembra que você abriu esta pasta").
 
