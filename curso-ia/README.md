@@ -51,7 +51,9 @@ curso-ia/
     │   ├── python/       labs: padrões de workflow, tool runner, custo de agentes
     │   └── projeto/      agente do zero, supervisor multiagente, memória e evals de trajetória
     └── modulo-07/
-        └── python/       verificador de código gerado, revisor de diff com LLM
+        ├── python/       verificador de código gerado, revisor de diff com LLM
+        ├── modelo-repo/  repositório pronto para agentes (CLAUDE.md, hooks, skill, subagente, spec)
+        └── solucao-referencia/  implementação de referência da spec de cupons
 ```
 
 ## Status
