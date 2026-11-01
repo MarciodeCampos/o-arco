@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050508">
+<meta name="description" content="Mapa de componentes e glossário do Claude e do Claude Code: modelos, superfícies, permissões, sandbox, modo auto, MCP, skills, subagentes, hooks, plugins, automação e governança.">
+<title>Mapa e glossário do Claude — Engenharia de IA Aplicada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/curso.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/">◈ TRIADIC.LIFE</a>
+  <span class="crumbs">/ <a href="../">Engenharia de IA</a> / Mapa e glossário</span>
+  <span class="spacer"></span>
+</header>
+<div class="layout">
+  <aside class="toc">
+    <button class="toc-toggle" type="button">☰ Nesta página</button>
+    <h2>Referência</h2>
+    <nav><ol>
+      <li><a href="#inicio">Visão geral</a></li>
+      <li><a href="#mapa">Mapa de componentes</a></li>
+      <li><a href="#ordem">O que adicionar, e quando</a></li>
+      <li><a href="#arquivos">Arquivos e locais</a></li>
+      <li><a href="#comandos">Comandos essenciais</a></li>
+      <li><a href="#ferramentas">Ferramentas embutidas</a></li>
+      <li><a href="#hooks">Eventos de hook</a></li>
+      <li><a href="#glossario">Glossário A–Z</a></li>
+    </ol></nav>
+  </aside>
+  <main class="content">
+    <section id="inicio">
+      <header><div class="eyebrow">Referência</div><h1>Mapa de componentes e glossário do Claude</h1></header>
+      <p class="lede">
+        Tudo o que o Claude usa para trabalhar com autonomia, num lugar só: as peças que compõem um ambiente produtivo com
+        o Claude, quando vale adicionar cada uma, os arquivos onde ficam e o significado de cada termo.
+        Volte aqui sempre que uma palavra nova aparecer.
+      </p>
+      <div class="callout"><b>Fonte e data</b>Baseado na documentação oficial do Claude Code e na versão 2.1.316, em novembro de 2026. O produto muda toda semana: na dúvida, a <a href="https://code.claude.com/docs/pt/overview" target="_blank" rel="noopener">documentação oficial em português</a> vale mais do que esta página. Para conceitos de modelo (tokens, temperatura, RAG), veja também o <a href="https://platform.claude.com/docs/pt-BR/about-claude/glossary" target="_blank" rel="noopener">glossário da plataforma</a>.</div>
+    </section>
+
+    <section id="mapa">
+      <h2>Mapa de componentes</h2>
+      <p>Da base para o topo: cada camada depende das de baixo. Quem está começando precisa das três primeiras; autonomia em testes e implantações usa todas.</p>
+<h3>Modelo e superfícies</h3>
+<table>
+<tr><th>Componente</th><th>Para que serve</th><th>Onde fica / como usar</th><th>Veja</th></tr>
+<tr><td><strong>Modelos Fable, Opus, Sonnet, Haiku</strong></td><td>O cérebro. Maior = mais capaz e mais caro</td><td><code>/model, --model, "model" no settings</code></td><td><a href="../pre-01/">Módulo P1</a></td></tr><tr><td><strong>Superfícies</strong></td><td>Onde você trabalha: terminal, IDE, desktop, web, celular</td><td><code>claude (CLI), extensões, claude.ai/code</code></td><td><a href="../pre-01/">Módulo P1</a></td></tr><tr><td><strong>Esforço</strong></td><td>Quanto raciocinar por passo</td><td><code>/effort, --effort</code></td><td><a href="../autonomo/#comandos"><code>/autonomo:comecar</code></a></td></tr>
+</table>
+<h3>Contexto e memória</h3>
+<table>
+<tr><th>Componente</th><th>Para que serve</th><th>Onde fica / como usar</th><th>Veja</th></tr>
+<tr><td><strong>CLAUDE.md / AGENTS.md</strong></td><td>Instruções permanentes do projeto e suas</td><td><code>./CLAUDE.md, ~/.claude/CLAUDE.md</code></td><td><a href="../autonomo/#comandos"><code>/autonomo:configurar-autonomia</code></a></td></tr><tr><td><strong>Regras</strong></td><td>Instruções por caminho de arquivo</td><td><code>.claude/rules/*.md</code></td><td><a href="../autonomo/#comandos"><code>/autonomo:configurar-autonomia</code></a></td></tr><tr><td><strong>Memória automática</strong></td><td>O Claude anota suas preferências</td><td><code>/memory</code></td><td><a href="../autonomo/#comandos"><code>/autonomo:configurar-autonomia</code></a></td></tr><tr><td><strong>Estilo de saída</strong></td><td>Tom e formato das respostas</td><td><code>/output-style</code></td><td><a href="../autonomo/#comandos"><code>/autonomo:configurar-autonomia</code></a></td></tr>
+</table>
+<h3>Permissões e isolamento</h3>
+<table>
+<tr><th>Componente</th><th>Para que serve</th><th>Onde fica / como usar</th><th>Veja</th></tr>
+<tr><td><strong>Modos de permissão</strong></td><td>Quanto o Claude pode fazer sem perguntar</td><td><code>Shift+Tab, --permission-mode, permissions.defaultMode</code></td><td><a href="../autonomo/#comandos"><code>/autonomo:configurar-autonomia</code></a></td></tr><tr><td><strong>Regras allow/ask/deny</strong></td><td>Liberar, confirmar ou proibir ações específicas</td><td><code>/permissions, "permissions" no settings</code></td><td><a href="../autonomo/#comandos"><code>/autonomo:configurar-autonomia</code></a></td></tr><tr><td><strong>Sandbox</strong></td><td>Cerca de arquivos e rede para comandos</td><td><code>/sandbox, "sandbox" no settings</code></td><td><a href="../autonomo/#comandos"><code>/autonomo:configurar-autonomia</code></a></td></tr><tr><td><strong>Modo auto + autoMode</strong></td><td>Classificador no lugar do clique</td><td><code>--permission-mode auto, "autoMode" em ~/.claude/settings.json</code></td><td><a href="../autonomo/#comandos"><code>/autonomo:configurar-autonomia</code></a></td></tr><tr><td><strong>Contêiner / nuvem</strong></td><td>Isolamento total para autonomia máxima</td><td><code>dev container, sessão na nuvem</code></td><td><a href="../autonomo/#comandos"><code>/autonomo:configurar-autonomia</code></a></td></tr>
+</table>
+<h3>Extensões</h3>
+<table>
+<tr><th>Componente</th><th>Para que serve</th><th>Onde fica / como usar</th><th>Veja</th></tr>
+<tr><td><strong>Servidores MCP</strong></td><td>Ferramentas e dados externos</td><td><code>claude mcp add, .mcp.json, /mcp</code></td><td></td></tr><tr><td><strong>Skills</strong></td><td>Procedimentos e conhecimento reutilizáveis</td><td><code>.claude/skills/&lt;nome&gt;/SKILL.md, /skills</code></td><td></td></tr><tr><td><strong>Subagentes</strong></td><td>Trabalhadores com contexto isolado</td><td><code>.claude/agents/*.md, /agents</code></td><td></td></tr><tr><td><strong>Hooks</strong></td><td>Ações automáticas em eventos</td><td><code>"hooks" no settings, /hooks</code></td><td></td></tr><tr><td><strong>Plugins e marketplaces</strong></td><td>Empacotar e distribuir tudo isso</td><td><code>/plugin, claude plugin install</code></td><td></td></tr><tr><td><strong>LSP, linha de status, atalhos</strong></td><td>Conforto e precisão no dia a dia</td><td><code>plugins de linguagem, /statusline, /keybindings</code></td><td></td></tr>
+</table>
+<h3>Paralelismo e trabalho remoto</h3>
+<table>
+<tr><th>Componente</th><th>Para que serve</th><th>Onde fica / como usar</th><th>Veja</th></tr>
+<tr><td><strong>Worktrees</strong></td><td>Várias tarefas sem conflito</td><td><code>claude -w, /fork</code></td><td></td></tr><tr><td><strong>Segundo plano</strong></td><td>Sessões que não prendem o terminal</td><td><code>claude --bg, claude agents, /background</code></td><td></td></tr><tr><td><strong>Equipes e fluxos</strong></td><td>Muitos agentes coordenados</td><td><code>agent teams, Workflow</code></td><td></td></tr><tr><td><strong>Metas e laços</strong></td><td>Trabalhar até concluir ou em intervalos</td><td><code>/goal, /loop</code></td><td></td></tr><tr><td><strong>Nuvem, Remote Control, celular</strong></td><td>Acompanhar e dirigir de longe</td><td><code>--cloud, /remote-control, /teleport</code></td><td></td></tr>
+</table>
+<h3>Automação, testes e implantação</h3>
+<table>
+<tr><th>Componente</th><th>Para que serve</th><th>Onde fica / como usar</th><th>Veja</th></tr>
+<tr><td><strong>Modo não interativo</strong></td><td>Rodar em scripts e CI</td><td><code>claude -p, --output-format json, --json-schema</code></td><td><a href="../autonomo/#comandos"><code>/autonomo:implantar</code></a></td></tr><tr><td><strong>Limites</strong></td><td>Teto de custo e de passos</td><td><code>--max-budget-usd, --max-turns</code></td><td><a href="../autonomo/#comandos"><code>/autonomo:implantar</code></a></td></tr><tr><td><strong>GitHub Actions / GitLab CI</strong></td><td>Claude no pipeline</td><td><code>/install-github-app, anthropics/claude-code-action</code></td><td><a href="../autonomo/#comandos"><code>/autonomo:implantar</code></a></td></tr><tr><td><strong>Revisão de código</strong></td><td>Achar bugs antes do merge</td><td><code>/code-review, /security-review, Code Review, ultrareview</code></td><td><a href="../autonomo/#comandos"><code>/autonomo:implantar</code></a></td></tr><tr><td><strong>Tarefas agendadas</strong></td><td>Trabalho recorrente sem você</td><td><code>/schedule, /loop</code></td><td><a href="../autonomo/#comandos"><code>/autonomo:implantar</code></a></td></tr>
+</table>
+<h3>Plataforma e governança</h3>
+<table>
+<tr><th>Componente</th><th>Para que serve</th><th>Onde fica / como usar</th><th>Veja</th></tr>
+<tr><td><strong>Agent SDK</strong></td><td>O motor do Claude Code nos seus produtos</td><td><code>@anthropic-ai/claude-agent-sdk, claude-agent-sdk (Python)</code></td><td></td></tr><tr><td><strong>Custos e uso</strong></td><td>Saber quanto gasta e onde</td><td><code>/usage, OpenTelemetry</code></td><td></td></tr><tr><td><strong>Managed settings</strong></td><td>Regras de toda a empresa</td><td><code>managed-settings.json, console de administração</code></td><td></td></tr>
+</table>
+    </section>
+
+    <section id="ordem">
+      <h2>O que adicionar, e quando</h2>
+      <p>Não configure tudo no primeiro dia. A documentação oficial recomenda adicionar cada peça quando aparecer o sinal certo:</p>
+<table>
+<tr><th>Sinal</th><th>O que adicionar</th></tr>
+<tr><td>O Claude errou uma convenção ou um comando duas vezes</td><td>Escreva no CLAUDE.md</td></tr><tr><td>Você sempre pede o mesmo formato de resposta</td><td>Defina um estilo de saída</td></tr><tr><td>Você digita o mesmo pedido para começar uma tarefa</td><td>Crie uma skill que você chama com /nome</td></tr><tr><td>Você cola o mesmo procedimento pela terceira vez</td><td>Transforme em skill</td></tr><tr><td>Você copia dados de um sistema que o Claude não vê</td><td>Conecte esse sistema por MCP</td></tr><tr><td>O Claude lê muitos arquivos para achar um símbolo</td><td>Instale o plugin de inteligência de código da linguagem</td></tr><tr><td>Uma tarefa lateral enche a conversa de saída</td><td>Mande para um subagente</td></tr><tr><td>Algo precisa acontecer sempre, sem pedir</td><td>Escreva um hook</td></tr><tr><td>Os pedidos de permissão estão atrapalhando</td><td>Rode /fewer-permission-prompts, ligue o sandbox ou use o modo auto (Módulo P4)</td></tr><tr><td>Um segundo repositório precisa do mesmo ambiente</td><td>Empacote como plugin</td></tr>
+</table>
+    </section>
+
+    <section id="arquivos">
+      <h2>Arquivos e locais</h2>
+      <p><code>~</code> é a sua pasta pessoal; caminhos sem <code>~</code> são relativos à raiz do projeto.</p>
+<table>
+<tr><th>Arquivo ou pasta</th><th>O que guarda</th></tr>
+<tr><td><code>~/.claude/settings.json</code></td><td>Suas configurações, valem em todos os projetos (inclui autoMode)</td></tr><tr><td><code>.claude/settings.json</code></td><td>Configurações do projeto, versionadas para o time</td></tr><tr><td><code>.claude/settings.local.json</code></td><td>Suas configurações neste projeto, fora do git</td></tr><tr><td><code>managed-settings.json</code></td><td>Configurações da organização, não podem ser sobrescritas</td></tr><tr><td><code>CLAUDE.md, .claude/CLAUDE.md, ~/.claude/CLAUDE.md</code></td><td>Instruções do projeto e suas</td></tr><tr><td><code>.claude/rules/*.md</code></td><td>Regras modulares, com escopo por caminho</td></tr><tr><td><code>.claude/skills/&lt;nome&gt;/SKILL.md, ~/.claude/skills/</code></td><td>Skills do projeto e suas</td></tr><tr><td><code>.claude/agents/*.md, ~/.claude/agents/</code></td><td>Subagentes do projeto e seus</td></tr><tr><td><code>.claude/commands/*.md</code></td><td>Comandos no formato antigo (continuam funcionando)</td></tr><tr><td><code>.mcp.json</code></td><td>Servidores MCP do projeto</td></tr><tr><td><code>~/.claude.json</code></td><td>Estado local e servidores MCP de escopo local e de usuário</td></tr><tr><td><code>~/.claude/projects/</code></td><td>Transcrições e memória automática por projeto</td></tr><tr><td><code>.claude-plugin/plugin.json</code></td><td>Manifesto de um plugin</td></tr><tr><td><code>.claude-plugin/marketplace.json</code></td><td>Catálogo de um marketplace de plugins</td></tr>
+</table>
+    </section>
+
+    <section id="comandos">
+      <h2>Comandos essenciais</h2>
+      <p>Digite <code>/</code> no Claude Code para ver todos. Estes são os essenciais:</p>
+<table>
+<tr><th>Comando</th><th>O que faz</th></tr>
+<tr><td><code>/init</code></td><td>Cria um CLAUDE.md a partir do seu projeto</td></tr><tr><td><code>/doctor</code></td><td>Diagnostica instalação e configuração</td></tr><tr><td><code>/model, /effort</code></td><td>Troca o modelo e o nível de esforço</td></tr><tr><td><code>/context</code></td><td>Mostra o que ocupa o contexto</td></tr><tr><td><code>/compact</code></td><td>Resume a conversa para liberar contexto</td></tr><tr><td><code>/clear</code></td><td>Começa uma conversa nova</td></tr><tr><td><code>/resume, /rename, /branch</code></td><td>Retoma, nomeia ou ramifica sessões</td></tr><tr><td><code>/rewind</code></td><td>Volta código e conversa a um checkpoint</td></tr><tr><td><code>/plan</code></td><td>Entra no modo plano</td></tr><tr><td><code>/permissions</code></td><td>Gerencia regras allow, ask e deny</td></tr><tr><td><code>/sandbox</code></td><td>Liga o sandbox de comandos</td></tr><tr><td><code>/auto-mode-setup</code></td><td>Rascunha a configuração de ambiente do modo auto</td></tr><tr><td><code>/fewer-permission-prompts</code></td><td>Sugere regras allow a partir do seu histórico</td></tr><tr><td><code>/memory</code></td><td>Edita CLAUDE.md e memória automática</td></tr><tr><td><code>/mcp</code></td><td>Conecta e autentica servidores MCP</td></tr><tr><td><code>/skills, /agents, /hooks, /plugin</code></td><td>Gerencia extensões</td></tr><tr><td><code>/code-review, /security-review</code></td><td>Revisa as mudanças da branch</td></tr><tr><td><code>/goal, /loop, /schedule</code></td><td>Trabalho até concluir, em laço ou agendado</td></tr><tr><td><code>/background, /tasks</code></td><td>Segundo plano e tarefas em andamento</td></tr><tr><td><code>/usage</code></td><td>Consumo e limites</td></tr><tr><td><code>/diff, /export</code></td><td>Revisa mudanças, exporta a conversa</td></tr><tr><td><code>/install-github-app</code></td><td>Configura o app e as Actions do GitHub</td></tr>
+</table>
+    </section>
+
+    <section id="ferramentas">
+      <h2>Ferramentas embutidas</h2>
+      <p>São os nomes que aparecem nas regras de permissão, como <code>Bash(npm test)</code> ou <code>Edit</code>.</p>
+<table>
+<tr><th>Ferramenta</th><th>Para que serve</th></tr>
+<tr><td><code>Read, Edit, Write, NotebookEdit</code></td><td>Ler e alterar arquivos</td></tr><tr><td><code>Glob, Grep</code></td><td>Encontrar arquivos e textos</td></tr><tr><td><code>Bash, PowerShell, Monitor</code></td><td>Rodar comandos; Monitor acompanha a saída em segundo plano</td></tr><tr><td><code>WebFetch, WebSearch</code></td><td>Buscar na web</td></tr><tr><td><code>Agent, SendMessage, ListAgents</code></td><td>Criar subagentes e conversar com outras sessões</td></tr><tr><td><code>Skill, ToolSearch</code></td><td>Usar skills e carregar ferramentas sob demanda</td></tr><tr><td><code>EnterPlanMode, ExitPlanMode, AskUserQuestion</code></td><td>Planejar e perguntar a você</td></tr><tr><td><code>EnterWorktree, ExitWorktree</code></td><td>Isolar trabalho em worktree</td></tr><tr><td><code>TaskCreate, TaskUpdate, TaskList, TaskGet, TaskStop</code></td><td>Lista de tarefas e tarefas em segundo plano</td></tr><tr><td><code>CronCreate, CronList, CronDelete, RemoteTrigger</code></td><td>Agendamentos</td></tr><tr><td><code>LSP</code></td><td>Inteligência de código</td></tr><tr><td><code>Workflow</code></td><td>Fluxos dinâmicos com muitos subagentes</td></tr><tr><td><code>Artifact, SendUserFile, PushNotification</code></td><td>Publicar páginas, enviar arquivos, notificar</td></tr>
+</table>
+    </section>
+
+    <section id="hooks">
+      <h2>Eventos de hook</h2>
+      <p>Os principais pontos do ciclo de vida em que um hook pode rodar. A lista completa está na <a href="https://code.claude.com/docs/pt/hooks" target="_blank" rel="noopener">referência de hooks</a>.</p>
+<table>
+<tr><th>Evento</th><th>Quando e para quê</th></tr>
+<tr><td><code>SessionStart / SessionEnd</code></td><td>Início e fim da sessão: preparar ambiente, registrar</td></tr><tr><td><code>UserPromptSubmit</code></td><td>Antes de o Claude ler seu pedido: adicionar contexto, bloquear</td></tr><tr><td><code>PreToolUse</code></td><td>Antes de uma ferramenta rodar: pode bloquear (a barreira mais usada)</td></tr><tr><td><code>PermissionRequest / PermissionDenied</code></td><td>Quando uma ação pede permissão ou é negada pelo modo auto</td></tr><tr><td><code>PostToolUse / PostToolUseFailure</code></td><td>Depois de uma ferramenta: formatar, rodar lint, registrar</td></tr><tr><td><code>Stop / StopFailure</code></td><td>Quando o Claude termina ou falha por erro de API: checar se testes passam</td></tr><tr><td><code>SubagentStart / SubagentStop</code></td><td>Início e fim de subagentes</td></tr><tr><td><code>PreCompact / PostCompact</code></td><td>Antes e depois da compactação</td></tr><tr><td><code>Notification</code></td><td>Quando o Claude Code notifica (por exemplo, esperando permissão)</td></tr><tr><td><code>ConfigChange, FileChanged, CwdChanged, InstructionsLoaded</code></td><td>Mudanças de configuração, arquivos, pasta e instruções</td></tr><tr><td><code>WorktreeCreate / WorktreeRemove, TaskCreated / TaskCompleted</code></td><td>Worktrees e tarefas</td></tr>
+</table>
+    </section>
+
+    <section id="glossario" class="glossario">
+      <h2>Glossário A–Z</h2>
+      <p><label for="filtro-glossario">Filtrar termos:</label> <input id="filtro-glossario" type="search" placeholder="ex.: permissão, hook, nuvem" autocomplete="off"> <small id="filtro-contador" aria-live="polite"></small></p>
+<h3>A</h3>
+<dl>
+<dt id="t-acceptedits">acceptEdits</dt><dd>Modo de permissão que aprova edições de arquivos e comandos simples de arquivo (mkdir, mv, cp) sem perguntar. <small><a href="../autonomo/#comandos"><code>/autonomo:configurar-autonomia</code></a>. <a href="https://code.claude.com/docs/pt/permission-modes" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-agent-sdk">Agent SDK <small>(Claude Agent SDK)</small></dt><dd>Biblioteca em TypeScript e Python que dá aos seus programas o mesmo motor do Claude Code: ciclo agêntico, ferramentas, permissões, hooks e sessões. <small> <a href="https://code.claude.com/docs/pt/agent-sdk/overview" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-agente">Agente <small>(agent)</small></dt><dd>Sistema em que o modelo decide quais ferramentas usar e em que ordem, observando o resultado de cada passo até concluir a tarefa. O Claude Code é um agente de código. <small><a href="../pre-01/">Módulo P1</a>. <a href="https://code.claude.com/docs/pt/how-claude-code-works" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-agents-md">AGENTS.md</dt><dd>Arquivo de instruções para agentes de código, padrão aberto. Se o repositório tem AGENTS.md e não tem CLAUDE.md, o Claude Code o lê como instruções do projeto. <small><a href="../autonomo/#comandos"><code>/autonomo:configurar-autonomia</code></a>. <a href="https://code.claude.com/docs/pt/memory" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-artefato">Artefato <small>(artifact)</small></dt><dd>Página web privada e interativa que o Claude publica no claude.ai a partir da sessão, para você ver ou compartilhar um resultado visual em vez de ler texto no terminal. <small><a href="../autonomo/#comandos"><code>/autonomo:comecar</code></a>. <a href="https://code.claude.com/docs/pt/artifacts" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-automode-environment">autoMode.environment</dt><dd>Configuração que diz ao classificador do modo auto quais repositórios, domínios, buckets e serviços são confiáveis. Lida do settings do usuário ou da organização, nunca do repositório. <small><a href="../autonomo/#comandos"><code>/autonomo:configurar-autonomia</code></a>. <a href="https://code.claude.com/docs/pt/auto-mode-config" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-autonomia-escada-da">Autonomia (escada da)</dt><dd>Termo do curso para a sequência de modos de permissão, do mais supervisionado ao mais livre: manual, acceptEdits, plano, auto, dontAsk e bypassPermissions. Subir na escada exige barreiras proporcionais. <small><a href="../autonomo/#comandos"><code>/autonomo:configurar-autonomia</code></a>. <a href="https://code.claude.com/docs/pt/permission-modes" target="_blank" rel="noopener">documentação</a></small></dd>
+</dl>
+<h3>B</h3>
+<dl>
+<dt id="t-bare-modo">Bare (modo) <small>(bare mode)</small></dt><dd>Flag --bare: inicia sem carregar hooks, skills, plugins, servidores MCP, memória automática nem CLAUDE.md. Recomendado em CI, para o resultado ser igual em qualquer máquina. <small><a href="../autonomo/#comandos"><code>/autonomo:implantar</code></a>. <a href="https://code.claude.com/docs/pt/headless" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-bypasspermissions">bypassPermissions</dt><dd>Modo de permissão que pula todas as checagens (flag --dangerously-skip-permissions). Só para contêineres e máquinas virtuais isolados, como usuário sem privilégios de root. Regras deny continuam valendo. <small><a href="../autonomo/#comandos"><code>/autonomo:configurar-autonomia</code></a>. <a href="https://code.claude.com/docs/pt/permission-modes" target="_blank" rel="noopener">documentação</a></small></dd>
+</dl>
+<h3>C</h3>
+<dl>
+<dt id="t-canal">Canal <small>(channel)</small></dt><dd>Servidor MCP que empurra eventos (mensagens, alertas, webhooks) para uma sessão em andamento, para o Claude reagir enquanto você está longe do terminal. <small> <a href="https://code.claude.com/docs/pt/channels" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-checkpoint">Checkpoint</dt><dd>Ponto de restauração criado a cada mensagem sua. Esc duas vezes ou /rewind volta o código, a conversa ou ambos. Não desfaz o que um comando de terminal mudou fora das ferramentas de edição. <small><a href="../autonomo/#comandos"><code>/autonomo:comecar</code></a>. <a href="https://code.claude.com/docs/pt/checkpointing" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-ciclo-agentico">Ciclo agêntico <small>(agentic loop)</small></dt><dd>O ciclo que o Claude repete em toda tarefa: coletar contexto, agir, verificar o resultado e repetir até terminar. Você pode interromper a qualquer momento. <small><a href="../autonomo/#comandos"><code>/autonomo:comecar</code></a>. <a href="https://code.claude.com/docs/pt/how-claude-code-works" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-classificador-do-modo-auto">Classificador do modo auto</dt><dd>Modelo separado que revisa cada ação no modo auto e bloqueia o que for irreversível, destrutivo, fora do escopo ou induzido por prompt injection. Não vê o resultado das ferramentas, para não ser manipulado por ele. <small><a href="../autonomo/#comandos"><code>/autonomo:configurar-autonomia</code></a>. <a href="https://code.claude.com/docs/pt/permission-modes" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-claude-p">claude -p <small>(print / non-interactive mode)</small></dt><dd>Modo não interativo: executa um único pedido e sai. Base para scripts, CI e pipelines. Aceita --output-format json, --json-schema, --max-turns e --max-budget-usd. <small><a href="../autonomo/#comandos"><code>/autonomo:implantar</code></a>. <a href="https://code.claude.com/docs/pt/headless" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-claude-md">CLAUDE.md</dt><dd>Arquivo de instruções permanentes que você escreve para o Claude: convenções, comandos de teste, regras do tipo "sempre faça X". Carregado no início de toda sessão e relido do disco após a compactação. <small><a href="../autonomo/#comandos"><code>/autonomo:configurar-autonomia</code></a>. <a href="https://code.claude.com/docs/pt/memory" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-code-review">Code Review</dt><dd>Serviço que revisa automaticamente cada pull request no GitHub com vários agentes. No terminal, o equivalente local é /code-review; ultrareview faz uma revisão mais profunda na nuvem. <small><a href="../autonomo/#comandos"><code>/autonomo:implantar</code></a>. <a href="https://code.claude.com/docs/pt/code-review" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-comando-de-barra">Comando de barra <small>(slash command)</small></dt><dd>Instrução reutilizável chamada com /nome, como /clear, /model e /compact. Comandos próprios hoje são feitos como skills. <small><a href="../autonomo/#comandos"><code>/autonomo:comecar</code></a>. <a href="https://code.claude.com/docs/pt/commands" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-compactacao">Compactação <small>(compaction)</small></dt><dd>Resumo automático da conversa quando a janela de contexto enche. O CLAUDE.md da raiz e a memória automática sobrevivem; instruções dadas só na conversa podem se perder. /compact força a compactação. <small><a href="../autonomo/#comandos"><code>/autonomo:comecar</code></a>. <a href="https://code.claude.com/docs/pt/context-window" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-conector">Conector <small>(connector)</small></dt><dd>Servidor MCP adicionado à sua conta do claude.ai (Gmail, Drive, Slack…). Aparece no /mcp do Claude Code quando você entra com a mesma conta. <small> <a href="https://code.claude.com/docs/pt/mcp" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-contexto-janela-de">Contexto (janela de) <small>(context window)</small></dt><dd>A memória de trabalho da sessão: conversa, arquivos lidos, saídas de comandos, CLAUDE.md, skills e instruções do sistema. /context mostra o que ocupa espaço. <small><a href="../pre-01/">Módulo P1</a>. <a href="https://code.claude.com/docs/pt/context-window" target="_blank" rel="noopener">documentação</a></small></dd>
+</dl>
+<h3>D</h3>
+<dl>
+<dt id="t-dev-container">Dev container</dt><dd>Contêiner de desenvolvimento configurado no repositório. Dá isolamento consistente para rodar o Claude com mais autonomia sem expor sua máquina. <small><a href="../autonomo/#comandos"><code>/autonomo:configurar-autonomia</code></a>. <a href="https://code.claude.com/docs/pt/devcontainer" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-dispatch">Dispatch</dt><dd>Envio de uma tarefa pelo app do celular que abre uma sessão do Claude Code no app desktop. <small> <a href="https://code.claude.com/docs/pt/desktop" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-dontask">dontAsk</dt><dd>Modo de permissão em que só rodam leituras e ferramentas pré-aprovadas; o que pediria permissão é negado. Ideal para CI com lista exata do que pode. <small><a href="../autonomo/#comandos"><code>/autonomo:implantar</code></a>. <a href="https://code.claude.com/docs/pt/permission-modes" target="_blank" rel="noopener">documentação</a></small></dd>
+</dl>
+<h3>E</h3>
+<dl>
+<dt id="t-equipe-de-agentes">Equipe de agentes <small>(agent teams)</small></dt><dd>Várias sessões do Claude Code coordenadas por uma líder, com lista de tarefas compartilhada e mensagens entre elas. Experimental, desligada por padrão. <small> <a href="https://code.claude.com/docs/pt/agent-teams" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-esforco-nivel-de">Esforço (nível de) <small>(effort level)</small></dt><dd>Quanto o modelo raciocina em cada passo: low, medium, high, xhigh ou max. Mais esforço, respostas mais cuidadosas, mais lentas e mais caras. /effort ou --effort. <small><a href="../autonomo/#comandos"><code>/autonomo:comecar</code></a>. <a href="https://code.claude.com/docs/pt/model-config" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-estilo-de-saida">Estilo de saída <small>(output style)</small></dt><dd>Configuração que muda o papel, o tom e o formato das respostas em toda a sessão, inclusive para usar o Claude em tarefas que não são de programação. <small><a href="../autonomo/#comandos"><code>/autonomo:configurar-autonomia</code></a>. <a href="https://code.claude.com/docs/pt/output-styles" target="_blank" rel="noopener">documentação</a></small></dd>
+</dl>
+<h3>F</h3>
+<dl>
+<dt id="t-ferramenta">Ferramenta <small>(tool)</small></dt><dd>Uma ação que o Claude pode executar: ler arquivo, editar, rodar comando, buscar na web, criar subagente. É o que transforma o modelo em agente. <small><a href="../autonomo/#comandos"><code>/autonomo:comecar</code></a>. <a href="https://code.claude.com/docs/pt/tools-reference" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-fluxo-dinamico">Fluxo dinâmico <small>(dynamic workflow)</small></dt><dd>Script que o Claude escreve para orquestrar muitos subagentes em segundo plano, por exemplo para auditar um código inteiro com verificação cruzada. <small> <a href="https://code.claude.com/docs/pt/workflows" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-frontmatter">Frontmatter</dt><dd>Bloco YAML entre linhas --- no topo de um arquivo Markdown. Skills, subagentes, estilos de saída e regras leem sua configuração dali. <small> <a href="https://code.claude.com/docs/pt/skills" target="_blank" rel="noopener">documentação</a></small></dd>
+</dl>
+<h3>G</h3>
+<dl>
+<dt id="t-github-actions-claude-code">GitHub Actions (Claude Code)</dt><dd>Integração que roda o Claude Code em workflows do GitHub: responder a menções em issues e PRs, corrigir CI, revisar código. /install-github-app configura. <small><a href="../autonomo/#comandos"><code>/autonomo:implantar</code></a>. <a href="https://code.claude.com/docs/pt/github-actions" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-goal">/goal</dt><dd>Define uma condição de conclusão; o Claude continua trabalhando até que ela seja verdadeira. <small> <a href="https://code.claude.com/docs/pt/goal" target="_blank" rel="noopener">documentação</a></small></dd>
+</dl>
+<h3>H</h3>
+<dl>
+<dt id="t-harness">Harness <small>(agentic harness)</small></dt><dd>As ferramentas, o gerenciamento de contexto e o ambiente de execução que transformam um modelo em agente. O Claude Code é o harness; o Claude é o modelo dentro dele. <small><a href="../pre-01/">Módulo P1</a>. <a href="https://code.claude.com/docs/pt/how-claude-code-works" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-hook">Hook</dt><dd>Ação que roda automaticamente em um ponto do ciclo de vida (antes de uma ferramenta, depois de uma edição, no início da sessão). Pode ser comando, HTTP, ferramenta MCP, prompt ou subagente. Determinístico: não depende da vontade do modelo. <small> <a href="https://code.claude.com/docs/pt/hooks-guide" target="_blank" rel="noopener">documentação</a></small></dd>
+</dl>
+<h3>I</h3>
+<dl>
+<dt id="t-injecao-de-prompt">Injeção de prompt <small>(prompt injection)</small></dt><dd>Instruções hostis escondidas em arquivos, páginas ou resultados de ferramentas, que tentam desviar o agente. A principal razão para não dar autonomia sem barreiras. <small><a href="../autonomo/#comandos"><code>/autonomo:configurar-autonomia</code></a>. <a href="https://code.claude.com/docs/pt/security" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-inteligencia-de-codigo">Inteligência de código <small>(code intelligence / LSP)</small></dt><dd>Plugin que conecta o Claude a um servidor de linguagem, para navegar por símbolos e ver erros de tipo sem ler arquivos inteiros. <small> <a href="https://code.claude.com/docs/pt/plugins/code-intelligence" target="_blank" rel="noopener">documentação</a></small></dd>
+</dl>
+<h3>L</h3>
+<dl>
+<dt id="t-loop">/loop</dt><dd>Skill que repete um pedido em intervalos durante a sessão, por exemplo para acompanhar um deploy ou um PR. <small> <a href="https://code.claude.com/docs/pt/scheduled-tasks" target="_blank" rel="noopener">documentação</a></small></dd>
+</dl>
+<h3>M</h3>
+<dl>
+<dt id="t-managed-settings">Managed settings <small>(configurações gerenciadas)</small></dt><dd>Configurações impostas pela organização, que usuários e projetos não podem sobrescrever. Usadas para regras de segurança de toda a empresa. <small> <a href="https://code.claude.com/docs/pt/managed-settings" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-marketplace">Marketplace</dt><dd>Catálogo de plugins, definido por um marketplace.json, de onde se instalam plugins com /plugin ou claude plugin install. <small> <a href="https://code.claude.com/docs/pt/plugins/overview" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-mcp">MCP <small>(Model Context Protocol)</small></dt><dd>Padrão aberto para conectar a IA a ferramentas e dados externos: bancos, Slack, Jira, navegador e centenas de outros. Visto em profundidade no Módulo 5 do curso principal. <small> <a href="https://code.claude.com/docs/pt/mcp" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-mcp-tool-search">MCP Tool Search</dt><dd>Mecanismo que carrega só os nomes das ferramentas MCP no início e busca o esquema completo quando for usar, para muitos servidores não lotarem o contexto. <small> <a href="https://code.claude.com/docs/pt/mcp" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-mcp-json">.mcp.json</dt><dd>Arquivo do projeto com os servidores MCP compartilhados pelo time. Cada pessoa aprova os servidores antes de eles conectarem. <small> <a href="https://code.claude.com/docs/pt/mcp" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-memoria-automatica">Memória automática <small>(auto memory)</small></dt><dd>Notas que o Claude escreve para si mesmo a partir das suas correções e preferências, guardadas por repositório. Contraparte do CLAUDE.md, que é você quem escreve. <small><a href="../autonomo/#comandos"><code>/autonomo:configurar-autonomia</code></a>. <a href="https://code.claude.com/docs/pt/memory" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-mod">Mod</dt><dd>Plugin que altera a própria interface e o comportamento do Claude Code: painéis, faixas, comandos e regras sobre chamadas de ferramentas. <small> <a href="https://code.claude.com/docs/pt/plugins/mods/overview" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-modelo-de-linguagem">Modelo de linguagem <small>(LLM)</small></dt><dd>Programa treinado em muito texto para prever a continuação mais provável. Com ferramentas, passa a agir; sem verificação, pode errar com confiança. <small><a href="../pre-01/">Módulo P1</a>.</small></dd>
+<dt id="t-modo-auto">Modo auto <small>(auto mode)</small></dt><dd>Modo de permissão em que o classificador revisa as ações no seu lugar, e o Claude roda a maioria sem perguntar. É o modo inicial padrão nas versões atuais do terminal e do VS Code. <small><a href="../autonomo/#comandos"><code>/autonomo:configurar-autonomia</code></a>. <a href="https://code.claude.com/docs/pt/permission-modes" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-modo-manual">Modo manual <small>(default)</small></dt><dd>Modo de permissão que pede aprovação para tudo que não é leitura. Valor de configuração: default. <small><a href="../autonomo/#comandos"><code>/autonomo:configurar-autonomia</code></a>. <a href="https://code.claude.com/docs/pt/permission-modes" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-modo-plano">Modo plano <small>(plan mode)</small></dt><dd>Modo em que o Claude pesquisa e propõe um plano sem editar seus arquivos. /plan ou Shift+Tab. <small><a href="../autonomo/#comandos"><code>/autonomo:comecar</code></a>. <a href="https://code.claude.com/docs/pt/permission-modes" target="_blank" rel="noopener">documentação</a></small></dd>
+</dl>
+<h3>P</h3>
+<dl>
+<dt id="t-plugin">Plugin</dt><dd>Pacote instalável com skills, hooks, subagentes e servidores MCP. Suas skills ganham prefixo (plugin:skill) para coexistir. <small> <a href="https://code.claude.com/docs/pt/plugins/overview" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-projeto-confianca-no">Projeto (confiança no) <small>(project trust)</small></dt><dd>Diálogo em que você aceita uma pasta antes de o Claude Code carregar a configuração dela. Até lá, regras allow e marketplaces do repositório ficam retidos. <small><a href="../autonomo/#comandos"><code>/autonomo:configurar-autonomia</code></a>. <a href="https://code.claude.com/docs/pt/claude-directory" target="_blank" rel="noopener">documentação</a></small></dd>
+</dl>
+<h3>R</h3>
+<dl>
+<dt id="t-regra-de-permissao">Regra de permissão <small>(permission rule)</small></dt><dd>Entrada allow, ask ou deny no settings.json, como Bash(npm test) ou Read(./.env). Avaliadas na ordem deny, ask, allow; vale a primeira que bater. Deny vale em todos os modos. <small><a href="../autonomo/#comandos"><code>/autonomo:configurar-autonomia</code></a>. <a href="https://code.claude.com/docs/pt/permissions" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-regras">Regras <small>(rules)</small></dt><dd>Arquivos em .claude/rules/ carregados junto com o CLAUDE.md. Podem valer só para certos caminhos (frontmatter paths:), economizando contexto. <small><a href="../autonomo/#comandos"><code>/autonomo:configurar-autonomia</code></a>. <a href="https://code.claude.com/docs/pt/memory" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-remocao-critica">Remoção crítica <small>(critical-path removal)</small></dt><dd>rm ou rmdir em caminhos críticos (raiz, home, pastas do sistema). Nenhum modo aprova sozinho, nem bypassPermissions por padrão. <small><a href="../autonomo/#comandos"><code>/autonomo:configurar-autonomia</code></a>. <a href="https://code.claude.com/docs/pt/permission-modes" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-remote-control">Remote Control</dt><dd>Continuar uma sessão local pelo celular ou navegador. O código continua rodando na sua máquina; só a interface é remota. <small> <a href="https://code.claude.com/docs/pt/remote-control" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-rotina-tarefa-agendada">Rotina / tarefa agendada <small>(scheduled task)</small></dt><dd>Pedido que roda sozinho em horário definido, na nuvem (/schedule) ou no app desktop. Antes chamado de routine. <small><a href="../autonomo/#comandos"><code>/autonomo:implantar</code></a>. <a href="https://code.claude.com/docs/pt/routines" target="_blank" rel="noopener">documentação</a></small></dd>
+</dl>
+<h3>S</h3>
+<dl>
+<dt id="t-sandbox">Sandbox <small>(sandboxing)</small></dt><dd>Isolamento de arquivos e rede no nível do sistema operacional para os comandos de terminal. Dentro do limite definido, o Claude trabalha sem pedir permissão a cada comando. /sandbox liga. <small><a href="../autonomo/#comandos"><code>/autonomo:configurar-autonomia</code></a>. <a href="https://code.claude.com/docs/pt/sandboxing" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-sessao">Sessão <small>(session)</small></dt><dd>Uma conversa ligada a uma pasta, com contexto próprio. claude -c continua a última; /resume escolhe; /clear começa outra. <small><a href="../autonomo/#comandos"><code>/autonomo:comecar</code></a>. <a href="https://code.claude.com/docs/pt/sessions" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-sessao-em-segundo-plano">Sessão em segundo plano <small>(background session)</small></dt><dd>Sessão que roda sem ocupar o terminal: claude --bg ou /background. claude agents lista, attach abre, stop para. <small> <a href="https://code.claude.com/docs/pt/agent-view" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-sessao-na-nuvem">Sessão na nuvem <small>(cloud session)</small></dt><dd>Sessão que roda na infraestrutura da Anthropic (ou da sua empresa) e continua com o notebook fechado. Começa de um clone novo do repositório. <small> <a href="https://code.claude.com/docs/pt/claude-code-on-the-web" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-settings-json-camadas">settings.json (camadas) <small>(settings layers)</small></dt><dd>Configuração em camadas, da mais forte para a mais fraca: gerenciada, flag --settings, .claude/settings.local.json, .claude/settings.json e ~/.claude/settings.json. Listas se somam; valores simples da camada mais forte vencem. <small><a href="../autonomo/#comandos"><code>/autonomo:configurar-autonomia</code></a>. <a href="https://code.claude.com/docs/pt/settings" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-skill">Skill</dt><dd>Arquivo SKILL.md com instruções, conhecimento ou um procedimento. O Claude carrega quando é relevante, ou você chama com /nome. Segue o padrão aberto Agent Skills. <small> <a href="https://code.claude.com/docs/pt/skills" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-skills-embutidas">Skills embutidas <small>(bundled skills)</small></dt><dd>Skills que já vêm no Claude Code, como /batch, /code-review, /debug, /loop, /run, /simplify e /fewer-permission-prompts. <small> <a href="https://code.claude.com/docs/pt/skills" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-subagente">Subagente <small>(subagent)</small></dt><dd>Assistente especializado com contexto, prompt, ferramentas e permissões próprios. Faz uma tarefa delegada e devolve um resumo. Embutidos: Explore, Plan e general-purpose. <small> <a href="https://code.claude.com/docs/pt/sub-agents" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-superficie">Superfície <small>(surface)</small></dt><dd>Onde você usa o Claude Code: terminal, VS Code, JetBrains, app desktop, claude.ai, celular. Todas usam o mesmo motor. <small><a href="../pre-01/">Módulo P1</a>. <a href="https://code.claude.com/docs/pt/platforms" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-system-prompt">System prompt</dt><dd>Instruções que o Claude Code envia antes da conversa em todo pedido. Pode ser complementado com --append-system-prompt. <small><a href="../autonomo/#comandos"><code>/autonomo:configurar-autonomia</code></a>. <a href="https://code.claude.com/docs/pt/cli-reference" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-system-reminder">System reminder</dt><dd>Mensagem que o harness insere na conversa para dar contexto: seu CLAUDE.md, a lista de skills, o texto de um hook, o aviso de que um arquivo mudou. <small><a href="../autonomo/#comandos"><code>/autonomo:configurar-autonomia</code></a>. <a href="https://code.claude.com/docs/pt/glossary" target="_blank" rel="noopener">documentação</a></small></dd>
+</dl>
+<h3>T</h3>
+<dl>
+<dt id="t-teleport">Teleport</dt><dd>/teleport traz uma sessão da nuvem para o seu terminal, com a branch e a conversa. O caminho inverso é --cloud. <small> <a href="https://code.claude.com/docs/pt/claude-code-on-the-web" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-token">Token</dt><dd>Pedaço de texto (em média, parte de uma palavra) que o modelo lê e escreve. Contexto, limites e preço são medidos em tokens. <small><a href="../pre-01/">Módulo P1</a>.</small></dd>
+<dt id="t-transcricao">Transcrição <small>(transcript)</small></dt><dd>Registro guardado de uma sessão: mensagens, chamadas de ferramentas e resultados. Permite retomar e auditar o que o agente fez. <small><a href="../autonomo/#comandos"><code>/autonomo:comecar</code></a>. <a href="https://code.claude.com/docs/pt/sessions" target="_blank" rel="noopener">documentação</a></small></dd>
+<dt id="t-turno">Turno <small>(turn)</small></dt><dd>Uma rodada: sua mensagem e tudo que o Claude faz até devolver a vez. <small><a href="../autonomo/#comandos"><code>/autonomo:comecar</code></a>. <a href="https://code.claude.com/docs/pt/glossary" target="_blank" rel="noopener">documentação</a></small></dd>
+</dl>
+<h3>V</h3>
+<dl>
+<dt id="t-verificacao-ciclo-de">Verificação (ciclo de) <small>(verification loop)</small></dt><dd>Dar ao Claude um jeito de conferir o próprio trabalho (testes, build, captura de tela) para ele corrigir sozinho até passar. A prática que mais aumenta a qualidade com autonomia. <small><a href="../autonomo/#comandos"><code>/autonomo:comecar</code></a>. <a href="https://code.claude.com/docs/pt/best-practices" target="_blank" rel="noopener">documentação</a></small></dd>
+</dl>
+<h3>W</h3>
+<dl>
+<dt id="t-worktree">Worktree</dt><dd>Cópia de trabalho separada do mesmo repositório git. Permite várias sessões em paralelo sem uma sobrescrever a outra. claude -w cria uma. <small> <a href="https://code.claude.com/docs/pt/worktrees" target="_blank" rel="noopener">documentação</a></small></dd>
+</dl>
+      <nav class="pager">
+        <a href="../"><small>← Voltar</small>Todos os módulos</a>
+        <a class="next" href="../autonomo/"><small>Começar →</small>Claude autônomo</a>
+      </nav>
+    </section>
+  </main>
+</div>
+<footer class="foot"><a href="/">triadic.life</a> · <a href="../">Engenharia de IA Aplicada</a></footer>
+<script src="../assets/curso.js"></script>
+<script src="filtro.js"></script>
+</body>
+</html>

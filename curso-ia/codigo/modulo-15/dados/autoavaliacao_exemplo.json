@@ -1,0 +1,17 @@
+{
+  "nome": "Exemplo",
+  "notas": {
+    "fundamentos": 3,
+    "apis_e_contexto": 3,
+    "avaliacao": 1,
+    "rag": 2,
+    "mcp_e_ferramentas": 2,
+    "agentes": 2,
+    "front_end_e_ux": 3,
+    "producao_e_llmops": 1,
+    "seguranca": 1,
+    "modelos_abertos": 0,
+    "produto_e_comunicacao": 2,
+    "lideranca_tecnica": 1
+  }
+}

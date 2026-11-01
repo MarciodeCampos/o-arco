@@ -1,0 +1,37 @@
+# Exemplo: verificação + revisão por agente em cada pull request.
+# Copie para o seu repositório e cadastre o segredo ANTHROPIC_API_KEY.
+# Confira a versão e as entradas atuais da action na documentação dela antes de usar.
+name: revisao-ia
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  verificar:
+    # A definição de pronto roda primeiro e sem IA: se falhar, nem gasta com revisão.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm ci
+      - run: npm run verificar
+
+  revisar:
+    needs: verificar
+    # Nunca rode com segredos em PRs de forks: o código do PR não é confiável.
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            Revise este pull request seguindo as regras do CLAUDE.md, com foco em contas com dinheiro,
+            casos de borda das specs e testes alterados. Comente só achados concretos, com arquivo e linha.

@@ -1,0 +1,41 @@
+[
+  {
+    "id": "suporte-rag",
+    "enunciado": "Projete um assistente de suporte para uma operadora de internet com 2 milhões de clientes. Ele responde dúvidas com base em 3 mil artigos e pode abrir chamados técnicos.",
+    "pontos_esperados": [
+      "Esclarece requisitos: volume, latência aceitável, idiomas, o que pode ser automatizado",
+      "RAG com busca híbrida, citações e resposta 'não sei' quando a base não cobre",
+      "Abrir chamado como ferramenta com validação e confirmação do cliente",
+      "Avaliação: dataset com gabarito, métricas de recuperação e de resposta, evals no CI",
+      "Custos: estimativa por conversa, modelo por rota, cache do prompt de sistema",
+      "Segurança: dados do cliente isolados por sessão, injeção via artigos ou mensagens",
+      "Operação: reserva para falha do provedor, passagem para humano, observabilidade"
+    ]
+  },
+  {
+    "id": "agente-financeiro",
+    "enunciado": "Projete um agente que concilia extratos bancários de pequenas empresas com notas fiscais e sugere lançamentos contábeis.",
+    "pontos_esperados": [
+      "Esclarece requisitos: formatos de entrada, volume mensal, quem aprova os lançamentos",
+      "Extração estruturada com validação de esquema e checagens determinísticas de soma",
+      "Workflow determinístico onde possível; agente só para os casos ambíguos",
+      "Aprovação humana antes de qualquer lançamento; trilha de auditoria",
+      "Avaliação com casos reais anonimizados e medição de acerto por tipo de divergência",
+      "Privacidade e LGPD: dados financeiros, retenção, contrato com o provedor",
+      "Custos e lote: processamento em batch fora do horário"
+    ]
+  },
+  {
+    "id": "moderacao",
+    "enunciado": "Projete a moderação de comentários de um portal de notícias com 500 mil comentários por dia.",
+    "pontos_esperados": [
+      "Esclarece requisitos: políticas, latência, tolerância a falso positivo e falso negativo",
+      "Cascata: regras e modelo pequeno ou destilado primeiro, modelo grande só nos casos incertos",
+      "Estimativa de custo e capacidade por dia, com a parcela que chega ao modelo grande",
+      "Revisão humana amostral e para casos limítrofes; canal de recurso",
+      "Avaliação por categoria, com dataset rotulado e acompanhamento de deriva",
+      "Ataques: ofuscação de texto, injeção de instruções no comentário",
+      "Transparência: registrar o motivo da decisão"
+    ]
+  }
+]

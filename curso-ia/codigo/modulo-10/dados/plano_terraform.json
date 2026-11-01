@@ -1,0 +1,91 @@
+{
+  "format_version": "1.2",
+  "gerado_por": "copilot de IaC (pedido: 'crie um bucket para os relatórios e uma VM para o job noturno')",
+  "resource_changes": [
+    {
+      "address": "aws_s3_bucket.relatorios",
+      "type": "aws_s3_bucket",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "after": {
+          "bucket": "loja-relatorios",
+          "tags": {
+            "time": "dados"
+          }
+        }
+      }
+    },
+    {
+      "address": "aws_s3_bucket_public_access_block.relatorios",
+      "type": "aws_s3_bucket_public_access_block",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "after": {
+          "bucket": "loja-relatorios",
+          "block_public_acls": false,
+          "block_public_policy": false,
+          "ignore_public_acls": false,
+          "restrict_public_buckets": false
+        }
+      }
+    },
+    {
+      "address": "aws_instance.job_noturno",
+      "type": "aws_instance",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "after": {
+          "instance_type": "p4d.24xlarge",
+          "associate_public_ip_address": true,
+          "tags": {
+            "time": "dados",
+            "centro_de_custo": "bi"
+          }
+        }
+      }
+    },
+    {
+      "address": "aws_security_group.job",
+      "type": "aws_security_group",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "after": {
+          "ingress": [
+            {
+              "from_port": 22,
+              "to_port": 22,
+              "cidr_blocks": [
+                "0.0.0.0/0"
+              ]
+            }
+          ],
+          "tags": {
+            "time": "dados",
+            "centro_de_custo": "bi"
+          }
+        }
+      }
+    },
+    {
+      "address": "aws_db_instance.legado",
+      "type": "aws_db_instance",
+      "change": {
+        "actions": [
+          "delete"
+        ],
+        "before": {
+          "identifier": "pedidos-legado",
+          "deletion_protection": false
+        }
+      }
+    }
+  ]
+}

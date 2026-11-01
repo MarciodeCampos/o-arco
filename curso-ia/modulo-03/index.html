@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050508">
+<meta name="description" content="Módulo 3 — Avaliação (Evals) e Testes de Sistemas com LLM: datasets, avaliadores, LLM como juiz, evals no CI, estatística e monitoramento.">
+<title>Módulo 3 · Evals e Testes de Sistemas com LLM — Engenharia de IA Aplicada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/curso.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="/">◈ TRIADIC.LIFE</a>
+  <span class="crumbs">/ <a href="../">Engenharia de IA</a> / Módulo 3</span>
+  <span class="spacer"></span>
+  <span class="progress-pill">0/9 aulas</span>
+</header>
+
+<div class="layout">
+
+  <aside class="toc">
+    <button class="toc-toggle" type="button">☰ Aulas do módulo</button>
+    <h2>Módulo 3</h2>
+    <nav>
+      <ol>
+        <li><a href="#inicio"><span class="chk"></span>Visão geral</a></li>
+        <li><a href="#aula-1"><span class="chk"></span>3.1 "Parece bom" não é métrica</a></li>
+        <li><a href="#aula-2"><span class="chk"></span>3.2 O dataset de avaliação</a></li>
+        <li><a href="#aula-3"><span class="chk"></span>3.3 Avaliadores com código</a></li>
+        <li><a href="#aula-4"><span class="chk"></span>3.4 LLM como juiz</a></li>
+        <li><a href="#aula-5"><span class="chk"></span>3.5 Evals no CI</a></li>
+        <li><a href="#aula-6"><span class="chk"></span>3.6 Comparar sem se enganar</a></li>
+        <li><a href="#aula-7"><span class="chk"></span>3.7 Avaliação em produção</a></li>
+        <li><a href="#projeto"><span class="chk"></span>Projeto do módulo</a></li>
+        <li><a href="#recursos"><span class="chk"></span>Recursos</a></li>
+      </ol>
+    </nav>
+  </aside>
+
+  <main class="content" data-modulo="modulo-03">
+
+    <!-- ============================================================ VISÃO GERAL -->
+    <section id="inicio">
+      <header>
+        <div class="eyebrow">Módulo 03 · 24h estimadas · novo</div>
+        <h1>Avaliação (Evals) e Testes de Sistemas com LLM</h1>
+      </header>
+      <p class="lede">
+        Você mudou o prompt e "parece melhor". Trocou de modelo e "parece igual". Sem medição, essas
+        frases são palpites. Este módulo ensina a transformar qualidade de IA em número confiável: o que
+        separa um protótipo de demonstração de um sistema em que uma empresa aposta dinheiro.
+      </p>
+      <div class="meta">
+        <span class="tag">7 aulas</span>
+        <span class="tag">4 laboratórios</span>
+        <span class="tag">Projeto em TypeScript</span>
+        <span class="tag">Pré-requisito: Módulo 2 (o projeto dele é avaliado aqui)</span>
+      </div>
+
+      <h3>Ao final do módulo você vai</h3>
+      <ul>
+        <li>Montar um dataset de avaliação e auditá-lo antes de confiar nele.</li>
+        <li>Escrever avaliadores por código que não são nem rígidos nem frouxos demais.</li>
+        <li>Usar um LLM como juiz e medir o quanto ele concorda com pessoas.</li>
+        <li>Rodar evals no CI e bloquear regressões antes do merge.</li>
+        <li>Comparar modelos e prompts sabendo quando a diferença é real e quando é ruído.</li>
+        <li>Fechar o ciclo entre o que falha em produção e o que entra no dataset.</li>
+      </ul>
+
+      <h3>Preparando o ambiente</h3>
+<pre data-lang="bash"><code>cd o-arco/curso-ia/codigo/modulo-03
+
+pip install -r python/requirements.txt     # labs (só o 3.4 chama a API)
+cd projeto &amp;&amp; npm install &amp;&amp; cd ..         # instala também o projeto do Módulo 2</code></pre>
+    </section>
+
+    <!-- ============================================================ AULA 1 -->
+    <section class="lesson" id="aula-1">
+      <h2>3.1 Por que "parece bom" não é métrica</h2>
+      <div class="lesson-meta">Leitura · 40 min</div>
+
+      <p>
+        Em software tradicional, <code>soma(2, 2)</code> devolve 4 sempre, e um teste unitário prova isso.
+        Em sistemas com LLM, a mesma entrada pode gerar saídas diferentes, "certo" muitas vezes é uma
+        questão de grau, e uma melhora num caso pode piorar outros dez. O olhômetro (rodar três exemplos e
+        achar bonito) falha de formas previsíveis:
+      </p>
+      <ul>
+        <li><strong>Viés de seleção:</strong> você testa os exemplos de que lembra, que costumam ser os fáceis.</li>
+        <li><strong>Regressões invisíveis:</strong> o ajuste que conserta o caso A quebra os casos B e C, que você não olhou.</li>
+        <li><strong>Ruído confundido com sinal:</strong> uma resposta melhor pode ser só sorte da amostragem.</li>
+        <li><strong>Decisões caras sem base:</strong> "o modelo barato serve?" vira opinião contra opinião.</li>
+      </ul>
+
+      <h3>As quatro peças de um eval</h3>
+      <div class="flow">
+        <span>Dataset: entradas + o que se espera</span><i>→</i>
+        <span>Executor: roda o sistema real</span><i>→</i>
+        <span>Avaliadores: transformam saídas em notas</span><i>→</i>
+        <span>Relatório: números com margem de erro</span>
+      </div>
+      <table>
+        <tr><th>Tipo</th><th>Pergunta que responde</th><th>Quando roda</th></tr>
+        <tr><td><strong>Teste unitário</strong></td><td>O código ao redor do LLM funciona? (parsing, validação, custo)</td><td>A cada commit, sem chamar a API</td></tr>
+        <tr><td><strong>Eval de regressão</strong></td><td>A mudança piorou algo que funcionava?</td><td>A cada PR que mexe no prompt, modelo ou código de IA</td></tr>
+        <tr><td><strong>Eval de capacidade</strong></td><td>O sistema resolve bem o problema? Qual modelo é melhor?</td><td>Antes de decisões: troca de modelo, lançamento</td></tr>
+        <tr><td><strong>Monitoramento</strong></td><td>Está funcionando com os usuários de verdade?</td><td>Continuamente, em produção (aula 3.7)</td></tr>
+      </table>
+
+      <div class="callout">
+        <b>Comece pequeno, mas comece</b>
+        Vinte casos bem escolhidos, rodando com um comando, valem mais que um plano de mil casos que nunca
+        sai do papel. O eval cresce junto com o sistema: cada bug encontrado vira um caso novo.
+      </div>
+
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Você melhorou o prompt e testou 3 exemplos: todos ficaram melhores. O que isso prova?</p>
+          <button type="button">Que o prompt novo é melhor</button>
+          <button type="button" data-certa>Pouco: 3 exemplos escolhidos por você não detectam regressões nem separam sinal de ruído</button>
+          <button type="button">Que o modelo ficou determinístico</button>
+          <p class="why">É um bom indício para continuar investigando, não uma conclusão. O eval é o que transforma indício em evidência.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ AULA 2 -->
+    <section class="lesson" id="aula-2">
+      <h2>3.2 Montando o dataset de avaliação</h2>
+      <div class="lesson-meta">Leitura + lab · 3h</div>
+
+      <h3>De onde vêm os casos</h3>
+      <ol>
+        <li><strong>Tráfego real</strong> (anonimizado): a melhor fonte, porque é o que o sistema enfrenta de verdade.</li>
+        <li><strong>Casos de borda escritos à mão:</strong> o recibo sem CNPJ, o OCR ruim, o texto que nem é recibo, o documento com instrução maliciosa.</li>
+        <li><strong>Bugs que já aconteceram:</strong> cada falha em produção vira um caso, para nunca voltar.</li>
+        <li><strong>Casos sintéticos</strong> gerados por LLM: úteis para variedade, mas revise uma amostra. Se algo sai errado, corrija o gerador, não caso a caso.</li>
+      </ol>
+
+      <h3>Regras de um bom dataset</h3>
+      <ul>
+        <li><strong>Critério de sucesso inequívoco.</strong> Dois especialistas olhando a mesma saída devem concordar se passou. "Um bom resumo" não é critério; "cita o valor e o prazo" é.</li>
+        <li><strong>Registre a origem do gabarito.</strong> Escrito por uma pessoa, verificado por uma pessoa, ou saída de um modelo? <em>Nunca use as respostas do modelo A como gabarito para comparar A com B</em>: você estaria medindo o quanto B imita A.</li>
+        <li><strong>Cobertura nos dois sentidos.</strong> Se o sistema deve sinalizar recibos com problema, também precisa de casos em que <em>não</em> deve sinalizar. Senão, "sinalizar tudo" tira nota máxima.</li>
+        <li><strong>Distribuição realista e balanceada.</strong> Compare com a produção. Informe sempre a <em>linha de base da classe majoritária</em>: se 72% dos casos são "dúvida", um sistema que sempre responde "dúvida" já acerta 72%.</li>
+        <li><strong>Sem vazamento.</strong> A resposta não pode aparecer no texto de entrada, nos exemplos do prompt nem em lugar que o sistema consiga ler.</li>
+        <li><strong>Tags por caso</strong> (<code>ocr</code>, <code>desconto</code>, <code>seguranca</code>): permitem ver <em>onde</em> o sistema falha, não só quanto.</li>
+        <li><strong>Versionado junto com o código.</strong> Notas de antes e depois de mudar o dataset não são comparáveis.</li>
+      </ul>
+
+      <div class="exercise">
+        <h4>LAB 3.2 — Auditando um dataset com problemas plantados</h4>
+        <p>
+          <code>dados/dataset_suporte.jsonl</code> tem 20 chamados de suporte rotulados por categoria, com
+          defeitos colocados de propósito. O script encontra os que dá para encontrar com código:
+        </p>
+<pre data-lang="bash"><code>python python/01_auditar_dataset.py</code></pre>
+<pre data-lang="saída"><code>[campo vazio]      c13: categoria
+[campo vazio]      c18: texto, categoria
+[duplicata exata]  c02, c05
+[quase duplicata]  c02, c05, c06
+[vazamento]        c16: o texto contém o próprio rótulo 'bug'
+
+Distribuição dos rótulos:
+  duvida          13  █████████████
+  cobranca         2  ██
+  bug              2  ██
+  cancelamento     1  █
+
+Linha de base da classe majoritária: responder sempre 'duvida' acerta 72%.
+[desbalanceado]    mais da metade dos casos é de uma única classe</code></pre>
+        <ol>
+          <li>Leia os 20 casos. Há pelo menos um rótulo discutível que o script não pega. Qual é, e como você o resolveria?</li>
+          <li>Rode o script no <code>casos.jsonl</code> do projeto deste módulo (adapte os nomes dos campos).</li>
+          <li>Escreva 5 casos novos que equilibrem as categorias.</li>
+        </ol>
+      </div>
+
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Para comparar o modelo atual (A) com um novo (B), alguém propõe usar as respostas de A como gabarito. Problema?</p>
+          <button type="button">Nenhum, A já foi aprovado em produção</button>
+          <button type="button" data-certa>Sim: B seria punido por toda diferença em relação a A, mesmo quando estiver certo</button>
+          <button type="button">Só se A for de outro provedor</button>
+          <p class="why">Gabarito derivado de um dos competidores faz esse competidor ganhar por construção. Use gabarito humano, verificado, ou uma rubrica.</p>
+        </div>
+        <div class="q">
+          <p>Um eval de "deve escalar para humano?" só tem casos em que a resposta certa é "sim". O que dá errado?</p>
+          <button type="button" data-certa>Um sistema que escala tudo tira nota máxima</button>
+          <button type="button">Nada, desde que os casos sejam difíceis</button>
+          <button type="button">O eval fica caro demais</button>
+          <p class="why">Sem casos negativos, o eval recompensa o comportamento degenerado. Cubra os dois sentidos.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ AULA 3 -->
+    <section class="lesson" id="aula-3">
+      <h2>3.3 Avaliadores baseados em código</h2>
+      <div class="lesson-meta">Leitura + lab · 3h</div>
+
+      <p>
+        Sempre que der para verificar com código, verifique com código: é rápido, barato, determinístico e
+        não tem opinião. O desafio é calibrar o rigor.
+      </p>
+      <table>
+        <tr><th>Avaliador</th><th>Bom para</th><th>Armadilha</th></tr>
+        <tr><td>Igualdade exata</td><td>IDs, enums, códigos</td><td>Rígido: reprova "brasilia." contra "Brasília"</td></tr>
+        <tr><td>Igualdade normalizada</td><td>Respostas curtas</td><td>Ainda reprova respostas certas com frase em volta</td></tr>
+        <tr><td>Número com tolerância</td><td>Valores, totais, medidas</td><td>Formatos (1.234,56 vs 1234.56) precisam ser tratados</td></tr>
+        <tr><td>"Contém"</td><td>Verificar se um fato aparece</td><td>Frouxo: aprova "Não é Brasília, é o Rio"</td></tr>
+        <tr><td>Schema / tipos</td><td>Saídas estruturadas</td><td>Garante a forma, não o conteúdo</td></tr>
+        <tr><td>Regras de negócio</td><td>Somas, datas, dígitos verificadores</td><td>Só pega o que você pensou em verificar</td></tr>
+        <tr><td>Executar e testar</td><td>Código gerado, SQL, configurações</td><td>Testes fracos aprovam soluções erradas</td></tr>
+      </table>
+
+      <h3>Checagens atômicas, não uma nota única</h3>
+      <p>
+        Avalie cada propriedade separadamente (<code>total</code>, <code>data</code>, <code>cnpj</code>,
+        <code>sinalizacao</code>…). Uma nota única como "7,3" esconde <em>o que</em> piorou. Checagens separadas
+        mostram que a data piorou nos recibos com ano de dois dígitos, e isso aponta direto para a correção.
+      </p>
+
+      <h3>Teste o seu avaliador</h3>
+      <p>Antes de confiar em qualquer nota, rode duas verificações baratas:</p>
+      <ul>
+        <li><strong>Oráculo:</strong> passe o próprio gabarito pelo avaliador. Tem que dar 100%. Se não der, o avaliador ou o caso estão errados.</li>
+        <li><strong>Linha de base nula:</strong> passe uma saída vazia ou boba. Tem que dar perto de 0%. Se não der, o avaliador é frouxo.</li>
+      </ul>
+      <p>O projeto deste módulo faz as duas coisas como testes automatizados.</p>
+
+      <div class="exercise">
+        <h4>LAB 3.3 — Do rígido ao frouxo</h4>
+<pre data-lang="bash"><code>python python/02_avaliadores.py</code></pre>
+<pre data-lang="saída"><code>saída                                     certo?   exato  normal.  contém
+"Brasília"                                     ✓       ✓        ✓       ✓
+"brasilia."                                    ✓      ✗!        ✓      ✗!
+"  Brasília "                                  ✓      ✗!        ✓       ✓
+"A capital do Brasil é Brasília."              ✓      ✗!       ✗!       ✓
+"Não é Brasília, é o Rio de Janeiro."          ✗       ✗        ✗      ✓!
+"Rio de Janeiro"                               ✗       ✗        ✗       ✗
+
+discordâncias com o humano: {'exato': 3, 'normalizado': 1, 'contem': 2}</code></pre>
+        <ol>
+          <li>Nenhum dos três acerta tudo. Que avaliador você escreveria para essa pergunta? (Dica: talvez a melhor solução seja mudar o <em>sistema</em>, pedindo saída estruturada.)</li>
+          <li>O avaliador de schema reprova o JSON dentro de <code>```json</code>. Corrija o avaliador para aceitá-lo. Depois responda: o sistema deveria produzir essa cerca?</li>
+        </ol>
+      </div>
+
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Seu avaliador dá 40% para o próprio gabarito. A conclusão é…</p>
+          <button type="button">O modelo é ruim</button>
+          <button type="button" data-certa>O avaliador (ou os casos) tem bug: corrija antes de avaliar qualquer modelo</button>
+          <button type="button">Precisa de mais repetições</button>
+          <p class="why">O gabarito deve passar por definição. É o teste de oráculo, que pega a maioria dos bugs de eval em minutos.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ AULA 4 -->
+    <section class="lesson" id="aula-4">
+      <h2>3.4 LLM como juiz, e como calibrá-lo</h2>
+      <div class="lesson-meta">Leitura + lab · 4h</div>
+
+      <p>
+        Algumas qualidades não cabem em código: o resumo é fiel? A explicação aponta o problema certo? O
+        tom é adequado? Para isso, um LLM avalia a saída de outro com uma rubrica. Funciona bem, desde que
+        você trate o juiz como mais um componente a ser testado.
+      </p>
+
+      <h3>Como escrever um bom juiz</h3>
+      <ul>
+        <li><strong>Rubrica concreta.</strong> Critérios verificáveis ("cita o valor ou o prazo"), não "avalie se é bom".</li>
+        <li><strong>Um critério por chamada</strong> quando o diagnóstico importa: fidelidade, completude e formato como notas separadas.</li>
+        <li><strong>Justificativa antes do veredito</strong>, no formato estruturado: o juiz raciocina antes de decidir, e você consegue auditar.</li>
+        <li><strong>Saída estruturada</strong> (<code>{"justificativa": "...", "aprovado": true}</code>): nada de procurar "SIM" no texto.</li>
+        <li><strong>A saída avaliada é dado, não instrução.</strong> Coloque-a entre tags e diga ao juiz para ignorar instruções dentro dela.</li>
+      </ul>
+
+      <h3>Os vieses conhecidos</h3>
+      <table>
+        <tr><th>Viés</th><th>O que acontece</th><th>Mitigação</th></tr>
+        <tr><td>Posição</td><td>Em comparações A×B, prefere a primeira (ou a segunda) opção</td><td>Sortear a ordem, ou avaliar nas duas ordens</td></tr>
+        <tr><td>Verbosidade</td><td>Prefere respostas mais longas</td><td>Dizer na rubrica que tamanho não conta; limitar tamanho como critério</td></tr>
+        <tr><td>Autopreferência</td><td>Prefere textos parecidos com os que ele mesmo escreveria</td><td>Juiz diferente do modelo avaliado</td></tr>
+        <tr><td>Deferência a rótulos</td><td>Favorece a resposta chamada de "referência" ou "humana"</td><td>Não dizer ao juiz de onde veio cada resposta</td></tr>
+      </table>
+
+      <h3>Calibração: o juiz concorda com pessoas?</h3>
+      <p>
+        Peça a uma pessoa que avalie algumas dezenas de casos de forma independente e compare com o juiz.
+        Duas métricas:
+      </p>
+      <ul>
+        <li><strong>Concordância:</strong> % de casos em que juiz e pessoa decidiram igual.</li>
+        <li><strong>Kappa de Cohen:</strong> concordância descontado o acaso. Um juiz que aprova tudo pode ter 50% de concordância e kappa 0: não sabe nada.</li>
+      </ul>
+      <p>
+        Regra prática: abaixo de ~90% de concordância em casos claros, melhore a rubrica antes de usar o
+        juiz para tomar decisões. Teste também casos negativos óbvios (resposta vazia, "não sei", resposta
+        a outra pergunta): o juiz precisa reprovar todos.
+      </p>
+
+      <div class="exercise">
+        <h4>LAB 3.4 — Calibrando um juiz de resumos</h4>
+        <p>
+          <code>dados/resumos_rotulados.jsonl</code> tem 12 resumos do mesmo e-mail, cada um com aprovação ou
+          reprovação de uma pessoa e o motivo. O script pede ao juiz que avalie os mesmos resumos e calcula a
+          concordância e o kappa:
+        </p>
+<pre data-lang="bash"><code>python python/03_llm_juiz.py
+python python/03_llm_juiz.py --rubrica-vaga</code></pre>
+        <ol>
+          <li>Compare concordância e kappa entre a rubrica boa e a vaga. Em quais casos a rubrica vaga erra?</li>
+          <li>O resumo r06 é fiel, mas longo. A pessoa reprovou. O juiz concorda? Se não, que critério faltou?</li>
+          <li>Rode o juiz duas vezes. Os vereditos mudam? Isso é variância do juiz, que se soma à do sistema avaliado.</li>
+        </ol>
+      </div>
+
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Seu juiz tem 50% de concordância com humanos e kappa 0. O que provavelmente está acontecendo?</p>
+          <button type="button">Ele é um juiz razoável</button>
+          <button type="button" data-certa>Ele está dando quase sempre o mesmo veredito: não discrimina bons de ruins</button>
+          <button type="button">Os humanos erraram</button>
+          <p class="why">Kappa perto de 0 significa concordância igual à do acaso. Um juiz que aprova tudo produz exatamente isso.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ AULA 5 -->
+    <section class="lesson" id="aula-5">
+      <h2>3.5 Evals no CI: regressão bloqueada antes do merge</h2>
+      <div class="lesson-meta">Leitura + prática · 3h</div>
+
+      <p>
+        Um eval que só roda quando alguém lembra não protege nada. Coloque-o no pipeline, como os testes.
+        Como evals custam dinheiro e tempo, use camadas:
+      </p>
+      <table>
+        <tr><th>Camada</th><th>Quando</th><th>O que roda</th><th>Custo</th></tr>
+        <tr><td>Testes rápidos</td><td>Todo commit</td><td>Testes unitários, oráculo, linha de base nula. Sem API.</td><td>Zero</td></tr>
+        <tr><td>Eval de fumaça</td><td>PR que toca prompt, modelo ou código de IA</td><td>Suíte pequena, 1 repetição, com limiar mínimo</td><td>Centavos</td></tr>
+        <tr><td>Suíte completa</td><td>Todas as noites e antes de lançamentos</td><td>Todos os casos, várias repetições, LLM-juiz</td><td>Alguns dólares</td></tr>
+      </table>
+      <h3>Cuidados que separam um eval de CI útil de um irritante</h3>
+      <ul>
+        <li><strong>Erro de infraestrutura não é nota zero.</strong> Um 429 ou timeout vai para uma lista separada. Se houver erros demais, o job falha por <em>infraestrutura</em>, não por qualidade.</li>
+        <li><strong>Limiar com folga.</strong> Com poucos casos o ruído é grande (aula 3.6). Um limiar exatamente na nota atual vai falhar aleatoriamente e o time vai aprender a ignorá-lo.</li>
+        <li><strong>Mesma configuração de produção.</strong> O eval deve chamar o código real, com o mesmo prompt e modelo. Uma reimplementação "parecida" mede outra coisa.</li>
+        <li><strong>Confira o modelo que respondeu</strong> (campo <code>model</code> da resposta). Uma troca silenciosa invalida o resultado.</li>
+        <li><strong>Guarde tudo:</strong> entrada, saída, checagens, custo e latência por caso, como artefato do job. Quando a nota cair, você precisa ver <em>por quê</em> sem rodar de novo.</li>
+        <li><strong>Segredo da API</strong> só como secret do CI, e nunca em PRs vindos de forks.</li>
+      </ul>
+      <p>
+        O projeto traz <code>exemplo-github-actions.yml</code> com essas camadas: testes rápidos em todo PR,
+        eval de fumaça com limiar de 90% e suíte completa com juiz todas as noites.
+      </p>
+
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>A API retornou 429 em 3 de 30 casos durante o eval. Como contar esses casos?</p>
+          <button type="button">Como falhas: o sistema não respondeu</button>
+          <button type="button">Como acertos, para não punir o modelo</button>
+          <button type="button" data-certa>Separados da nota, como erros de infraestrutura; se forem muitos, o resultado inteiro não vale</button>
+          <p class="why">Misturar falhas de rede com falhas do modelo contamina a nota e faz um dia de API instável parecer uma regressão.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ AULA 6 -->
+    <section class="lesson" id="aula-6">
+      <h2>3.6 Comparar modelos e prompts sem se enganar</h2>
+      <div class="lesson-meta">Leitura + lab · 3h</div>
+
+      <p>
+        Um eval com N casos dá uma <em>estimativa</em> da taxa real de acerto. Toda estimativa tem margem de
+        erro, e ela é maior do que a intuição sugere. Uma aproximação útil para a meia-largura do intervalo
+        de 95% de uma taxa: <strong>±1/√(casos × repetições)</strong> (é o pior caso, com a taxa perto de 50%; perto de 0% ou 100% a margem é menor). Com 25 casos e 2 repetições, ±14 pontos
+        percentuais. Com 100 e 2, ±7.
+      </p>
+
+      <div class="exercise">
+        <h4>LAB 3.6 — Simulando o ruído</h4>
+<pre data-lang="bash"><code>python python/04_ruido_estatistico.py</code></pre>
+        <p>O sistema A acerta 80% de verdade, o B acerta 85%. Quantas vezes o eval percebe isso?</p>
+<pre data-lang="saída"><code>    casos  B parece melhor   empate  A parece melhor  diferença detectada*
+       10              49%      23%              27%                    4%
+       25              61%      13%              26%                    6%
+       50              70%       8%              22%                   10%
+      100              80%       5%              16%                   14%
+      200              89%       2%               8%                   28%
+      500              98%       0%               1%                   55%
+     1000             100%       0%               0%                   83%</code></pre>
+        <p>
+          Com 25 casos, em 26% das vezes o sistema <em>pior</em> parece melhor. Para detectar com confiança
+          uma melhora de 5 pontos, são necessárias centenas de casos.
+        </p>
+        <ol>
+          <li>Mude para A = 70% e B = 90%. Quantos casos bastam agora?</li>
+          <li>Qual a menor diferença que vale a pena detectar no seu projeto? Quantos casos isso exige?</li>
+        </ol>
+      </div>
+
+      <h3>Na prática</h3>
+      <ul>
+        <li><strong>Sempre informe o intervalo</strong>, não só a taxa: "82% (61%–93%)" conta uma história bem diferente de "82%".</li>
+        <li><strong>Compare em pares:</strong> os dois sistemas nos <em>mesmos</em> casos. A diferença caso a caso tem muito menos ruído do que comparar duas notas gerais.</li>
+        <li><strong>Repetições</strong> reduzem o ruído do não determinismo; <strong>mais casos</strong> reduzem o ruído de quais casos você escolheu. Os dois são botões do mesmo painel.</li>
+        <li><strong>Olhe caso a caso</strong> mesmo quando o agregado é inconclusivo: dois casos que falham <em>sempre</em> com o modelo B são uma pista concreta.</li>
+        <li><strong>Custo por tarefa concluída</strong>, não por chamada: inclua as tentativas extras, o juiz e a revisão humana dos casos sinalizados.</li>
+      </ul>
+
+      <h3>Exemplo: comparando dois modelos no projeto</h3>
+      <p>
+        O comando <code>npm run comparar</code> faz a comparação pareada. Abaixo, um exemplo
+        <strong>ilustrativo</strong>, gerado com um modelo simulado que erra o total de dois recibos:
+      </p>
+<pre data-lang="saída"><code>caso                                A (claude-opus-5-5)   B (claude-haiku-5-5)
+academia-desconto-percentual                       100%                     0%  ▼
+farmacia-desconto                                  100%                   100%
+...
+posto-quantidade-decimal                           100%                     0%  ▼
+
+Diferença B − A: -18.2 p.p.  (IC 95%: -42.1 p.p. a +5.7 p.p.)
+→ Inconclusivo: a diferença cabe no ruído. Mais casos ou repetições ajudariam.</code></pre>
+      <p>
+        Repare: B errou <em>sempre</em> nos mesmos dois casos, mas com só 11 casos o agregado é
+        inconclusivo. A leitura certa: "não há evidência de que B seja equivalente; há dois padrões de erro
+        concretos (quantidade decimal e desconto percentual) para investigar e transformar em mais casos".
+      </p>
+
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Prompt novo: 84%. Prompt antigo: 80%. 25 casos, 1 repetição. O que concluir?</p>
+          <button type="button">O prompt novo é 4 pontos melhor</button>
+          <button type="button" data-certa>Nada ainda: a margem com 25 casos é de cerca de ±20 pontos; precisa de mais casos ou repetições</button>
+          <button type="button">O prompt antigo é melhor</button>
+          <p class="why">1/√25 = ±20 p.p. Uma diferença de 4 pontos está bem dentro do ruído.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ AULA 7 -->
+    <section class="lesson" id="aula-7">
+      <h2>3.7 Avaliação em produção</h2>
+      <div class="lesson-meta">Leitura · 1h30</div>
+
+      <p>
+        O dataset de avaliação é uma fotografia; a produção é o filme. Usuários fazem perguntas que você
+        não previu, os dados mudam e o comportamento do modelo pode mudar entre versões. Avaliação online
+        completa a offline:
+      </p>
+      <ul>
+        <li><strong>Sinais explícitos:</strong> 👍/👎, "esta resposta ajudou?", correções feitas pelo usuário.</li>
+        <li><strong>Sinais implícitos:</strong> o usuário copiou a resposta? Reformulou a pergunta logo depois? Abriu um chamado humano?</li>
+        <li><strong>Checagens automáticas</strong> nas respostas reais: as mesmas regras de negócio do eval (soma fecha? JSON válido?).</li>
+        <li><strong>LLM-juiz por amostragem:</strong> avaliar 1% a 5% do tráfego com a rubrica já calibrada.</li>
+        <li><strong>Métricas operacionais:</strong> taxa de recusa, de <code>max_tokens</code>, de erros, latência e custo por tarefa.</li>
+      </ul>
+
+      <h3>O ciclo que faz o sistema melhorar</h3>
+      <div class="flow">
+        <span>Produção</span><i>→</i><span>Falhas detectadas</span><i>→</i><span>Viram casos no dataset</span><i>→</i><span>Correção</span><i>→</i><span>Eval no CI prova a correção</span><i>↺</i>
+      </div>
+      <div class="callout warn">
+        <b>Privacidade</b>
+        Dados de produção que entram no dataset precisam ser anonimizados e tratados conforme a LGPD e as
+        políticas da empresa. Registre de onde veio cada caso e quem pode acessar o dataset.
+      </div>
+
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Um usuário reportou que o extrator leu "1O/2026" como outubro de 2016. Qual o primeiro passo?</p>
+          <button type="button">Ajustar o prompt e fazer deploy</button>
+          <button type="button" data-certa>Transformar o recibo (anonimizado) em caso do dataset, ver o eval falhar, e só então corrigir</button>
+          <button type="button">Trocar para um modelo maior</button>
+          <p class="why">O caso no dataset prova o bug, prova a correção e impede que ele volte. É o "teste de regressão" do mundo de IA.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ PROJETO -->
+    <section class="lesson" id="projeto">
+      <h2>Projeto do módulo: evals do extrator de recibos</h2>
+      <div class="lesson-meta">Projeto · 8–10h · TypeScript</div>
+
+      <p>
+        Uma suíte de avaliação completa para o extrator do Módulo 2. Ela importa e executa o extrator
+        <strong>real</strong>, sem cópias nem reimplementações, e aplica tudo o que este módulo ensinou.
+      </p>
+
+<pre data-lang="bash"><code>cd projeto
+npm install
+npm test                                        # 14 testes: avaliadores, oráculo, linha nula, estatística
+npm run eval                                    # 11 casos × 1 repetição
+npm run eval -- --reps 3 --juiz                 # com repetições e LLM-juiz
+npm run eval -- --modelo claude-haiku-5-5 --reps 3
+npm run comparar -- resultados/A.json resultados/B.json
+npm run eval -- --limiar 0.9                    # código de saída 1 se ficar abaixo (CI)</code></pre>
+
+      <h3>O que tem dentro</h3>
+      <table>
+        <tr><th>Arquivo</th><th>Responsabilidade</th></tr>
+        <tr><td><code>casos/casos.jsonl</code></td><td>11 casos com tags e origem do gabarito: recibos limpos, desconto, acréscimo, OCR com soma errada, sem CNPJ, quantidade decimal, ano com 2 dígitos, <strong>prompt injection</strong> e um texto que nem é recibo</td></tr>
+        <tr><td><code>src/avaliadores.ts</code></td><td>Checagens atômicas com tolerâncias (centavos, formatação de CNPJ) e sinalização avaliada nos dois sentidos</td></tr>
+        <tr><td><code>src/juiz.ts</code></td><td>LLM-juiz com rubrica para a qualidade da explicação nos casos com problema, usando um modelo diferente do avaliado</td></tr>
+        <tr><td><code>src/estatistica.ts</code></td><td>Wilson, diferença pareada, percentis, piso de ruído</td></tr>
+        <tr><td><code>src/executar.ts</code></td><td>Executor com concorrência, repetições, erros de infraestrutura separados, conferência do modelo servido, relatório por checagem e por tag, limiar para CI</td></tr>
+        <tr><td><code>src/comparar.ts</code></td><td>Comparação pareada entre duas execuções, com custo e latência</td></tr>
+        <tr><td><code>test/</code></td><td>Oráculo, linha de base nula, "sinalizar tudo não passa", tolerâncias e casos de segurança</td></tr>
+        <tr><td><code>exemplo-github-actions.yml</code></td><td>Workflow em camadas para copiar para o seu repositório</td></tr>
+      </table>
+
+      <h3>Entregáveis</h3>
+      <ol>
+        <li>Rode a suíte com <code>claude-opus-5-5</code> e <code>claude-haiku-5-5</code>, com 3 repetições cada, e compare. Registre taxa com intervalo, custo por recibo e latência.</li>
+        <li>Expanda para pelo menos 30 casos, incluindo os recibos que você criou no Módulo 2. Mantenha cobertura nos dois sentidos.</li>
+        <li>Calibre o juiz: rotule você mesmo as explicações de 10 execuções e meça a concordância.</li>
+        <li>Faça uma mudança no prompt do extrator que <em>você acha</em> que melhora. Prove (ou refute) com o eval e o comparador.</li>
+        <li>Coloque o workflow no seu repositório e mostre um PR bloqueado por regressão.</li>
+      </ol>
+
+      <h3>Critérios de avaliação</h3>
+      <table>
+        <tr><th>Critério</th><th>Peso</th></tr>
+        <tr><td>Dataset de 30+ casos, com tags, origem e cobertura nos dois sentidos</td><td>25%</td></tr>
+        <tr><td>Comparação de modelos com intervalos e custo por tarefa</td><td>20%</td></tr>
+        <tr><td>Calibração do juiz com concordância medida</td><td>20%</td></tr>
+        <tr><td>Mudança de prompt provada ou refutada com o comparador</td><td>20%</td></tr>
+        <tr><td>CI funcionando</td><td>15%</td></tr>
+      </table>
+    </section>
+
+    <!-- ============================================================ RECURSOS -->
+    <section class="lesson" id="recursos">
+      <h2>Recursos para aprofundar</h2>
+      <div class="lesson-meta">Todos gratuitos</div>
+      <ul class="resources">
+        <li><a href="https://platform.claude.com/docs" target="_blank" rel="noopener">Documentação da API da Anthropic</a> <small>· guias de definição de critérios de sucesso e de criação de testes</small></li>
+        <li><a href="https://hamel.dev/blog/posts/evals/" target="_blank" rel="noopener">Hamel Husain — Your AI Product Needs Evals</a> <small>· o argumento prático para evals desde o começo</small></li>
+        <li><a href="https://eugeneyan.com/writing/llm-evaluators/" target="_blank" rel="noopener">Eugene Yan — Evaluating the Effectiveness of LLM-Evaluators</a> <small>· panorama de LLM-como-juiz e seus vieses</small></li>
+        <li><a href="https://arxiv.org/abs/2306.05685" target="_blank" rel="noopener">Judging LLM-as-a-Judge (2023)</a> <small>· artigo que mediu os vieses de posição, verbosidade e autopreferência</small></li>
+        <li><a href="https://www.promptfoo.dev/docs/intro/" target="_blank" rel="noopener">promptfoo</a> <small>· ferramenta aberta de evals por configuração, boa para comparar com o que você construiu</small></li>
+      </ul>
+
+      <nav class="pager">
+        <a href="../modulo-02/"><small>← Módulo anterior</small>2 · APIs de LLM e Engenharia de Contexto</a>
+        <a class="next" href="../modulo-04/"><small>Próximo módulo →</small>4 · RAG de Ponta a Ponta</a>
+      </nav>
+    </section>
+
+  </main>
+</div>
+
+<footer class="foot">
+  <a href="/">triadic.life</a> · <a href="../">Engenharia de IA Aplicada</a> · <a href="https://github.com/MarciodeCampos/o-arco/tree/main/curso-ia/codigo/modulo-03" target="_blank" rel="noopener">código do módulo</a>
+</footer>
+
+<script src="../assets/curso.js"></script>
+</body>
+</html>

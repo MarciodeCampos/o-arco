@@ -1,0 +1,16 @@
+{
+  "name": "servico-de-frete",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "tsx --test test/*.test.ts",
+    "aceitacao": "tsx --test specs/*.aceitacao.test.ts",
+    "typecheck": "tsc --noEmit",
+    "verificar": "bash scripts/verificar.sh"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}

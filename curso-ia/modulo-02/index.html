@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050508">
+<meta name="description" content="Módulo 2 — APIs de LLM e Engenharia de Contexto: requisições, prompts, saídas estruturadas, tool calling, streaming, cache, batch, erros e gateways.">
+<title>Módulo 2 · APIs de LLM e Engenharia de Contexto — Engenharia de IA Aplicada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/curso.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="/">◈ TRIADIC.LIFE</a>
+  <span class="crumbs">/ <a href="../">Engenharia de IA</a> / Módulo 2</span>
+  <span class="spacer"></span>
+  <span class="progress-pill">0/11 aulas</span>
+</header>
+
+<div class="layout">
+
+  <aside class="toc">
+    <button class="toc-toggle" type="button">☰ Aulas do módulo</button>
+    <h2>Módulo 2</h2>
+    <nav>
+      <ol>
+        <li><a href="#inicio"><span class="chk"></span>Visão geral</a></li>
+        <li><a href="#aula-1"><span class="chk"></span>2.1 Provedores e escolha de modelo</a></li>
+        <li><a href="#aula-2"><span class="chk"></span>2.2 Anatomia de uma requisição</a></li>
+        <li><a href="#aula-3"><span class="chk"></span>2.3 Prompt e contexto</a></li>
+        <li><a href="#aula-4"><span class="chk"></span>2.4 Saídas estruturadas</a></li>
+        <li><a href="#aula-5"><span class="chk"></span>2.5 Tool calling</a></li>
+        <li><a href="#aula-6"><span class="chk"></span>2.6 Streaming</a></li>
+        <li><a href="#aula-7"><span class="chk"></span>2.7 Cache, batch e tokens</a></li>
+        <li><a href="#aula-8"><span class="chk"></span>2.8 Erros e limites</a></li>
+        <li><a href="#aula-9"><span class="chk"></span>2.9 Vários provedores</a></li>
+        <li><a href="#projeto"><span class="chk"></span>Projeto do módulo</a></li>
+        <li><a href="#recursos"><span class="chk"></span>Recursos</a></li>
+      </ol>
+    </nav>
+  </aside>
+
+  <main class="content" data-modulo="modulo-02">
+
+    <!-- ============================================================ VISÃO GERAL -->
+    <section id="inicio">
+      <header>
+        <div class="eyebrow">Módulo 02 · 32h estimadas</div>
+        <h1>APIs de LLM e Engenharia de Contexto</h1>
+      </header>
+      <p class="lede">
+        No Módulo 1 você fez uma chamada. Aqui você aprende tudo o que cabe em uma requisição e como
+        transformar um LLM em um componente confiável de software: com dados tipados, ferramentas,
+        respostas em tempo real, custo sob controle e tratamento de falhas.
+      </p>
+      <div class="meta">
+        <span class="tag">9 aulas</span>
+        <span class="tag">10 laboratórios</span>
+        <span class="tag">Python + TypeScript</span>
+        <span class="tag">Pré-requisito: Módulo 1</span>
+      </div>
+
+      <h3>Ao final do módulo você vai</h3>
+      <ul>
+        <li>Escolher provedor e modelo com critérios de custo, qualidade, latência e privacidade.</li>
+        <li>Montar requisições completas: sistema, histórico, esforço, limites e motivos de parada.</li>
+        <li>Escrever prompts e montar contextos que funcionam com modelos de raciocínio atuais.</li>
+        <li>Receber dados tipados e validados, em vez de texto solto.</li>
+        <li>Dar ferramentas ao modelo e escrever o loop de tool calling à mão.</li>
+        <li>Fazer streaming, usar cache de prompt e batch, e calcular o efeito no custo.</li>
+        <li>Tratar erros, limites de taxa e timeouts como em qualquer sistema distribuído.</li>
+      </ul>
+
+      <h3>Preparando o ambiente</h3>
+<pre data-lang="bash"><code>cd o-arco/curso-ia/codigo/modulo-02
+
+pip install -r python/requirements.txt          # anthropic + pydantic
+cd typescript &amp;&amp; npm install &amp;&amp; cd ..           # SDK + zod
+cd projeto &amp;&amp; npm install &amp;&amp; cd ..              # projeto do módulo
+
+export ANTHROPIC_API_KEY="sk-ant-..."</code></pre>
+      <div class="callout warn">
+        <b>Orçamento dos labs</b>
+        Os labs deste módulo usam esforço <code>low</code> e respostas curtas. Rodar todos uma vez custa
+        alguns centavos de dólar. Defina um limite de gasto no console do provedor mesmo assim: um loop
+        com bug é a forma mais rápida de gastar dinheiro com IA.
+      </div>
+    </section>
+
+    <!-- ============================================================ AULA 1 -->
+    <section class="lesson" id="aula-1">
+      <h2>2.1 Provedores e como escolher um modelo</h2>
+      <div class="lesson-meta">Leitura · 40 min</div>
+
+      <p>Há três formas de acessar um LLM em produção:</p>
+      <table>
+        <tr><th>Forma</th><th>Exemplos</th><th>Vantagens</th><th>Cuidados</th></tr>
+        <tr><td><strong>API do fabricante</strong></td><td>Anthropic, OpenAI, Google, Mistral</td><td>Modelos e recursos mais novos primeiro; documentação oficial</td><td>Dependência de um fornecedor; dados saem da sua infraestrutura</td></tr>
+        <tr><td><strong>Nuvem que você já usa</strong></td><td>Amazon Bedrock, Google Vertex AI, Microsoft Foundry</td><td>Contrato, faturamento, rede privada e conformidade já resolvidos na empresa</td><td>Recursos podem chegar depois; preço e cotas podem diferir</td></tr>
+        <tr><td><strong>Modelos abertos</strong></td><td>Llama, Qwen, Mistral, DeepSeek, Gemma (hospedados por você ou por terceiros)</td><td>Controle total dos dados; custo previsível em alto volume; ajuste fino livre</td><td>Você opera a infraestrutura; em geral, menos capacidade que os maiores modelos fechados</td></tr>
+      </table>
+
+      <h3>Os critérios de escolha</h3>
+      <ol>
+        <li><strong>Qualidade na sua tarefa.</strong> Rankings públicos ajudam a fazer a primeira lista, mas o que vale é o resultado nos seus casos reais. Esse é o tema do Módulo 3.</li>
+        <li><strong>Custo por tarefa concluída.</strong> Não por token: um modelo barato que precisa de três tentativas pode sair mais caro que um caro que acerta de primeira.</li>
+        <li><strong>Latência.</strong> O tempo até o primeiro token importa para chat; o tempo total importa para processamento em segundo plano.</li>
+        <li><strong>Janela de contexto e saída máxima.</strong> Quanto texto cabe na entrada e quanto o modelo pode escrever.</li>
+        <li><strong>Recursos da API.</strong> Saída estruturada, ferramentas, visão, cache, batch, controle de raciocínio.</li>
+        <li><strong>Dados e conformidade.</strong> Retenção de dados, região de processamento, uso para treino, LGPD, contrato.</li>
+      </ol>
+
+      <h3>A família de modelos de um provedor</h3>
+      <p>
+        Os provedores costumam oferecer tamanhos diferentes. Nos labs usamos a família Claude como
+        referência (preços de nov/2026, por milhão de tokens):
+      </p>
+      <table>
+        <tr><th>Modelo</th><th>Entrada / saída</th><th>Bom para</th></tr>
+        <tr><td><code>claude-opus-5-5</code></td><td>$4 / $20</td><td>Raciocínio difícil, agentes, código complexo</td></tr>
+        <tr><td><code>claude-sonnet-5-5</code></td><td>$2 / $10</td><td>Uso geral, código do dia a dia, agentes rápidos</td></tr>
+        <tr><td><code>claude-haiku-5-5</code></td><td>$0,10 / $0,50</td><td>Classificação, extração e roteamento em alto volume</td></tr>
+      </table>
+      <div class="callout">
+        <b>Estratégia prática</b>
+        Comece com o modelo mais capaz para provar que a tarefa é possível e criar um conjunto de testes.
+        Depois teste modelos menores e esforço mais baixo contra esses testes. Fique com o mais barato que
+        passa. Começar pelo mais barato faz você descartar ideias boas por acreditar que "IA não resolve".
+      </div>
+
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Um hospital quer usar LLM com prontuários e a TI exige que os dados não saiam da nuvem contratada. A primeira opção a avaliar é…</p>
+          <button type="button">A API pública mais barata</button>
+          <button type="button" data-certa>O LLM oferecido dentro da nuvem que o hospital já usa, ou um modelo aberto hospedado lá</button>
+          <button type="button">Qualquer opção, desde que use temperatura baixa</button>
+          <p class="why">Requisitos de dados e contrato eliminam opções antes da qualidade. Quase sempre há um caminho dentro da nuvem da empresa.</p>
+        </div>
+        <div class="q">
+          <p>Qual métrica de custo leva às melhores decisões?</p>
+          <button type="button">Preço por milhão de tokens de entrada</button>
+          <button type="button" data-certa>Custo por tarefa concluída com a qualidade exigida</button>
+          <button type="button">Preço da assinatura mensal</button>
+          <p class="why">Tentativas extras, revisões humanas e tokens de raciocínio entram na conta. É o custo por resultado que importa.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ AULA 2 -->
+    <section class="lesson" id="aula-2">
+      <h2>2.2 Anatomia de uma requisição</h2>
+      <div class="lesson-meta">Leitura + lab · 2h</div>
+
+<pre data-lang="python"><code>resposta = client.messages.create(
+    model="claude-opus-5-5",            # qual modelo
+    max_tokens=8000,                    # teto da resposta (inclui raciocínio)
+    system="Você é um mentor...",       # quem o modelo é, regras, contexto fixo
+    messages=[                          # a conversa até agora
+        {"role": "user", "content": "O que é idempotência?"},
+        {"role": "assistant", "content": "É quando..."},
+        {"role": "user", "content": "Me dá um exemplo em HTTP."},
+    ],
+    output_config={"effort": "low"},    # quanto raciocinar
+)</code></pre>
+
+      <table>
+        <tr><th>Campo</th><th>Para que serve</th><th>Dica</th></tr>
+        <tr><td><code>system</code></td><td>Papel, regras, formato, conhecimento fixo</td><td>Deixe estável entre chamadas (ajuda o cache, aula 2.7)</td></tr>
+        <tr><td><code>messages</code></td><td>Histórico alternando <code>user</code> e <code>assistant</code></td><td>A API não tem memória: o histórico é responsabilidade sua</td></tr>
+        <tr><td><code>max_tokens</code></td><td>Limite da resposta</td><td>Baixo demais corta a resposta no meio; o raciocínio também conta</td></tr>
+        <tr><td><code>effort</code></td><td>Profundidade do raciocínio: <code>low</code> a <code>max</code></td><td><code>low</code> para tarefas simples; suba só se a qualidade medida pedir</td></tr>
+        <tr><td><code>tools</code></td><td>Ferramentas que o modelo pode pedir para usar</td><td>Aula 2.5</td></tr>
+        <tr><td><code>output_config.format</code></td><td>Forçar um JSON Schema na resposta</td><td>Aula 2.4</td></tr>
+      </table>
+
+      <h3>Os motivos de parada</h3>
+      <p>Toda resposta traz um <code>stop_reason</code>. Seu código deve tratar cada um:</p>
+      <ul>
+        <li><code>end_turn</code>: terminou normalmente.</li>
+        <li><code>max_tokens</code>: bateu no limite. A resposta está incompleta.</li>
+        <li><code>tool_use</code>: o modelo quer usar uma ferramenta e espera o resultado.</li>
+        <li><code>refusal</code>: o modelo recusou por política de segurança. Não use o conteúdo.</li>
+      </ul>
+      <div class="callout">
+        <b>Recusas e modelo reserva</b>
+        Filtros de segurança às vezes recusam pedidos legítimos (falsos positivos). Nos labs de chat usamos
+        o parâmetro <code>fallbacks: "default"</code> (beta), que faz o próprio servidor tentar um modelo
+        alternativo quando isso acontece. Em qualquer provedor, trate a recusa como um caso previsto do
+        fluxo, não como uma exceção rara.
+      </div>
+
+      <h3>Histórico: a conversa é uma lista que você mantém</h3>
+      <p>
+        Depois de cada resposta, adicione ao histórico a mensagem do assistente com <strong>todos os
+        blocos</strong> que vieram (<code>resposta.content</code>), não só o texto. Isso preserva blocos de
+        raciocínio e chamadas de ferramenta que o modelo precisa ver na próxima volta.
+      </p>
+      <p>
+        Repare que, como o histórico inteiro é reenviado a cada mensagem, <strong>o custo de entrada
+        cresce a cada turno</strong>. Em conversas longas, isso domina a conta. Por isso existem o cache
+        (aula 2.7) e a compactação de contexto (Módulo 6).
+      </p>
+
+      <div class="exercise">
+        <h4>LAB 2.2 — Chat de terminal com histórico e custo</h4>
+<pre data-lang="bash"><code>python python/01_chat_terminal.py
+# ou
+cd typescript &amp;&amp; npx tsx 01-chat-terminal.ts</code></pre>
+        <ol>
+          <li>Diga seu nome, converse por 3 turnos e pergunte "qual é meu nome?". Depois use <code>/limpar</code> e pergunte de novo.</li>
+          <li>Observe a coluna de tokens de entrada a cada turno. Ela cresce como? Por quê?</li>
+          <li>Faça a mesma pergunta difícil com <code>ESFORCO=low</code> e <code>ESFORCO=high</code>. Compare qualidade, tempo e tokens de saída.</li>
+          <li>Altere o código para guardar só o texto da resposta no histórico, em vez de <code>resposta.content</code>. Por que isso é pior quando há ferramentas?</li>
+        </ol>
+      </div>
+
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>A resposta veio com <code>stop_reason: "max_tokens"</code>. O que fazer?</p>
+          <button type="button">Mostrar ao usuário normalmente</button>
+          <button type="button" data-certa>Tratar como incompleta: aumentar o limite, pedir continuação ou avisar</button>
+          <button type="button">Repetir a mesma chamada até vir end_turn</button>
+          <p class="why">Repetir sem mudar nada tende a cortar no mesmo ponto. Um JSON cortado, por exemplo, nem é parseável.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ AULA 3 -->
+    <section class="lesson" id="aula-3">
+      <h2>2.3 Prompt engineering e engenharia de contexto</h2>
+      <div class="lesson-meta">Leitura + exercício · 3h</div>
+
+      <p>
+        <strong>Prompt engineering</strong> é escrever bem a instrução. <strong>Engenharia de
+        contexto</strong> é a disciplina mais ampla de decidir <em>tudo</em> o que entra na janela do
+        modelo: instruções, documentos, histórico, resultados de ferramentas, exemplos. Com modelos de
+        raciocínio, o segundo passou a importar mais que o primeiro: o modelo raramente erra por falta de
+        "truque" no prompt, e sim por falta de informação ou por excesso de ruído.
+      </p>
+
+      <h3>Os princípios que funcionam</h3>
+      <ol>
+        <li><strong>Explique como para um colega novo e competente.</strong> Ele não conhece seu produto, seus usuários nem suas regras. Diga o objetivo, para quem é o resultado e o que é sucesso.</li>
+        <li><strong>Dê o porquê das regras.</strong> "Respostas curtas, porque aparecem numa notificação de celular" funciona melhor que "SEJA BREVE!!!". Com o motivo, o modelo generaliza para casos que você não previu.</li>
+        <li><strong>Separe instruções de dados.</strong> Coloque documentos e entradas do usuário entre tags (<code>&lt;email&gt;…&lt;/email&gt;</code>). O modelo sabe onde começa e termina cada coisa, e fica mais difícil um texto malicioso se passar por instrução.</li>
+        <li><strong>Documentos longos primeiro, pergunta no fim.</strong> Em contextos grandes, a instrução logo depois do material costuma render melhor.</li>
+        <li><strong>Mostre exemplos</strong> quando o formato ou o tom for sutil. Dois ou três exemplos variados valem mais que um parágrafo de descrição. Cuidado: o modelo tende a copiar o exemplo de perto.</li>
+        <li><strong>Diga o que fazer, não só o que evitar.</strong> "Escreva em parágrafos corridos" é melhor que "não use listas".</li>
+        <li><strong>Permita a incerteza.</strong> "Se a informação não estiver no documento, diga que não encontrou" reduz alucinação.</li>
+        <li><strong>Não microgerencie o raciocínio.</strong> Com modelos que já raciocinam, receitas do tipo "pense passo a passo assim e assado" podem piorar o resultado. Dê o objetivo e os critérios, ajuste o esforço.</li>
+      </ol>
+
+      <h3>Antes e depois</h3>
+<pre data-lang="prompt ruim"><code>Resuma esse texto. Seja breve!!! NÃO invente nada.
+{texto}</code></pre>
+<pre data-lang="prompt melhor"><code>Você resume chamados de suporte para o gerente do turno, que lê os resumos
+no celular entre reuniões e decide quais escalar.
+
+&lt;chamado&gt;
+{texto}
+&lt;/chamado&gt;
+
+Escreva um resumo de até 2 frases com: o problema do cliente e o que ele
+pede. Se o cliente mencionar prazo, valor em dinheiro ou ameaça de cancelar,
+inclua isso, porque é o que define a escalação. Use só o que está no
+chamado; se algo estiver ambíguo, diga que está ambíguo.</code></pre>
+
+      <h3>Engenharia de contexto: menos e melhor</h3>
+      <ul>
+        <li><strong>Cada token compete pela atenção do modelo.</strong> Despejar 50 documentos "por garantia" piora a resposta e o custo. Selecione o que é relevante (Módulo 4).</li>
+        <li><strong>Resultados de ferramentas também são contexto.</strong> Uma ferramenta que devolve 10 mil linhas de JSON polui a janela. Devolva só os campos úteis.</li>
+        <li><strong>Histórico envelhece.</strong> Em conversas longas, resuma ou descarte partes antigas (Módulo 6).</li>
+        <li><strong>O prompt é código.</strong> Versione, revise em PR e teste (Módulo 3).</li>
+      </ul>
+
+      <div class="exercise">
+        <h4>Exercício — Reescreva o prompt</h4>
+        <p>Este prompt gera respostas inconsistentes num app de receitas. Reescreva-o aplicando os princípios da aula:</p>
+<pre data-lang="prompt"><code>Você é um chef. Responda perguntas de culinária. Seja útil. Não fale de
+outros assuntos. Use markdown.</code></pre>
+        <details>
+          <summary>Ver uma versão possível</summary>
+<pre data-lang="prompt"><code>Você é o assistente do app Cozinha Fácil, usado por pessoas que cozinham
+em casa, muitas iniciantes, geralmente pelo celular com as mãos ocupadas.
+
+Ajude com receitas, substituição de ingredientes, técnicas e planejamento
+de refeições. Prefira ingredientes fáceis de achar em mercados brasileiros.
+Quando der uma receita, liste ingredientes com quantidades e depois passos
+numerados e curtos, porque o usuário segue lendo enquanto cozinha.
+
+Se a pergunta envolver segurança alimentar (ponto de carne, conservação,
+alergias), seja preciso e conservador: um erro aqui pode fazer mal a alguém.
+
+Se pedirem algo fora de culinária, diga gentilmente que você só ajuda com
+cozinha e sugira uma pergunta relacionada.</code></pre>
+        </details>
+      </div>
+
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Por que colocar o e-mail do cliente entre tags <code>&lt;email&gt;</code>?</p>
+          <button type="button">É exigência da API</button>
+          <button type="button" data-certa>Separa dados de instruções, o que melhora a precisão e dificulta prompt injection</button>
+          <button type="button">Reduz o número de tokens</button>
+          <p class="why">Sem delimitação, uma frase como "ignore as regras acima" dentro do e-mail se mistura com as suas instruções.</p>
+        </div>
+        <div class="q">
+          <p>Seu RAG coloca 40 documentos no contexto e as respostas pioraram. A causa mais provável é…</p>
+          <button type="button">Temperatura alta</button>
+          <button type="button" data-certa>Ruído: muitos trechos irrelevantes competindo pela atenção do modelo</button>
+          <button type="button">O modelo é pequeno demais</button>
+          <p class="why">Mais contexto não é melhor contexto. Selecionar e ordenar o que entra é o centro da engenharia de contexto.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ AULA 4 -->
+    <section class="lesson" id="aula-4">
+      <h2>2.4 Saídas estruturadas: dados, não texto</h2>
+      <div class="lesson-meta">Leitura + lab · 3h</div>
+
+      <p>
+        A maior parte das integrações não quer um parágrafo: quer um objeto para salvar no banco, rotear
+        um chamado ou preencher um formulário. Pedir "responda só em JSON" no prompt funciona quase
+        sempre, e "quase sempre" é o pior tipo de bug em produção.
+      </p>
+      <p>
+        Com <strong>saídas estruturadas</strong>, você envia um JSON Schema e a API restringe a geração
+        para que a resposta siga esse schema. Os SDKs geram o schema a partir dos tipos que você já usa:
+        <strong>Pydantic</strong> em Python e <strong>Zod</strong> em TypeScript.
+      </p>
+
+<pre data-lang="typescript"><code>const Chamado = z.object({
+  categoria: z.enum(["cobranca", "bug", "duvida", "cancelamento", "elogio", "outro"]),
+  prioridade: z.enum(["baixa", "media", "alta", "critica"])
+    .describe("critica = sistema fora do ar ou perda de dinheiro"),
+  resumo: z.string().describe("Uma frase, no máximo 20 palavras"),
+  pede_reembolso: z.boolean(),
+});
+
+const resposta = await client.messages.parse({
+  model: "claude-opus-5-5",
+  max_tokens: 4000,
+  messages: [{ role: "user", content: `&lt;email&gt;${texto}&lt;/email&gt;\nExtraia o chamado.` }],
+  output_config: { effort: "low", format: zodOutputFormat(Chamado) },
+});
+
+const chamado = resposta.parsed_output; // tipado: chamado.prioridade é "baixa" | "media" | ...</code></pre>
+
+      <h3>Boas práticas de schema</h3>
+      <ul>
+        <li><strong><code>.describe()</code> / <code>Field(description=…)</code> é prompt.</strong> Explique o critério de cada campo, principalmente os subjetivos.</li>
+        <li><strong>Use enums</strong> para categorias. Texto livre gera "Cobrança", "cobranca", "financeiro"…</li>
+        <li><strong>Campos opcionais como <code>null</code> explícito</strong> (<code>.nullable()</code>, <code>str | None</code>), para o modelo não inventar valor quando a informação não existe.</li>
+        <li><strong>Inclua campos de autoavaliação</strong> como <code>confianca</code> ou <code>observacoes</code>. Eles alimentam a revisão humana.</li>
+        <li><strong>Valide de novo no seu código.</strong> Os SDKs validam o formato com Zod/Pydantic, mas nem toda restrição cabe no schema enviado à API (o SDK pode, por exemplo, passar opções de enum ou limites numéricos para a descrição do campo). E nenhuma restrição de schema garante que o <em>conteúdo</em> está certo: isso é com as suas regras de negócio (projeto do módulo).</li>
+      </ul>
+
+      <div class="exercise">
+        <h4>LAB 2.4 — De e-mail a chamado tipado</h4>
+<pre data-lang="bash"><code>python python/02_saida_estruturada.py                          # e-mail irritado
+python python/02_saida_estruturada.py dados/email_cliente_2.txt  # elogio + dúvida
+# ou
+cd typescript &amp;&amp; npx tsx 02-saida-estruturada.ts</code></pre>
+        <ol>
+          <li>Rode com os dois e-mails. A prioridade e a categoria fazem sentido?</li>
+          <li>O primeiro e-mail tem dois assuntos (cobrança e bug). Como o schema lida com isso? Mude-o para aceitar uma lista de categorias.</li>
+          <li>Crie um terceiro e-mail ambíguo e veja como o modelo preenche <code>nome_cliente</code> quando o nome não aparece.</li>
+        </ol>
+      </div>
+
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Com saída estruturada, o que ainda pode dar errado?</p>
+          <button type="button">O JSON vir com sintaxe inválida</button>
+          <button type="button" data-certa>O JSON ser válido mas com o conteúdo errado (um valor mal lido, uma categoria discutível)</button>
+          <button type="button">Nada, o formato garante a correção</button>
+          <p class="why">O schema garante a forma, não a verdade. Por isso existem validações de negócio e evals.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ AULA 5 -->
+    <section class="lesson" id="aula-5">
+      <h2>2.5 Tool calling: o modelo pede, seu código age</h2>
+      <div class="lesson-meta">Leitura + lab · 4h</div>
+
+      <p>
+        Um LLM sozinho não consulta seu banco, não sabe a cotação de hoje e não envia e-mail. Com
+        <strong>ferramentas</strong> (tools, ou function calling), você descreve funções que ele pode
+        pedir para usar. O ciclo:
+      </p>
+      <div class="flow">
+        <span>1. Você envia a pergunta + a lista de ferramentas</span><i>→</i>
+        <span>2. O modelo responde <code>tool_use</code>: "chame X com estes argumentos"</span><i>→</i>
+        <span>3. Seu código executa X</span><i>→</i>
+        <span>4. Você devolve o <code>tool_result</code></span><i>↺</i>
+      </div>
+      <p>
+        O loop se repete até o modelo responder sem pedir ferramenta (<code>stop_reason</code> diferente
+        de <code>tool_use</code>). <strong>O modelo nunca executa nada</strong>: ele só pede. Quem decide
+        executar, e com quais permissões, é o seu código. Essa é a base de segurança de todo agente.
+      </p>
+
+<pre data-lang="python"><code>{
+    "name": "calcular_frete",
+    "description": "Calcula valor e prazo de frete para um CEP de destino e um peso em kg.",
+    "strict": True,   # garante que os argumentos seguem o schema
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "cep": {"type": "string", "description": "CEP de destino, com ou sem hífen"},
+            "peso_kg": {"type": "number"},
+        },
+        "required": ["cep", "peso_kg"],
+        "additionalProperties": False,
+    },
+}</code></pre>
+
+      <h3>Regras de ouro</h3>
+      <ul>
+        <li><strong>A descrição é um prompt.</strong> Diga o que a ferramenta faz, quando usar e o que devolve. Nomes e descrições ruins são a causa nº 1 de ferramenta errada.</li>
+        <li><strong>Erros voltam para o modelo</strong> como <code>tool_result</code> com <code>is_error: true</code>. Ele pode corrigir o argumento ou explicar o problema ao usuário.</li>
+        <li><strong>Vários pedidos na mesma resposta</strong> são comuns (chamadas paralelas). Devolva todos os resultados juntos, em uma única mensagem.</li>
+        <li><strong>Sempre ponha um teto no loop.</strong> Sem limite de rodadas, um modelo confuso pode chamar ferramentas para sempre, e você paga por cada volta.</li>
+        <li><strong>Ações com efeito no mundo real</strong> (pagar, apagar, enviar) precisam de confirmação humana ou de regras rígidas no seu código. Detalhes nos Módulos 6 e 12.</li>
+      </ul>
+
+      <div class="exercise">
+        <h4>LAB 2.5 — Atendente com duas ferramentas</h4>
+<pre data-lang="bash"><code>python python/03_ferramentas.py
+python python/03_ferramentas.py "Qual o status do pedido 9999?"
+# ou
+cd typescript &amp;&amp; npx tsx 03-ferramentas.ts</code></pre>
+        <p>O log mostra cada pedido do modelo e cada resultado. Experimentos:</p>
+        <ol>
+          <li>Pergunte sobre um pedido inexistente. Como o modelo reage ao erro da ferramenta?</li>
+          <li>Pergunte o frete de dois pedidos ao mesmo tempo. O modelo faz chamadas em paralelo?</li>
+          <li>Piore de propósito a descrição de <code>calcular_frete</code> (por exemplo, "faz cálculos"). O que muda?</li>
+          <li>Adicione uma ferramenta <code>cancelar_pedido</code> que só executa depois de o usuário digitar "sim" no terminal.</li>
+        </ol>
+      </div>
+
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Quem executa a função <code>calcular_frete</code>?</p>
+          <button type="button">O servidor do provedor do LLM</button>
+          <button type="button" data-certa>O seu código, depois de receber o pedido do modelo</button>
+          <button type="button">O próprio modelo, internamente</button>
+          <p class="why">O modelo só gera o pedido estruturado. Execução, permissões e validação ficam com você.</p>
+        </div>
+        <div class="q">
+          <p>A ferramenta falhou com "CEP deve ter 8 dígitos". O que devolver ao modelo?</p>
+          <button type="button">Nada, e encerrar a conversa</button>
+          <button type="button" data-certa>Um tool_result com a mensagem de erro e is_error: true</button>
+          <button type="button">Um valor de frete padrão</button>
+          <p class="why">Com o erro, o modelo pode pedir o CEP correto ao usuário. Inventar um valor esconderia o problema.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ AULA 6 -->
+    <section class="lesson" id="aula-6">
+      <h2>2.6 Streaming: a resposta enquanto ela nasce</h2>
+      <div class="lesson-meta">Leitura + lab · 1h30</div>
+
+      <p>
+        Uma resposta de 800 tokens pode levar dezenas de segundos para ficar pronta. Sem streaming, o
+        usuário encara uma tela parada. Com streaming, o texto começa a aparecer em cerca de um segundo.
+        O tempo total é o mesmo; a <strong>percepção</strong> muda completamente.
+      </p>
+<pre data-lang="typescript"><code>const stream = client.messages.stream({ model, max_tokens: 16000, messages });
+
+stream.on("text", (pedaco) => process.stdout.write(pedaco)); // cada pedaço, assim que chega
+
+const final = await stream.finalMessage(); // mensagem completa: usage, stop_reason</code></pre>
+      <h3>Quando usar</h3>
+      <ul>
+        <li><strong>Sempre que uma pessoa estiver esperando</strong> a resposta (chat, assistentes, editores).</li>
+        <li><strong>Em respostas longas</strong>, mesmo sem pessoa esperando: streaming evita que a conexão HTTP estoure o tempo limite.</li>
+        <li><strong>Não precisa</strong> em jobs de fundo curtos, nem em extração estruturada em que você só usa o objeto final.</li>
+      </ul>
+      <h3>Duas métricas para acompanhar</h3>
+      <ul>
+        <li><strong>TTFT</strong> (time to first token): o tempo até o primeiro pedaço. Define a sensação de rapidez.</li>
+        <li><strong>Tempo total</strong>: define quanto tempo a conexão fica aberta e o throughput do sistema.</li>
+      </ul>
+      <div class="callout">
+        <b>No navegador</b>
+        Em apps web, o back-end recebe o stream do provedor e o repassa ao front-end por Server-Sent
+        Events ou WebSocket. A chave de API nunca vai para o navegador. Você vai construir isso no Módulo 8.
+      </div>
+
+      <div class="exercise">
+        <h4>LAB 2.6 — Medindo TTFT e tempo total</h4>
+<pre data-lang="bash"><code>cd typescript &amp;&amp; npx tsx 04-streaming.ts
+npx tsx 04-streaming.ts "Escreva um conto de 400 palavras sobre um robô que aprende a cozinhar"</code></pre>
+        <ol>
+          <li>Compare TTFT e tempo total entre uma resposta curta e uma longa.</li>
+          <li>Rode com esforço <code>high</code> numa pergunta difícil. O que acontece com o TTFT? Por quê?</li>
+        </ol>
+      </div>
+
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Streaming reduz o custo da chamada?</p>
+          <button type="button">Sim, pela metade</button>
+          <button type="button" data-certa>Não: os tokens são os mesmos. Muda a latência percebida e evita timeouts</button>
+          <button type="button">Sim, porque usa um modelo menor</button>
+          <p class="why">O custo é o mesmo. Streaming é sobre experiência e robustez da conexão.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ AULA 7 -->
+    <section class="lesson" id="aula-7">
+      <h2>2.7 Cache de prompt, batch e economia de tokens</h2>
+      <div class="lesson-meta">Leitura + labs · 3h</div>
+
+      <h3>Cache de prompt</h3>
+      <p>
+        Muitas aplicações reenviam o mesmo início a cada chamada: instruções longas, um manual, o
+        histórico da conversa. Com <strong>cache de prompt</strong>, o provedor guarda esse prefixo
+        processado por alguns minutos, e as próximas chamadas que começam igual pagam uma fração do preço
+        por ele, além de responderem mais rápido.
+      </p>
+<pre data-lang="python"><code>SISTEMA = [
+    {"type": "text", "text": "Responda usando SOMENTE o manual abaixo."},
+    {"type": "text", "text": f"&lt;manual&gt;{manual}&lt;/manual&gt;",
+     "cache_control": {"type": "ephemeral"}},   # tudo até aqui vai para o cache
+]</code></pre>
+      <table>
+        <tr><th>Operação</th><th>Preço relativo à entrada normal</th></tr>
+        <tr><td>Gravar no cache (validade de 5 min)</td><td>1,25×</td></tr>
+        <tr><td>Gravar no cache (validade de 1 h)</td><td>2×</td></tr>
+        <tr><td>Ler do cache</td><td>cerca de 0,1× (no <code>claude-opus-5-5</code>, 0,05×)</td></tr>
+      </table>
+      <p>As regras que fazem o cache funcionar, ou falhar em silêncio:</p>
+      <ul>
+        <li><strong>É uma comparação de prefixo.</strong> Qualquer byte diferente antes do ponto de cache invalida tudo depois dele. Coloque o que é estável primeiro e o que varia (a pergunta) por último.</li>
+        <li><strong>Inimigos silenciosos:</strong> data e hora no prompt de sistema, IDs de requisição, JSON com chaves em ordem diferente, lista de ferramentas que muda.</li>
+        <li><strong>Há um tamanho mínimo</strong> (centenas a alguns milhares de tokens, conforme o modelo). Abaixo dele o cache simplesmente não acontece, sem erro.</li>
+        <li><strong>Confirme sempre</strong> pelo <code>usage</code>: <code>cache_creation_input_tokens</code> (gravou) e <code>cache_read_input_tokens</code> (leu). Se a leitura fica em zero, algo está mudando o prefixo.</li>
+      </ul>
+
+      <h3>Batch: metade do preço para o que pode esperar</h3>
+      <p>
+        A API de lotes recebe milhares de requisições de uma vez, processa em segundo plano (em geral em
+        menos de uma hora, no máximo em 24 h) e cobra <strong>50% menos</strong>. É ideal para classificar
+        o acumulado do dia, gerar descrições de catálogo, enriquecer dados e rodar evals.
+      </p>
+      <ul>
+        <li>Cada requisição leva um <code>custom_id</code>. Os resultados chegam <strong>fora de ordem</strong>: case sempre pelo ID.</li>
+        <li>Algumas requisições podem falhar e outras não. Trate cada resultado individualmente.</li>
+      </ul>
+
+      <h3>Outras formas de economizar tokens</h3>
+      <ul>
+        <li><strong>Modelo certo por tarefa</strong> (aula 2.1): de longe a maior alavanca.</li>
+        <li><strong>Esforço mínimo que mantém a qualidade.</strong> Tokens de raciocínio são cobrados como saída.</li>
+        <li><strong>Peça saídas enxutas.</strong> Saída custa 5× a entrada. Um JSON com campos curtos é mais barato que um parágrafo.</li>
+        <li><strong>Corte o contexto inútil:</strong> HTML com marcação, logs inteiros, histórico velho.</li>
+        <li><strong>Conte antes de enviar</strong> documentos grandes com a API de contagem de tokens.</li>
+      </ul>
+
+      <div class="exercise">
+        <h4>LAB 2.7a — Cache em ação</h4>
+<pre data-lang="bash"><code>python python/04_cache.py</code></pre>
+        <p>
+          São três perguntas sobre o mesmo manual (<code>dados/manual_produto.md</code>, com bem mais que o mínimo de tokens para cache).
+          Verifique: a 1ª chamada grava no cache e a 2ª e a 3ª leem dele. O script calcula a economia.
+        </p>
+        <ol>
+          <li>Coloque <code>datetime.now()</code> no primeiro bloco do sistema e rode de novo. O que acontece com o cache?</li>
+          <li>Mova a pergunta para dentro do sistema, antes do manual. Por que o cache para de funcionar?</li>
+        </ol>
+      </div>
+
+      <div class="exercise">
+        <h4>LAB 2.7b — Classificação em lote</h4>
+<pre data-lang="bash"><code>python python/05_batch.py
+python python/05_batch.py msgbatch_...   # para retomar um lote já enviado</code></pre>
+        <p>
+          Oito avaliações de clientes (<code>dados/avaliacoes.jsonl</code>) são classificadas por sentimento
+          e tema, com saída estruturada dentro do lote. Repare que o script imprime na ordem em que os
+          resultados chegam, não na ordem do arquivo.
+        </p>
+      </div>
+
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Seu prompt de sistema começa com "Hoje é 01/11/2026 14:32:07". O cache nunca é lido. Por quê?</p>
+          <button type="button">O cache não funciona com português</button>
+          <button type="button" data-certa>O horário muda a cada chamada, e qualquer diferença no prefixo invalida o cache</button>
+          <button type="button">O prompt é curto demais</button>
+          <p class="why">Se precisar da data, coloque-a depois do ponto de cache (na mensagem do usuário), e com precisão de dia, não de segundo.</p>
+        </div>
+        <div class="q">
+          <p>Qual tarefa é boa candidata para batch?</p>
+          <button type="button">Responder o chat do site em tempo real</button>
+          <button type="button" data-certa>Gerar descrições para 20 mil produtos do catálogo durante a noite</button>
+          <button type="button">Autocompletar código no editor</button>
+          <p class="why">Batch troca latência por preço: serve para o que ninguém está esperando na hora.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ AULA 8 -->
+    <section class="lesson" id="aula-8">
+      <h2>2.8 Erros, retries, timeouts e limites de taxa</h2>
+      <div class="lesson-meta">Leitura + lab · 1h30</div>
+
+      <p>
+        Uma API de LLM é um serviço remoto como qualquer outro: cai, fica lenta e limita o uso. Trate-a
+        com as mesmas práticas de sistemas distribuídos.
+      </p>
+      <table>
+        <tr><th>Erro</th><th>Significado</th><th>Tentar de novo?</th></tr>
+        <tr><td>400</td><td>Requisição inválida (parâmetro errado, schema inválido)</td><td>Não: corrija o código</td></tr>
+        <tr><td>401 / 403</td><td>Chave inválida ou sem permissão</td><td>Não</td></tr>
+        <tr><td>404</td><td>Modelo ou recurso inexistente</td><td>Não</td></tr>
+        <tr><td>429</td><td>Limite de taxa (requisições ou tokens por minuto)</td><td>Sim, com espera crescente</td></tr>
+        <tr><td>500 / 529</td><td>Erro ou sobrecarga do provedor</td><td>Sim, com espera crescente</td></tr>
+        <tr><td>Timeout / conexão</td><td>Rede ou resposta lenta demais</td><td>Sim, com cuidado</td></tr>
+      </table>
+      <h3>O que o SDK já faz por você</h3>
+      <p>
+        Os SDKs oficiais repetem automaticamente erros de conexão, 408, 409, 429 e 5xx, com espera
+        exponencial (2 tentativas por padrão). <strong>Configure, não reimplemente:</strong>
+      </p>
+<pre data-lang="typescript"><code>const client = new Anthropic({ maxRetries: 3, timeout: 60_000 }); // ms no SDK TypeScript
+
+// por chamada:
+await client.messages.create(params, { timeout: 10_000, maxRetries: 0 });</code></pre>
+      <h3>O que continua sendo seu</h3>
+      <ul>
+        <li><strong>Classificar o erro</strong> pelos tipos do SDK (<code>RateLimitError</code>, <code>BadRequestError</code>…), nunca comparando o texto da mensagem.</li>
+        <li><strong>Idempotência:</strong> se a chamada dispara uma ação (enviar e-mail), garanta que uma repetição não a duplique.</li>
+        <li><strong>Degradação elegante:</strong> o que o usuário vê se a IA estiver fora? Uma mensagem honesta, uma fila para depois, um modelo reserva.</li>
+        <li><strong>Limites de taxa no seu lado:</strong> controle a concorrência dos seus jobs (filas, semáforos) para não viver no 429.</li>
+        <li><strong>Timeouts realistas:</strong> com raciocínio ativo, respostas boas podem levar minutos. Use streaming nas chamadas longas.</li>
+      </ul>
+
+      <div class="exercise">
+        <h4>LAB 2.8 — Provocando erros de propósito</h4>
+<pre data-lang="bash"><code>cd typescript &amp;&amp; npx tsx 05-erros-e-limites.ts</code></pre>
+        <p>O script faz uma chamada normal, uma com modelo inexistente, uma com <code>max_tokens</code> minúsculo e uma com timeout de 1 ms, e mostra como cada uma é classificada.</p>
+        <ol>
+          <li>Adicione um caso com uma chave de API inválida (dica: crie outro client com <code>apiKey: "x"</code>).</li>
+          <li>Escreva uma função <code>comFallback(params)</code> que tenta <code>claude-opus-5-5</code> e, em caso de 429 ou 5xx, tenta <code>claude-sonnet-5-5</code>.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============================================================ AULA 9 -->
+    <section class="lesson" id="aula-9">
+      <h2>2.9 Vários provedores: gateways e abstrações</h2>
+      <div class="lesson-meta">Leitura · 1h</div>
+
+      <p>
+        Cedo ou tarde surge a pergunta: "e se quisermos trocar de provedor?". Há três abordagens, com
+        custos diferentes:
+      </p>
+      <table>
+        <tr><th>Abordagem</th><th>Como</th><th>Prós</th><th>Contras</th></tr>
+        <tr><td><strong>Gateway de terceiros</strong></td><td>OpenRouter e serviços similares: uma API, centenas de modelos</td><td>Experimentar rápido; um só faturamento</td><td>Mais um intermediário vendo seus dados; recursos avançados nem sempre passam</td></tr>
+        <tr><td><strong>Biblioteca/proxy próprio</strong></td><td>LiteLLM ou similar rodando na sua infraestrutura</td><td>Controle; registro centralizado de uso e custo</td><td>Formato "mínimo denominador comum"; mais um serviço para operar</td></tr>
+        <tr><td><strong>Interface própria fina</strong></td><td>Uma função do seu domínio com adaptadores por provedor</td><td>Usa o melhor de cada SDK; fácil de testar</td><td>Você escreve os adaptadores</td></tr>
+      </table>
+      <p>Para a maioria das aplicações, a terceira opção é a mais saudável. Seu código depende de uma interface do seu domínio, não do formato de nenhum provedor:</p>
+<pre data-lang="typescript"><code>// o resto do sistema só conhece isto:
+interface ExtratorDeRecibos {
+  extrair(texto: string): Promise&lt;{ recibo: Recibo; custoUsd: number }&gt;;
+}
+
+// e cada provedor vira um adaptador, usando os recursos nativos do seu SDK:
+class ExtratorAnthropic implements ExtratorDeRecibos { /* messages.parse + zod */ }
+class ExtratorModeloLocal implements ExtratorDeRecibos { /* servidor local */ }</code></pre>
+      <div class="callout warn">
+        <b>O que não se transfere</b>
+        Trocar de provedor não é só trocar a URL. Prompts são ajustados para um modelo, recursos (cache,
+        raciocínio, ferramentas de servidor) variam e a qualidade muda. Toda troca precisa passar pelos
+        seus evals antes de ir para produção (Módulo 3).
+      </div>
+
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Qual a principal razão para ter evals antes de trocar de modelo ou provedor?</p>
+          <button type="button">É exigência legal</button>
+          <button type="button" data-certa>Prompts e comportamento não se transferem 1:1; sem medir, você não sabe se piorou</button>
+          <button type="button">Para reduzir a latência</button>
+          <p class="why">É exatamente o tema do próximo módulo.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ PROJETO -->
+    <section class="lesson" id="projeto">
+      <h2>Projeto do módulo: extrator de recibos</h2>
+      <div class="lesson-meta">Projeto · 8–10h · TypeScript</div>
+
+      <p>
+        Um sistema que lê notas e cupons fiscais em texto (como os que saem de um OCR), devolve dados
+        estruturados, <strong>valida com regras de negócio</strong>, pede ao modelo que revise quando a
+        validação falha e gera um relatório de qualidade e custo. É o padrão de quase toda automação
+        séria com LLM: <em>extrair → validar → corrigir → revisar humano quando necessário</em>.
+      </p>
+
+<pre data-lang="bash"><code>cd projeto
+npm install
+npm test                      # testes das regras de validação e custo (não chamam a API)
+npm run extrair               # processa recibos/*.txt
+npm run extrair -- --modelo claude-haiku-5-5</code></pre>
+
+      <h3>Arquitetura</h3>
+      <table>
+        <tr><th>Arquivo</th><th>Responsabilidade</th></tr>
+        <tr><td><code>src/esquema.ts</code></td><td>O contrato (Zod): emitente, data, itens, desconto, acréscimo, total, pagamento, confiança, observações</td></tr>
+        <tr><td><code>src/validar.ts</code></td><td>Regras que o schema não expressa: dígitos do CNPJ, data válida e não futura, quantidade × unitário, soma dos itens</td></tr>
+        <tr><td><code>src/extrator.ts</code></td><td>Chamada com saída estruturada e o loop "validar e corrigir": se a validação falha, os problemas voltam ao modelo uma vez</td></tr>
+        <tr><td><code>src/custo.ts</code></td><td>Custo por chamada, incluindo cache e desconto de batch</td></tr>
+        <tr><td><code>src/cli.ts</code></td><td>Processa a pasta, grava <code>saida/*.json</code> e imprime o relatório</td></tr>
+        <tr><td><code>test/</code></td><td>14 testes com <code>node:test</code>, que rodam sem chave de API</td></tr>
+      </table>
+
+      <h3>Os recibos de exemplo</h3>
+      <ul>
+        <li><code>01-padaria.txt</code> e <code>02-farmacia.txt</code>: limpos; o segundo tem desconto.</li>
+        <li><code>03-mercado-foto.txt</code>: simula OCR de foto, com letras trocadas por números (<code>OOO1</code>, <code>1O/2026</code>), e <strong>uma soma que não fecha</strong> na própria nota.</li>
+        <li><code>04-restaurante.txt</code>: tem taxa de serviço (acréscimo).</li>
+      </ul>
+      <p>
+        <strong>O que esperar:</strong> padaria, farmácia e restaurante devem passar na validação. No recibo do
+        mercado, a regra de soma deve disparar; o modelo recebe o problema, relê a nota e, seguindo as
+        instruções, mantém os valores impressos com <code>confianca: "baixa"</code>, em vez de "ajeitar" os
+        números para a conta fechar. É exatamente o comportamento que você quer num sistema contábil: o caso
+        vai para revisão humana.
+      </p>
+
+      <h3>Entregáveis</h3>
+      <ol>
+        <li>Adicione 6 recibos seus (anonimizados), incluindo pelo menos um com erro proposital.</li>
+        <li>Adicione uma regra de validação nova (por exemplo, data anterior a 5 anos é suspeita) com testes.</li>
+        <li>Implemente um modo <code>--batch</code> que envia todos os recibos pela API de lotes e compare o custo.</li>
+        <li>Rode com <code>claude-opus-5-5</code> e <code>claude-haiku-5-5</code>. Monte uma tabela com taxa de aprovação, tentativas, tempo e custo por recibo.</li>
+        <li>No README, recomende um modelo para 10 mil recibos por mês, justificando com os seus números.</li>
+      </ol>
+
+      <h3>Critérios de avaliação</h3>
+      <table>
+        <tr><th>Critério</th><th>Peso</th></tr>
+        <tr><td>Extração correta e validação funcionando nos recibos novos</td><td>30%</td></tr>
+        <tr><td>Nova regra de validação com testes</td><td>15%</td></tr>
+        <tr><td>Modo batch funcionando</td><td>20%</td></tr>
+        <tr><td>Comparação de modelos com números reais</td><td>20%</td></tr>
+        <tr><td>README e recomendação justificada</td><td>15%</td></tr>
+      </table>
+      <div class="callout">
+        <b>Ponte para o Módulo 3</b>
+        Você vai perceber que comparar modelos olhando a saída no terminal não escala. No próximo módulo,
+        este mesmo extrator ganha um conjunto de avaliação com respostas esperadas e uma nota automática,
+        rodando no CI.
+      </div>
+    </section>
+
+    <!-- ============================================================ RECURSOS -->
+    <section class="lesson" id="recursos">
+      <h2>Recursos para aprofundar</h2>
+      <div class="lesson-meta">Todos gratuitos</div>
+      <ul class="resources">
+        <li><a href="https://platform.claude.com/docs" target="_blank" rel="noopener">Documentação da API da Anthropic</a> <small>· guias de prompts, saídas estruturadas, ferramentas, cache e batch</small></li>
+        <li><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents" target="_blank" rel="noopener">Effective context engineering for AI agents</a> <small>· artigo sobre engenharia de contexto</small></li>
+        <li><a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener">Building effective agents</a> <small>· quando usar chamada única, workflow ou agente (ponte para o Módulo 6)</small></li>
+        <li><a href="https://zod.dev" target="_blank" rel="noopener">Zod</a> e <a href="https://docs.pydantic.dev" target="_blank" rel="noopener">Pydantic</a> <small>· as bibliotecas de schema usadas nos labs</small></li>
+        <li><a href="https://openrouter.ai/docs" target="_blank" rel="noopener">OpenRouter</a> e <a href="https://docs.litellm.ai" target="_blank" rel="noopener">LiteLLM</a> <small>· para experimentar vários provedores</small></li>
+      </ul>
+
+      <nav class="pager">
+        <a href="../modulo-01/"><small>← Módulo anterior</small>1 · Fundamentos de IA e LLMs</a>
+        <a class="next" href="../modulo-03/"><small>Próximo módulo →</small>3 · Avaliação (Evals) e Testes</a>
+      </nav>
+    </section>
+
+  </main>
+</div>
+
+<footer class="foot">
+  <a href="/">triadic.life</a> · <a href="../">Engenharia de IA Aplicada</a> · <a href="https://github.com/MarciodeCampos/o-arco/tree/main/curso-ia/codigo/modulo-02" target="_blank" rel="noopener">código do módulo</a>
+</footer>
+
+<script src="../assets/curso.js"></script>
+</body>
+</html>

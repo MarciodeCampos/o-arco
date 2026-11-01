@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Assistente da Loja</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+  <header><h1>Assistente da Loja</h1><p>Chat com streaming e análise de imagens</p></header>
+
+  <main>
+    <section aria-labelledby="t-chat" class="painel">
+      <h2 id="t-chat">Chat</h2>
+      <div id="conversa" class="conversa" aria-live="polite"></div>
+      <form id="form-chat" class="linha">
+        <label for="entrada" class="so-leitor">Sua mensagem</label>
+        <textarea id="entrada" rows="2" maxlength="4000" placeholder="Pergunte algo… (Enter envia, Shift+Enter quebra linha)" required></textarea>
+        <div class="botoes">
+          <button type="button" id="microfone" title="Ditar (se o navegador suportar)" hidden>🎤</button>
+          <button type="submit" id="enviar">Enviar</button>
+          <button type="button" id="parar" hidden>Parar</button>
+        </div>
+      </form>
+      <p id="status-chat" class="status" role="status"></p>
+    </section>
+
+    <section aria-labelledby="t-img" class="painel">
+      <h2 id="t-img">Analisar imagem</h2>
+      <form id="form-imagem">
+        <label class="arquivo">
+          <input type="file" id="arquivo" accept="image/png,image/jpeg,image/webp,image/gif" required>
+          <span>Escolher foto de nota fiscal, etiqueta ou produto</span>
+        </label>
+        <img id="previa" alt="Prévia da imagem escolhida" hidden>
+        <label for="pergunta-img">Pergunta (opcional)</label>
+        <input id="pergunta-img" maxlength="500" placeholder="Ex.: qual o total e a data?">
+        <button type="submit" id="analisar">Analisar</button>
+      </form>
+      <p id="status-img" class="status" role="status"></p>
+      <div id="resultado" hidden>
+        <p><strong>Tipo:</strong> <span id="r-tipo"></span> · <strong>Confiança:</strong> <span id="r-confianca"></span></p>
+        <p id="r-descricao"></p>
+        <table><thead><tr><th>Campo</th><th>Valor</th></tr></thead><tbody id="r-valores"></tbody></table>
+        <ul id="r-alertas" class="alertas"></ul>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js" type="module"></script>
+</body>
+</html>

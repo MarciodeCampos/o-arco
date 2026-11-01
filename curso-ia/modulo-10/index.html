@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050508">
+<meta name="description" content="Módulo 10 — IA para DevOps e SRE: IaC com policy-as-code, agentes para Kubernetes, troubleshooting, AIOps, ChatOps com aprovação, runbooks, post-mortem, auto-remediação e FinOps.">
+<title>Módulo 10 · IA para DevOps e SRE — Engenharia de IA Aplicada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/curso.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/">◈ TRIADIC.LIFE</a>
+  <span class="crumbs">/ <a href="../">Engenharia de IA</a> / Módulo 10</span>
+  <span class="spacer"></span>
+  <span class="progress-pill">0/10 aulas</span>
+</header>
+<div class="layout">
+  <aside class="toc">
+    <button class="toc-toggle" type="button">☰ Aulas do módulo</button>
+    <h2>Módulo 10</h2>
+    <nav><ol>
+      <li><a href="#inicio"><span class="chk"></span>Visão geral</a></li>
+      <li><a href="#aula-1"><span class="chk"></span>10.1 IA na infraestrutura</a></li>
+      <li><a href="#aula-2"><span class="chk"></span>10.2 IaC e policy-as-code</a></li>
+      <li><a href="#aula-3"><span class="chk"></span>10.3 Kubernetes e GitOps</a></li>
+      <li><a href="#aula-4"><span class="chk"></span>10.4 Troubleshooting com ReAct</a></li>
+      <li><a href="#aula-5"><span class="chk"></span>10.5 AIOps</a></li>
+      <li><a href="#aula-6"><span class="chk"></span>10.6 ChatOps com aprovação</a></li>
+      <li><a href="#aula-7"><span class="chk"></span>10.7 Runbooks e post-mortem</a></li>
+      <li><a href="#aula-8"><span class="chk"></span>10.8 Auto-remediação e FinOps</a></li>
+      <li><a href="#projeto"><span class="chk"></span>Projeto do módulo</a></li>
+      <li><a href="#recursos"><span class="chk"></span>Recursos</a></li>
+    </ol></nav>
+  </aside>
+  <main class="content" data-modulo="modulo-10">
+    <section id="inicio">
+      <header><div class="eyebrow">Módulo 10 · 32h estimadas</div><h1>IA para DevOps e SRE</h1></header>
+      <p class="lede">
+        Infraestrutura é onde um erro de IA custa mais caro: um <code>apply</code> errado apaga um banco, um
+        rollback errado derruba o checkout. Este módulo aplica tudo o que veio antes (saídas estruturadas,
+        agentes, aprovação humana, auditoria) ao trabalho de plataforma, sempre com o mesmo princípio:
+        <strong>a IA investiga e propõe; código e pessoas validam e autorizam</strong>.
+      </p>
+      <div class="meta"><span class="tag">8 aulas</span><span class="tag">2 labs + bot de ChatOps</span><span class="tag">Cluster simulado, roda offline</span><span class="tag">Pré-requisito: Módulo 6</span></div>
+      <h3>Ao final do módulo você vai</h3>
+      <ul>
+        <li>Usar IA para gerar infraestrutura com portões de validação e políticas como código.</li>
+        <li>Construir um agente que investiga incidentes em Kubernetes com método.</li>
+        <li>Detectar anomalias de forma robusta e montar linhas do tempo de incidentes.</li>
+        <li>Operar ChatOps com RBAC, aprovação e auditoria.</li>
+        <li>Desenhar auto-remediação que não piora o incidente.</li>
+      </ul>
+<pre data-lang="bash"><code>cd o-arco/curso-ia/codigo/modulo-10
+python python/01_politicas_iac.py
+python python/02_anomalias_e_timeline.py
+cd projeto &amp;&amp; npm install &amp;&amp; npm test      # instala também o agente do Módulo 6</code></pre>
+    </section>
+
+    <section class="lesson" id="aula-1">
+      <h2>10.1 IA na infraestrutura: o que muda</h2>
+      <div class="lesson-meta">Leitura · 1h</div>
+      <ul>
+        <li><strong>Raio de impacto:</strong> uma resposta errada num chat é um incômodo; um comando errado em produção é um incidente. Classifique cada ação por risco (Módulo 6) e trate ações de escrita como deploys.</li>
+        <li><strong>Leitura é segura, escrita não:</strong> a maior parte do valor está em <em>investigar</em> (ler logs, métricas, eventos, histórico). Comece só com leitura.</li>
+        <li><strong>Validação determinística depois da IA:</strong> <code>terraform validate</code> e <code>plan</code>, dry-run do Kubernetes, políticas, testes. O modelo propõe; as ferramentas da sua plataforma verificam.</li>
+        <li><strong>Credenciais mínimas:</strong> a conta de serviço do agente só lê, salvo exceções aprovadas e auditadas.</li>
+        <li><strong>Alucinação de flags e APIs:</strong> modelos inventam opções de linha de comando e campos de manifest com confiança. Validação de schema e dry-run pegam isso.</li>
+      </ul>
+    </section>
+
+    <section class="lesson" id="aula-2">
+      <h2>10.2 Copilot de IaC com validação e policy-as-code</h2>
+      <div class="lesson-meta">Leitura + lab · 4h</div>
+      <div class="flow"><span>Pedido em linguagem natural</span><i>→</i><span>LLM gera Terraform/Helm</span><i>→</i><span><code>validate</code> + <code>plan</code></span><i>→</i><span>Políticas (OPA, Sentinel, Checkov)</span><i>→</i><span>PR com revisão humana</span><i>→</i><span>apply pelo CI</span></div>
+      <div class="exercise">
+        <h4>LAB 10.2 — O portão de políticas</h4>
+<pre data-lang="bash"><code>python python/01_politicas_iac.py</code></pre>
+<pre data-lang="saída"><code>✓ create  aws_s3_bucket.relatorios
+      [alerta] tags obrigatórias ausentes: centro_de_custo
+✗ create  aws_s3_bucket_public_access_block.relatorios
+      [bloqueia] bucket com acesso público liberado
+✗ create  aws_instance.job_noturno
+      [bloqueia] tipo de instância p4d.24xlarge fora da lista aprovada (custo)
+✗ create  aws_security_group.job
+      [bloqueia] porta 22 aberta para a internet inteira
+✗ delete  aws_db_instance.legado
+      [bloqueia] remove um recurso de DADOS (pedidos-legado): exige aprovação explícita e backup verificado
+
+4 violações bloqueantes.</code></pre>
+        <p>
+          O "copilot" recebeu um pedido inocente ("um bucket para relatórios e uma VM para o job noturno") e
+          devolveu um bucket público, uma instância de GPU caríssima, SSH aberto para o mundo e, de quebra, a
+          remoção de um banco. Nenhum desses problemas passa pelo portão. As mensagens das políticas podem
+          voltar ao LLM para ele corrigir o plano, num ciclo de validar e corrigir (Módulo 2).
+        </p>
+      </div>
+      <div class="callout"><b>Fluxo PR-first</b>A IA nunca aplica: ela abre um pull request com o código e o resultado do <code>plan</code> e das políticas. A detecção de drift (diferença entre código e realidade) vira um PR também.</div>
+          <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Um copilot gera um plano Terraform que remove um banco de dados. O que deve acontecer?</p>
+          <button type="button">Aplicar, porque o plano foi gerado a partir do pedido do engenheiro</button>
+          <button type="button" data-certa>Bloquear por política (policy-as-code) e exigir aprovação explícita com backup verificado</button>
+          <button type="button">Pedir ao copilot que confirme se tem certeza</button>
+          <p class="why">Políticas determinísticas no pipeline barram ações destrutivas, independentemente de quem ou o quê gerou o plano.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="lesson" id="aula-3">
+      <h2>10.3 Agentes para Kubernetes e GitOps</h2>
+      <div class="lesson-meta">Leitura · 3h</div>
+      <ul>
+        <li><strong>Gerar e revisar manifests:</strong> LLMs escrevem YAML razoável; valide com <code>kubectl apply --dry-run=server</code>, schemas e políticas (requests e limits obrigatórios, sem <code>latest</code>, sem privilégios).</li>
+        <li><strong>Autoscaling:</strong> a IA pode sugerir parâmetros de HPA/VPA a partir do histórico de uso, mas a mudança passa pelo mesmo fluxo de PR.</li>
+        <li><strong>Rollouts progressivos</strong> (canário, blue-green): a IA ajuda a ler as métricas da análise de canário e a explicar por que um rollout foi abortado.</li>
+        <li><strong>GitOps</strong> (Argo CD, Flux): o estado desejado vive no Git. Um agente bem projetado <em>propõe commits</em>, não altera o cluster por fora, o que mantém auditoria e rollback pelo próprio Git.</li>
+      </ul>
+    </section>
+
+    <section class="lesson" id="aula-4">
+      <h2>10.4 Troubleshooting com ReAct</h2>
+      <div class="lesson-meta">Leitura + prática · 5h</div>
+      <p>O agente do projeto segue o método de um SRE experiente, escrito no prompt de sistema:</p>
+      <ol>
+        <li>Estado dos pods e eventos; depois logs e métricas.</li>
+        <li>Procurar a <strong>mudança mais recente</strong>: a maioria dos incidentes começa com um deploy, uma configuração ou um pico de tráfego.</li>
+        <li>Registrar o diagnóstico estruturado <em>com evidências</em> antes de agir (o código recusa ação sem diagnóstico).</li>
+        <li>Preferir a correção mais segura e reversível.</li>
+      </ol>
+      <table>
+        <tr><th>Cenário</th><th>Sintoma</th><th>Evidência-chave</th><th>Ação correta</th></tr>
+        <tr><td><code>crashloop-config</code></td><td>CrashLoopBackOff, 99% de erro</td><td>Log "DATABASE_URL não definida" logo após o deploy da revisão 42</td><td>Rollback para a 41</td></tr>
+        <tr><td><code>oom</code></td><td>OOMKilled, latência alta</td><td>Memória em 100% com tráfego 4× maior; cache em memória crescendo</td><td>Aumentar limite de memória (e revisar o cache)</td></tr>
+        <tr><td><code>imagem-inexistente</code></td><td>ImagePullBackOff</td><td>"manifest unknown" para a tag <code>1.8.3-rc</code></td><td>Rollback para a 8 (e corrigir a tag no CI)</td></tr>
+      </table>
+<pre data-lang="bash"><code>npm run investigar -- crashloop-config</code></pre>
+    </section>
+
+    <section class="lesson" id="aula-5">
+      <h2>10.5 AIOps: métricas, logs e anomalias</h2>
+      <div class="lesson-meta">Leitura + lab · 4h</div>
+      <ul>
+        <li><strong>Linguagem natural → consulta:</strong> "erro 5xx do checkout na última hora por versão" → PromQL ou LogQL. Útil para quem não domina a linguagem; mostre sempre a consulta gerada e rode em modo só leitura.</li>
+        <li><strong>Resumo de logs:</strong> agrupar milhares de linhas em padrões e mandar ao LLM só os padrões e exemplos, não o log inteiro (custo e contexto).</li>
+        <li><strong>Detecção de anomalias:</strong> estatística simples (z-score, sazonalidade) e modelos de série temporal resolvem a maioria dos casos; o LLM entra para <em>explicar</em> e correlacionar, não para detectar.</li>
+      </ul>
+      <div class="exercise">
+        <h4>LAB 10.5 — Anomalias e linha do tempo</h4>
+<pre data-lang="bash"><code>python python/02_anomalias_e_timeline.py</code></pre>
+<pre data-lang="saída"><code>Detector INGÊNUO (janela inclui os próprios pontos anômalos):
+  2 minutos anômalos: 10:34, 10:35
+Detector ROBUSTO (anomalias ficam fora da referência):
+  10 minutos anômalos: 10:34, 10:35, 10:36, ... 10:43
+
+LINHA DO TEMPO
+  10:33  deploy    checkout revisão 42 (migração de ConfigMap) iniciada
+  10:34  anomalia  latencia_p95_ms começou a subir: 983 ms (z = 56)
+  10:34  anomalia  taxa_erro_pct começou a subir: 11.17% (z = 63)
+  10:35  alerta    taxa de erro 5xx &gt; 5% em checkout
+  10:40  deploy    rollback de checkout para a revisão 41
+  10:44  alerta    alerta resolvido</code></pre>
+        <p>
+          O detector ingênuo "se acostuma" com o incidente: depois que os primeiros pontos anômalos entram na
+          janela de referência, o desvio-padrão cresce e o resto do incidente parece normal. Um detalhe de
+          implementação que muda a resposta, e que só aparece quando você testa com um incidente de verdade.
+        </p>
+      </div>
+          <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Por que um detector de anomalias com média móvel simples pode falhar num incidente longo?</p>
+          <button type="button" data-certa>Porque a média passa a incluir o próprio incidente e o anormal vira o novo normal</button>
+          <button type="button">Porque médias não funcionam com métricas de latência</button>
+          <button type="button">Porque precisa de um LLM para interpretar</button>
+          <p class="why">Foi o que o lab mostrou: a versão robusta usa uma linha de base que não absorve o período anômalo.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="lesson" id="aula-6">
+      <h2>10.6 ChatOps com RBAC, aprovação e auditoria</h2>
+      <div class="lesson-meta">Leitura + prática · 3h</div>
+      <ul>
+        <li><strong>Comandos explícitos</strong> (<code>/investigar</code>, <code>/rollback</code>), não "faça o que achar melhor".</li>
+        <li><strong>Aprovação por quem tem o papel certo</strong> (RBAC): no projeto, só <code>ana.sre</code> e <code>bruno.oncall</code> aprovam ações em produção; qualquer outro nome é recusado.</li>
+        <li><strong>Mostrar o impacto antes de aprovar:</strong> o diff da mudança, a revisão de destino, quantos pods serão reiniciados.</li>
+        <li><strong>Auditoria completa:</strong> cada passo do agente e cada aprovação (quem, quando, o quê) vão para <code>auditoria-chatops.jsonl</code>.</li>
+        <li><strong>Disjuntores</strong> (circuit breakers): limite de ações automáticas por hora; se o agente propõe três rollbacks seguidos, algo está errado, então pare e chame uma pessoa.</li>
+      </ul>
+    </section>
+
+    <section class="lesson" id="aula-7">
+      <h2>10.7 RAG de runbooks e post-mortem automático</h2>
+      <div class="lesson-meta">Leitura · 2h</div>
+      <ul>
+        <li><strong>Runbooks como fonte do agente:</strong> indexe runbooks, READMEs e post-mortems antigos com o RAG do Módulo 4 e exponha como ferramenta (ou servidor MCP, Módulo 5). O agente passa a seguir o procedimento da <em>sua</em> empresa.</li>
+        <li><strong>Linha do tempo automática:</strong> junte deploys, alertas, anomalias e mensagens do canal (lab 10.5).</li>
+        <li><strong>Rascunho de post-mortem sem culpados:</strong> o LLM escreve o rascunho a partir da linha do tempo e da trajetória do agente; as pessoas revisam, especialmente as causas contribuintes e as ações.</li>
+        <li><strong>Lições viram prevenção:</strong> cada post-mortem gera itens concretos (teste no CI, alerta mais cedo, política nova) e, de preferência, um caso novo no eval do agente.</li>
+      </ul>
+    </section>
+
+    <section class="lesson" id="aula-8">
+      <h2>10.8 Auto-remediação segura e FinOps</h2>
+      <div class="lesson-meta">Leitura · 3h</div>
+      <h3>Auto-remediação</h3>
+      <div class="flow"><span>Alerta</span><i>→</i><span>Verificação (é real?)</span><i>→</i><span>Mitigação (playbook conhecido, dry-run)</span><i>→</i><span>Validação (métricas voltaram?)</span><i>→</i><span>Notificação</span></div>
+      <ul>
+        <li>Automatize primeiro ações <strong>reversíveis e bem compreendidas</strong> (reiniciar um pod, escalar réplicas dentro de limites), com <strong>dry-run</strong> e validação depois.</li>
+        <li>Ações de alto impacto (rollback em produção, failover de banco) continuam com uma pessoa no circuito.</li>
+        <li>Limites e disjuntores: o remediador nunca pode ser a causa do próximo incidente.</li>
+      </ul>
+      <h3>FinOps com IA</h3>
+      <ul>
+        <li>Estimativa de custo no PR (ferramentas como Infracost) e explicação em linguagem natural do que encarece.</li>
+        <li>Rightsizing a partir do histórico de uso; detecção de recursos ociosos ("zumbis").</li>
+        <li>Previsão de gasto e alerta de desvio. O mesmo raciocínio vale para o custo dos próprios LLMs (Módulo 9).</li>
+      </ul>
+    </section>
+
+    <section class="lesson" id="projeto">
+      <h2>Projeto do módulo: bot de ChatOps para incidentes</h2>
+      <div class="lesson-meta">Projeto · 10h · TypeScript</div>
+<pre data-lang="bash"><code>cd projeto &amp;&amp; npm install &amp;&amp; npm test       # 7 testes, offline
+npm run investigar -- oom                     # precisa de ANTHROPIC_API_KEY</code></pre>
+      <table>
+        <tr><th>Arquivo</th><th>Responsabilidade</th></tr>
+        <tr><td><code>cenarios/*.json</code></td><td>Três incidentes realistas: pods, eventos, logs, métricas, histórico de deploys e a ação correta</td></tr>
+        <tr><td><code>src/cluster.ts</code></td><td>Cluster simulado com erros úteis para o agente se corrigir</td></tr>
+        <tr><td><code>src/sre.ts</code></td><td>Agente (do Módulo 6) com 4 ferramentas de leitura, diagnóstico estruturado obrigatório e 2 ações com aprovação</td></tr>
+        <tr><td><code>src/chatops.ts</code></td><td>Simulação de canal com RBAC de aprovadores e auditoria</td></tr>
+      </table>
+      <h3>Entregáveis</h3>
+      <ol>
+        <li>Rode os três cenários com a API. O agente chegou à causa certa? Quantos passos e quanto custou?</li>
+        <li>Crie dois cenários novos (por exemplo, certificado TLS expirado; dependência externa lenta) com testes.</li>
+        <li>Transforme os cenários num eval de trajetória (Módulo 6): a ação correta foi proposta? Alguma ação foi executada sem diagnóstico?</li>
+        <li>Adicione uma ferramenta de busca em runbooks usando o RAG do Módulo 4.</li>
+        <li>Gere o rascunho de post-mortem a partir da trajetória e do diagnóstico.</li>
+      </ol>
+      <h3>Critérios de avaliação</h3>
+      <table>
+        <tr><th>Critério</th><th>Peso</th></tr>
+        <tr><td>Resultados dos três cenários, analisados</td><td>20%</td></tr>
+        <tr><td>Cenários novos com testes</td><td>20%</td></tr>
+        <tr><td>Eval de trajetória</td><td>25%</td></tr>
+        <tr><td>Runbooks via RAG</td><td>20%</td></tr>
+        <tr><td>Post-mortem gerado e revisado</td><td>15%</td></tr>
+      </table>
+    </section>
+
+    <section class="lesson" id="recursos">
+      <h2>Recursos para aprofundar</h2>
+      <div class="lesson-meta">Todos gratuitos</div>
+      <ul class="resources">
+        <li><a href="https://www.openpolicyagent.org/docs/latest/" target="_blank" rel="noopener">Open Policy Agent</a> e <a href="https://www.conftest.dev/" target="_blank" rel="noopener">Conftest</a> <small>· políticas como código</small></li>
+        <li><a href="https://www.checkov.io/" target="_blank" rel="noopener">Checkov</a> <small>· varredura de IaC</small></li>
+        <li><a href="https://sre.google/sre-book/postmortem-culture/" target="_blank" rel="noopener">Postmortem culture (Google SRE)</a> <small>· post-mortems sem culpados</small></li>
+        <li><a href="https://argo-cd.readthedocs.io/" target="_blank" rel="noopener">Argo CD</a> <small>· GitOps</small></li>
+        <li><a href="https://www.infracost.io/docs/" target="_blank" rel="noopener">Infracost</a> <small>· custo de infraestrutura no PR</small></li>
+      </ul>
+      <nav class="pager">
+        <a href="../modulo-09/"><small>← Módulo anterior</small>9 · Arquitetura e LLMOps</a>
+        <a class="next" href="../modulo-11/"><small>Próximo módulo →</small>11 · Modelos Abertos e Fine-Tuning</a>
+      </nav>
+    </section>
+  </main>
+</div>
+<footer class="foot"><a href="/">triadic.life</a> · <a href="../">Engenharia de IA Aplicada</a> · <a href="https://github.com/MarciodeCampos/o-arco/tree/main/curso-ia/codigo/modulo-10" target="_blank" rel="noopener">código do módulo</a></footer>
+<script src="../assets/curso.js"></script>
+</body>
+</html>

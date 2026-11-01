@@ -1,0 +1,18 @@
+{
+  "name": "curso-ia-modulo-01",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "xor": "tsx 01-rede-neural-xor.ts",
+    "chamada": "tsx 04-primeira-chamada.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.3.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "@types/node": "^22.0.0"
+  }
+}

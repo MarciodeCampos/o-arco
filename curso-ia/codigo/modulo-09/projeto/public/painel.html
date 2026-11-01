@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Painel do Gateway</title>
+<link rel="stylesheet" href="painel.css">
+</head>
+<body>
+<main>
+  <h1>Gateway de LLM</h1>
+  <p class="s">Atualiza a cada 5 s · <span id="hora"></span></p>
+  <div class="kpis" id="kpis"></div>
+  <section><h2>Custo por cliente</h2><table id="clientes"></table></section>
+  <section><h2>Custo por modelo</h2><table id="modelos"></table></section>
+  <section><h2>Versões de prompt (compare o canário com a estável)</h2><table id="versoes"></table></section>
+</main>
+<script src="painel.js"></script>
+</body>
+</html>

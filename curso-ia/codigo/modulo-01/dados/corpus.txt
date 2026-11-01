@@ -1,0 +1,20 @@
+a inteligência artificial não é mágica. ela é matemática, dados e muita computação.
+um modelo de linguagem aprende a prever a próxima palavra a partir das palavras anteriores.
+quanto mais texto o modelo lê, melhor ele fica em continuar frases de forma coerente.
+a rede neural ajusta seus pesos para errar cada vez menos.
+o gradiente mostra para onde andar, e a taxa de aprendizado diz o tamanho do passo.
+um token pode ser uma palavra inteira, um pedaço de palavra ou até um único caractere.
+o transformer usa atenção para que cada token olhe para os outros tokens da frase.
+a janela de contexto é a quantidade máxima de texto que o modelo consegue ler de uma vez.
+a temperatura controla o quanto o modelo arrisca ao escolher a próxima palavra.
+com temperatura baixa a resposta fica previsível; com temperatura alta ela fica criativa.
+o modelo não sabe o que é verdade; ele sabe o que é provável.
+por isso ele pode inventar fatos com toda a confiança, e isso se chama alucinação.
+um bom engenheiro de ia mede, testa e desconfia antes de confiar.
+dados ruins geram modelos ruins, não importa o tamanho da rede.
+o café da manhã de quem estuda ia costuma ter pão, café e muita curiosidade.
+a máquina aprende com exemplos, assim como uma criança aprende a falar ouvindo os adultos.
+uma pergunta clara costuma gerar uma resposta melhor do que uma pergunta vaga.
+o engenheiro conecta o modelo ao mundo com ferramentas, dados e boas instruções.
+cada erro do modelo é uma pista sobre o que falta nos dados ou nas instruções.
+aprender ia é como aprender um instrumento: teoria ajuda, mas a prática é que ensina.

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050508">
+<meta name="description" content="Módulo 14 — Projeto Integrador: um Micro-SaaS com IA do problema ao deploy, com RAG, agente, MCP, evals, segurança, custos e defesa técnica.">
+<title>Módulo 14 · Projeto Integrador — Engenharia de IA Aplicada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/curso.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/">◈ TRIADIC.LIFE</a>
+  <span class="crumbs">/ <a href="../">Engenharia de IA</a> / Módulo 14</span>
+  <span class="spacer"></span>
+  <span class="progress-pill">0/8 aulas</span>
+</header>
+<div class="layout">
+  <aside class="toc">
+    <button class="toc-toggle" type="button">☰ Etapas do projeto</button>
+    <h2>Módulo 14</h2>
+    <nav><ol>
+      <li><a href="#inicio"><span class="chk"></span>Visão geral</a></li>
+      <li><a href="#aula-1"><span class="chk"></span>14.1 Ideação e arquitetura</a></li>
+      <li><a href="#aula-2"><span class="chk"></span>14.2 Entrega 1: núcleo</a></li>
+      <li><a href="#aula-3"><span class="chk"></span>14.3 Entrega 2: API e MCP</a></li>
+      <li><a href="#aula-4"><span class="chk"></span>14.4 Entrega 3: produto no ar</a></li>
+      <li><a href="#aula-5"><span class="chk"></span>14.5 Red team do projeto</a></li>
+      <li><a href="#aula-6"><span class="chk"></span>14.6 Defesa técnica</a></li>
+      <li><a href="#projeto"><span class="chk"></span>Rubrica final</a></li>
+      <li><a href="#recursos"><span class="chk"></span>Recursos</a></li>
+    </ol></nav>
+  </aside>
+  <main class="content" data-modulo="modulo-14">
+    <section id="inicio">
+      <header><div class="eyebrow">Módulo 14 · 40h estimadas</div><h1>Projeto Integrador: Micro-SaaS com IA</h1></header>
+      <p class="lede">
+        Aqui tudo se junta. Você constrói um produto pequeno e real, do problema ao deploy, usando o que o
+        curso ensinou: RAG, agente, MCP, evals, segurança, custos e operação. Ganha quem demonstra o maior
+        número de decisões bem fundamentadas, não quem tem a ideia mais ambiciosa.
+      </p>
+      <div class="meta"><span class="tag">6 etapas</span><span class="tag">3 entregas</span><span class="tag">kit de entrega</span><span class="tag">Pré-requisito: Módulos 1–12</span></div>
+      <p>O kit traz o modelo de README, o modelo de arquitetura, o checklist de produção, um exemplo de CI e um verificador automático:</p>
+<pre data-lang="bash"><code>cd o-arco/curso-ia/codigo/modulo-14/kit
+python verificar_projeto.py ~/meu-micro-saas        # sai com código 1 se faltar item obrigatório
+python test_verificar_projeto.py                    # testes do próprio verificador</code></pre>
+      <div class="callout"><b>Pode ser em dupla ou trio</b>Times maiores devem entregar mais profundidade (mais evals, mais red team), não mais funcionalidades. Cada pessoa precisa defender qualquer parte do sistema na banca.</div>
+    </section>
+
+    <section class="lesson" id="aula-1">
+      <h2>14.1 Ideação, proposta de valor e arquitetura</h2>
+      <div class="lesson-meta">Etapa · 4h</div>
+      <p>Escolha um problema estreito, com usuário identificável e dados que você pode usar legalmente. Bons exemplos:</p>
+      <table>
+        <tr><th>Ideia</th><th>Peças do curso que exercita</th></tr>
+        <tr><td>Assistente de atendimento para uma loja, com base no manual e nas políticas</td><td>RAG com citações (4), ferramentas de pedido via MCP (5), aprovação para reembolso (6)</td></tr>
+        <tr><td>Triagem de chamados de TI com sugestão de solução</td><td>Classificação com modelo pequeno ou destilado (11), evals (3), batch (2)</td></tr>
+        <tr><td>Revisor de contratos para pequenos escritórios</td><td>PDF e multimodal (8), saída estruturada (2), dados sensíveis e LGPD (12)</td></tr>
+        <tr><td>Copiloto de plantão para um time pequeno</td><td>Agente SRE (10), MCP com logs e métricas (5), ChatOps</td></tr>
+        <tr><td>Da reunião ao board para agências</td><td>Extração verificável (13), integração com ferramenta real, relatórios</td></tr>
+      </table>
+      <p><strong>Entregável da etapa:</strong> uma página com problema, público, alternativa atual, por que IA (Módulo 9.1), três métricas de sucesso e o desenho inicial em <code>ARQUITETURA.md</code>. Comece o dataset de avaliação <em>agora</em>, com 20 casos escritos à mão: ele guia todas as decisões seguintes.</p>
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Qual destes escopos é o melhor ponto de partida para o Projeto Integrador?</p>
+          <button type="button">Uma plataforma de IA que atende qualquer tipo de empresa</button>
+          <button type="button" data-certa>Um assistente que responde dúvidas de pós-venda de uma loja específica, com o manual e as políticas dela</button>
+          <button type="button">Um modelo próprio treinado do zero para concorrer com os grandes</button>
+          <p class="why">Escopo estreito permite dataset de avaliação realista, métricas claras e profundidade em segurança e custos, que é o que a banca avalia.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="lesson" id="aula-2">
+      <h2>14.2 Entrega 1: núcleo de RAG e agente com evals (CLI)</h2>
+      <div class="lesson-meta">Entrega · 10h</div>
+      <p>Antes de qualquer tela, o núcleo funciona pela linha de comando e é medido:</p>
+      <ul>
+        <li>Indexação e busca híbrida com citações (projeto do Módulo 4 como base).</li>
+        <li>Agente com orçamento, detecção de laço e aprovação para ações irreversíveis (projeto do Módulo 6).</li>
+        <li>Dataset de avaliação com pelo menos 40 casos com gabarito e tags, incluindo casos em que a resposta certa é "não sei".</li>
+        <li>Testes automatizados com modelo roteirizado ou API falsa, que rodam sem chave.</li>
+        <li>Primeiro relatório de evals com intervalo de confiança (Módulo 3.6) e custo por tarefa.</li>
+      </ul>
+      <div class="callout"><b>Critério de aceite da Entrega 1</b>Outra pessoa clona o repositório, roda <code>npm test</code> sem chave e vê tudo passar; com chave, roda as evals e obtém números próximos aos do README.</div>
+    </section>
+
+    <section class="lesson" id="aula-3">
+      <h2>14.3 Entrega 2: API do back-end e servidor MCP</h2>
+      <div class="lesson-meta">Entrega · 8h</div>
+      <ul>
+        <li><strong>API</strong> com validação de entrada, limites de taxa e orçamento por cliente, e chamadas ao modelo passando por um gateway com reserva e log de custo (Módulo 9).</li>
+        <li><strong>Prompts versionados</strong> em arquivos, com rollout gradual e caminho de rollback testado.</li>
+        <li><strong>Servidor MCP</strong> expondo pelo menos uma capacidade do seu produto (busca, consulta de pedido, criação de tarefa), com autenticação e auditoria no transporte HTTP (Módulo 5).</li>
+        <li><strong>CI</strong> rodando testes e o verificador a cada push, e evals com limiar em cada PR. Use <code>kit/ci-exemplo.yml</code> como ponto de partida.</li>
+      </ul>
+    </section>
+
+    <section class="lesson" id="aula-4">
+      <h2>14.4 Entrega 3: front-end, deploy, observabilidade e custos</h2>
+      <div class="lesson-meta">Entrega · 10h</div>
+      <ul>
+        <li><strong>Front-end</strong> em React, Angular ou HTML puro, como preferir: streaming com botão parar, estados de erro claros, acessível por teclado, CSP restritiva e nenhuma chave no navegador (Módulo 8).</li>
+        <li><strong>Deploy</strong> numa plataforma com HTTPS e segredos gerenciados (Fly.io, Render, Railway, Cloud Run, uma VPS com Caddy…). Infraestrutura como código é bônus, passando pelas políticas do Módulo 10.</li>
+        <li><strong>Observabilidade:</strong> log estruturado por requisição (modelo, versão do prompt, tokens, custo, latência) e um painel com erro, p95 e gasto do dia.</li>
+        <li><strong>Custos:</strong> custo por tarefa medido, projeção mensal para um cenário realista e pelo menos uma alavanca aplicada e medida (modelo por rota, cache, batch ou destilação).</li>
+      </ul>
+    </section>
+
+    <section class="lesson" id="aula-5">
+      <h2>14.5 Revisão de segurança: red team do próprio projeto</h2>
+      <div class="lesson-meta">Etapa · 4h</div>
+      <ol>
+        <li>Mapeie a tríade letal: onde há dados privados, conteúdo não confiável e canais de saída? Corte pelo menos um lado em cada fluxo (Módulo 12.2).</li>
+        <li>Rode o red team automatizado do Módulo 12 adaptado ao seu produto, com um canário plantado nos dados privados.</li>
+        <li>Faça uma rodada manual: injeção indireta em um documento do RAG, pedido de dados de outro cliente, tentativa de ação irreversível sem aprovação.</li>
+        <li>Todo ataque bem-sucedido vira teste automatizado e correção. Documente o antes e o depois.</li>
+        <li>Preencha a ficha do sistema (Módulo 12.5) e rode <code>verificar_projeto.py</code>.</li>
+      </ol>
+      <p>Verificador rodado no projeto do Módulo 6, que é um projeto didático sem README de produto. A saída real mostra o tipo de coisa que costuma faltar:</p>
+<pre data-lang="saída"><code>  ✗ README na raiz  → Crie um README.md (use kit/MODELO_README.md)
+  ✗ README: problema e público  → Seção explicando o problema e para quem
+  ✗ README: arquitetura  → Seção ou ARQUITETURA.md com o desenho
+  ✗ README: como rodar  → Passo a passo para rodar localmente
+  ✓ testes automatizados
+  ✓ dataset de avaliação (evals)
+  ✓ sem segredos no repositório
+  ✓ sem .env versionado
+  · CI configurado  → Testes e evals rodando a cada PR (Módulos 3 e 7)
+  ...
+5/16 itens · obrigatórios faltando: 4</code></pre>
+      <p>O verificador só confere a presença das peças; ele não sabe se as evals são boas. Isso é trabalho da banca.</p>
+    </section>
+
+    <section class="lesson" id="aula-6">
+      <h2>14.6 Apresentação, documentação e defesa técnica</h2>
+      <div class="lesson-meta">Etapa · 4h</div>
+      <p>A defesa tem 20 minutos: 8 de demonstração e 12 de perguntas. Estrutura sugerida:</p>
+      <ol>
+        <li><strong>Problema e usuário</strong> (1 min): quem, qual dor, como resolvem hoje.</li>
+        <li><strong>Demonstração ao vivo</strong> (4 min) do fluxo principal, com um caso em que o sistema diz "não sei" ou pede aprovação. Tenha um vídeo de reserva se a rede cair.</li>
+        <li><strong>Números</strong> (2 min): qualidade com intervalo de confiança, custo por tarefa, resultado do red team.</li>
+        <li><strong>Uma decisão difícil</strong> (1 min): o que você trocou por quê, com evidência.</li>
+      </ol>
+      <h3>Perguntas típicas da banca</h3>
+      <ul>
+        <li>"Se o provedor ficar fora por uma hora, o que o usuário vê?"</li>
+        <li>"Mostre um caso em que o sistema erra. Por que erra e o que você faria?"</li>
+        <li>"Como você sabe que a versão 2 do prompt é melhor que a 1, e não ruído?"</li>
+        <li>"Um documento do RAG manda o agente enviar dados para um site. O que acontece?"</li>
+        <li>"Quanto custa com 10 vezes mais usuários? Qual é a primeira alavanca?"</li>
+      </ul>
+      <details>
+        <summary>Como responder bem quando não sabe</summary>
+        <p>Diga o que mediu, o que não mediu e como mediria. "Não testei com 10 vezes mais carga; pela medição atual de X tokens por tarefa, a projeção é Y; o primeiro passo seria um teste de carga no gateway." Isso vale mais do que um número inventado.</p>
+      </details>
+    </section>
+
+    <section class="lesson" id="projeto">
+      <h2>Rubrica final</h2>
+      <div class="lesson-meta">Avaliação</div>
+      <table>
+        <tr><th>Critério</th><th>Peso</th><th>O que a banca procura</th></tr>
+        <tr><td>Problema e produto</td><td>10%</td><td>Usuário real, escopo claro, IA justificada</td></tr>
+        <tr><td>Arquitetura e código</td><td>15%</td><td>Desenho coerente, código legível, decisões registradas</td></tr>
+        <tr><td>Evals e qualidade</td><td>20%</td><td>Dataset com gabarito, intervalo de confiança, evals no CI, teste fora da distribuição</td></tr>
+        <tr><td>Segurança e privacidade</td><td>20%</td><td>Tríade letal tratada, red team com antes e depois, aprovação humana, ficha do sistema</td></tr>
+        <tr><td>Operação e custos</td><td>15%</td><td>Limites, reserva, logs, painel, custo por tarefa e projeção</td></tr>
+        <tr><td>Experiência do usuário</td><td>10%</td><td>Streaming, erros claros, acessibilidade, transparência sobre a IA</td></tr>
+        <tr><td>Defesa técnica</td><td>10%</td><td>Demonstração, números e respostas honestas</td></tr>
+      </table>
+      <p><strong>Eliminatórios:</strong> chave de API no repositório ou no navegador; números do README que não se reproduzem; ação irreversível sem aprovação humana.</p>
+      <p>Use o <a href="https://github.com/MarciodeCampos/o-arco/blob/main/curso-ia/codigo/modulo-14/kit/CHECKLIST_PRODUCAO.md" target="_blank" rel="noopener">checklist de produção</a> antes de cada entrega.</p>
+    </section>
+
+    <section class="lesson" id="recursos">
+      <h2>Recursos para aprofundar</h2>
+      <div class="lesson-meta">Gratuitos</div>
+      <ul class="resources">
+        <li><a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener">Building effective agents</a> <small>· quando usar workflow ou agente</small></li>
+        <li><a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/" target="_blank" rel="noopener">OWASP Top 10 for LLM Applications</a> <small>· lista de revisão para a etapa 14.5</small></li>
+        <li><a href="https://12factor.net/pt_br/" target="_blank" rel="noopener">The Twelve-Factor App</a> <small>· configuração, logs e deploy de serviços</small></li>
+      </ul>
+      <nav class="pager">
+        <a href="../modulo-13/"><small>← Módulo anterior</small>13 · Produto e Gestão</a>
+        <a class="next" href="../modulo-15/"><small>Próximo módulo →</small>15 · Carreira</a>
+      </nav>
+    </section>
+  </main>
+</div>
+<footer class="foot"><a href="/">triadic.life</a> · <a href="../">Engenharia de IA Aplicada</a> · <a href="https://github.com/MarciodeCampos/o-arco/tree/main/curso-ia/codigo/modulo-14" target="_blank" rel="noopener">kit do projeto</a></footer>
+<script src="../assets/curso.js"></script>
+</body>
+</html>

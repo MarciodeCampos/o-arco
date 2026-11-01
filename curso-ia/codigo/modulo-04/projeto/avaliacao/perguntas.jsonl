@@ -1,0 +1,24 @@
+{"id": "q01", "pergunta": "Quanto tempo demora a entrega para o interior de Minas Gerais?", "relevantes": ["entregas#prazos-de-entrega"], "fatos": ["4 a 7 dias"], "tags": ["parafrase"]}
+{"id": "q02", "pergunta": "A partir de qual valor o frete é grátis?", "relevantes": ["entregas#frete-gratis"], "fatos": ["499"], "tags": ["literal"]}
+{"id": "q03", "pergunta": "Como faço para voltar o purificador às configurações de fábrica?", "relevantes": ["manual-brisa-x2#8-resetar-o-aparelho"], "fatos": ["10 segundos"], "tags": ["parafrase"]}
+{"id": "q04", "pergunta": "Qual a garantia do purificador?", "relevantes": ["garantia-e-trocas#garantia", "manual-brisa-x2#11-garantia"], "fatos": ["12 meses"], "tags": ["literal"]}
+{"id": "q05", "pergunta": "Se eu assinar o plano de filtros, a garantia muda?", "relevantes": ["garantia-e-trocas#garantia", "plano-filtro-em-dia#beneficios"], "fatos": ["24 meses"], "tags": ["multi-doc"]}
+{"id": "q06", "pergunta": "Comprei e me arrependi, posso devolver?", "relevantes": ["garantia-e-trocas#direito-de-arrependimento"], "fatos": ["7 dias"], "tags": ["parafrase"]}
+{"id": "q07", "pergunta": "Meu aparelho aparece desconectado no celular, o que eu faço?", "relevantes": ["app-brisa-casa#problemas-de-conexao", "manual-brisa-x2#6-aplicativo-e-wi-fi"], "fatos": [], "tags": ["parafrase"]}
+{"id": "q08", "pergunta": "O app funciona com Wi-Fi 5 GHz?", "relevantes": ["app-brisa-casa#requisitos", "manual-brisa-x2#6-aplicativo-e-wi-fi"], "fatos": ["2,4"], "tags": ["literal"]}
+{"id": "q09", "pergunta": "De quanto em quanto tempo devo trocar o filtro HEPA?", "relevantes": ["manual-brisa-x2#7-manutencao"], "fatos": ["6 a 8 meses"], "tags": ["literal"]}
+{"id": "q10", "pergunta": "Quanto custa a assinatura de filtros por mês?", "relevantes": ["plano-filtro-em-dia#preco-e-pagamento"], "fatos": ["34,90"], "tags": ["literal"]}
+{"id": "q11", "pergunta": "Tem multa para cancelar a assinatura?", "relevantes": ["plano-filtro-em-dia#fidelidade-e-cancelamento"], "fatos": [], "tags": ["parafrase"]}
+{"id": "q12", "pergunta": "Vou viajar por dois meses, preciso continuar pagando o plano?", "relevantes": ["plano-filtro-em-dia#pausar-a-assinatura"], "fatos": ["3 meses"], "tags": ["parafrase"]}
+{"id": "q13", "pergunta": "O purificador grava áudio ou tem câmera?", "relevantes": ["privacidade#dados-coletados"], "fatos": [], "tags": ["parafrase"]}
+{"id": "q14", "pergunta": "Posso usar o Brisa X2 na varanda?", "relevantes": ["manual-brisa-x2#3-instalacao", "garantia-e-trocas#garantia", "manual-brisa-x2#11-garantia"], "fatos": [], "tags": ["parafrase"]}
+{"id": "q15", "pergunta": "Qual o barulho do aparelho no modo de dormir?", "relevantes": ["manual-brisa-x2#5-modos-de-operacao", "manual-brisa-x2#10-especificacoes-tecnicas"], "fatos": ["24 dB"], "tags": ["parafrase"]}
+{"id": "q16", "pergunta": "A caixa chegou amassada, e agora?", "relevantes": ["entregas#produto-avariado-na-entrega"], "fatos": [], "tags": ["parafrase"]}
+{"id": "q17", "pergunta": "Quantas pessoas da família podem usar o aplicativo?", "relevantes": ["app-brisa-casa#compartilhar-com-a-familia"], "fatos": ["5"], "tags": ["literal"]}
+{"id": "q18", "pergunta": "Vocês enviam para Portugal?", "relevantes": ["entregas#entregas-internacionais"], "fatos": [], "tags": ["parafrase"]}
+{"id": "q19", "pergunta": "Por quanto tempo vocês guardam meus dados de qualidade do ar?", "relevantes": ["privacidade#retencao"], "fatos": ["24 meses"], "tags": ["literal"]}
+{"id": "q20", "pergunta": "Produto recondicionado tem garantia?", "relevantes": ["garantia-e-trocas#produtos-de-vitrine-e-recondicionados"], "fatos": ["6 meses"], "tags": ["literal"]}
+{"id": "q21", "pergunta": "Vocês vendem ar-condicionado?", "relevantes": [], "fatos": [], "tags": ["sem-resposta"]}
+{"id": "q22", "pergunta": "Qual o telefone do SAC?", "relevantes": [], "fatos": [], "tags": ["sem-resposta"]}
+{"id": "q23", "pergunta": "O Brisa X2 funciona em 220V?", "relevantes": ["manual-brisa-x2#2-conteudo-da-embalagem", "manual-brisa-x2#10-especificacoes-tecnicas"], "fatos": [], "tags": ["parafrase"]}
+{"id": "q24", "pergunta": "Existe desconto para quem paga o ano inteiro da assinatura à vista?", "relevantes": [], "fatos": [], "tags": ["sem-resposta"]}

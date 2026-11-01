@@ -1,0 +1,451 @@
+{
+ "pontos": [
+  {
+   "minuto": 0,
+   "hora": "10:00",
+   "taxa_erro_pct": 0.36,
+   "latencia_p95_ms": 186,
+   "requisicoes_s": 594
+  },
+  {
+   "minuto": 1,
+   "hora": "10:01",
+   "taxa_erro_pct": 0.35,
+   "latencia_p95_ms": 169,
+   "requisicoes_s": 595
+  },
+  {
+   "minuto": 2,
+   "hora": "10:02",
+   "taxa_erro_pct": 0.57,
+   "latencia_p95_ms": 185,
+   "requisicoes_s": 626
+  },
+  {
+   "minuto": 3,
+   "hora": "10:03",
+   "taxa_erro_pct": 0.44,
+   "latencia_p95_ms": 185,
+   "requisicoes_s": 605
+  },
+  {
+   "minuto": 4,
+   "hora": "10:04",
+   "taxa_erro_pct": 0.15,
+   "latencia_p95_ms": 190,
+   "requisicoes_s": 613
+  },
+  {
+   "minuto": 5,
+   "hora": "10:05",
+   "taxa_erro_pct": 0.47,
+   "latencia_p95_ms": 160,
+   "requisicoes_s": 556
+  },
+  {
+   "minuto": 6,
+   "hora": "10:06",
+   "taxa_erro_pct": 0.27,
+   "latencia_p95_ms": 174,
+   "requisicoes_s": 608
+  },
+  {
+   "minuto": 7,
+   "hora": "10:07",
+   "taxa_erro_pct": 0.39,
+   "latencia_p95_ms": 186,
+   "requisicoes_s": 584
+  },
+  {
+   "minuto": 8,
+   "hora": "10:08",
+   "taxa_erro_pct": 0.45,
+   "latencia_p95_ms": 185,
+   "requisicoes_s": 583
+  },
+  {
+   "minuto": 9,
+   "hora": "10:09",
+   "taxa_erro_pct": 0.66,
+   "latencia_p95_ms": 187,
+   "requisicoes_s": 630
+  },
+  {
+   "minuto": 10,
+   "hora": "10:10",
+   "taxa_erro_pct": 0.31,
+   "latencia_p95_ms": 171,
+   "requisicoes_s": 591
+  },
+  {
+   "minuto": 11,
+   "hora": "10:11",
+   "taxa_erro_pct": 0.38,
+   "latencia_p95_ms": 188,
+   "requisicoes_s": 606
+  },
+  {
+   "minuto": 12,
+   "hora": "10:12",
+   "taxa_erro_pct": 0.33,
+   "latencia_p95_ms": 169,
+   "requisicoes_s": 587
+  },
+  {
+   "minuto": 13,
+   "hora": "10:13",
+   "taxa_erro_pct": 0.58,
+   "latencia_p95_ms": 170,
+   "requisicoes_s": 606
+  },
+  {
+   "minuto": 14,
+   "hora": "10:14",
+   "taxa_erro_pct": 0.46,
+   "latencia_p95_ms": 162,
+   "requisicoes_s": 601
+  },
+  {
+   "minuto": 15,
+   "hora": "10:15",
+   "taxa_erro_pct": 0.6,
+   "latencia_p95_ms": 156,
+   "requisicoes_s": 592
+  },
+  {
+   "minuto": 16,
+   "hora": "10:16",
+   "taxa_erro_pct": 0.38,
+   "latencia_p95_ms": 170,
+   "requisicoes_s": 612
+  },
+  {
+   "minuto": 17,
+   "hora": "10:17",
+   "taxa_erro_pct": 0.39,
+   "latencia_p95_ms": 162,
+   "requisicoes_s": 621
+  },
+  {
+   "minuto": 18,
+   "hora": "10:18",
+   "taxa_erro_pct": 0.5,
+   "latencia_p95_ms": 191,
+   "requisicoes_s": 636
+  },
+  {
+   "minuto": 19,
+   "hora": "10:19",
+   "taxa_erro_pct": 0.45,
+   "latencia_p95_ms": 181,
+   "requisicoes_s": 568
+  },
+  {
+   "minuto": 20,
+   "hora": "10:20",
+   "taxa_erro_pct": 0.49,
+   "latencia_p95_ms": 173,
+   "requisicoes_s": 589
+  },
+  {
+   "minuto": 21,
+   "hora": "10:21",
+   "taxa_erro_pct": 0.21,
+   "latencia_p95_ms": 168,
+   "requisicoes_s": 587
+  },
+  {
+   "minuto": 22,
+   "hora": "10:22",
+   "taxa_erro_pct": 0.59,
+   "latencia_p95_ms": 156,
+   "requisicoes_s": 564
+  },
+  {
+   "minuto": 23,
+   "hora": "10:23",
+   "taxa_erro_pct": 0.44,
+   "latencia_p95_ms": 197,
+   "requisicoes_s": 614
+  },
+  {
+   "minuto": 24,
+   "hora": "10:24",
+   "taxa_erro_pct": 0.12,
+   "latencia_p95_ms": 150,
+   "requisicoes_s": 609
+  },
+  {
+   "minuto": 25,
+   "hora": "10:25",
+   "taxa_erro_pct": 0.29,
+   "latencia_p95_ms": 167,
+   "requisicoes_s": 624
+  },
+  {
+   "minuto": 26,
+   "hora": "10:26",
+   "taxa_erro_pct": 0.57,
+   "latencia_p95_ms": 182,
+   "requisicoes_s": 606
+  },
+  {
+   "minuto": 27,
+   "hora": "10:27",
+   "taxa_erro_pct": 0.47,
+   "latencia_p95_ms": 199,
+   "requisicoes_s": 615
+  },
+  {
+   "minuto": 28,
+   "hora": "10:28",
+   "taxa_erro_pct": 0.48,
+   "latencia_p95_ms": 187,
+   "requisicoes_s": 561
+  },
+  {
+   "minuto": 29,
+   "hora": "10:29",
+   "taxa_erro_pct": 0.59,
+   "latencia_p95_ms": 191,
+   "requisicoes_s": 613
+  },
+  {
+   "minuto": 30,
+   "hora": "10:30",
+   "taxa_erro_pct": 0.1,
+   "latencia_p95_ms": 172,
+   "requisicoes_s": 621
+  },
+  {
+   "minuto": 31,
+   "hora": "10:31",
+   "taxa_erro_pct": 0.13,
+   "latencia_p95_ms": 178,
+   "requisicoes_s": 625
+  },
+  {
+   "minuto": 32,
+   "hora": "10:32",
+   "taxa_erro_pct": 0.2,
+   "latencia_p95_ms": 199,
+   "requisicoes_s": 614
+  },
+  {
+   "minuto": 33,
+   "hora": "10:33",
+   "taxa_erro_pct": 0.38,
+   "latencia_p95_ms": 184,
+   "requisicoes_s": 616
+  },
+  {
+   "minuto": 34,
+   "hora": "10:34",
+   "taxa_erro_pct": 11.17,
+   "latencia_p95_ms": 983,
+   "requisicoes_s": 583
+  },
+  {
+   "minuto": 35,
+   "hora": "10:35",
+   "taxa_erro_pct": 20.93,
+   "latencia_p95_ms": 864,
+   "requisicoes_s": 624
+  },
+  {
+   "minuto": 36,
+   "hora": "10:36",
+   "taxa_erro_pct": 23.4,
+   "latencia_p95_ms": 1012,
+   "requisicoes_s": 596
+  },
+  {
+   "minuto": 37,
+   "hora": "10:37",
+   "taxa_erro_pct": 28.43,
+   "latencia_p95_ms": 951,
+   "requisicoes_s": 568
+  },
+  {
+   "minuto": 38,
+   "hora": "10:38",
+   "taxa_erro_pct": 36.28,
+   "latencia_p95_ms": 912,
+   "requisicoes_s": 609
+  },
+  {
+   "minuto": 39,
+   "hora": "10:39",
+   "taxa_erro_pct": 43.15,
+   "latencia_p95_ms": 900,
+   "requisicoes_s": 607
+  },
+  {
+   "minuto": 40,
+   "hora": "10:40",
+   "taxa_erro_pct": 48.65,
+   "latencia_p95_ms": 866,
+   "requisicoes_s": 650
+  },
+  {
+   "minuto": 41,
+   "hora": "10:41",
+   "taxa_erro_pct": 3.66,
+   "latencia_p95_ms": 312,
+   "requisicoes_s": 623
+  },
+  {
+   "minuto": 42,
+   "hora": "10:42",
+   "taxa_erro_pct": 4.24,
+   "latencia_p95_ms": 312,
+   "requisicoes_s": 572
+  },
+  {
+   "minuto": 43,
+   "hora": "10:43",
+   "taxa_erro_pct": 4.28,
+   "latencia_p95_ms": 284,
+   "requisicoes_s": 616
+  },
+  {
+   "minuto": 44,
+   "hora": "10:44",
+   "taxa_erro_pct": 0.76,
+   "latencia_p95_ms": 184,
+   "requisicoes_s": 586
+  },
+  {
+   "minuto": 45,
+   "hora": "10:45",
+   "taxa_erro_pct": 0.39,
+   "latencia_p95_ms": 177,
+   "requisicoes_s": 598
+  },
+  {
+   "minuto": 46,
+   "hora": "10:46",
+   "taxa_erro_pct": 0,
+   "latencia_p95_ms": 174,
+   "requisicoes_s": 625
+  },
+  {
+   "minuto": 47,
+   "hora": "10:47",
+   "taxa_erro_pct": 0.22,
+   "latencia_p95_ms": 179,
+   "requisicoes_s": 624
+  },
+  {
+   "minuto": 48,
+   "hora": "10:48",
+   "taxa_erro_pct": 0.53,
+   "latencia_p95_ms": 198,
+   "requisicoes_s": 557
+  },
+  {
+   "minuto": 49,
+   "hora": "10:49",
+   "taxa_erro_pct": 0.35,
+   "latencia_p95_ms": 176,
+   "requisicoes_s": 616
+  },
+  {
+   "minuto": 50,
+   "hora": "10:50",
+   "taxa_erro_pct": 0.56,
+   "latencia_p95_ms": 148,
+   "requisicoes_s": 627
+  },
+  {
+   "minuto": 51,
+   "hora": "10:51",
+   "taxa_erro_pct": 0.18,
+   "latencia_p95_ms": 188,
+   "requisicoes_s": 563
+  },
+  {
+   "minuto": 52,
+   "hora": "10:52",
+   "taxa_erro_pct": 0.43,
+   "latencia_p95_ms": 194,
+   "requisicoes_s": 596
+  },
+  {
+   "minuto": 53,
+   "hora": "10:53",
+   "taxa_erro_pct": 0.43,
+   "latencia_p95_ms": 190,
+   "requisicoes_s": 604
+  },
+  {
+   "minuto": 54,
+   "hora": "10:54",
+   "taxa_erro_pct": 0.39,
+   "latencia_p95_ms": 198,
+   "requisicoes_s": 626
+  },
+  {
+   "minuto": 55,
+   "hora": "10:55",
+   "taxa_erro_pct": 0.36,
+   "latencia_p95_ms": 213,
+   "requisicoes_s": 571
+  },
+  {
+   "minuto": 56,
+   "hora": "10:56",
+   "taxa_erro_pct": 0.54,
+   "latencia_p95_ms": 177,
+   "requisicoes_s": 603
+  },
+  {
+   "minuto": 57,
+   "hora": "10:57",
+   "taxa_erro_pct": 0.51,
+   "latencia_p95_ms": 183,
+   "requisicoes_s": 616
+  },
+  {
+   "minuto": 58,
+   "hora": "10:58",
+   "taxa_erro_pct": 0.17,
+   "latencia_p95_ms": 162,
+   "requisicoes_s": 615
+  },
+  {
+   "minuto": 59,
+   "hora": "10:59",
+   "taxa_erro_pct": 0.26,
+   "latencia_p95_ms": 168,
+   "requisicoes_s": 563
+  }
+ ],
+ "eventos": [
+  {
+   "hora": "10:33",
+   "fonte": "deploy",
+   "texto": "checkout revisão 42 (migração de ConfigMap) iniciada"
+  },
+  {
+   "hora": "10:35",
+   "fonte": "alerta",
+   "texto": "taxa de erro 5xx > 5% em checkout"
+  },
+  {
+   "hora": "10:37",
+   "fonte": "chat",
+   "texto": "ana.sre assumiu o incidente"
+  },
+  {
+   "hora": "10:40",
+   "fonte": "deploy",
+   "texto": "rollback de checkout para a revisão 41"
+  },
+  {
+   "hora": "10:44",
+   "fonte": "alerta",
+   "texto": "alerta resolvido"
+  }
+ ]
+}

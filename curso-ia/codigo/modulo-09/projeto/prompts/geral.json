@@ -1,0 +1,10 @@
+{
+  "estavel": "v1",
+  "versoes": {
+    "v1": {
+      "sistema": "Você é o assistente interno da empresa. Responda em português, de forma direta.",
+      "criadoEm": "2026-09-02",
+      "nota": "versão inicial"
+    }
+  }
+}

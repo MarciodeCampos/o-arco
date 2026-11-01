@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050508">
+<meta name="description" content="Módulo 13 — IA para Produto e Gestão de Projetos: requisitos, priorização com análise de sensibilidade, atas verificáveis, previsão por Monte Carlo e automação de ferramentas.">
+<title>Módulo 13 · IA para Produto e Gestão — Engenharia de IA Aplicada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/curso.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/">◈ TRIADIC.LIFE</a>
+  <span class="crumbs">/ <a href="../">Engenharia de IA</a> / Módulo 13</span>
+  <span class="spacer"></span>
+  <span class="progress-pill">0/7 aulas</span>
+</header>
+<div class="layout">
+  <aside class="toc">
+    <button class="toc-toggle" type="button">☰ Aulas do módulo</button>
+    <h2>Módulo 13</h2>
+    <nav><ol>
+      <li><a href="#inicio"><span class="chk"></span>Visão geral</a></li>
+      <li><a href="#aula-1"><span class="chk"></span>13.1 Requisitos com IA</a></li>
+      <li><a href="#aula-2"><span class="chk"></span>13.2 Priorização</a></li>
+      <li><a href="#aula-3"><span class="chk"></span>13.3 Reuniões e atas</a></li>
+      <li><a href="#aula-4"><span class="chk"></span>13.4 Previsão de prazos</a></li>
+      <li><a href="#aula-5"><span class="chk"></span>13.5 Relatórios e automação</a></li>
+      <li><a href="#projeto"><span class="chk"></span>Projeto do módulo</a></li>
+      <li><a href="#recursos"><span class="chk"></span>Recursos</a></li>
+    </ol></nav>
+  </aside>
+  <main class="content" data-modulo="modulo-13">
+    <section id="inicio">
+      <header><div class="eyebrow">Módulo 13 · 16h estimadas</div><h1>IA para Produto e Gestão de Projetos</h1></header>
+      <p class="lede">
+        Engenheiros de IA trabalham com produto e gestão, e esses fluxos também se beneficiam de IA, desde
+        que o julgamento continue humano. Este módulo é prático: atas em que cada tarefa prova de onde veio,
+        priorização que mostra quais estimativas realmente mudam a decisão, e prazos comunicados como
+        probabilidade, não como promessa.
+      </p>
+      <div class="meta"><span class="tag">5 aulas</span><span class="tag">3 labs</span><span class="tag">Python</span><span class="tag">Pré-requisito: Módulo 2</span></div>
+<pre data-lang="bash"><code>cd o-arco/curso-ia/codigo/modulo-13/python
+pip install -r requirements.txt
+python 02_priorizacao_rice.py &amp;&amp; python 03_previsao_monte_carlo.py   # sem API</code></pre>
+    </section>
+
+    <section class="lesson" id="aula-1">
+      <h2>13.1 Requisitos e histórias de usuário com IA</h2>
+      <div class="lesson-meta">Leitura · 2h</div>
+      <ul>
+        <li><strong>Do pedido vago à história:</strong> a IA transforma "o cliente não consegue parear" em histórias com critérios de aceite. Peça critérios <em>testáveis</em> e casos de borda (Módulo 7.3).</li>
+        <li><strong>A IA faz as perguntas que faltam:</strong> peça uma lista de ambiguidades e decisões em aberto antes das histórias. É o uso mais valioso, porque expõe o que ninguém decidiu.</li>
+        <li><strong>Evidência, não intuição:</strong> agrupar centenas de chamados de suporte por tema (Módulo 2.7, batch) dá o "alcance" real de um problema. Os 340 chamados de pareamento da reunião do lab vieram daí.</li>
+        <li><strong>Cuidado:</strong> histórias geradas parecem completas e não são. Revise com quem entende o usuário.</li>
+      </ul>
+    </section>
+
+    <section class="lesson" id="aula-2">
+      <h2>13.2 Priorização: o que realmente decide a ordem</h2>
+      <div class="lesson-meta">Leitura + lab · 2h</div>
+      <div class="exercise">
+        <h4>LAB 13.2 — RICE com análise de sensibilidade</h4>
+<pre data-lang="saída"><code>#   item                                             RICE
+1   Corrigir travamento ao abrir programações       10000
+2   Aviso de rede 5 GHz no pareamento                7200
+3   Modo escuro no app                               1800
+...
+Se alcance e esforço puderem errar ±50% (5000 simulações):
+item                                         chance de ser o 1º  posição típica
+Corrigir travamento ao abrir programações                   70%       1–2
+Aviso de rede 5 GHz no pareamento                           30%       1–2
+Modo escuro no app                                           0%       3–4
+Assistente de IA no suporte do app                           0%       3–5</code></pre>
+        <p>
+          A discussão "o travamento ou o aviso de 5 GHz primeiro?" é quase um empate dentro da incerteza.
+          Já o "assistente de IA no suporte", que costuma gerar entusiasmo, não chega ao topo em nenhuma das
+          5 mil simulações. O lab mostra onde vale gastar tempo: melhorar as estimativas que mudam a decisão,
+          não debater as que não mudam.
+        </p>
+      </div>
+      <p>O mesmo raciocínio vale para WSJF (custo do atraso ÷ tamanho) ou MoSCoW. A IA ajuda a estimar e a explicar; a ordem final é decisão de produto.</p>
+          <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Na análise de sensibilidade do RICE, dois itens dividem o 1º lugar em 70% e 30% das simulações. O que isso indica?</p>
+          <button type="button">Que o primeiro deve ser feito com certeza</button>
+          <button type="button" data-certa>Que a escolha entre eles está dentro da incerteza das estimativas; vale melhorar essas estimativas ou decidir por outro critério</button>
+          <button type="button">Que o RICE não funciona</button>
+          <p class="why">Quando a ordem muda com erros plausíveis nas estimativas, debater a ordem rende menos que medir melhor o alcance ou o esforço.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="lesson" id="aula-3">
+      <h2>13.3 Reuniões: decisões e tarefas verificáveis</h2>
+      <div class="lesson-meta">Leitura + lab · 3h</div>
+      <p>
+        Resumir uma reunião é fácil; o risco é a ata inventar uma tarefa, um responsável ou um prazo que
+        ninguém disse. O lab exige que cada item cite o trecho exato da transcrição, e o
+        <strong>código confere</strong> se o trecho existe. Item sem citação real não vai para o board.
+      </p>
+<pre data-lang="bash"><code>python 01_reuniao_para_tarefas.py         # gera tarefas_board.csv</code></pre>
+      <p>Na transcrição de exemplo, uma boa extração separa:</p>
+      <ul>
+        <li><strong>Tarefas com dono e prazo:</strong> aviso de 5 GHz (Elisa, versão de 15/11); código da etapa nos logs (Diego, sexta); falar com o jurídico (Carla, esta semana).</li>
+        <li><strong>Decisão:</strong> adiar o plano anual para dezembro.</li>
+        <li><strong>Risco:</strong> plano anual junto com a Black Friday sobrecarregar o checkout.</li>
+        <li><strong>Pendência sem dono:</strong> revisar as notas da loja de aplicativos. Não vira tarefa de ninguém por conta própria.</li>
+      </ul>
+      <div class="callout"><b>Privacidade em reuniões</b>Gravações e transcrições têm dados pessoais e, às vezes, sigilosos. Avise os participantes, defina retenção e quem acessa, e não mande para ferramentas sem contrato adequado (Módulo 12).</div>
+    </section>
+
+    <section class="lesson" id="aula-4">
+      <h2>13.4 Previsão de prazos com Monte Carlo</h2>
+      <div class="lesson-meta">Leitura + lab · 2h</div>
+<pre data-lang="saída"><code>Vazão histórica: [4, 6, 3, 5, 7, 2, 5, 4, 6, 5, 3, 8, 4, 5, 6, 4] (média 4.8 itens/semana)
+Itens restantes: 42 · início: 02/11/2026
+
+ confiança  semanas         data
+       50%        9 04/01/2027
+       70%       10 11/01/2027
+       85%       10 11/01/2027
+       95%       11 18/01/2027</code></pre>
+      <p>
+        Em vez de estimar cada tarefa em horas, o lab usa quantos itens o time realmente conclui por semana
+        e simula 10 mil futuros possíveis. Comunique a data de 85% para compromissos externos e a de 50%
+        como meta interna. A IA entra antes disso: quebrar épicos em itens de tamanho parecido e detectar
+        dependências que a simulação não vê.
+      </p>
+          <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Para um compromisso com cliente, qual data da previsão Monte Carlo comunicar?</p>
+          <button type="button">A de 50%, porque é a mais provável</button>
+          <button type="button" data-certa>A de 85% ou mais, deixando a de 50% como meta interna</button>
+          <button type="button">A data da média, sem mencionar incerteza</button>
+          <p class="why">A de 50% falha metade das vezes. Compromissos externos usam um percentil alto.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="lesson" id="aula-5">
+      <h2>13.5 Relatórios de status e automação de ferramentas</h2>
+      <div class="lesson-meta">Leitura · 3h</div>
+      <ul>
+        <li><strong>Um relatório, vários públicos:</strong> o mesmo dado de sprint vira um parágrafo para a diretoria (risco e data), uma lista para o time (bloqueios) e um e-mail para o cliente. Gere a partir dos dados do board, não da memória de alguém.</li>
+        <li><strong>Automação de ferramentas:</strong> Jira, Linear, Trello, Notion e Slack têm APIs e, cada vez mais, servidores MCP (Módulo 5). Um agente pode criar e atualizar cards, com as mesmas regras do Módulo 6: escrita registrada e ações em massa só com aprovação.</li>
+        <li><strong>Rastreabilidade:</strong> cada card criado por IA guarda a origem (a citação da reunião, o chamado, o documento).</li>
+        <li><strong>Métricas que importam:</strong> tempo de ciclo, vazão, itens bloqueados. A IA ajuda a explicar variações ("por que a vazão caiu?"), não a substituir a conversa com o time.</li>
+      </ul>
+    </section>
+
+    <section class="lesson" id="projeto">
+      <h2>Projeto do módulo: da reunião ao board</h2>
+      <div class="lesson-meta">Projeto · 6h</div>
+      <ol>
+        <li>Use o lab 13.3 com transcrições reais (com consentimento) de 3 reuniões. Meça quantas tarefas foram descartadas por citação inválida e quantas estavam corretas.</li>
+        <li>Envie as tarefas válidas para uma ferramenta real (API ou servidor MCP), com confirmação antes de criar.</li>
+        <li>Gere um relatório semanal para dois públicos a partir dos dados do board.</li>
+        <li>Rode a previsão Monte Carlo com o histórico real do seu time e compare com a estimativa que vocês dariam.</li>
+      </ol>
+      <h3>Critérios de avaliação</h3>
+      <table>
+        <tr><th>Critério</th><th>Peso</th></tr>
+        <tr><td>Extração verificável, com medição de acerto</td><td>35%</td></tr>
+        <tr><td>Integração com ferramenta real, com confirmação</td><td>25%</td></tr>
+        <tr><td>Relatórios para públicos diferentes</td><td>20%</td></tr>
+        <tr><td>Previsão com dados reais</td><td>20%</td></tr>
+      </table>
+    </section>
+
+    <section class="lesson" id="recursos">
+      <h2>Recursos para aprofundar</h2>
+      <div class="lesson-meta">Gratuitos</div>
+      <ul class="resources">
+        <li><a href="https://www.intercom.com/blog/rice-simple-prioritization-for-product-managers/" target="_blank" rel="noopener">RICE: simple prioritization for product managers</a> <small>· o artigo original do método</small></li>
+        <li><a href="https://www.actionableagile.com/" target="_blank" rel="noopener">ActionableAgile</a> <small>· previsão por fluxo e Monte Carlo</small></li>
+        <li><a href="https://modelcontextprotocol.io" target="_blank" rel="noopener">MCP</a> <small>· para conectar agentes a Jira, Linear, Notion e Slack</small></li>
+      </ul>
+      <nav class="pager">
+        <a href="../modulo-12/"><small>← Módulo anterior</small>12 · Segurança e Governança</a>
+        <a class="next" href="../modulo-14/"><small>Próximo módulo →</small>14 · Projeto Integrador</a>
+      </nav>
+    </section>
+  </main>
+</div>
+<footer class="foot"><a href="/">triadic.life</a> · <a href="../">Engenharia de IA Aplicada</a> · <a href="https://github.com/MarciodeCampos/o-arco/tree/main/curso-ia/codigo/modulo-13" target="_blank" rel="noopener">código do módulo</a></footer>
+<script src="../assets/curso.js"></script>
+</body>
+</html>
