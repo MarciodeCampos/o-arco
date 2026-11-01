@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050508">
+<meta name="description" content="Módulo 8 — IA no Front-end, UX e Multimodal: padrões de UX, chat com streaming, visão, PDFs, voz, ML no navegador, prototipação e testes E2E.">
+<title>Módulo 8 · IA no Front-end, UX e Multimodal — Engenharia de IA Aplicada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/curso.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/">◈ TRIADIC.LIFE</a>
+  <span class="crumbs">/ <a href="../">Engenharia de IA</a> / Módulo 8</span>
+  <span class="spacer"></span>
+  <span class="progress-pill">0/9 aulas</span>
+</header>
+<div class="layout">
+  <aside class="toc">
+    <button class="toc-toggle" type="button">☰ Aulas do módulo</button>
+    <h2>Módulo 8</h2>
+    <nav><ol>
+      <li><a href="#inicio"><span class="chk"></span>Visão geral</a></li>
+      <li><a href="#aula-1"><span class="chk"></span>8.1 UX para IA</a></li>
+      <li><a href="#aula-2"><span class="chk"></span>8.2 Chat com streaming</a></li>
+      <li><a href="#aula-3"><span class="chk"></span>8.3 Visão e documentos</a></li>
+      <li><a href="#aula-4"><span class="chk"></span>8.4 Áudio e voz</a></li>
+      <li><a href="#aula-5"><span class="chk"></span>8.5 ML no navegador</a></li>
+      <li><a href="#aula-6"><span class="chk"></span>8.6 Prototipação com IA</a></li>
+      <li><a href="#aula-7"><span class="chk"></span>8.7 Testes de ponta a ponta</a></li>
+      <li><a href="#projeto"><span class="chk"></span>Projeto do módulo</a></li>
+      <li><a href="#recursos"><span class="chk"></span>Recursos</a></li>
+    </ol></nav>
+  </aside>
+  <main class="content" data-modulo="modulo-08">
+    <section id="inicio">
+      <header><div class="eyebrow">Módulo 08 · 28h estimadas</div><h1>IA no Front-end, UX e Multimodal</h1></header>
+      <p class="lede">
+        A mesma resposta de um modelo pode parecer mágica ou frustrante dependendo da interface. Este
+        módulo cuida da ponta que o usuário vê: respostas em tempo real, incerteza comunicada com
+        honestidade, imagens, documentos e voz como entrada, ML rodando no próprio navegador e testes que
+        provam que tudo funciona num navegador de verdade.
+      </p>
+      <div class="meta"><span class="tag">7 aulas</span><span class="tag">2 labs + app completo</span><span class="tag">Back-end Node + front sem framework</span><span class="tag">Pré-requisito: Módulo 2</span></div>
+      <h3>Ao final do módulo você vai</h3>
+      <ul>
+        <li>Aplicar padrões de UX específicos de IA: streaming, estados, incerteza, cancelamento.</li>
+        <li>Construir chat com streaming ponta a ponta, com a chave da API protegida no back-end.</li>
+        <li>Extrair dados de fotos e PDFs, com saída estruturada e citações.</li>
+        <li>Integrar voz e ML no navegador como melhorias progressivas.</li>
+        <li>Testar a experiência completa com Playwright.</li>
+      </ul>
+<pre data-lang="bash"><code>cd o-arco/curso-ia/codigo/modulo-08
+pip install -r python/requirements.txt
+cd projeto &amp;&amp; npm install &amp;&amp; npm test     # 10 testes, incluindo navegador (se o Playwright estiver instalado)
+npm run dev                                 # http://127.0.0.1:3000 (precisa de ANTHROPIC_API_KEY)</code></pre>
+    </section>
+
+    <section class="lesson" id="aula-1">
+      <h2>8.1 Padrões de UX para produtos com IA</h2>
+      <div class="lesson-meta">Leitura · 2h</div>
+      <table>
+        <tr><th>Problema</th><th>Padrão</th></tr>
+        <tr><td>Espera longa e tela parada</td><td><strong>Streaming</strong> + indicador de "gerando"; mostrar o tempo até o 1º token</td></tr>
+        <tr><td>Resposta indo para o lado errado</td><td><strong>Botão parar</strong> sempre visível durante a geração (e cancelar no servidor também)</td></tr>
+        <tr><td>Usuário não sabe se pode confiar</td><td><strong>Citações e fontes</strong> clicáveis (Módulo 4); confiança explícita em extrações</td></tr>
+        <tr><td>IA errou e agiu</td><td><strong>Desfazer</strong> e confirmação antes de ações; prévia do que vai acontecer</td></tr>
+        <tr><td>Falha de rede ou da API</td><td><strong>Estados de erro claros</strong>, com o que fazer; nunca uma bolha vazia</td></tr>
+        <tr><td>Expectativa irreal</td><td>Dizer o que o assistente faz e o que <em>não</em> faz; exemplos de perguntas</td></tr>
+        <tr><td>Acessibilidade</td><td><code>aria-live</code> para o texto que chega; respeitar <code>prefers-reduced-motion</code>; teclado em tudo</td></tr>
+      </table>
+      <div class="callout"><b>UI generativa</b>Além de texto, o modelo pode devolver dados estruturados que o front renderiza como componentes (tabelas, cartões, formulários). A regra é a mesma da aula 2.4: o modelo produz dados validados por schema, o seu código decide como desenhar. Nunca renderize HTML gerado pelo modelo direto na página.</div>
+    </section>
+
+    <section class="lesson" id="aula-2">
+      <h2>8.2 Chat com streaming, do servidor ao navegador</h2>
+      <div class="lesson-meta">Leitura + prática · 5h</div>
+      <div class="flow"><span>Navegador (fetch + ReadableStream)</span><i>⇄</i><span>Seu back-end (valida, limita, guarda a chave)</span><i>⇄</i><span>API do LLM (stream)</span></div>
+      <h3>No servidor (<code>src/servidor.ts</code>)</h3>
+<pre data-lang="typescript"><code>res.writeHead(200, { "content-type": "text/event-stream" });
+const stream = client.messages.stream({ model, max_tokens: 4000, system: SISTEMA, messages });
+res.on("close", () =&gt; stream.abort());                     // usuário saiu: para de pagar tokens
+stream.on("text", (pedaco) =&gt; res.write(`event: texto\ndata: ${JSON.stringify({ pedaco })}\n\n`));
+const final = await stream.finalMessage();
+res.write(`event: fim\ndata: ${JSON.stringify({ stop_reason: final.stop_reason })}\n\n`);</code></pre>
+      <h3>No navegador (<code>public/app.js</code>)</h3>
+<pre data-lang="javascript"><code>const r = await fetch("/api/chat", { method: "POST", body, signal: controlador.signal });
+for await (const { evento, dados } of lerEventos(r.body)) {
+  if (evento === "texto") bolha.textContent += dados.pedaco;   // textContent, nunca innerHTML
+}
+// botão parar: controlador.abort()</code></pre>
+      <h3>Segurança do front</h3>
+      <ul>
+        <li><strong>A chave nunca vai ao navegador.</strong> Tudo passa pelo back-end, que também fixa o prompt de sistema e o modelo.</li>
+        <li><strong><code>textContent</code>, não <code>innerHTML</code>:</strong> a resposta do modelo pode conter <code>&lt;img onerror=…&gt;</code>, por injeção ou por acaso. Para renderizar Markdown, use uma biblioteca com sanitização.</li>
+        <li><strong>Política de segurança de conteúdo</strong> (<code>Content-Security-Policy: default-src 'self'</code>): mesmo que algo escape, scripts de fora não rodam. Por isso o app não tem nenhum script ou estilo inline.</li>
+        <li><strong>Validação e limites no servidor:</strong> tamanho das mensagens, número de turnos, requisições por minuto por IP.</li>
+      </ul>
+    </section>
+
+    <section class="lesson" id="aula-3">
+      <h2>8.3 Visão: fotos, telas e documentos</h2>
+      <div class="lesson-meta">Leitura + labs · 4h</div>
+      <p>
+        Modelos multimodais leem imagens e PDFs diretamente: notas fiscais, etiquetas, prints de erro,
+        gráficos, contratos. Não é preciso OCR separado, e o modelo entende layout e contexto.
+      </p>
+      <div class="exercise">
+        <h4>LAB 8.3 — Foto de cupom e contrato em PDF</h4>
+<pre data-lang="bash"><code>python python/01_visao.py      # foto torta e borrada (dados/cupom.jpg) → JSON validado
+python python/02_pdf.py        # contrato em PDF → resposta com citação de página</code></pre>
+        <ol>
+          <li>Tire uma foto de um cupom real seu (cubra dados pessoais) e rode o lab. Compare o campo <code>legibilidade</code> com a realidade.</li>
+          <li>Reduza a foto para 400 px de largura e rode de novo. O que acontece com os tokens e com a precisão?</li>
+          <li>No PDF, pergunte algo que o contrato não diz. O modelo admite?</li>
+        </ol>
+      </div>
+      <h3>Boas práticas</h3>
+      <ul>
+        <li><strong>Imagem antes do texto</strong> na mensagem.</li>
+        <li><strong>Resolução:</strong> imagens custam tokens proporcionais ao tamanho. Redimensione no cliente antes de enviar; muito pequena perde detalhe.</li>
+        <li><strong>Confira o tipo real do arquivo</strong>, não só a extensão: o servidor do projeto checa os primeiros bytes (assinatura) e recusa um "PNG" que é texto.</li>
+        <li><strong>Dados sensíveis aparecem em fotos</strong> (documentos, rostos, cartões). Peça ao modelo para sinalizar e defina retenção curta.</li>
+        <li><strong>Peça legibilidade e confiança</strong> na saída: fotos ruins são a maior causa de erro.</li>
+      </ul>
+    </section>
+
+    <section class="lesson" id="aula-4">
+      <h2>8.4 Áudio e voz</h2>
+      <div class="lesson-meta">Leitura · 2h</div>
+      <table>
+        <tr><th>Peça</th><th>Opções</th><th>Cuidados</th></tr>
+        <tr><td><strong>Fala → texto</strong> (STT)</td><td>APIs de transcrição (Whisper e similares, provedores de nuvem); Web Speech API do navegador</td><td>Sotaques, ruído, nomes próprios; latência</td></tr>
+        <tr><td><strong>Texto → fala</strong> (TTS)</td><td>APIs de voz neural; <code>speechSynthesis</code> do navegador</td><td>Leia respostas curtas; listas e tabelas não funcionam em voz</td></tr>
+        <tr><td><strong>Agentes de voz em tempo real</strong></td><td>APIs de áudio em tempo real dos provedores, WebRTC</td><td>Interrupções ("barge-in"), latência abaixo de ~1 s, custo por minuto</td></tr>
+      </table>
+      <p>
+        O app do projeto usa a Web Speech API como <strong>melhoria progressiva</strong>: o botão de microfone
+        só aparece se o navegador suportar, e o usuário pode sempre digitar. Voz muda o design das respostas:
+        frases curtas, sem formatação visual, confirmação falada antes de ações.
+      </p>
+    </section>
+
+    <section class="lesson" id="aula-5">
+      <h2>8.5 ML rodando no navegador</h2>
+      <div class="lesson-meta">Leitura · 2h</div>
+      <p>
+        Nem tudo precisa de um LLM na nuvem. Modelos pequenos rodam no próprio navegador (WebAssembly e
+        WebGPU), sem custo por chamada e sem os dados saírem do dispositivo: classificação de sentimento,
+        detecção de idioma, embeddings para busca local, detecção de objetos e pose em vídeo.
+      </p>
+<pre data-lang="javascript"><code>// Transformers.js: o modelo é baixado uma vez e fica em cache no navegador
+import { pipeline } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.2";
+const classificar = await pipeline("sentiment-analysis", "Xenova/bert-base-multilingual-uncased-sentiment");
+console.log(await classificar("O produto chegou rápido e funciona muito bem!"));</code></pre>
+      <ul>
+        <li><strong>Bibliotecas:</strong> Transformers.js (modelos do Hugging Face), TensorFlow.js, ONNX Runtime Web, MediaPipe (visão em tempo real).</li>
+        <li><strong>Quando faz sentido:</strong> privacidade, uso offline, latência mínima, altíssimo volume de tarefas simples.</li>
+        <li><strong>Custos escondidos:</strong> download do modelo (dezenas a centenas de MB), bateria, desempenho desigual entre aparelhos.</li>
+        <li><strong>Padrão híbrido:</strong> filtro ou classificação no navegador, LLM na nuvem só quando necessário.</li>
+      </ul>
+    </section>
+
+    <section class="lesson" id="aula-6">
+      <h2>8.6 Prototipação e design assistidos por IA</h2>
+      <div class="lesson-meta">Leitura · 2h</div>
+      <ul>
+        <li><strong>Texto → interface:</strong> ferramentas geram telas a partir de descrição. Ótimas para explorar alternativas rápido; o resultado é ponto de partida, não produto.</li>
+        <li><strong>Design → código:</strong> de um arquivo de design ou de um print para componentes. Funciona melhor com um design system definido (cores, espaçamentos, componentes), que você passa como contexto.</li>
+        <li><strong>Agentes de código no front</strong> (Módulo 7): o arquivo de contexto deve trazer os componentes existentes e as regras de acessibilidade, para o agente reaproveitar em vez de inventar.</li>
+        <li><strong>Revise o que a IA esquece:</strong> estados vazios, de erro e de carregamento; teclado; contraste; textos longos; telas pequenas.</li>
+      </ul>
+    </section>
+
+    <section class="lesson" id="aula-7">
+      <h2>8.7 Testes de ponta a ponta</h2>
+      <div class="lesson-meta">Leitura + prática · 3h</div>
+      <p>
+        O <code>test/e2e.test.ts</code> abre um Chromium de verdade com Playwright, digita uma pergunta, espera
+        o texto chegar em streaming, clica em "parar", envia uma imagem e confere a tabela de resultado. A
+        API é falsa (<code>test/api-falsa.ts</code> imita até os eventos SSE), então o teste é rápido,
+        gratuito e determinístico, e falha se houver <strong>qualquer erro no console</strong>, inclusive
+        violações da política de segurança.
+      </p>
+<pre data-lang="typescript"><code>await pagina.fill("#entrada", "Qual o prazo para o interior de MG?");
+await pagina.keyboard.press("Enter");
+await pagina.locator(".msg.assistant").getByText("4 a 7 dias úteis").waitFor();
+await pagina.locator("#parar").click();
+assert.deepEqual(erros, [], "sem erros no console");</code></pre>
+      <p>
+        Agentes também podem testar interfaces: um agente com ferramentas de navegador explora o app como um
+        usuário e relata problemas. É um complemento útil (acha o que você não pensou em testar), mas não
+        substitui testes determinísticos no CI.
+      </p>
+    </section>
+
+    <section class="lesson" id="projeto">
+      <h2>Projeto do módulo: assistente multimodal</h2>
+      <div class="lesson-meta">Projeto · 10h · TypeScript + HTML/CSS/JS</div>
+      <table>
+        <tr><th>Arquivo</th><th>Responsabilidade</th></tr>
+        <tr><td><code>src/servidor.ts</code></td><td>Proxy da API: chat em SSE com cancelamento, análise de imagem estruturada, validação, limite por IP, checagem de assinatura de arquivo, CSP, proteção contra <code>../</code></td></tr>
+        <tr><td><code>public/</code></td><td>Interface sem framework: streaming, parar, estados, voz progressiva, upload com prévia e limite de tamanho</td></tr>
+        <tr><td><code>test/servidor.test.ts</code></td><td>9 testes do servidor com API falsa (inclusive SSE)</td></tr>
+        <tr><td><code>test/e2e.test.ts</code></td><td>Teste no navegador com Playwright</td></tr>
+      </table>
+      <p>
+        Os testes acharam três bugs reais durante a construção: uma lista vazia de mensagens derrubava a
+        validação com erro 500, imagens SVG recebiam o código de erro errado, e um upload grande demais
+        deixava a conexão num estado que quebrava a requisição seguinte. Os três estão corrigidos e
+        cobertos.
+      </p>
+      <h3>Entregáveis</h3>
+      <ol>
+        <li>Renderize Markdown nas respostas com uma biblioteca de sanitização e prove com um teste que <code>&lt;img src=x onerror=alert(1)&gt;</code> não executa.</li>
+        <li>Adicione citações clicáveis usando o RAG do Módulo 4 como fonte.</li>
+        <li>Redimensione imagens no navegador (canvas) antes do envio e meça a economia de tokens.</li>
+        <li>Adicione histórico persistente por usuário (no servidor) com opção de apagar.</li>
+        <li>Faça um teste de acessibilidade (navegação só por teclado e leitor de tela) e corrija o que achar.</li>
+      </ol>
+      <h3>Critérios de avaliação</h3>
+      <table>
+        <tr><th>Critério</th><th>Peso</th></tr>
+        <tr><td>Markdown seguro com teste de XSS</td><td>25%</td></tr>
+        <tr><td>Citações integradas ao RAG</td><td>20%</td></tr>
+        <tr><td>Redimensionamento com medição</td><td>15%</td></tr>
+        <tr><td>Histórico persistente com exclusão</td><td>20%</td></tr>
+        <tr><td>Acessibilidade</td><td>20%</td></tr>
+      </table>
+    </section>
+
+    <section class="lesson" id="recursos">
+      <h2>Recursos para aprofundar</h2>
+      <div class="lesson-meta">Todos gratuitos</div>
+      <ul class="resources">
+        <li><a href="https://pair.withgoogle.com/guidebook/" target="_blank" rel="noopener">People + AI Guidebook</a> <small>· padrões de UX para produtos com IA</small></li>
+        <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Server-sent_events" target="_blank" rel="noopener">MDN — Server-Sent Events</a> e <a href="https://developer.mozilla.org/pt-BR/docs/Web/HTTP/CSP" target="_blank" rel="noopener">CSP</a></li>
+        <li><a href="https://huggingface.co/docs/transformers.js" target="_blank" rel="noopener">Transformers.js</a> <small>· modelos no navegador</small></li>
+        <li><a href="https://playwright.dev" target="_blank" rel="noopener">Playwright</a> <small>· testes de ponta a ponta</small></li>
+        <li><a href="https://platform.claude.com/docs" target="_blank" rel="noopener">Documentação da API</a> <small>· visão, PDFs, citações e streaming</small></li>
+      </ul>
+      <nav class="pager">
+        <a href="../modulo-07/"><small>← Módulo anterior</small>7 · Agentes de Código</a>
+        <a class="next" href="../modulo-09/"><small>Próximo módulo →</small>9 · Arquitetura e LLMOps</a>
+      </nav>
+    </section>
+  </main>
+</div>
+<footer class="foot"><a href="/">triadic.life</a> · <a href="../">Engenharia de IA Aplicada</a> · <a href="https://github.com/MarciodeCampos/o-arco/tree/main/curso-ia/codigo/modulo-08" target="_blank" rel="noopener">código do módulo</a></footer>
+<script src="../assets/curso.js"></script>
+</body>
+</html>

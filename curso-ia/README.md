@@ -27,6 +27,7 @@ curso-ia/
 ├── modulo-05/index.html  aulas do módulo 5
 ├── modulo-06/index.html  aulas do módulo 6
 ├── modulo-07/index.html  aulas do módulo 7
+├── modulo-08/index.html  aulas do módulo 8
 └── codigo/
     ├── modulo-01/
     │   ├── python/       labs e projeto (NumPy + SDK anthropic)
@@ -50,10 +51,14 @@ curso-ia/
     ├── modulo-06/
     │   ├── python/       labs: padrões de workflow, tool runner, custo de agentes
     │   └── projeto/      agente do zero, supervisor multiagente, memória e evals de trajetória
-    └── modulo-07/
-        ├── python/       verificador de código gerado, revisor de diff com LLM
-        ├── modelo-repo/  repositório pronto para agentes (CLAUDE.md, hooks, skill, subagente, spec)
-        └── solucao-referencia/  implementação de referência da spec de cupons
+    ├── modulo-07/
+    │   ├── python/       verificador de código gerado, revisor de diff com LLM
+    │   ├── modelo-repo/  repositório pronto para agentes (CLAUDE.md, hooks, skill, subagente, spec)
+    │   └── solucao-referencia/  implementação de referência da spec de cupons
+    └── modulo-08/
+        ├── python/       labs: visão (foto de cupom) e PDF com citações
+        ├── dados/        foto de cupom e contrato em PDF de exemplo
+        └── projeto/      app multimodal: chat com streaming, análise de imagem, testes E2E
 ```
 
 ## Status
@@ -67,7 +72,8 @@ curso-ia/
 | 05 · MCP — Model Context Protocol | ✅ pronto |
 | 06 · Agentes de IA | ✅ pronto |
 | 07 · Agentes de Código | ✅ pronto |
-| 08 – 15 | planejados (ver `curriculo.json`) |
+| 08 · IA no Front-end, UX e Multimodal | ✅ pronto |
+| 09 – 15 | planejados (ver `curriculo.json`) |
 
 ## Rodando os labs do Módulo 1
 

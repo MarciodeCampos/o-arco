@@ -174,18 +174,18 @@
       "slug": "modulo-08",
       "titulo": "IA no Front-end, UX e Multimodal",
       "horas": 28,
-      "status": "planejado",
+      "status": "pronto",
       "resumo": "Interfaces que conversam: chat com streaming, UI generativa, visão, áudio e voz, ML no navegador e prototipação assistida por IA.",
       "unidades": [
-        "Padrões de UX para IA: streaming, incerteza, citações, desfazer",
-        "Chat e UI generativa no front-end (React/Angular) com back-end seguro",
-        "Visão: OCR inteligente, análise de imagem e de documentos",
-        "Áudio e voz: transcrição, síntese e agentes de voz em tempo real",
-        "ML no navegador (TensorFlow.js, Transformers.js, WebGPU)",
-        "Prototipação e design assistidos por IA (texto→UI, Figma→código)",
-        "Testes E2E com agentes"
+        "Padrões de UX para produtos com IA",
+        "Chat com streaming, do servidor ao navegador",
+        "Visão: fotos, telas e documentos",
+        "Áudio e voz",
+        "ML rodando no navegador",
+        "Prototipação e design assistidos por IA",
+        "Testes de ponta a ponta"
       ],
-      "projeto": "App web multimodal: envie uma foto/áudio e receba análise estruturada em streaming",
+      "projeto": "Assistente multimodal: chat em streaming com cancelamento, análise estruturada de imagens, back-end protegido e testes no navegador",
       "melhorias": [
         "Junta Multimodal (Mód. 2) e UX/UI (Mód. 5) originais",
         "Sem dependência de um único provedor de nuvem"
