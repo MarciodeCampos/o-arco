@@ -137,7 +137,7 @@ npm run aceitacao                                     # falha de propósito: é 
 # peça ao agente: "Implemente specs/cupons.md até npm run aceitacao passar. Siga o CLAUDE.md."
 npm run aceitacao     # depois: 6 testes passando
 npm run verificar     # e a definição de pronto continua verde</code></pre>
-      <div class="callout warn"><b>O agente vai tentar mudar o teste</b>Quando um teste é difícil de satisfazer, agentes às vezes "ajustam" o teste. Por isso a regra está no <code>CLAUDE.md</code> (orientação) <em>e</em> num hook (garantia).</div>
+      <div class="callout warn"><b>O agente vai tentar mudar o teste</b>Quando um teste é difícil de satisfazer, agentes às vezes "ajustam" o teste. Por isso a regra está no <code>CLAUDE.md</code> (orientação) <em>e</em> num hook (bloqueio que não depende do modelo obedecer, mas que só vale para as ações que o hook intercepta; veja 7.4).</div>
     </section>
 
     <section class="lesson" id="aula-4">
@@ -147,7 +147,7 @@ npm run verificar     # e a definição de pronto continua verde</code></pre>
       <table>
         <tr><th>Recurso</th><th>Para quê</th><th>No modelo-repo</th></tr>
         <tr><td><strong>Permissões</strong></td><td>Liberar comandos seguros sem confirmação e proibir os perigosos</td><td><code>.claude/settings.json</code>: libera <code>npm test</code>, proíbe <code>git push</code>, <code>curl</code> e leitura de <code>.env</code></td></tr>
-        <tr><td><strong>Hooks</strong></td><td>Código que roda antes ou depois de ações do agente. Impõe regras que não dependem do modelo obedecer</td><td><code>proteger_arquivos.py</code> bloqueia edições em <code>.env</code>, testes existentes, testes de aceitação e CI; outro hook roda o typecheck após cada edição</td></tr>
+        <tr><td><strong>Hooks</strong></td><td>Código que roda antes ou depois de ações do agente. Impõe regras que não dependem do modelo obedecer, <em>nas ações que ele intercepta</em></td><td><code>proteger_arquivos.py</code> bloqueia edições em <code>.env</code>, testes existentes, testes de aceitação e CI; outro hook roda o typecheck após cada edição</td></tr>
         <tr><td><strong>Skills</strong></td><td>Procedimentos especializados que o agente carrega quando a tarefa pede</td><td><code>nova-regra-de-frete</code>: o passo a passo para mudar regras de frete e cupom</td></tr>
         <tr><td><strong>Subagentes</strong></td><td>Agentes com papel, ferramentas e contexto próprios</td><td><code>revisor</code>: só lê, revisa o diff com foco em dinheiro e casos de borda</td></tr>
       </table>
@@ -163,6 +163,14 @@ echo '{"tool_name":"Write","tool_input":{"file_path":"test/cupons.test.ts"}}' | 
         impediria o agente de cumprir a regra do <code>CLAUDE.md</code> "toda regra nova vem com testes".
         Regras de agentes também têm bugs; teste-as como qualquer código.
       </p>
+      <div class="callout warn"><b>O alcance de um hook é o alcance do seu matcher</b>
+        Este hook está ligado a <code>Edit|Write</code>. Ele bloqueia o agente de editar um teste com essas
+        ferramentas, mas não vê um <code>sed -i</code>, um <code>echo &gt;</code> ou um script rodado pelo terminal,
+        que passam pela ferramenta <code>Bash</code>. Um hook protege exatamente as operações que cobre, e nada além.
+        Por isso a proteção real é em camadas: o hook para o caminho comum; as permissões e o sandbox limitam o
+        terminal; e o CI confere o resultado, por exemplo falhando o PR quando um arquivo de teste existente mudou.
+        Faça o exercício: peça ao agente para "ajustar" um teste e veja por qual caminho ele tenta.
+      </div>
       <p>A sintaxe exata de configuração muda entre versões: confira a documentação da ferramenta que você usa.</p>
     </section>
 

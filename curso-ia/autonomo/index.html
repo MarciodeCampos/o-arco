@@ -115,6 +115,7 @@
         <ul>
           <li>No Linux, o sandbox precisa de dois programas (<code>bubblewrap</code> e <code>socat</code>). Sem eles, o Claude Code roda sem sandbox, em silêncio. O plugin confere e instala.</li>
           <li>Regras de texto podem ser contornadas escrevendo um comando de um jeito incomum. Por isso há três camadas: regras, o classificador do modo auto e, nos seus projetos do GitHub, a proteção da branch principal.</li>
+          <li>Ler também tem risco. Tudo o que o Claude lê (um arquivo baixado, uma página, um log) entra no contexto dele, e pode conter instruções escritas por outra pessoa para enganá-lo. As barreiras limitam o que ele consegue fazer depois, mas não impedem que ele leia algo malicioso.</li>
           <li>O modo "autonomia total, sem nenhuma checagem" só é configurado dentro de um contêiner ou na nuvem, nunca direto no seu computador.</li>
         </ul>
       </details>
@@ -144,7 +145,7 @@
       <details><summary>Quanto custa?</summary><p>O plugin é gratuito. O uso do Claude depende do seu plano; dentro do Claude Code, <code>/usage</code> mostra o consumo. Plataformas de publicação têm planos gratuitos; o Claude avisa antes de qualquer coisa que possa gerar cobrança.</p></details>
       <details><summary>Posso desfazer?</summary><p>Sim. O Claude faz backup das configurações antes de mudar e explica como restaurar. Para remover o plugin: <code>claude plugin uninstall autonomo@o-arco</code>.</p></details>
       <details><summary>Funciona no Windows?</summary><p>Sim, com uma ressalva: o sandbox não existe no Windows nativo. As regras de proteção funcionam; para a proteção completa, o Claude recomenda o WSL ou um contêiner.</p></details>
-      <details><summary>O Claude vê minhas senhas?</summary><p>Ele nunca pede senhas na conversa. Logins acontecem no navegador, senhas do computador são digitadas por você no terminal, e chaves de serviços vão para arquivos e painéis que o Claude é bloqueado de ler.</p></details>
+      <details><summary>O Claude vê minhas senhas?</summary><p>Ele nunca pede senhas na conversa. Logins acontecem no navegador, senhas do computador são digitadas por você no terminal, e chaves de serviços vão para arquivos e painéis que o Claude é configurado para não ler. As barreiras foram testadas nos casos da tabela acima e têm os limites descritos ali.</p></details>
       <details><summary>Quero entender os termos</summary><p>Veja o <a href="../glossario/">mapa de componentes e glossário</a> e o módulo <a href="../pre-01/">P1 · IA sem mistério</a>.</p></details>
       <nav class="pager">
         <a href="../"><small>← Voltar</small>Engenharia de IA Aplicada</a>

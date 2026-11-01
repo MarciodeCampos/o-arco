@@ -374,7 +374,26 @@
       "projeto": "Diagnóstico do seu trabalho: três tarefas para delegar ao Claude, com critério de pronto e riscos",
       "melhorias": [],
       "aulas": 8
+    },
+    {
+      "numero": 2,
+      "slug": "pre-02",
+      "titulo": "Preparação: terminal, arquivos e Git",
+      "horas": 8,
+      "status": "pronto",
+      "resumo": "Para quem ainda não programa: abrir o terminal, andar pelas pastas, instalar Git, Node e Python, usar Git e GitHub e criar o primeiro projeto. Exemplos para Windows (PowerShell) e para Mac e Linux (bash), com tabela de equivalências.",
+      "unidades": [
+        "O terminal: o que é e como abrir",
+        "Pastas, arquivos e caminhos",
+        "Instalar Git, Node e Python (winget, Homebrew, apt)",
+        "Git e GitHub em cinco comandos",
+        "PowerShell e bash: tabela de equivalências",
+        "O primeiro projeto"
+      ],
+      "projeto": "Computador pronto para o Módulo 1: versões conferidas, preparação do Módulo 1 rodando e um repositório seu no GitHub",
+      "melhorias": [],
+      "aulas": 8
     }
   ],
-  "cargaHorariaPreliminares": 8
+  "cargaHorariaPreliminares": 16
 }

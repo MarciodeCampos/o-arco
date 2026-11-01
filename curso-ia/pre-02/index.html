@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050508">
+<meta name="description" content="Módulo P2 — Preparação para quem está começando: terminal, pastas e arquivos, instalação de Git, Node e Python, Git e GitHub, diferenças entre PowerShell e bash, e o primeiro projeto.">
+<title>P2 · Preparação: terminal, arquivos e Git — Engenharia de IA Aplicada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/curso.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/">◈ TRIADIC.LIFE</a>
+  <span class="crumbs">/ <a href="../">Engenharia de IA</a> / P2</span>
+  <span class="spacer"></span>
+  <span class="progress-pill">0/8 aulas</span>
+</header>
+<div class="layout">
+  <aside class="toc">
+    <button class="toc-toggle" type="button">☰ Aulas do módulo</button>
+    <h2>Módulo P2</h2>
+    <nav><ol>
+      <li><a href="#inicio"><span class="chk"></span>Visão geral</a></li>
+      <li><a href="#aula-1"><span class="chk"></span>P2.1 O terminal</a></li>
+      <li><a href="#aula-2"><span class="chk"></span>P2.2 Pastas e arquivos</a></li>
+      <li><a href="#aula-3"><span class="chk"></span>P2.3 Instalar as ferramentas</a></li>
+      <li><a href="#aula-4"><span class="chk"></span>P2.4 Git e GitHub</a></li>
+      <li><a href="#aula-5"><span class="chk"></span>P2.5 PowerShell e bash</a></li>
+      <li><a href="#aula-6"><span class="chk"></span>P2.6 Primeiro projeto</a></li>
+      <li><a href="#projeto"><span class="chk"></span>Projeto do módulo</a></li>
+      <li><a href="#recursos"><span class="chk"></span>Recursos</a></li>
+    </ol></nav>
+  </aside>
+  <main class="content" data-modulo="pre-02">
+    <section id="inicio">
+      <header><div class="eyebrow">Introdução · Módulo P2 · 8h estimadas</div><h1>Preparação: terminal, arquivos e Git</h1></header>
+      <p class="lede">
+        O Módulo 1 já pede programação e comandos de terminal. Este módulo é a ponte para quem ainda não
+        tem essa base: abrir o terminal, andar pelas pastas, instalar as ferramentas, usar Git e GitHub e
+        criar um primeiro projeto. Os exemplos aparecem para Windows (PowerShell) e para Mac e Linux (bash),
+        porque os comandos não são iguais.
+      </p>
+      <div class="meta"><span class="tag">6 aulas</span><span class="tag">sem pré-requisito</span><span class="tag">Windows, Mac e Linux</span></div>
+      <div class="callout"><b>Prefere que o Claude faça com você?</b>
+        O plugin <a href="../autonomo/">autonomo</a> faz esta preparação conduzindo você passo a passo, e este
+        módulo explica o que ele está fazendo. Os dois caminhos levam ao mesmo lugar: um computador pronto
+        para o Módulo 1.</div>
+    </section>
+
+    <section class="lesson" id="aula-1">
+      <h2>P2.1 O terminal: o que é e como abrir</h2>
+      <div class="lesson-meta">Leitura + prática · 1h</div>
+      <p>
+        O terminal é uma janela onde você digita comandos em vez de clicar. Cada comando é uma linha: você
+        escreve, aperta Enter, e o programa responde com texto. Os agentes de código, como o Claude Code,
+        trabalham assim, e por isso vale entender o básico mesmo que o Claude digite a maior parte.
+      </p>
+      <table>
+        <tr><th>Sistema</th><th>Como abrir</th><th>Programa que roda os comandos</th></tr>
+        <tr><td>Windows 10 e 11</td><td>Menu Iniciar, digite <em>Terminal</em> (ou <em>PowerShell</em>)</td><td>Windows PowerShell 5.1, que já vem instalado. O PowerShell 7 é uma versão mais nova, instalada à parte</td></tr>
+        <tr><td>Mac</td><td>Spotlight (Cmd + Espaço), digite <em>Terminal</em></td><td>zsh, parecido com o bash</td></tr>
+        <tr><td>Linux</td><td>Ctrl + Alt + T na maioria das distribuições</td><td>bash</td></tr>
+      </table>
+      <p>Três ideias para não se perder:</p>
+      <ul>
+        <li><strong>O terminal sempre está numa pasta.</strong> Ela aparece no começo da linha, por exemplo <code>PS C:\Users\ana&gt;</code> no Windows ou <code>ana@pc:~$</code> no Linux. Os comandos agem sobre essa pasta.</li>
+        <li><strong>Silêncio costuma ser sucesso.</strong> Muitos comandos não escrevem nada quando dá certo. Quando dá errado, a mensagem de erro diz o quê; leia a primeira linha vermelha antes de qualquer coisa.</li>
+        <li><strong>Ctrl + C interrompe</strong> o comando que está rodando. Seta para cima repete o comando anterior.</li>
+      </ul>
+      <div class="exercise">
+        <h4>Prática</h4>
+        <p>Abra o terminal e descubra em que pasta você está:</p>
+<pre data-lang="powershell"><code>Get-Location</code></pre>
+<pre data-lang="bash"><code>pwd</code></pre>
+      </div>
+    </section>
+
+    <section class="lesson" id="aula-2">
+      <h2>P2.2 Pastas, arquivos e caminhos</h2>
+      <div class="lesson-meta">Leitura + prática · 1h</div>
+      <p>
+        Um caminho é o endereço de um arquivo. No Windows ele começa pela letra do disco e usa barra
+        invertida: <code>C:\Users\ana\projetos</code>. No Mac e no Linux começa pela raiz e usa barra normal:
+        <code>/home/ana/projetos</code>. Nos dois, <code>~</code> é a sua pasta pessoal, <code>.</code> é a pasta
+        atual e <code>..</code> é a pasta de cima.
+      </p>
+      <table>
+        <tr><th>O que fazer</th><th>PowerShell (Windows)</th><th>bash / zsh (Mac e Linux)</th></tr>
+        <tr><td>Listar arquivos</td><td><code>ls</code></td><td><code>ls</code></td></tr>
+        <tr><td>Listar incluindo ocultos</td><td><code>Get-ChildItem -Force</code></td><td><code>ls -la</code></td></tr>
+        <tr><td>Entrar numa pasta</td><td><code>cd projetos</code></td><td><code>cd projetos</code></td></tr>
+        <tr><td>Voltar uma pasta</td><td><code>cd ..</code></td><td><code>cd ..</code></td></tr>
+        <tr><td>Criar pasta</td><td><code>mkdir projetos</code></td><td><code>mkdir projetos</code></td></tr>
+        <tr><td>Ver um arquivo de texto</td><td><code>Get-Content README.md</code> (ou <code>cat</code>)</td><td><code>cat README.md</code></td></tr>
+        <tr><td>Abrir a pasta atual no gerenciador de arquivos</td><td><code>explorer .</code></td><td><code>open .</code> (Mac) · <code>xdg-open .</code> (Linux)</td></tr>
+      </table>
+      <div class="callout warn"><b>Arquivos que começam com ponto</b>
+        <code>.env</code>, <code>.gitignore</code> e a pasta <code>.git</code> ficam ocultos por padrão. O
+        <code>.env</code> guarda segredos (chaves de API) e nunca vai para o GitHub; o <code>.gitignore</code> diz
+        ao Git o que ignorar. No Windows, ative "Itens ocultos" na aba Exibir do Explorador de Arquivos.</div>
+    </section>
+
+    <section class="lesson" id="aula-3">
+      <h2>P2.3 Instalar Git, Node e Python</h2>
+      <div class="lesson-meta">Prática · 1h30</div>
+      <p>Os laboratórios usam três ferramentas: <strong>Git</strong> (histórico do código), <strong>Node.js 20+</strong> (TypeScript) e <strong>Python 3.10+</strong>. A forma mais simples de instalar:</p>
+      <h3>Windows</h3>
+<pre data-lang="powershell"><code>winget install --id Git.Git -e
+winget install --id OpenJS.NodeJS.LTS -e
+winget install --id Python.Python.3.12 -e
+winget install --id GitHub.cli -e</code></pre>
+      <h3>Mac</h3>
+<pre data-lang="bash"><code>xcode-select --install     # traz o Git
+brew install node python gh   # requer o Homebrew: https://brew.sh</code></pre>
+      <h3>Linux (Debian e Ubuntu)</h3>
+<pre data-lang="bash"><code>sudo apt update
+sudo apt install git nodejs npm python3 python3-venv gh</code></pre>
+      <p>
+        <strong>Feche e abra o terminal</strong> depois de instalar: só um terminal novo enxerga os programas
+        recém-instalados. Depois confira as versões:
+      </p>
+<pre data-lang="powershell"><code>git --version
+node --version
+python --version
+gh --version</code></pre>
+      <div class="callout"><b>Python no Windows</b>
+        Se <code>python</code> abrir a Microsoft Store em vez de mostrar a versão, o atalho da Store está na frente.
+        Use <code>py</code> no lugar de <code>python</code> (o instalador traz esse lançador), ou desative o atalho em
+        Configurações → Aplicativos → Configurações avançadas de aplicativos → Aliases de execução. Onde o
+        curso escreve <code>python3</code>, no Windows use <code>python</code> ou <code>py</code>.</div>
+      <p>
+        No Linux, versões antigas de distribuição podem trazer um Node anterior ao 20. Confira com
+        <code>node --version</code>; se for menor, siga o instalador oficial em
+        <a href="https://nodejs.org/pt/download" target="_blank" rel="noopener">nodejs.org</a>.
+      </p>
+    </section>
+
+    <section class="lesson" id="aula-4">
+      <h2>P2.4 Git e GitHub em cinco comandos</h2>
+      <div class="lesson-meta">Leitura + prática · 1h30</div>
+      <p>
+        O Git guarda fotografias do seu projeto, chamadas <em>commits</em>. Com elas você vê o que mudou,
+        volta atrás e trabalha em paralelo em <em>branches</em>. O GitHub guarda uma cópia na internet e é
+        onde os agentes abrem pull requests para você revisar.
+      </p>
+      <p>Uma vez por computador, diga ao Git quem você é e conecte o GitHub (o login abre no navegador):</p>
+<pre data-lang="powershell"><code>git config --global user.name "Seu Nome"
+git config --global user.email "voce@exemplo.com"
+gh auth login --web</code></pre>
+      <p>No dia a dia, quase tudo são estes cinco comandos (iguais no PowerShell e no bash):</p>
+      <table>
+        <tr><th>Comando</th><th>O que faz</th></tr>
+        <tr><td><code>git clone &lt;endereço&gt;</code></td><td>Baixa um repositório do GitHub para o seu computador</td></tr>
+        <tr><td><code>git status</code></td><td>Mostra o que mudou desde o último commit. Na dúvida, rode este</td></tr>
+        <tr><td><code>git add &lt;arquivo&gt;</code></td><td>Escolhe o que vai entrar no próximo commit</td></tr>
+        <tr><td><code>git commit -m "mensagem"</code></td><td>Tira a fotografia, com uma frase que diz o que mudou</td></tr>
+        <tr><td><code>git push</code></td><td>Envia os commits para o GitHub</td></tr>
+      </table>
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Você editou dois arquivos e não lembra quais. Qual comando mostra isso sem mudar nada?</p>
+          <button type="button">git commit</button>
+          <button type="button" data-certa>git status</button>
+          <button type="button">git push</button>
+          <p class="why"><code>git status</code> só lê. É o comando mais seguro para se situar antes de qualquer outro.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="lesson" id="aula-5">
+      <h2>P2.5 PowerShell e bash: tabela de equivalências</h2>
+      <div class="lesson-meta">Referência · 1h</div>
+      <p>
+        A maior parte dos comandos do curso está escrita para bash. Nos módulos, cada bloco desses tem um
+        botão <em>No Windows PowerShell</em> com a versão convertida, quando a conversão é direta. Para o
+        resto, use esta tabela. Ela vale para o <strong>Windows PowerShell 5.1</strong>, o que vem no Windows.
+      </p>
+      <table>
+        <tr><th>No bash</th><th>No PowerShell 5.1</th><th>Observação</th></tr>
+        <tr><td><code>cmd1 &amp;&amp; cmd2</code></td><td>Um comando por linha</td><td>O 5.1 não aceita <code>&amp;&amp;</code> (o PowerShell 7 aceita). <code>cmd1; cmd2</code> roda o segundo mesmo se o primeiro falhar</td></tr>
+        <tr><td><code>export CHAVE="valor"</code></td><td><code>$env:CHAVE = "valor"</code></td><td>Vale só para esta janela do terminal</td></tr>
+        <tr><td><code>source .venv/bin/activate</code></td><td><code>.venv\Scripts\Activate.ps1</code></td><td>Veja o aviso sobre scripts abaixo</td></tr>
+        <tr><td><code>python3</code></td><td><code>python</code> ou <code>py</code></td><td>Veja P2.3</td></tr>
+        <tr><td><code>echo $?</code></td><td><code>$LASTEXITCODE</code></td><td>Código de saída do último programa: 0 é sucesso</td></tr>
+        <tr><td><code>ls -la</code></td><td><code>Get-ChildItem -Force</code></td><td><code>ls -la</code> dá erro no PowerShell</td></tr>
+        <tr><td><code>rm -rf pasta</code></td><td><code>Remove-Item -Recurse -Force pasta</code></td><td>Apaga sem lixeira, nos dois. Confira o caminho antes</td></tr>
+        <tr><td><code>cmd | head -20</code></td><td><code>cmd | Select-Object -First 20</code></td><td></td></tr>
+        <tr><td><code>grep texto arquivo</code></td><td><code>Select-String texto arquivo</code></td><td></td></tr>
+        <tr><td><code>which node</code></td><td><code>Get-Command node</code></td><td></td></tr>
+        <tr><td><code>touch arquivo</code></td><td><code>New-Item arquivo</code></td><td></td></tr>
+        <tr><td><code>curl -s url</code></td><td><code>curl.exe -s url</code></td><td>No 5.1, <code>curl</code> sozinho é outro comando (<code>Invoke-WebRequest</code>)</td></tr>
+        <tr><td>Quebra de linha com <code>\</code></td><td>Quebra de linha com <code>`</code> (crase)</td><td>Ou escreva o comando numa linha só</td></tr>
+        <tr><td><code>echo "x" &gt; arquivo</code></td><td><code>Set-Content arquivo "x" -Encoding utf8</code></td><td>No 5.1, <code>&gt;</code> grava em UTF-16, que muitas ferramentas não leem</td></tr>
+      </table>
+      <div class="callout warn"><b>"A execução de scripts foi desabilitada neste sistema"</b>
+        É a mensagem mais comum no Windows, ao ativar o ambiente Python ou ao rodar <code>npm</code>. O
+        Windows bloqueia scripts do PowerShell por padrão. Para liberar os scripts locais e os assinados, só
+        para o seu usuário, rode uma vez:
+<pre data-lang="powershell"><code>Set-ExecutionPolicy -Scope CurrentUser RemoteSigned</code></pre>
+        Scripts baixados da internet sem assinatura continuam bloqueados.</div>
+      <div class="callout"><b>Chave de API permanente</b>
+        <code>$env:ANTHROPIC_API_KEY = "..."</code> some ao fechar o terminal. <code>setx ANTHROPIC_API_KEY "..."</code>
+        grava para os próximos terminais, mas em texto puro nas configurações do seu usuário. Para os labs,
+        prefira definir na sessão ou usar um arquivo <code>.env</code> fora do Git.</div>
+      <p>
+        <strong>Alternativas:</strong> o Git para Windows instala o <em>Git Bash</em>, onde os comandos bash do
+        curso funcionam quase todos como estão. O <a href="https://learn.microsoft.com/pt-br/windows/wsl/install" target="_blank" rel="noopener">WSL</a>
+        roda um Linux completo dentro do Windows e é a opção mais próxima do ambiente dos labs. Escolha um
+        e mantenha: misturar os três confunde caminhos e instalações.
+      </p>
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>No PowerShell 5.1, <code>cd projeto &amp;&amp; npm install</code> dá erro. O que fazer?</p>
+          <button type="button">Trocar <code>&amp;&amp;</code> por <code>|</code></button>
+          <button type="button" data-certa>Rodar <code>cd projeto</code> e depois <code>npm install</code>, em linhas separadas</button>
+          <button type="button">Rodar como administrador</button>
+          <p class="why">O 5.1 não conhece <code>&amp;&amp;</code>. Separando em duas linhas, você também vê se o primeiro comando deu certo antes do segundo.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="lesson" id="aula-6">
+      <h2>P2.6 O primeiro projeto</h2>
+      <div class="lesson-meta">Prática · 1h</div>
+      <p>
+        Com o plugin <a href="../autonomo/">autonomo</a>, <code>/autonomo:novo-projeto</code> cria o projeto já com
+        testes, GitHub e verificação automática. Para fazer à mão e ver cada passo:
+      </p>
+<pre data-lang="powershell"><code>mkdir meu-primeiro-projeto
+cd meu-primeiro-projeto
+git init
+Set-Content README.md "# Meu primeiro projeto" -Encoding utf8
+git add README.md
+git commit -m "Primeiro commit"
+gh repo create meu-primeiro-projeto --private --source . --push</code></pre>
+<pre data-lang="bash"><code>mkdir meu-primeiro-projeto
+cd meu-primeiro-projeto
+git init
+echo "# Meu primeiro projeto" &gt; README.md
+git add README.md
+git commit -m "Primeiro commit"
+gh repo create meu-primeiro-projeto --private --source . --push</code></pre>
+      <p>Abra o endereço que o último comando mostrar: o repositório está no seu GitHub, privado.</p>
+    </section>
+
+    <section class="lesson" id="projeto">
+      <h2>Projeto do módulo: pronto para o Módulo 1</h2>
+      <div class="lesson-meta">Projeto · 1h</div>
+      <p>O módulo está concluído quando você consegue, no seu terminal:</p>
+      <ol>
+        <li>Mostrar as versões de Git, Node (20 ou mais) e Python (3.10 ou mais).</li>
+        <li>Clonar o repositório do curso e rodar a preparação do Módulo 1, usando a versão do seu sistema:</li>
+      </ol>
+<pre data-lang="powershell"><code>git clone https://github.com/MarciodeCampos/o-arco.git
+cd o-arco\curso-ia\codigo\modulo-01
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install -r python\requirements.txt
+cd typescript
+npm install
+cd ..</code></pre>
+      <ol start="3">
+        <li>Rodar o primeiro lab: <code>python python/01_rede_neural_xor.py</code> mostra a perda caindo.</li>
+        <li>Ter o repositório <code>meu-primeiro-projeto</code> no seu GitHub, com um commit.</li>
+      </ol>
+      <p>Anote cada erro que apareceu e como você resolveu. Essa lista é o seu primeiro registro de problemas, e o mesmo hábito vale para depurar agentes mais tarde.</p>
+    </section>
+
+    <section class="lesson" id="recursos">
+      <h2>Recursos para aprofundar</h2>
+      <div class="lesson-meta">Gratuitos</div>
+      <ul class="resources">
+        <li><a href="https://learn.microsoft.com/pt-br/powershell/scripting/overview" target="_blank" rel="noopener">Documentação do PowerShell</a> <small>· em português</small></li>
+        <li><a href="https://git-scm.com/book/pt-br/v2" target="_blank" rel="noopener">Pro Git</a> <small>· livro oficial do Git, em português</small></li>
+        <li><a href="https://cli.github.com/manual/" target="_blank" rel="noopener">Manual do GitHub CLI</a> <small>· o comando <code>gh</code></small></li>
+        <li><a href="https://learn.microsoft.com/pt-br/windows/wsl/install" target="_blank" rel="noopener">Instalar o WSL</a> <small>· Linux dentro do Windows</small></li>
+      </ul>
+      <nav class="pager">
+        <a href="../pre-01/"><small>← Anterior</small>P1 · IA sem mistério</a>
+        <a class="next" href="../modulo-01/"><small>Próximo →</small>Módulo 1 · Fundamentos</a>
+      </nav>
+    </section>
+  </main>
+</div>
+<footer class="foot"><a href="/">triadic.life</a> · <a href="../">Engenharia de IA Aplicada</a> · <a href="../glossario/">Mapa e glossário</a></footer>
+<script src="../assets/curso.js"></script>
+</body>
+</html>

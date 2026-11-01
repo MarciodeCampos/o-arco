@@ -100,6 +100,60 @@
     });
   }
 
+
+  /* ---------------- Windows PowerShell ----------------
+   * Muitos alunos usam o Windows PowerShell 5.1, que não aceita "&&", "export" nem
+   * "source". Para cada bloco bash simples, gera a versão PowerShell (um comando por
+   * linha) dentro de um <details>. Blocos que não dá para converter com segurança
+   * ganham só um aviso com link para a tabela de equivalências (P2.5).
+   */
+  const NAO_CONVERTE = /\|\s*(head|tail|grep|wc|jq|sed|awk)\b|\$\(|\\\s*$|<<|\/dev\/null|\brm -rf\b|\bchmod\b|^\s*[A-Z_]+=\S+\s|\bcurl\b|\bsudo\b|\bapt\b|\bbrew\b/m;
+  const PRECISA = /&&|\bexport [A-Z_]+=|\bsource \S+|\bpython3\b|echo \$\?/;
+
+  function linhaParaPowerShell(linha) {
+    const m = linha.match(/^(.*?)(\s+#.*)?$/);
+    const codigo = m[1];
+    const comentario = (m[2] || "").trim();
+    if (!codigo.trim()) return [linha];
+    const partes = codigo.split("&&").map((p) =>
+      p
+        .trim()
+        .replace(/^export ([A-Z_][A-Z0-9_]*)=(.*)$/, "$$env:$1 = $2")
+        .replace(/^source (\S+)\/bin\/activate$/, (_, d) => `${d.replace(/\//g, "\\")}\\Scripts\\Activate.ps1`)
+        .replace(/\bpython3\b/g, "python")
+        .replace(/;\s*echo \$\?$/, "; $$LASTEXITCODE")
+        .replace(/^echo \$\?$/, "$$LASTEXITCODE"),
+    );
+    if (!comentario) return partes;
+    // Um comando só: o comentário fica na mesma linha. Vários: vai antes, para valer para todos.
+    if (partes.length === 1) return [partes[0] + "   " + comentario];
+    return [comentario, ...partes];
+  }
+
+  function iniciarPowerShell() {
+    if (document.querySelector(".content[data-modulo='pre-02']")) return;
+    const tabela = "../pre-02/#aula-5";
+    document.querySelectorAll('pre[data-lang="bash"]').forEach((pre) => {
+      const original = (pre.querySelector("code") || pre).textContent;
+      if (!PRECISA.test(original)) return;
+      const bloco = document.createElement("details");
+      bloco.className = "pwsh";
+      if (NAO_CONVERTE.test(original)) {
+        bloco.innerHTML = `<summary>No Windows PowerShell</summary><p>Este bloco usa recursos do bash. Use o Git Bash ou o WSL, ou adapte com a <a href="${tabela}">tabela de equivalências</a>.</p>`;
+      } else {
+        const ps = original.split("\n").flatMap(linhaParaPowerShell).join("\n");
+        const novo = document.createElement("pre");
+        novo.setAttribute("data-lang", "powershell");
+        const code = document.createElement("code");
+        code.textContent = ps;
+        novo.appendChild(code);
+        bloco.innerHTML = `<summary>No Windows PowerShell</summary><p>O PowerShell 5.1 não aceita <code>&amp;&amp;</code>: rode um comando por linha e confira se cada um terminou sem erro antes do próximo. Outras diferenças na <a href="${tabela}">tabela de equivalências</a>.</p>`;
+        bloco.appendChild(novo);
+      }
+      pre.insertAdjacentElement("afterend", bloco);
+    });
+  }
+
   /* ---------------- copiar código ---------------- */
   function iniciarCopiar() {
     document.querySelectorAll("pre").forEach((pre) => {
@@ -184,6 +238,7 @@
   document.addEventListener("DOMContentLoaded", () => {
     renderizarCurriculo();
     iniciarQuiz();
+    iniciarPowerShell();
     iniciarCopiar();
     iniciarModulo();
   });

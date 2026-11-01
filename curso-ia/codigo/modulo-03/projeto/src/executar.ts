@@ -16,7 +16,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { custoChamada } from "../../../modulo-02/projeto/src/custo.js";
 import { extrairRecibo } from "../../../modulo-02/projeto/src/extrator.js";
 import { avaliar, casoPassou } from "./avaliadores.js";
-import { media, percentil, pisoDeRuido, wilson } from "./estatistica.js";
+import { bootstrapPorCaso, media, percentil, pisoDeRuido, wilson } from "./estatistica.js";
 import { MODELO_JUIZ, julgarExplicacao } from "./juiz.js";
 import type { Caso, ErroInfra, Linha } from "./tipos.js";
 
@@ -123,7 +123,15 @@ async function main() {
   // ---------------------------------------------------------------- relatório
   const n = linhas.length;
   const acertos = linhas.filter((l) => l.passou).length;
-  const ic = wilson(acertos, n);
+  // A unidade estatística é o caso. Com 1 repetição, Wilson sobre as execuções serve.
+  // Com várias, as repetições de um caso são correlacionadas: reamostramos por caso.
+  const porCaso = new Map<string, number[]>();
+  for (const l of linhas) porCaso.set(l.caso, [...(porCaso.get(l.caso) ?? []), l.passou ? 1 : 0]);
+  const taxasPorCaso = [...porCaso.values()].map(media);
+  const ic =
+    reps === 1
+      ? { ...wilson(acertos, n), metodo: "wilson" }
+      : (({ media: taxa, inferior, superior }) => ({ taxa, inferior, superior, metodo: "bootstrap por caso" }))(bootstrapPorCaso(taxasPorCaso));
   const pct = (x: number) => `${(x * 100).toFixed(0)}%`;
 
   console.log("Por checagem:");
@@ -156,8 +164,8 @@ async function main() {
   const custo = linhas.reduce((s, l) => s + l.custoUsd, 0);
   const lat = linhas.map((l) => l.latenciaS);
   console.log("\n--- resumo ---");
-  console.log(`taxa de acerto: ${pct(ic.taxa)}  (IC 95%: ${pct(ic.inferior)} – ${pct(ic.superior)})  ·  ${acertos}/${n}`);
-  console.log(`ruído aproximado com ${casos.length} casos × ${reps} rep.: ±${pct(pisoDeRuido(casos.length, reps))}`);
+  console.log(`taxa de acerto: ${pct(ic.taxa)}  (IC 95%, ${ic.metodo}: ${pct(ic.inferior)} – ${pct(ic.superior)})  ·  ${acertos}/${n}`);
+  console.log(`piso de ruído com ${taxasPorCaso.length} casos: ±${pct(pisoDeRuido(taxasPorCaso.length))} (repetições não reduzem este piso; só mais casos)`);
   console.log(`erros de infraestrutura (fora da nota): ${erros.length}`);
   console.log(`latência p50 ${percentil(lat, 0.5).toFixed(1)}s · p95 ${percentil(lat, 0.95).toFixed(1)}s`);
   console.log(`custo: US$ ${custo.toFixed(4)} (US$ ${(custo / Math.max(n, 1)).toFixed(5)} por execução) + juiz US$ ${custoJuiz.toFixed(4)}`);

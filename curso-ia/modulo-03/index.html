@@ -386,9 +386,23 @@ python python/03_llm_juiz.py --rubrica-vaga</code></pre>
       <p>
         Um eval com N casos dá uma <em>estimativa</em> da taxa real de acerto. Toda estimativa tem margem de
         erro, e ela é maior do que a intuição sugere. Uma aproximação útil para a meia-largura do intervalo
-        de 95% de uma taxa: <strong>±1/√(casos × repetições)</strong> (é o pior caso, com a taxa perto de 50%; perto de 0% ou 100% a margem é menor). Com 25 casos e 2 repetições, ±14 pontos
-        percentuais. Com 100 e 2, ±7.
+        de 95% de uma taxa: <strong>±1/√casos</strong> (é o pior caso, com a taxa perto de 50%; perto de 0% ou 100% a margem é menor). Com 25 casos, ±20 pontos
+        percentuais. Com 100, ±10.
       </p>
+      <div class="callout warn"><b>Repetições não são casos novos</b>
+        É tentador contar <em>casos × repetições</em> como se fossem amostras independentes: 25 casos com 4 repetições
+        dariam ±10 pontos, como 100 casos. Não dão. As repetições do mesmo caso são correlacionadas: se o caso é
+        difícil, ele tende a falhar em todas. Repetir mede a <strong>variabilidade da geração</strong> (o modelo responder
+        diferente à mesma pergunta); acrescentar casos mede a <strong>cobertura dos problemas reais</strong>. São duas
+        fontes de incerteza diferentes, e repetir só diminui a primeira. A fórmula com casos × repetições só vale no
+        caso extremo em que cada execução se comporta como um caso novo, e por isso <em>subestima</em> a incerteza.
+        <br><br>
+        Na prática: trate o <strong>caso como unidade</strong>. Calcule a taxa de cada caso (média das suas repetições),
+        compare sistemas <strong>em pares</strong> nos mesmos casos e, quando a distribuição for estranha ou houver
+        poucos casos, use <strong>reamostragem por caso</strong> (bootstrap): sorteie casos com reposição, levando
+        junto todas as repetições de cada um, e veja quanto a média varia. O projeto deste módulo faz isso
+        (<code>bootstrapPorCaso</code> em <code>src/estatistica.ts</code>).
+      </div>
 
       <div class="exercise">
         <h4>LAB 3.6 — Simulando o ruído</h4>
@@ -416,7 +430,7 @@ python python/03_llm_juiz.py --rubrica-vaga</code></pre>
       <ul>
         <li><strong>Sempre informe o intervalo</strong>, não só a taxa: "82% (61%–93%)" conta uma história bem diferente de "82%".</li>
         <li><strong>Compare em pares:</strong> os dois sistemas nos <em>mesmos</em> casos. A diferença caso a caso tem muito menos ruído do que comparar duas notas gerais.</li>
-        <li><strong>Repetições</strong> reduzem o ruído do não determinismo; <strong>mais casos</strong> reduzem o ruído de quais casos você escolheu. Os dois são botões do mesmo painel.</li>
+        <li><strong>Repetições</strong> reduzem o ruído do não determinismo dentro de cada caso; <strong>mais casos</strong> reduzem o ruído de quais casos você escolheu. Não são equivalentes: se a dúvida é "o sistema funciona nos problemas reais?", só casos novos e independentes respondem. Use repetições para saber se um caso é estável, não para inflar o N.</li>
         <li><strong>Olhe caso a caso</strong> mesmo quando o agregado é inconclusivo: dois casos que falham <em>sempre</em> com o modelo B são uma pista concreta.</li>
         <li><strong>Custo por tarefa concluída</strong>, não por chamada: inclua as tentativas extras, o juiz e a revisão humana dos casos sinalizados.</li>
       </ul>
@@ -433,7 +447,13 @@ farmacia-desconto                                  100%                   100%
 posto-quantidade-decimal                           100%                     0%  ▼
 
 Diferença B − A: -18.2 p.p.  (IC 95%: -42.1 p.p. a +5.7 p.p.)
-→ Inconclusivo: a diferença cabe no ruído. Mais casos ou repetições ajudariam.</code></pre>
+Conferência por reamostragem de casos: IC 95% -45.5 p.p. a +0.0 p.p.
+→ Inconclusivo: a diferença cabe no ruído. Mais casos independentes ajudariam; repetições só reduzem a variação dentro de cada caso.</code></pre>
+      <p>
+        As duas linhas de intervalo usam a mesma unidade, o caso. A primeira supõe distribuição normal; a segunda
+        reamostra os casos e não supõe nada sobre a forma. Quando elas discordam muito, desconfie da primeira: com
+        poucos casos e diferenças que só valem 0 ou −100%, a aproximação normal é fraca.
+      </p>
       <p>
         Repare: B errou <em>sempre</em> nos mesmos dois casos, mas com só 11 casos o agregado é
         inconclusivo. A leitura certa: "não há evidência de que B seja equivalente; há dois padrões de erro
@@ -445,9 +465,9 @@ Diferença B − A: -18.2 p.p.  (IC 95%: -42.1 p.p. a +5.7 p.p.)
         <div class="q">
           <p>Prompt novo: 84%. Prompt antigo: 80%. 25 casos, 1 repetição. O que concluir?</p>
           <button type="button">O prompt novo é 4 pontos melhor</button>
-          <button type="button" data-certa>Nada ainda: a margem com 25 casos é de cerca de ±20 pontos; precisa de mais casos ou repetições</button>
+          <button type="button" data-certa>Nada ainda: a margem com 25 casos é de cerca de ±20 pontos; precisa de mais casos (e de comparar os dois nos mesmos casos)</button>
           <button type="button">O prompt antigo é melhor</button>
-          <p class="why">1/√25 = ±20 p.p. Uma diferença de 4 pontos está bem dentro do ruído.</p>
+          <p class="why">1/√25 = ±20 p.p. Uma diferença de 4 pontos está bem dentro do ruído. Rodar os mesmos 25 casos mais vezes não resolve: diz se cada caso é estável, mas não traz problemas novos.</p>
         </div>
       </div>
     </section>
@@ -517,7 +537,7 @@ npm run eval -- --limiar 0.9                    # código de saída 1 se ficar a
         <tr><td><code>casos/casos.jsonl</code></td><td>11 casos com tags e origem do gabarito: recibos limpos, desconto, acréscimo, OCR com soma errada, sem CNPJ, quantidade decimal, ano com 2 dígitos, <strong>prompt injection</strong> e um texto que nem é recibo</td></tr>
         <tr><td><code>src/avaliadores.ts</code></td><td>Checagens atômicas com tolerâncias (centavos, formatação de CNPJ) e sinalização avaliada nos dois sentidos</td></tr>
         <tr><td><code>src/juiz.ts</code></td><td>LLM-juiz com rubrica para a qualidade da explicação nos casos com problema, usando um modelo diferente do avaliado</td></tr>
-        <tr><td><code>src/estatistica.ts</code></td><td>Wilson, diferença pareada, percentis, piso de ruído</td></tr>
+        <tr><td><code>src/estatistica.ts</code></td><td>Wilson, diferença pareada, reamostragem por caso (bootstrap), percentis, piso de ruído por caso</td></tr>
         <tr><td><code>src/executar.ts</code></td><td>Executor com concorrência, repetições, erros de infraestrutura separados, conferência do modelo servido, relatório por checagem e por tag, limiar para CI</td></tr>
         <tr><td><code>src/comparar.ts</code></td><td>Comparação pareada entre duas execuções, com custo e latência</td></tr>
         <tr><td><code>test/</code></td><td>Oráculo, linha de base nula, "sinalizar tudo não passa", tolerâncias e casos de segurança</td></tr>
