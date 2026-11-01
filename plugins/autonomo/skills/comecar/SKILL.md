@@ -52,9 +52,9 @@ de opções obriga a pessoa a achar "Other", o que confunde. Escreva, por exempl
 nome e o e-mail que vão aparecer no histórico, assim: Meu nome é Ana Souza, e-mail ana@exemplo.com".
 Se você já sabe um e-mail provável, sugira-o na frase.
 
-**GitHub:** se ela não tem conta, mande o link https://github.com/signup e espere. Depois rode
-`gh auth login --web`, e explique antes: vai aparecer um código de 8 letras no terminal; ela copia,
-abre o link que aparece, cola o código e autoriza. Confira com `gh auth status`.
+**GitHub:** se ela não tem conta, mande o link https://github.com/signup e espere. Depois, o login
+com `gh auth login --web`, seguindo a seção "Logins pelo navegador" da skill `autonomo:como-ensinar`.
+Confira com `gh auth status`.
 
 ## Etapa 4 · Autonomia com barreiras
 

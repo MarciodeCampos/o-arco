@@ -29,9 +29,8 @@ Diga claramente se a plataforma escolhida pode gerar cobrança e onde a pessoa a
 
 ## 3. Conta e login (a pessoa faz, você orienta)
 - Mande o link de cadastro da plataforma (skill `autonomo:links`) e espere ela confirmar.
-- Logins que abrem o navegador (`vercel login`, `gh auth login`) são interativos: peça para ela rodar
-  num terminal separado, ou na própria sessão com `!` na frente (por exemplo `! vercel login`), e
-  diga o que vai aparecer.
+- Logins que abrem o navegador (`vercel login`, `gh auth login`): siga a seção "Logins pelo
+  navegador" da skill `autonomo:como-ensinar` (no Windows, numa janela separada do PowerShell).
 
 ## 4. Segredos
 Se o projeto usa chaves (API, banco de dados), elas vão no painel da plataforma, nunca no código nem
