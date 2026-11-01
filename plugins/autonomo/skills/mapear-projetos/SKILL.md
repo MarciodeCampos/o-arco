@@ -37,6 +37,12 @@ cada arquivo, peça para a pessoa liberar cada pasta uma vez, digitando aqui no 
 sessão; não muda nada nela". Se aparecer uma confirmação em inglês, traduza e diga qual opção
 escolher, como manda a skill `autonomo:como-ensinar`.
 
+Ofereça também: "Se outro assistente (ChatGPT, Gemini, Antigravity) já conhece seus projetos, cole
+aqui a lista dele." Use essa lista como ponto de partida, marcando cada item como **registrado** (veio
+da lista) até encontrar a pasta, o repositório ou o endereço que o confirma (**verificado**). Muitos
+projetos não são software (obras, catálogos, imóveis, métodos): registre-os também, sem pasta se for o
+caso.
+
 ## 2. Pistas rápidas: onde a pessoa já trabalhou
 Antes de varrer pastas, use os registros que as ferramentas de IA e os editores já guardam. Eles
 apontam direto para as pastas de trabalho, inclusive fora das pastas comuns (`C:\`, `D:\`, Google
@@ -106,11 +112,23 @@ Proponha ligações entre projetos com evidência, por exemplo:
 Mostre cada ligação com o motivo e peça para a pessoa confirmar, corrigir e acrescentar as que só
 ela sabe ("o site X manda clientes para o sistema Y").
 
+**Hierarquia:** separe os níveis, porque é isso que mostra quantos projetos independentes existem e
+quais já podem trabalhar juntos:
+- **ecossistema:** guarda-chuva de vários projetos (por exemplo, uma marca que reúne tudo);
+- **plataforma** ou **produto:** algo que um usuário usa (um site, um app, um jogo);
+- **módulo:** parte de uma plataforma (inbox, mapa, planos);
+- **ativo:** dados ou acervo compartilhado por vários (uma base de empresas, um catálogo de músicas);
+- **ferramenta:** script ou utilitário interno;
+- **obra** ou **iniciativa:** projeto que não é software (música, livro, negócio, imóvel).
+Cada item aponta para o seu pai em `projeto_pai`.
+
 ## 6. Situação de cada projeto
 - **Publicado:** tem endereço que responde (`curl -sI <url>` com 200 ou 30x).
 - **Em andamento:** alteração nos últimos 30 dias.
 - **Pausado:** sem alteração há mais de 30 dias.
 - **Arquivado:** arquivado no GitHub.
+- **Registrado:** veio de uma lista ou da memória da pessoa e ainda não foi confirmado no computador,
+  no GitHub ou na internet.
 Pergunte à pessoa só sobre os que ficaram em dúvida.
 
 ## 7. Entregar
@@ -128,14 +146,18 @@ Pergunte à pessoa só sobre os que ficaram em dúvida.
     {
       "id": "sistema-agendamento",
       "nome": "Sistema de agendamento",
+      "tipo": "plataforma",
+      "projeto_pai": "minha-marca",
       "descricao": "Agenda online para clientes",
       "situacao": "publicado",
+      "verificado": true,
       "endereco": "https://agenda.exemplo.com",
       "repositorio": "https://github.com/dono/sistema-agendamento",
       "caminho_local": "C:/Users/NOME/Documents/sistema-agendamento",
       "tecnologias": ["Next.js", "Supabase"],
       "ultima_alteracao": "AAAA-MM-DD",
-      "conexoes": [{ "com": "site-principal", "motivo": "recebe clientes do site" }]
+      "conexoes": [{ "com": "site-principal", "motivo": "recebe clientes do site" }],
+      "proximo_passo": "colocar testes e proteção de segredos"
     }
   ]
 }
