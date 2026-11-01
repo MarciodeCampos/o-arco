@@ -32,6 +32,8 @@ Depois abra o Claude Code (`claude`) e digite:
 | `/autonomo:configurar-autonomia` | Escolhe e aplica o nível de autonomia (0 a 3), com backup e validação |
 | `/autonomo:verificar-barreiras` | Prova com testes inofensivos que segredos e ações destrutivas estão bloqueados |
 | `/autonomo:novo-projeto` | Cria um projeto com git, testes, proteção de segredos, GitHub e CI, e desenvolve a primeira versão |
+| `/autonomo:mapear-projetos` | Encontra os projetos que você já tem no computador e no GitHub, onde estão publicados e como se conectam, e gera o `projetos.json` |
+| `/autonomo:skills-recomendadas` | Sugere e instala plugins oficiais úteis para o seu tipo de projeto |
 | `/autonomo:implantar` | Publica o projeto: prévia automática, produção com aprovação, caminho de volta |
 
 O Claude também usa as skills sozinho quando o pedido combina, por exemplo "quero criar um site".
@@ -54,7 +56,8 @@ Os limites conhecidos estão em [`skills/niveis/SKILL.md`](skills/niveis/SKILL.m
 autonomo/
 ├── .claude-plugin/plugin.json
 └── skills/
-    ├── comecar, diagnostico, configurar-autonomia, verificar-barreiras, novo-projeto, implantar
+    ├── comecar, diagnostico, configurar-autonomia, verificar-barreiras, novo-projeto, implantar,
+    │   mapear-projetos, skills-recomendadas
     │                comandos que a pessoa usa (/autonomo:...)
     └── como-ensinar, links, niveis, modelos
                      referências que o Claude carrega pela ferramenta Skill (não aparecem no menu)

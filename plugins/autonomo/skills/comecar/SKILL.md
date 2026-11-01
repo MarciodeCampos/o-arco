@@ -19,9 +19,9 @@ Explique em até quatro frases:
 - Nada será instalado ou alterado sem você avisar antes.
 - No fim, ela terá um projeto funcionando e um ambiente em que você pode trabalhar sozinho com segurança.
 
-Pergunte (AskUserQuestion) o que ela quer construir primeiro, com opções como: um site ou página
-pessoal; um aplicativo web; automatizar uma tarefa repetitiva (planilhas, arquivos, e-mails); ainda
-não sei, quero aprender. Pergunte também, em outra questão, quanta experiência ela tem: nunca
+Pergunte (AskUserQuestion) o que ela quer fazer primeiro, com opções como: **organizar e evoluir
+projetos que já tenho**; um site ou página pessoal; um aplicativo web; automatizar uma tarefa
+repetitiva (planilhas, arquivos, e-mails); ainda não sei, quero aprender. Pergunte também, em outra questão, quanta experiência ela tem: nunca
 programei; já programei um pouco; sou desenvolvedor. Guarde as respostas: elas definem o
 {{PERFIL}} do CLAUDE.md e o projeto da etapa 5.
 
@@ -63,7 +63,12 @@ autonomia é segura.
 
 ## Etapa 5 · Primeiro projeto
 
-Carregue e siga a skill `autonomo:novo-projeto` (ferramenta Skill) com o objetivo
+Se na etapa 1 ela disse que já tem projetos, comece pela skill `autonomo:mapear-projetos`
+(ferramenta Skill): ela encontra os projetos no computador e no GitHub e gera o `projetos.json`.
+Depois, pergunte o que ela quer fazer com eles (por exemplo, uma página que mostra o mapa, ou
+colocar testes e proteção de segredos num deles) e siga a skill adequada.
+
+Caso contrário, carregue e siga a skill `autonomo:novo-projeto` (ferramenta Skill) com o objetivo
 escolhido na etapa 1. Para quem nunca programou, escolha algo que dá para ver funcionando no
 navegador em poucos minutos.
 
@@ -76,6 +81,9 @@ Faça um resumo com:
   PowerShell do Windows não aceita `&&`);
 - três próximos pedidos que ela pode fazer, escritos como ela diria, por exemplo:
   "Adicione uma página de contato ao meu site e publique".
+
+Ofereça, numa frase, a skill `autonomo:skills-recomendadas`: uma seleção de plugins oficiais que
+ampliam o que você sabe fazer para o tipo de projeto dela.
 
 Lembre que, a partir de agora, o `~/.claude/CLAUDE.md` faz você trabalhar assim em toda sessão, e
 que `/autonomo:diagnostico` confere o ambiente a qualquer momento.

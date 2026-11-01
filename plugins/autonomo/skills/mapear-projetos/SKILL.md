@@ -1,0 +1,122 @@
+---
+name: mapear-projetos
+description: Procura os projetos que a pessoa já tem no computador e no GitHub (pastas com git, sites, aplicativos, scripts), descobre onde cada um está publicado e como eles se conectam, e gera um inventário (projetos.json) com um resumo em linguagem simples. Use quando a pessoa disser que já tem projetos, quiser organizar ou listar o que está em desenvolvimento, ou ver como seus sistemas se ligam.
+argument-hint: "[pastas onde procurar]"
+---
+
+# Mapear os projetos que já existem
+
+Quem já tem projetos quer ir direto à parte útil. Esta skill encontra o que existe, sem alterar nada,
+e transforma em um inventário que serve de base para tudo o que vem depois (organizar, conectar,
+publicar, criar uma página que mostra os projetos).
+
+Carregue a skill `autonomo:como-ensinar` (ferramenta Skill) se ainda não carregou nesta sessão.
+Nunca leia arquivos do plugin com Read. Pastas indicadas pela pessoa (pode estar vazio): $ARGUMENTS
+
+## Regras desta skill
+- **Somente leitura.** Não altere, mova, apague, faça commit ou push em nenhum projeto encontrado.
+- **Segredos:** nunca abra `.env`, `.env.*`, chaves, `credentials*`, `*.pem`, `id_rsa*` nem pastas
+  como `.ssh` e `.aws`. Para saber se um projeto usa um serviço, olhe nomes de dependências e arquivos
+  de configuração sem segredos (`package.json`, `vercel.json`, `netlify.toml`, `CNAME`,
+  `.github/workflows/*`, `README*`, `.env.example`).
+- Ignore `node_modules`, `.venv`, `venv`, `dist`, `build`, `.next`, `.cache`, `vendor`, `AppData`,
+  `Library`, `.git` (por dentro) e lixeiras.
+
+## 1. Combinar onde procurar
+Pergunte em texto normal (não com AskUserQuestion) em quais pastas os projetos costumam ficar, e
+sugira os lugares comuns: `Documentos`, `Desktop`/`Área de Trabalho`, `projetos`, `source/repos`,
+`GitHub`, `dev`, `code`. Diga que também vai olhar a conta do GitHub, que costuma ter tudo.
+
+As pastas indicadas ficam fora da pasta desta sessão. Para não aparecer uma pergunta em inglês a
+cada arquivo, peça para a pessoa liberar cada pasta uma vez, digitando aqui no Claude:
+
+```
+/add-dir C:\Users\NOME\Documents
+```
+(no Mac ou Linux, por exemplo `/add-dir ~/Documents`). Explique: "isso me deixa ler essa pasta nesta
+sessão; não muda nada nela". Se aparecer uma confirmação em inglês, traduza e diga qual opção
+escolher, como manda a skill `autonomo:como-ensinar`.
+
+## 2. Procurar no computador
+Para cada pasta liberada, encontre projetos até 4 níveis de profundidade. Um projeto é uma pasta com
+`.git`, ou, sem git, com `package.json`, `pyproject.toml`, `requirements.txt`, `index.html` na raiz,
+`composer.json`, `Gemfile`, `go.mod` ou `Cargo.toml`. Não entre num projeto já encontrado procurando
+outros dentro dele (exceto se ele for claramente uma pasta que agrupa vários).
+
+Use a ferramenta Glob (por exemplo `**/.git/HEAD` e `**/package.json`) ou um comando de busca. No
+Windows, os comandos rodam no Git Bash: caminhos como `/c/Users/NOME/Documents` funcionam.
+
+Para cada projeto, colete sem alterar nada (rode cada comando git sozinho):
+- nome da pasta e caminho;
+- `git -C <pasta> remote get-url origin` (repositório no GitHub ou em outro lugar);
+- `git -C <pasta> log -1 --format=%cs` (data da última alteração) e a branch atual;
+- `git -C <pasta> status --porcelain` só para saber se há mudanças não salvas (conte as linhas);
+- tecnologias, pelos arquivos de configuração e dependências principais;
+- onde está publicado: arquivo `CNAME` (domínio do GitHub Pages), `vercel.json`, `netlify.toml`,
+  `fly.toml`, `render.yaml`, workflows de deploy, e endereços citados no `README`;
+- uma descrição de uma linha, pelo `README` ou pelo `description` do `package.json`.
+
+## 3. Procurar no GitHub
+Se o `gh` estiver logado (`gh auth status`), liste os repositórios da pessoa e das organizações dela:
+
+```
+gh repo list --limit 300 --json name,nameWithOwner,description,url,homepageUrl,isPrivate,isArchived,pushedAt
+```
+
+Repita com `gh repo list <organização>` para cada organização de `gh api user/orgs --jq '.[].login'`.
+O `homepageUrl` costuma ser o endereço publicado. Junte com o que achou no computador pelo endereço
+do repositório: o mesmo projeto aparece uma vez só, marcando se existe no computador, no GitHub ou
+nos dois.
+
+## 4. Descobrir as conexões
+Proponha ligações entre projetos com evidência, por exemplo:
+- mesmo domínio ou subdomínios (`app.exemplo.com` e `exemplo.com`);
+- um projeto cita o endereço ou o repositório de outro (README, configuração, código);
+- dependência de um pacote que é outro projeto da pessoa;
+- mesmo serviço externo (o mesmo projeto Supabase, Firebase ou API própria), pelo nome no código ou
+  na configuração, nunca pelos segredos;
+- mesma organização no GitHub ou mesmo prefixo de nome.
+Mostre cada ligação com o motivo e peça para a pessoa confirmar, corrigir e acrescentar as que só
+ela sabe ("o site X manda clientes para o sistema Y").
+
+## 5. Situação de cada projeto
+- **Publicado:** tem endereço que responde (`curl -sI <url>` com 200 ou 30x).
+- **Em andamento:** alteração nos últimos 30 dias.
+- **Pausado:** sem alteração há mais de 30 dias.
+- **Arquivado:** arquivado no GitHub.
+Pergunte à pessoa só sobre os que ficaram em dúvida.
+
+## 6. Entregar
+1. Uma tabela curta, em linguagem simples: projeto, o que é, situação, onde está publicado, onde está
+   no computador. Agrupe por rede ou tema se houver muitos.
+2. Um desenho das conexões em texto (ou Mermaid, se a pessoa preferir), por exemplo:
+   `site-principal → sistema-agendamento (manda clientes)`.
+3. O arquivo `projetos.json`, gravado onde a pessoa escolher (sugira a pasta desta sessão), neste
+   formato:
+
+```json
+{
+  "atualizado_em": "AAAA-MM-DD",
+  "projetos": [
+    {
+      "id": "sistema-agendamento",
+      "nome": "Sistema de agendamento",
+      "descricao": "Agenda online para clientes",
+      "situacao": "publicado",
+      "endereco": "https://agenda.exemplo.com",
+      "repositorio": "https://github.com/dono/sistema-agendamento",
+      "caminho_local": "C:/Users/NOME/Documents/sistema-agendamento",
+      "tecnologias": ["Next.js", "Supabase"],
+      "ultima_alteracao": "AAAA-MM-DD",
+      "conexoes": [{ "com": "site-principal", "motivo": "recebe clientes do site" }]
+    }
+  ]
+}
+```
+
+4. Três próximos passos sugeridos, escritos como a pessoa diria. Por exemplo: "crie uma página que
+   mostra esse mapa" (skill `autonomo:novo-projeto`, usando o `projetos.json` como dados), "coloque
+   proteção de segredos e testes no projeto X", "publique o projeto Y" (skill `autonomo:implantar`).
+
+Termine dizendo que nada foi alterado nos projetos e que basta pedir "atualize o mapa dos meus
+projetos" para rodar de novo.
