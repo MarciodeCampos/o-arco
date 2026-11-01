@@ -65,7 +65,7 @@ cd projeto &amp;&amp; npm install &amp;&amp; npm test      # instala também o a
       <div class="lesson-meta">Leitura · 1h</div>
       <ul>
         <li><strong>Raio de impacto:</strong> uma resposta errada num chat é um incômodo; um comando errado em produção é um incidente. Classifique cada ação por risco (Módulo 6) e trate ações de escrita como deploys.</li>
-        <li><strong>Leitura é segura, escrita não:</strong> a maior parte do valor está em <em>investigar</em> (ler logs, métricas, eventos, histórico). Comece só com leitura.</li>
+        <li><strong>Leitura é menos arriscada que escrita, mas não é isenta de risco:</strong> a maior parte do valor está em <em>investigar</em> (ler logs, métricas, eventos, histórico), e por isso comece só com leitura. Mas ler também tem riscos: logs e variáveis de ambiente podem conter segredos, que entram no contexto do modelo e podem sair numa resposta; e um log, um ticket ou uma página pode trazer instruções maliciosas (injeção indireta, Módulo 12). Leitura com credenciais restritas, segredos mascarados na origem e o conteúdo lido tratado como dado, não como ordem.</li>
         <li><strong>Validação determinística depois da IA:</strong> <code>terraform validate</code> e <code>plan</code>, dry-run do Kubernetes, políticas, testes. O modelo propõe; as ferramentas da sua plataforma verificam.</li>
         <li><strong>Credenciais mínimas:</strong> a conta de serviço do agente só lê, salvo exceções aprovadas e auditadas.</li>
         <li><strong>Alucinação de flags e APIs:</strong> modelos inventam opções de linha de comando e campos de manifest com confiança. Validação de schema e dry-run pegam isso.</li>

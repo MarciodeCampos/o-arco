@@ -23,6 +23,7 @@ curso-ia/
 ├── autonomo/index.html   comece aqui: como instalar o plugin autonomo
 ├── glossario/           mapa de componentes e glossário do Claude (gerado por gerar.py)
 ├── pre-01/index.html     introdução P1 · IA sem mistério (calculadora de custo em calculadora.js)
+├── pre-02/index.html     P2 · Preparação: terminal, arquivos, Git (PowerShell e bash)
 ├── modulo-01/index.html  aulas do módulo 1
 ├── modulo-02/index.html  aulas do módulo 2
 ├── modulo-03/index.html  aulas do módulo 3
@@ -103,6 +104,8 @@ segurança testadas, criar projetos e publicá-los, explicando cada passo em lin
   na raiz do repositório). Instalação: `claude plugin marketplace add MarciodeCampos/o-arco` e
   `claude plugin install autonomo@o-arco`.
 - Página para pessoas: `autonomo/index.html`.
+- Preparação para iniciantes: `pre-02/` (terminal, arquivos, Git, tabela PowerShell × bash). Os blocos
+  `bash` dos módulos ganham uma versão PowerShell gerada por `assets/curso.js` (`iniciarPowerShell`).
 - Introdução conceitual: `pre-01/` (P1 · IA sem mistério) e `glossario/` (gerado por
   `python3 glossario/gerar.py`, a partir da documentação oficial do Claude Code consultada em
   novembro de 2026 com a versão 2.1.316).

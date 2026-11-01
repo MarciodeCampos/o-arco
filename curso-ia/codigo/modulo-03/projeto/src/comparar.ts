@@ -6,7 +6,7 @@
  * Responde: B é melhor, pior ou igual a A, considerando o ruído? E quanto custa?
  */
 import { readFileSync } from "node:fs";
-import { diferencaPareada, media, percentil } from "./estatistica.js";
+import { bootstrapPorCaso, diferencaPareada, media, percentil } from "./estatistica.js";
 import type { Linha } from "./tipos.js";
 
 interface Execucao {
@@ -51,9 +51,12 @@ const d = diferencaPareada(
 );
 const pp = (x: number) => `${x >= 0 ? "+" : ""}${(x * 100).toFixed(1)} p.p.`;
 console.log(`\nDiferença B − A: ${pp(d.media)}  (IC 95%: ${pp(d.inferior)} a ${pp(d.superior)})`);
+// Conferência sem supor normalidade: reamostra os casos, levando a diferença de cada um.
+const boot = bootstrapPorCaso(comuns.map((c) => pb.get(c)! - pa.get(c)!));
+console.log(`Conferência por reamostragem de casos: IC 95% ${pp(boot.inferior)} a ${pp(boot.superior)}`);
 if (d.inferior > 0) console.log("→ B é melhor, com evidência razoável.");
 else if (d.superior < 0) console.log("→ B é pior, com evidência razoável.");
-else console.log("→ Inconclusivo: a diferença cabe no ruído. Mais casos ou repetições ajudariam.");
+else console.log("→ Inconclusivo: a diferença cabe no ruído. Mais casos independentes ajudariam; repetições só reduzem a variação dentro de cada caso.");
 
 const custo = (e: Execucao) => media(e.linhas.map((l) => l.custoUsd));
 const p50 = (e: Execucao) => percentil(e.linhas.map((l) => l.latenciaS), 0.5);

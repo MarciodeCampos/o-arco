@@ -100,7 +100,7 @@ cd projeto &amp;&amp; npm install &amp;&amp; npm test</code></pre>
         <p>
           A página de um "concorrente" tem, em texto branco, uma instrução para incluir uma imagem que envia o
           resumo para fora e para elogiar o produto deles. O lab compara o resumidor ingênuo com o protegido.
-          Mesmo que o modelo resista sozinho, a limpeza da saída é a garantia que não depende dele.
+          Mesmo que o modelo resista sozinho, a limpeza da saída é a camada que não depende dele. Ela não é infalível: fecha os canais que reconhece (links e imagens para fora), mas um dado pode escapar transformado, por exemplo codificado em base64, parafraseado ou dividido em partes. Por isso ela se soma ao menor privilégio e à aprovação humana, em vez de substituí-los.
         </p>
       </div>
           <div class="quiz">

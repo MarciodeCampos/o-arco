@@ -6,7 +6,9 @@ protegido, sai com código 2: a ação é bloqueada e a mensagem do stderr volta
 agente, que entende por quê. Código 0 libera.
 
 Hooks são a forma de impor regras que NÃO dependem do modelo obedecer ao CLAUDE.md:
-o modelo pode esquecer uma instrução; o hook não esquece.
+o modelo pode esquecer uma instrução; o hook não esquece. Mas o hook só vê as chamadas
+do seu matcher (aqui, Edit e Write): uma edição feita pelo terminal (sed -i, echo >)
+passa pela ferramenta Bash e não chega aqui. Complemente com permissões, sandbox e CI.
 
 Teste sem agente:
     echo '{"tool_name":"Edit","tool_input":{"file_path":".env"}}' | python3 proteger_arquivos.py; echo $?

@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { desvioPadrao, diferencaPareada, media, percentil, pisoDeRuido, wilson } from "../src/estatistica.js";
+import { bootstrapPorCaso, desvioPadrao, diferencaPareada, media, percentil, pisoDeRuido, wilson } from "../src/estatistica.js";
 
 const perto = (a: number, b: number, tol = 1e-3) => assert.ok(Math.abs(a - b) < tol, `${a} ≠ ${b}`);
 
@@ -41,7 +41,23 @@ test("diferença pareada: ruído puro tem IC que cruza zero", () => {
   assert.ok(d.inferior < 0 && d.superior > 0);
 });
 
-test("piso de ruído: 25 casos × 2 reps ≈ ±14 p.p.; 100 × 2 ≈ ±7 p.p.", () => {
-  perto(pisoDeRuido(25, 2), 0.1414);
-  perto(pisoDeRuido(100, 2), 0.0707);
+test("piso de ruído: depende dos casos, não das repetições (25 → ±20 p.p.; 100 → ±10 p.p.)", () => {
+  perto(pisoDeRuido(25), 0.2);
+  perto(pisoDeRuido(100), 0.1);
+});
+
+test("bootstrap por caso: IC contém a média e é reproduzível com a mesma semente", () => {
+  const taxas = [1, 1, 0.67, 0, 1, 0.33, 1, 1, 0.67, 1, 0, 1];
+  const r1 = bootstrapPorCaso(taxas);
+  const r2 = bootstrapPorCaso(taxas);
+  assert.ok(r1.inferior < r1.media && r1.media < r1.superior);
+  assert.deepEqual(r1, r2);
+});
+
+test("bootstrap por caso: repetir os mesmos casos não estreita o intervalo", () => {
+  // 20 casos, metade sempre acerta e metade sempre erra. Rodar 1 ou 10 vezes dá as
+  // mesmas taxas por caso, então o intervalo tem de ser o mesmo.
+  const taxas = Array.from({ length: 20 }, (_, i) => (i % 2 ? 1 : 0));
+  const r = bootstrapPorCaso(taxas);
+  assert.ok(r.superior - r.inferior > 0.3, "com 20 casos o IC deve ter mais de ±15 p.p.");
 });
