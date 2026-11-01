@@ -1,0 +1,7 @@
+id,item,alcance_mes,impacto,confianca,esforco_semanas
+B1,Aviso de rede 5 GHz no pareamento,4000,2,0.9,1
+B2,Plano anual de assinatura,1500,3,0.5,4
+B3,Modo escuro no app,9000,0.5,0.8,2
+B4,Histórico de qualidade do ar exportável,800,1,0.8,2
+B5,Assistente de IA no suporte do app,6000,2,0.5,6
+B6,Corrigir travamento ao abrir programações,2500,2,1.0,0.5

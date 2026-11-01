@@ -32,6 +32,7 @@ curso-ia/
 ├── modulo-10/index.html  aulas do módulo 10
 ├── modulo-11/index.html  aulas do módulo 11
 ├── modulo-12/index.html  aulas do módulo 12
+├── modulo-13/index.html  aulas do módulo 13
 └── codigo/
     ├── modulo-01/
     │   ├── python/       labs e projeto (NumPy + SDK anthropic)
@@ -73,10 +74,13 @@ curso-ia/
     ├── modulo-11/
     │   ├── python/       labs: preparar dataset, LoRA do zero, destilação com cascata, LoRA com PEFT (Colab)
     │   └── dados/        chamados brutos, chamados novos escritos à mão, dataset preparado
-    └── modulo-12/
-        ├── python/       labs: injeção indireta numa página, ficha do sistema de IA (LGPD/AI Act)
-        ├── dados/        página envenenada e questionário de governança
-        └── projeto/      guardrails (PII com validação, saída, tríade letal) e red team automatizado
+    ├── modulo-12/
+    │   ├── python/       labs: injeção indireta numa página, ficha do sistema de IA (LGPD/AI Act)
+    │   ├── dados/        página envenenada e questionário de governança
+    │   └── projeto/      guardrails (PII com validação, saída, tríade letal) e red team automatizado
+    └── modulo-13/
+        ├── python/       labs: reunião→tarefas com citação verificada, RICE com sensibilidade, previsão Monte Carlo
+        └── dados/        transcrição de reunião, backlog e histórico de vazão do time
 ```
 
 ## Status
@@ -95,7 +99,8 @@ curso-ia/
 | 10 · IA para DevOps e SRE | ✅ pronto |
 | 11 · Modelos Abertos, Fine-Tuning e Destilação | ✅ pronto |
 | 12 · Segurança, Privacidade e Governança | ✅ pronto |
-| 13 – 15 | planejados (ver `curriculo.json`) |
+| 13 · IA para Produto e Gestão | ✅ pronto |
+| 14 – 15 | planejados (ver `curriculo.json`) |
 
 ## Rodando os labs do Módulo 1
 

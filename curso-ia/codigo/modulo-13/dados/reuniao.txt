@@ -1,0 +1,15 @@
+Reunião de planejamento — App Brisa Casa — 28/10/2026
+Presentes: Carla (produto), Diego (back-end), Elisa (mobile), Fábio (suporte)
+
+Carla: Bom dia. Pauta: as reclamações de pareamento do Wi-Fi e o lançamento do plano anual.
+Fábio: O pareamento é o assunto número um no suporte. Foram 340 chamados em outubro, quase todos de gente tentando usar rede de 5 GHz.
+Elisa: Dá para o app detectar a rede de 5 GHz e avisar antes de começar o pareamento. Acho que em uma semana eu entrego isso.
+Carla: Ótimo, Elisa, então fica com você o aviso de rede 5 GHz no pareamento. Precisa estar na versão de 15 de novembro.
+Diego: Do lado do servidor, os logs de pareamento hoje não dizem em que etapa falhou. Eu posso adicionar o código da etapa nos logs até sexta.
+Carla: Fechado, Diego. Sobre o plano anual: o jurídico ainda não aprovou o texto do contrato.
+Fábio: Sem o texto aprovado eu não consigo treinar o time de suporte.
+Carla: Então decidimos adiar o lançamento do plano anual para dezembro. Eu falo com o jurídico essa semana para ter uma data.
+Diego: Uma preocupação: se o plano anual sair junto com a Black Friday, o pico de pedidos pode derrubar o checkout.
+Carla: Bem lembrado. Vamos registrar esse risco.
+Elisa: Mais uma coisa: alguém precisa revisar as notas da loja de aplicativos, estamos com 3,1 estrelas.
+Carla: Isso fica para a próxima reunião, sem dono por enquanto.

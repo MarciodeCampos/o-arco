@@ -285,16 +285,16 @@
       "slug": "modulo-13",
       "titulo": "IA para Produto e Gestão de Projetos",
       "horas": 16,
-      "status": "planejado",
+      "status": "pronto",
       "resumo": "Usar IA para levantar requisitos, priorizar backlog, estimar, resumir reuniões e automatizar Jira/Linear/Notion/Slack, sem perder o julgamento humano.",
       "unidades": [
-        "Requisitos e histórias de usuário a partir de linguagem natural",
-        "Priorização (RICE, WSJF) e estimativas com Monte Carlo",
-        "Reuniões: transcrição, decisões e follow-ups automáticos",
-        "Relatórios de status para públicos diferentes",
-        "Bots de automação para ferramentas de gestão"
+        "Requisitos e histórias de usuário com IA",
+        "Priorização: o que realmente decide a ordem",
+        "Reuniões: decisões e tarefas verificáveis",
+        "Previsão de prazos com Monte Carlo",
+        "Relatórios de status e automação de ferramentas"
       ],
-      "projeto": "Bot que transforma notas de reunião em tarefas priorizadas no seu board",
+      "projeto": "Bot que transforma transcrições de reunião em tarefas verificáveis no board, com relatórios e previsão de prazos",
       "melhorias": [
         "Condensado de 10 para 5 unidades: mais prático, menos teórico"
       ]
