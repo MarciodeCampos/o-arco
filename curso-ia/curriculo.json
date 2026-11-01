@@ -218,19 +218,19 @@
       "slug": "modulo-10",
       "titulo": "IA para DevOps e SRE",
       "horas": 32,
-      "status": "planejado",
+      "status": "pronto",
       "resumo": "IaC gerado e validado por IA, agentes para Kubernetes, diagnóstico de incidentes, AIOps, ChatOps com aprovação e auto-remediação com guardrails.",
       "unidades": [
-        "Copilot de IaC: Terraform/Pulumi gerado, validado e com policy-as-code",
-        "Agentes para Kubernetes: manifests, autoscaling, rollout e GitOps",
-        "Troubleshooting com ReAct: CrashLoopBackOff, OOMKilled, latência",
-        "AIOps: PromQL/LogQL a partir de linguagem natural e detecção de anomalias",
-        "ChatOps com RBAC, aprovação humana e auditoria",
+        "IA na infraestrutura: o que muda",
+        "Copilot de IaC com validação e policy-as-code",
+        "Agentes para Kubernetes e GitOps",
+        "Troubleshooting com ReAct",
+        "AIOps: métricas, logs e anomalias",
+        "ChatOps com RBAC, aprovação e auditoria",
         "RAG de runbooks e post-mortem automático",
-        "Auto-remediação segura: dry-run, circuit breakers, human-in-the-loop",
-        "FinOps com IA"
+        "Auto-remediação segura e FinOps"
       ],
-      "projeto": "Bot de ChatOps que diagnostica um pod com problema e propõe correção com aprovação",
+      "projeto": "Bot de ChatOps que investiga incidentes num cluster Kubernetes simulado, registra diagnóstico com evidências e executa correções só com aprovação de quem tem permissão",
       "melhorias": [
         "Condensado de 12 para 8 unidades, mantendo as práticas",
         "Fundamentos repetidos foram removidos"

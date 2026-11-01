@@ -29,6 +29,7 @@ curso-ia/
 ├── modulo-07/index.html  aulas do módulo 7
 ├── modulo-08/index.html  aulas do módulo 8
 ├── modulo-09/index.html  aulas do módulo 9
+├── modulo-10/index.html  aulas do módulo 10
 └── codigo/
     ├── modulo-01/
     │   ├── python/       labs e projeto (NumPy + SDK anthropic)
@@ -60,9 +61,13 @@ curso-ia/
     │   ├── python/       labs: visão (foto de cupom) e PDF com citações
     │   ├── dados/        foto de cupom e contrato em PDF de exemplo
     │   └── projeto/      app multimodal: chat com streaming, análise de imagem, testes E2E
-    └── modulo-09/
-        ├── python/       lab: planejamento de capacidade e custo
-        └── projeto/      gateway de LLM: roteamento, reserva, cache, cotas, prompts versionados, painel
+    ├── modulo-09/
+    │   ├── python/       lab: planejamento de capacidade e custo
+    │   └── projeto/      gateway de LLM: roteamento, reserva, cache, cotas, prompts versionados, painel
+    └── modulo-10/
+        ├── python/       labs: policy-as-code em plano Terraform, anomalias e linha do tempo
+        ├── dados/        plano Terraform gerado por IA e métricas de um incidente
+        └── projeto/      bot de ChatOps: agente SRE sobre cluster simulado, aprovação com RBAC, auditoria
 ```
 
 ## Status
@@ -78,7 +83,8 @@ curso-ia/
 | 07 · Agentes de Código | ✅ pronto |
 | 08 · IA no Front-end, UX e Multimodal | ✅ pronto |
 | 09 · Arquitetura e LLMOps | ✅ pronto |
-| 10 – 15 | planejados (ver `curriculo.json`) |
+| 10 · IA para DevOps e SRE | ✅ pronto |
+| 11 – 15 | planejados (ver `curriculo.json`) |
 
 ## Rodando os labs do Módulo 1
 

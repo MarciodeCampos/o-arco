@@ -1,0 +1,101 @@
+{
+  "descricao": "Deploy v42 do checkout removeu a variável DATABASE_URL",
+  "servico": "checkout",
+  "deployment": {
+    "nome": "checkout",
+    "revisaoAtual": 42,
+    "historico": [
+      {
+        "revisao": 41,
+        "imagem": "loja/checkout:2.13.0",
+        "quando": "2026-10-30T14:00:00Z",
+        "autor": "ci",
+        "mudanca": "ajuste de timeout"
+      },
+      {
+        "revisao": 42,
+        "imagem": "loja/checkout:2.14.0",
+        "quando": "2026-11-01T09:12:00Z",
+        "autor": "ci",
+        "mudanca": "migração de configuração para ConfigMap novo"
+      }
+    ],
+    "replicas": 3,
+    "recursos": {
+      "memoria": "512Mi",
+      "cpu": "500m"
+    }
+  },
+  "pods": [
+    {
+      "nome": "checkout-7f9c-a1",
+      "status": "CrashLoopBackOff",
+      "reinicios": 14,
+      "revisao": 42,
+      "ultimoMotivo": "Error"
+    },
+    {
+      "nome": "checkout-7f9c-b2",
+      "status": "CrashLoopBackOff",
+      "reinicios": 13,
+      "revisao": 42,
+      "ultimoMotivo": "Error"
+    },
+    {
+      "nome": "checkout-7f9c-c3",
+      "status": "CrashLoopBackOff",
+      "reinicios": 14,
+      "revisao": 42,
+      "ultimoMotivo": "Error"
+    }
+  ],
+  "eventos": [
+    "09:12:05 Deployment checkout escalado para revisão 42",
+    "09:12:40 Pod checkout-7f9c-a1: Back-off restarting failed container",
+    "09:13:10 Pod checkout-7f9c-b2: Back-off restarting failed container"
+  ],
+  "logs": {
+    "*": [
+      "2026-11-01T09:12:31Z INFO iniciando checkout 2.14.0",
+      "2026-11-01T09:12:31Z INFO carregando configuração do ConfigMap checkout-config-v2",
+      "2026-11-01T09:12:32Z ERROR variável obrigatória DATABASE_URL não definida",
+      "2026-11-01T09:12:32Z FATAL encerrando: configuração inválida"
+    ]
+  },
+  "metricas": {
+    "taxa_erro_5xx": [
+      0.2,
+      0.3,
+      0.2,
+      0.4,
+      61.0,
+      98.5,
+      99.1
+    ],
+    "latencia_p95_ms": [
+      180,
+      190,
+      175,
+      185,
+      0,
+      0,
+      0
+    ],
+    "memoria_pct": [
+      41,
+      43,
+      42,
+      44,
+      5,
+      4,
+      4
+    ]
+  },
+  "acaoCorreta": {
+    "ferramenta": "fazer_rollback",
+    "args": {
+      "deployment": "checkout",
+      "revisao": 41
+    }
+  }
+}

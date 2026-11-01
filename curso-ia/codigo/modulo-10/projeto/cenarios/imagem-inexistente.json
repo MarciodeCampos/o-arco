@@ -1,0 +1,79 @@
+{
+  "descricao": "Erro de digitação na tag da imagem do frete",
+  "servico": "frete",
+  "deployment": {
+    "nome": "frete",
+    "revisaoAtual": 9,
+    "historico": [
+      {
+        "revisao": 8,
+        "imagem": "loja/frete:1.8.2",
+        "quando": "2026-10-28T16:00:00Z",
+        "autor": "ana",
+        "mudanca": "nova faixa de CEP"
+      },
+      {
+        "revisao": 9,
+        "imagem": "loja/frete:1.8.3-rc",
+        "quando": "2026-11-01T11:30:00Z",
+        "autor": "bruno",
+        "mudanca": "correção de arredondamento"
+      }
+    ],
+    "replicas": 2,
+    "recursos": {
+      "memoria": "256Mi",
+      "cpu": "250m"
+    }
+  },
+  "pods": [
+    {
+      "nome": "frete-6b8-k1",
+      "status": "ImagePullBackOff",
+      "reinicios": 0,
+      "revisao": 9,
+      "ultimoMotivo": "ErrImagePull"
+    },
+    {
+      "nome": "frete-5a1-old",
+      "status": "Running",
+      "reinicios": 0,
+      "revisao": 8,
+      "ultimoMotivo": null
+    }
+  ],
+  "eventos": [
+    "11:30:10 Pod frete-6b8-k1: Failed to pull image \"loja/frete:1.8.3-rc\": manifest unknown",
+    "11:30:40 Pod frete-6b8-k1: Back-off pulling image"
+  ],
+  "logs": {
+    "*": []
+  },
+  "metricas": {
+    "taxa_erro_5xx": [
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.2,
+      0.1,
+      0.1
+    ],
+    "latencia_p95_ms": [
+      120,
+      118,
+      121,
+      125,
+      180,
+      190,
+      185
+    ]
+  },
+  "acaoCorreta": {
+    "ferramenta": "fazer_rollback",
+    "args": {
+      "deployment": "frete",
+      "revisao": 8
+    }
+  }
+}

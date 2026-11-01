@@ -1,0 +1,109 @@
+{
+  "descricao": "Pico de tráfego da Black Friday estourou a memória do recomendador",
+  "servico": "recomendacoes",
+  "deployment": {
+    "nome": "recomendacoes",
+    "revisaoAtual": 17,
+    "historico": [
+      {
+        "revisao": 17,
+        "imagem": "loja/recomendacoes:5.2.1",
+        "quando": "2026-10-20T10:00:00Z",
+        "autor": "ci",
+        "mudanca": "cache de produtos em memória"
+      }
+    ],
+    "replicas": 4,
+    "recursos": {
+      "memoria": "1Gi",
+      "cpu": "1"
+    }
+  },
+  "pods": [
+    {
+      "nome": "recomendacoes-55d-x1",
+      "status": "Running",
+      "reinicios": 6,
+      "revisao": 17,
+      "ultimoMotivo": "OOMKilled"
+    },
+    {
+      "nome": "recomendacoes-55d-x2",
+      "status": "Running",
+      "reinicios": 7,
+      "revisao": 17,
+      "ultimoMotivo": "OOMKilled"
+    },
+    {
+      "nome": "recomendacoes-55d-x3",
+      "status": "Running",
+      "reinicios": 5,
+      "revisao": 17,
+      "ultimoMotivo": "OOMKilled"
+    },
+    {
+      "nome": "recomendacoes-55d-x4",
+      "status": "Running",
+      "reinicios": 6,
+      "revisao": 17,
+      "ultimoMotivo": "OOMKilled"
+    }
+  ],
+  "eventos": [
+    "10:01:00 Pod recomendacoes-55d-x1: OOMKilled (limite 1Gi)",
+    "10:04:12 Pod recomendacoes-55d-x2: OOMKilled (limite 1Gi)",
+    "10:06:30 HPA recomendacoes: réplicas no máximo (4/4)"
+  ],
+  "logs": {
+    "*": [
+      "2026-11-01T09:58:10Z INFO cache de produtos: 812 MB",
+      "2026-11-01T10:00:51Z WARN cache de produtos: 1003 MB",
+      "2026-11-01T10:00:59Z INFO requisições/s: 2310 (normal: 600)"
+    ]
+  },
+  "metricas": {
+    "taxa_erro_5xx": [
+      0.1,
+      0.1,
+      0.2,
+      3.5,
+      4.2,
+      5.0,
+      4.8
+    ],
+    "latencia_p95_ms": [
+      90,
+      95,
+      92,
+      410,
+      520,
+      610,
+      580
+    ],
+    "memoria_pct": [
+      70,
+      74,
+      81,
+      99,
+      100,
+      98,
+      100
+    ],
+    "requisicoes_por_s": [
+      580,
+      600,
+      640,
+      1900,
+      2310,
+      2400,
+      2350
+    ]
+  },
+  "acaoCorreta": {
+    "ferramenta": "ajustar_recursos",
+    "args": {
+      "deployment": "recomendacoes",
+      "memoria": "2Gi"
+    }
+  }
+}
