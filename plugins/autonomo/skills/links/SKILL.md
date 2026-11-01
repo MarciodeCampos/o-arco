@@ -1,3 +1,9 @@
+---
+name: links
+description: Links diretos e oficiais (Claude, GitHub, Node, Vercel e outros) para quando a pessoa precisar fazer algo fora do terminal. Carregue quando for mandar um link de cadastro, download ou painel.
+user-invocable: false
+---
+
 # Links diretos
 
 Use estes links quando a pessoa precisar fazer algo fora do terminal. Confira se ainda funcionam
