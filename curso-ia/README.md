@@ -25,6 +25,7 @@ curso-ia/
 ├── modulo-03/index.html  aulas do módulo 3
 ├── modulo-04/index.html  aulas do módulo 4
 ├── modulo-05/index.html  aulas do módulo 5
+├── modulo-06/index.html  aulas do módulo 6
 └── codigo/
     ├── modulo-01/
     │   ├── python/       labs e projeto (NumPy + SDK anthropic)
@@ -42,9 +43,12 @@ curso-ia/
     ├── modulo-04/
     │   ├── python/       labs: BM25 do zero, vetores e escala
     │   └── projeto/      RAG com PGlite + pgvector, busca híbrida, citações e evals
-    └── modulo-05/
-        ├── python/       servidor e cliente MCP, testes, servidor envenenado e verificador
-        └── projeto/      o RAG do módulo 4 como servidor MCP (stdio e HTTP), com proteções
+    ├── modulo-05/
+    │   ├── python/       servidor e cliente MCP, testes, servidor envenenado e verificador
+    │   └── projeto/      o RAG do módulo 4 como servidor MCP (stdio e HTTP), com proteções
+    └── modulo-06/
+        ├── python/       labs: padrões de workflow, tool runner, custo de agentes
+        └── projeto/      agente do zero, supervisor multiagente, memória e evals de trajetória
 ```
 
 ## Status
@@ -56,7 +60,8 @@ curso-ia/
 | 03 · Avaliação (Evals) e Testes | ✅ pronto |
 | 04 · RAG de Ponta a Ponta | ✅ pronto |
 | 05 · MCP — Model Context Protocol | ✅ pronto |
-| 06 – 15 | planejados (ver `curriculo.json`) |
+| 06 · Agentes de IA | ✅ pronto |
+| 07 – 15 | planejados (ver `curriculo.json`) |
 
 ## Rodando os labs do Módulo 1
 

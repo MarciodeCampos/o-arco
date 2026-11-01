@@ -41,7 +41,7 @@ export class EmbedderHash implements Embedder {
 
   private vetor(texto: string): number[] {
     const v = new Array(this.dimensao).fill(0);
-    const t = ` ${texto.normalize("NFKD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, " ")} `;
+    const t = ` ${texto.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, " ")} `;
     for (let i = 0; i < t.length - 2; i++) {
       const tri = t.slice(i, i + 3);
       let h = 2166136261; // FNV-1a

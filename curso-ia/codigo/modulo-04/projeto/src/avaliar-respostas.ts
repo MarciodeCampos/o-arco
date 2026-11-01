@@ -37,7 +37,7 @@ const { values: args } = parseArgs({
   },
 });
 
-const norm = (s: string) => s.normalize("NFKD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ");
+const norm = (s: string) => s.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/\s+/g, " ");
 const PRECO = { entrada: 4, saida: 20 }; // claude-opus-5-5, US$/1M tokens (nov/2026)
 
 async function main() {
