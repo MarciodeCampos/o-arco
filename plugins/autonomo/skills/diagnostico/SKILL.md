@@ -7,7 +7,7 @@ description: Verifica o ambiente da pessoa (sistema, Claude Code, git, Node, Pyt
 
 Somente leitura: esta skill não instala nem altera nada.
 
-1. Leia `${CLAUDE_PLUGIN_ROOT}/referencia/como-ensinar.md` se ainda não leu nesta sessão.
+1. Carregue a skill `autonomo:como-ensinar` (ferramenta Skill) se ainda não carregou nesta sessão.
 2. Diga à pessoa, em uma frase, que vai olhar o que já está instalado, sem mudar nada.
 3. Rode o diagnóstico:
    - macOS, Linux ou WSL: `bash "${CLAUDE_SKILL_DIR}/diagnostico.sh"`

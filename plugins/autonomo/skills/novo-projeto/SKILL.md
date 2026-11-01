@@ -6,7 +6,8 @@ argument-hint: "[ideia do projeto]"
 
 # Novo projeto
 
-Leia `${CLAUDE_PLUGIN_ROOT}/referencia/como-ensinar.md` se ainda não leu nesta sessão.
+Carregue a skill `autonomo:como-ensinar` (ferramenta Skill) se ainda não carregou nesta sessão.
+Nunca leia arquivos do plugin com Read.
 Ideia recebida (pode estar vazia): $ARGUMENTS
 
 ## 1. Entender a ideia
@@ -32,7 +33,7 @@ Pergunte o nome do projeto e crie em `~/projetos/<nome-em-minusculas-com-hifens>
 1. `git init` (sozinho) e `git switch -c main` se necessário.
 2. `.gitignore` com, no mínimo: `.env`, `.env.*`, `!.env.example`, `node_modules/`, `__pycache__/`,
    `.venv/`, `dist/`, `.DS_Store`.
-3. `.claude/settings.json` a partir de `${CLAUDE_PLUGIN_ROOT}/modelos/projeto-settings.json`,
+3. `.claude/settings.json` a partir do modelo `projeto-settings.json` da skill `autonomo:modelos`,
    acrescentando em `permissions.allow` os comandos de teste e build do projeto
    (por exemplo `Bash(npm test *)`, `Bash(npm run build *)`, `Bash(pytest *)`). Avise que vai aparecer
    uma aprovação para a pasta `.claude` do projeto.
@@ -70,4 +71,4 @@ ou público. Então:
 A partir de agora, trabalhe em branches para mudanças grandes (`git switch -c nome-da-mudanca`) e
 abra pull requests (`gh pr create`) quando a pessoa quiser revisar antes. Para publicar, use a skill
 `implantar`. Termine com o resumo: onde está o projeto, o link do GitHub, como abrir de novo
-(`cd ~/projetos/<nome> && claude`), e três ideias de próximos pedidos.
+(`cd ~/projetos/<nome>` e depois `claude`, em duas linhas: o PowerShell do Windows não aceita `&&`), e três ideias de próximos pedidos.

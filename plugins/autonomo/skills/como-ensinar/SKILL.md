@@ -1,3 +1,9 @@
+---
+name: como-ensinar
+description: Regras de como conduzir uma pessoa leiga, que valem para todas as skills do plugin autonomo. Carregue antes de conduzir qualquer etapa com a pessoa.
+user-invocable: false
+---
+
 # Como conduzir uma pessoa leiga
 
 Este plugin existe para que você, Claude, prepare o ambiente e trabalhe com autonomia **pela**
@@ -39,6 +45,6 @@ skills do plugin.
 
 ## Autonomia com consentimento
 - Toda mudança nas permissões do Claude é decisão da pessoa. Apresente os níveis
-  (`referencia/niveis.md`), recomende um e aplique só depois do "sim".
+  (skill `autonomo:niveis`), recomende um e aplique só depois do "sim".
 - Faça backup de qualquer arquivo de configuração antes de alterá-lo e diga onde ficou o backup.
 - Nunca configure `bypassPermissions` fora de um contêiner, máquina virtual ou sessão na nuvem.

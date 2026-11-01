@@ -46,16 +46,18 @@ O Nível 2 liga o modo auto, em que um segundo modelo revisa cada ação, e acre
 - sandbox de comandos, que restringe a escrita à pasta do projeto e protege segredos contra leituras indiretas.
 
 As barreiras foram testadas no Claude Code 2.1.316, inclusive no modo que pula todas as checagens.
-Os limites conhecidos estão em [`referencia/niveis.md`](referencia/niveis.md).
+Os limites conhecidos estão em [`skills/niveis/SKILL.md`](skills/niveis/SKILL.md).
 
 ## Estrutura
 
 ```
 autonomo/
 ├── .claude-plugin/plugin.json
-├── skills/          comecar, diagnostico, configurar-autonomia, verificar-barreiras, novo-projeto, implantar
-├── modelos/         settings por nível, settings de projeto, bloco do CLAUDE.md do usuário
-└── referencia/      como ensinar leigos, links diretos, níveis e limites
+└── skills/
+    ├── comecar, diagnostico, configurar-autonomia, verificar-barreiras, novo-projeto, implantar
+    │                comandos que a pessoa usa (/autonomo:...)
+    └── como-ensinar, links, niveis, modelos
+                     referências que o Claude carrega pela ferramenta Skill (não aparecem no menu)
 ```
 
 ## Desfazer
@@ -64,3 +66,10 @@ autonomo/
 Para remover o plugin: `claude plugin uninstall autonomo@o-arco`.
 
 Licença MIT. Parte do curso [Engenharia de IA Aplicada](https://triadic.life/curso-ia/).
+
+## Por que as referências são skills
+
+As skills carregam o material de apoio pela ferramenta Skill, nunca lendo arquivos do plugin. Os
+arquivos do plugin ficam fora da pasta do projeto, e no Windows (onde não há sandbox) o modo auto
+pergunta, em inglês, antes de cada leitura fora da pasta. Se a pessoa escolhesse bloquear, o plugin
+deixaria de funcionar. Carregar pela ferramenta Skill evita a pergunta.
