@@ -99,6 +99,16 @@ for await (const { evento, dados } of lerEventos(r.body)) {
         <li><strong>Política de segurança de conteúdo</strong> (<code>Content-Security-Policy: default-src 'self'</code>): mesmo que algo escape, scripts de fora não rodam. Por isso o app não tem nenhum script ou estilo inline.</li>
         <li><strong>Validação e limites no servidor:</strong> tamanho das mensagens, número de turnos, requisições por minuto por IP.</li>
       </ul>
+          <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>O usuário fecha a aba no meio de uma resposta em streaming. O que o servidor deve fazer?</p>
+          <button type="button">Continuar gerando para guardar no cache</button>
+          <button type="button" data-certa>Cancelar a chamada ao modelo, para não pagar por tokens que ninguém vai ler</button>
+          <button type="button">Reiniciar a geração quando ele voltar</button>
+          <p class="why">Cancelar a requisição ao provedor quando a conexão cai evita custo e carga sem benefício.</p>
+        </div>
+      </div>
     </section>
 
     <section class="lesson" id="aula-3">
@@ -126,6 +136,16 @@ python python/02_pdf.py        # contrato em PDF → resposta com citação de p
         <li><strong>Dados sensíveis aparecem em fotos</strong> (documentos, rostos, cartões). Peça ao modelo para sinalizar e defina retenção curta.</li>
         <li><strong>Peça legibilidade e confiança</strong> na saída: fotos ruins são a maior causa de erro.</li>
       </ul>
+          <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Onde deve ficar a chave de API num app que analisa fotos enviadas pelo navegador?</p>
+          <button type="button" data-certa>Só no servidor; o navegador envia a imagem para o seu back-end</button>
+          <button type="button">No JavaScript do front-end, ofuscada</button>
+          <button type="button">No localStorage do usuário</button>
+          <p class="why">Qualquer coisa enviada ao navegador pode ser lida. O back-end valida a imagem (tipo real, tamanho) e só ele chama o modelo.</p>
+        </div>
+      </div>
     </section>
 
     <section class="lesson" id="aula-4">

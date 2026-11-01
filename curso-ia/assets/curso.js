@@ -55,7 +55,7 @@
           `<span class="tag">${m.horas}h</span>`,
           pronto ? '<span class="tag ok">Disponível</span>' : '<span class="tag soon">Em produção</span>',
           m.novo ? '<span class="tag new">Novo</span>' : "",
-          pronto && feitas ? `<span class="tag ok">${feitas}/${m.unidades.length} aulas feitas</span>` : "",
+          pronto && feitas ? `<span class="tag ok">${feitas}/${m.aulas || m.unidades.length} aulas feitas</span>` : "",
         ].join("");
         return `
         <article class="mod${pronto ? " ready" : ""}">

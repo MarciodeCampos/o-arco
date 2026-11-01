@@ -103,6 +103,16 @@ cd projeto &amp;&amp; npm install &amp;&amp; npm test</code></pre>
           Mesmo que o modelo resista sozinho, a limpeza da saída é a garantia que não depende dele.
         </p>
       </div>
+          <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Qual combinação caracteriza a “tríade letal”?</p>
+          <button type="button">Modelo grande, temperatura alta e prompt longo</button>
+          <button type="button" data-certa>Acesso a dados privados, exposição a conteúdo não confiável e um canal para enviar dados para fora</button>
+          <button type="button">Falta de testes, falta de logs e falta de CI</button>
+          <p class="why">Com os três presentes, uma injeção pode exfiltrar dados. Cortar qualquer um dos lados quebra o ataque.</p>
+        </div>
+      </div>
     </section>
 
     <section class="lesson" id="aula-3">
@@ -141,6 +151,16 @@ mascarar("Sou Ana, CPF 52998224725, cartão 4111-1111-1111-1111, ana.souza@exemp
         <li><strong>No RAG:</strong> filtrar a busca pelas permissões do usuário <em>antes</em> de chegar ao modelo.</li>
         <li><strong>Segredos:</strong> chaves e tokens nunca no prompt; detectores de formato conhecido na entrada, na saída e no código (Módulo 7).</li>
       </ul>
+          <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Qual a melhor forma de detectar CPFs num texto antes de mandá-lo ao modelo?</p>
+          <button type="button">Pedir ao próprio modelo que ignore dados pessoais</button>
+          <button type="button" data-certa>Regex do formato seguida da validação dos dígitos verificadores, e mascarar o que for válido</button>
+          <button type="button">Remover todos os números do texto</button>
+          <p class="why">Só o formato gera falsos positivos; a validação dos dígitos reduz erros e o mascaramento preserva o resto do texto.</p>
+        </div>
+      </div>
     </section>
 
     <section class="lesson" id="aula-5">

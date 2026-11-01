@@ -99,6 +99,16 @@ cd projeto &amp;&amp; npm install &amp;&amp; npm test      # instala também o a
         </p>
       </div>
       <div class="callout"><b>Fluxo PR-first</b>A IA nunca aplica: ela abre um pull request com o código e o resultado do <code>plan</code> e das políticas. A detecção de drift (diferença entre código e realidade) vira um PR também.</div>
+          <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Um copilot gera um plano Terraform que remove um banco de dados. O que deve acontecer?</p>
+          <button type="button">Aplicar, porque o plano foi gerado a partir do pedido do engenheiro</button>
+          <button type="button" data-certa>Bloquear por política (policy-as-code) e exigir aprovação explícita com backup verificado</button>
+          <button type="button">Pedir ao copilot que confirme se tem certeza</button>
+          <p class="why">Políticas determinísticas no pipeline barram ações destrutivas, independentemente de quem ou o quê gerou o plano.</p>
+        </div>
+      </div>
     </section>
 
     <section class="lesson" id="aula-3">
@@ -159,6 +169,16 @@ LINHA DO TEMPO
           janela de referência, o desvio-padrão cresce e o resto do incidente parece normal. Um detalhe de
           implementação que muda a resposta, e que só aparece quando você testa com um incidente de verdade.
         </p>
+      </div>
+          <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Por que um detector de anomalias com média móvel simples pode falhar num incidente longo?</p>
+          <button type="button" data-certa>Porque a média passa a incluir o próprio incidente e o anormal vira o novo normal</button>
+          <button type="button">Porque médias não funcionam com métricas de latência</button>
+          <button type="button">Porque precisa de um LLM para interpretar</button>
+          <p class="why">Foi o que o lab mostrou: a versão robusta usa uma linha de base que não absorve o período anômalo.</p>
+        </div>
       </div>
     </section>
 

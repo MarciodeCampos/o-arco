@@ -184,7 +184,8 @@ npm run servidor:stdio                     # precisa do índice do módulo 4 (np
    `<section class="lesson" id="aula-N">`. O atributo `data-modulo` da `<main>` deve ser `modulo-NN`.
 2. Coloque o código em `codigo/modulo-NN/` e **rode tudo antes de publicar**: as saídas mostradas
    nas aulas devem ser as reais.
-3. Em `curriculo.json`, mude o `status` do módulo para `"pronto"`. A capa passa a mostrar o link.
+3. Em `curriculo.json`, mude o `status` do módulo para `"pronto"` (a capa passa a mostrar o link) e
+   ponha em `aulas` o número de `<section class="lesson">` da página, usado no progresso da capa.
 4. Quiz: em cada `.q`, marque a alternativa certa com `data-certa`; o `.why` aparece depois da resposta.
 
 ## Para transformar em produto

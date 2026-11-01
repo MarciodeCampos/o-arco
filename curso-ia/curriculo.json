@@ -30,7 +30,8 @@
         "Removida a prévia de RAG/MCP/Agentes (agora cada tema tem módulo próprio)",
         "Labs executáveis em Python e TypeScript",
         "Modelos de raciocínio e custo por token desde o início"
-      ]
+      ],
+      "aulas": 10
     },
     {
       "numero": 2,
@@ -54,7 +55,8 @@
       "melhorias": [
         "Saídas estruturadas e context engineering ganham unidade própria",
         "Prompt chaining sai daqui e vai para Agentes"
-      ]
+      ],
+      "aulas": 11
     },
     {
       "numero": 3,
@@ -76,7 +78,8 @@
       "projeto": "Suíte de evals para o extrator do Módulo 2: checagens atômicas, LLM-juiz, comparação pareada e workflow de CI",
       "melhorias": [
         "Módulo inexistente na ementa original e hoje central para o cargo"
-      ]
+      ],
+      "aulas": 9
     },
     {
       "numero": 4,
@@ -98,7 +101,8 @@
       "melhorias": [
         "Unifica o RAG que aparecia em 5 módulos diferentes",
         "Inclui busca híbrida, reranking e avaliação"
-      ]
+      ],
+      "aulas": 9
     },
     {
       "numero": 5,
@@ -120,7 +124,8 @@
       "melhorias": [
         "Segurança de MCP com ameaças reais, não só WAF",
         "Implementação nas duas linguagens"
-      ]
+      ],
+      "aulas": 9
     },
     {
       "numero": 6,
@@ -145,7 +150,8 @@
         "Junta os módulos 4 e parte do 8 originais",
         "Remove casos de referência vagos",
         "Avaliação de trajetória de agentes"
-      ]
+      ],
+      "aulas": 11
     },
     {
       "numero": 7,
@@ -167,7 +173,8 @@
       "melhorias": [
         "Neutro em fornecedor",
         "Inclui os agentes de terminal ausentes na ementa original"
-      ]
+      ],
+      "aulas": 9
     },
     {
       "numero": 8,
@@ -189,7 +196,8 @@
       "melhorias": [
         "Junta Multimodal (Mód. 2) e UX/UI (Mód. 5) originais",
         "Sem dependência de um único provedor de nuvem"
-      ]
+      ],
+      "aulas": 9
     },
     {
       "numero": 9,
@@ -211,7 +219,8 @@
       "melhorias": [
         "Remove sobreposição com o módulo de agentes",
         "Adiciona versionamento de prompts e OpenTelemetry"
-      ]
+      ],
+      "aulas": 9
     },
     {
       "numero": 10,
@@ -234,7 +243,8 @@
       "melhorias": [
         "Condensado de 12 para 8 unidades, mantendo as práticas",
         "Fundamentos repetidos foram removidos"
-      ]
+      ],
+      "aulas": 10
     },
     {
       "numero": 11,
@@ -257,7 +267,8 @@
         "Corrige a unidade 1 copiada por engano na ementa original",
         "LoRA em Python, onde o ecossistema realmente está",
         "Destilação e inferência local"
-      ]
+      ],
+      "aulas": 9
     },
     {
       "numero": 12,
@@ -278,7 +289,8 @@
       "projeto": "Red team automatizado contra um app do curso, com guardrails em camadas, comparação antes e depois e ficha de governança",
       "melhorias": [
         "Substitui a lista genérica de 7 tópicos por conteúdo técnico prático"
-      ]
+      ],
+      "aulas": 9
     },
     {
       "numero": 13,
@@ -297,7 +309,8 @@
       "projeto": "Bot que transforma transcrições de reunião em tarefas verificáveis no board, com relatórios e previsão de prazos",
       "melhorias": [
         "Condensado de 10 para 5 unidades: mais prático, menos teórico"
-      ]
+      ],
+      "aulas": 7
     },
     {
       "numero": 14,
@@ -318,7 +331,8 @@
       "melhorias": [
         "Evals e segurança viram critérios de avaliação",
         "Front-end em React ou Angular, à escolha"
-      ]
+      ],
+      "aulas": 8
     },
     {
       "numero": 15,
@@ -337,7 +351,8 @@
       "projeto": "Portfólio publicado e simulação de entrevista de system design",
       "melhorias": [
         "Mantido, com system design de IA mais aprofundado"
-      ]
+      ],
+      "aulas": 7
     }
   ]
 }

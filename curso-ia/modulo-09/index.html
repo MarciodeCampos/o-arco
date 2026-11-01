@@ -74,6 +74,16 @@ cd projeto &amp;&amp; npm install &amp;&amp; npm test</code></pre>
         executa (regras de negócio, cálculos, permissões). Você viu isso no extrator de recibos: o modelo
         lê, o código valida a soma e os dígitos do CNPJ.
       </p>
+          <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Validar se um CPF tem dígitos verificadores corretos é tarefa para:</p>
+          <button type="button">Um modelo grande, com raciocínio estendido</button>
+          <button type="button">Um modelo pequeno, para economizar</button>
+          <button type="button" data-certa>Código determinístico: é uma regra exata, barata e testável</button>
+          <p class="why">Se a regra é conhecida e exata, código ganha em custo, latência e previsibilidade. IA entra onde há ambiguidade.</p>
+        </div>
+      </div>
     </section>
 
     <section class="lesson" id="aula-2">
@@ -192,6 +202,16 @@ CUSTO MENSAL (30 dias)
         <li>Promove (vira <em>estável</em>) ou faz rollback (remove a candidata), mudando um arquivo, sem deploy das aplicações.</li>
       </ol>
       <p>O mesmo vale para trocar de modelo: uma rota nova em canário, medida, e então promovida.</p>
+          <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Qual é a forma mais segura de colocar uma versão nova de prompt em produção?</p>
+          <button type="button">Trocar para todos de uma vez fora do horário de pico</button>
+          <button type="button" data-certa>Liberar para uma fração do tráfego, comparar métricas com a versão atual e ter rollback pronto</button>
+          <button type="button">Pedir ao modelo que avalie se o prompt novo é melhor</button>
+          <p class="why">Canário com métricas comparáveis e rollback limita o estrago de uma regressão que as evals não pegaram.</p>
+        </div>
+      </div>
     </section>
 
     <section class="lesson" id="projeto">

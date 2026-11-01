@@ -72,6 +72,16 @@ python 01_preparar_dataset.py &amp;&amp; python 02_lora_do_zero.py &amp;&amp; py
         <tr><td><strong>5. Treinar do zero</strong></td><td>Quase nunca faz sentido fora de laboratórios de pesquisa</td><td>—</td></tr>
       </table>
       <div class="callout warn"><b>O erro mais comum</b>Ajustar um modelo para ele "saber" os produtos ou políticas da empresa. Fatos mudam, o modelo ajustado fica desatualizado, alucina com mais confiança e não cita a fonte. Fatos pertencem ao RAG; o ajuste ensina <em>comportamento</em>.</div>
+          <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Qual problema é o melhor candidato a fine-tuning ou destilação?</p>
+          <button type="button">Responder sobre a política de reembolso, que muda todo mês</button>
+          <button type="button" data-certa>Classificar milhões de chamados por mês em categorias estáveis, onde um modelo grande já acerta</button>
+          <button type="button">Uma tarefa nova sem nenhum exemplo rotulado</button>
+          <p class="why">Conhecimento que muda pede RAG. Tarefa estreita, estável e de alto volume, com um professor que já acerta, é onde ajuste e destilação pagam.</p>
+        </div>
+      </div>
     </section>
 
     <section class="lesson" id="aula-2">
@@ -213,6 +223,16 @@ CASCATA nos chamados novos: o aluno responde se estiver confiante; senão, o pro
           isso. (No modo offline, os rótulos do dataset fazem o papel do professor; o acerto da cascata supõe
           que o professor acerta os casos que recebe, o que você deve medir.)
         </p>
+      </div>
+          <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>O modelo destilado acertou 100% no conjunto de teste do desenvolvimento. O que falta?</p>
+          <button type="button">Nada, pode substituir o modelo grande</button>
+          <button type="button" data-certa>Testar com dados fora da distribuição, como chamados novos escritos de outro jeito</button>
+          <button type="button">Treinar por mais épocas</button>
+          <p class="why">No lab, o mesmo modelo caiu para 40% em chamados novos. A cascata (pequeno primeiro, grande quando incerto) protege contra isso.</p>
+        </div>
       </div>
     </section>
 
