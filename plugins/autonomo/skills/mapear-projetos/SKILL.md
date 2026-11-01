@@ -114,8 +114,16 @@ Proponha ligações entre projetos com evidência, por exemplo:
 - cópias do mesmo projeto em lugares diferentes (`C:\`, `D:\`, Google Drive, pastas `backup`): agrupe
   como um projeto só, aponte qual parece ser a cópia principal (a alterada mais recentemente ou com
   git) e liste as outras como cópias.
-Mostre cada ligação com o motivo e peça para a pessoa confirmar, corrigir e acrescentar as que só
-ela sabe ("o site X manda clientes para o sistema Y").
+Classifique cada ligação pela força da evidência, porque "mesmo tema" ou "mesmo domínio" não prova
+integração técnica:
+- **comprovada:** um arquivo mostra a ligação (um importa, chama, publica ou alimenta o outro);
+- **estratégica:** a pessoa confirma que existe, mas não há prova técnica nos arquivos;
+- **hipótese:** palpite seu (nome parecido, mesmo tema), ainda sem confirmação.
+Mostre cada ligação com o motivo e a evidência, e peça para a pessoa confirmar, corrigir e acrescentar
+as que só ela sabe ("o site X manda clientes para o sistema Y").
+
+**Nomes iguais:** coisas diferentes com o mesmo nome (uma obra, um repositório e um plugin chamados
+"O Arco") viram itens separados, com `id` diferentes, mesmo quando dividem pasta ou repositório.
 
 **Hierarquia:** separe os níveis, porque é isso que mostra quantos projetos independentes existem e
 quais já podem trabalhar juntos:
@@ -128,13 +136,18 @@ quais já podem trabalhar juntos:
 Cada item aponta para o seu pai em `projeto_pai`.
 
 ## 6. Situação de cada projeto
-- **Publicado:** tem endereço que responde (`curl -sI <url>` com 200 ou 30x).
-- **Em andamento:** alteração nos últimos 30 dias.
-- **Pausado:** sem alteração há mais de 30 dias.
-- **Arquivado:** arquivado no GitHub.
-- **Registrado:** veio de uma lista ou da memória da pessoa e ainda não foi confirmado no computador,
-  no GitHub ou na internet.
-Pergunte à pessoa só sobre os que ficaram em dúvida.
+Registre três coisas separadas, porque elas podem coexistir (um site publicado pode estar em
+desenvolvimento ativo, e um produto sem mudanças no código pode estar operando e faturando):
+- **`publicacao`:** `publicado` (o endereço responde a `curl -sI <url>` com 200 ou 30x; isso não prova
+  que todas as funções funcionam), `nao_publicado` ou `desconhecido`.
+- **`atividade`:** `em_andamento` (alteração nos últimos 30 dias), `sem_alteracao_recente` (a cópia
+  examinada não muda há mais de 30 dias; não diga "pausado" sem a pessoa confirmar), `pausado` ou
+  `arquivado` (só quando a pessoa ou o GitHub disser).
+- **`verificacao`:** `verificado` (achei pasta, repositório ou site), `registrado` (veio de uma lista
+  ou da memória da pessoa, sem confirmação) ou `parcial`.
+Seja preciso nas conclusões: "não achei remoto git nas cópias examinadas e não está na lista de
+repositórios da conta X" é diferente de "não tem cópia no GitHub". Pergunte à pessoa só sobre os que
+ficaram em dúvida.
 
 ## 7. Entregar
 1. Uma tabela curta, em linguagem simples: projeto, o que é, situação, onde está publicado, onde está
@@ -154,19 +167,29 @@ Pergunte à pessoa só sobre os que ficaram em dúvida.
       "tipo": "plataforma",
       "projeto_pai": "minha-marca",
       "descricao": "Agenda online para clientes",
-      "situacao": "publicado",
-      "verificado": true,
+      "publicacao": "publicado",
+      "atividade": "em_andamento",
+      "verificacao": "verificado",
+      "visibilidade": "publica",
+      "descricao_publica": "Agende um horário online, pelo celular",
       "endereco": "https://agenda.exemplo.com",
       "repositorio": "https://github.com/dono/sistema-agendamento",
       "caminho_local": "C:/Users/NOME/Documents/sistema-agendamento",
       "tecnologias": ["Next.js", "Supabase"],
       "ultima_alteracao": "AAAA-MM-DD",
-      "conexoes": [{ "com": "site-principal", "motivo": "recebe clientes do site" }],
+      "conexoes": [
+        { "com": "site-principal", "motivo": "recebe clientes do site", "evidencia": "comprovada", "fonte": "link no index.html do site" }
+      ],
       "proximo_passo": "colocar testes e proteção de segredos"
     }
   ]
 }
 ```
+
+O inventário é interno: guarda caminhos, backups e itens privados. Por isso cada item tem
+`visibilidade` (`publica`, `restrita` ou `privada`) e uma `descricao_publica` escrita para clientes.
+Uma página pública gerada a partir do arquivo mostra só os itens públicos, só a `descricao_publica`,
+e nunca caminhos locais.
 
 4. Três próximos passos sugeridos, escritos como a pessoa diria. Por exemplo: "crie uma página que
    mostra esse mapa" (skill `autonomo:novo-projeto`, usando o `projetos.json` como dados), "coloque
