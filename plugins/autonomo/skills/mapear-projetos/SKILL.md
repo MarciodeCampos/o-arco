@@ -37,10 +37,34 @@ cada arquivo, peça para a pessoa liberar cada pasta uma vez, digitando aqui no 
 sessão; não muda nada nela". Se aparecer uma confirmação em inglês, traduza e diga qual opção
 escolher, como manda a skill `autonomo:como-ensinar`.
 
-## 2. Procurar no computador
-Para cada pasta liberada, encontre projetos até 4 níveis de profundidade. Um projeto é uma pasta com
-`.git`, ou, sem git, com `package.json`, `pyproject.toml`, `requirements.txt`, `index.html` na raiz,
-`composer.json`, `Gemfile`, `go.mod` ou `Cargo.toml`. Não entre num projeto já encontrado procurando
+## 2. Pistas rápidas: onde a pessoa já trabalhou
+Antes de varrer pastas, use os registros que as ferramentas de IA e os editores já guardam. Eles
+apontam direto para as pastas de trabalho, inclusive fora das pastas comuns (`C:\`, `D:\`, Google
+Drive). Leia **só** os itens abaixo, nunca outros arquivos dessas pastas (algumas guardam logins):
+- **Claude Code:** os **nomes** das pastas em `~/.claude/projects/` (cada nome é o caminho de uma
+  pasta aberta no Claude, com `\`, `/` e `:` trocados por `-`). Não abra o conteúdo: são conversas.
+  Como a troca perde informação, confira se o caminho reconstruído existe.
+- **VS Code, Cursor, Windsurf, Antigravity:** a linha `folder` dos arquivos `workspace.json` em
+  `%APPDATA%\<Editor>\User\workspaceStorage\*\` (Windows), `~/Library/Application Support/<Editor>/User/workspaceStorage/*/`
+  (macOS) ou `~/.config/<Editor>/User/workspaceStorage/*/` (Linux). `<Editor>` é `Code`, `Cursor`,
+  `Windsurf` ou `Antigravity`.
+- **Antigravity:** os nomes das pastas em `~/.gemini/antigravity/` e em `~/.gemini/antigravity/playground/`
+  (só nomes; não abra `~/.gemini` além disso).
+- **Codex:** os nomes das pastas em `~/Documents/Codex/`.
+Diga à pessoa de onde veio cada pista ("o VS Code lembra que você abriu esta pasta").
+
+## 3. Procurar no computador
+Junte às pistas as pastas que a pessoa indicou e os lugares comuns (pasta pessoal, `Documentos`,
+`Desktop`, `Downloads`, `projetos`; no Windows, também a raiz de cada disco, como `C:\` e `D:\`, e o
+Google Drive, como `G:\Meu Drive`). Libere cada uma com `/add-dir` (passo 1) e procure até 3 níveis de
+profundidade. Na raiz de um disco, pule `Windows`, `Program Files*`, `ProgramData`, `$Recycle.Bin` e
+`Users` (a pasta pessoal já foi vista).
+
+Um projeto é uma pasta com `.git`, ou, sem git, com `package.json`, `pyproject.toml`,
+`requirements.txt`, `index.html` na raiz, `composer.json`, `Gemfile`, `go.mod`, `Cargo.toml`, `pom.xml`,
+ou com instruções para agentes de IA: `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`, `.cursorrules`. Pastas de
+dados, mídia ou documentos sem código (por exemplo bases de CSV, datasets, catálogos de música) também
+contam se a pessoa disser que são projetos: registre-as com a situação e uma descrição. Não entre num projeto já encontrado procurando
 outros dentro dele (exceto se ele for claramente uma pasta que agrupa vários).
 
 Use a ferramenta Glob (por exemplo `**/.git/HEAD` e `**/package.json`) ou um comando de busca. No
@@ -56,7 +80,7 @@ Para cada projeto, colete sem alterar nada (rode cada comando git sozinho):
   `fly.toml`, `render.yaml`, workflows de deploy, e endereços citados no `README`;
 - uma descrição de uma linha, pelo `README` ou pelo `description` do `package.json`.
 
-## 3. Procurar no GitHub
+## 4. Procurar no GitHub
 Se o `gh` estiver logado (`gh auth status`), liste os repositórios da pessoa e das organizações dela:
 
 ```
@@ -68,7 +92,7 @@ O `homepageUrl` costuma ser o endereço publicado. Junte com o que achou no comp
 do repositório: o mesmo projeto aparece uma vez só, marcando se existe no computador, no GitHub ou
 nos dois.
 
-## 4. Descobrir as conexões
+## 5. Descobrir as conexões
 Proponha ligações entre projetos com evidência, por exemplo:
 - mesmo domínio ou subdomínios (`app.exemplo.com` e `exemplo.com`);
 - um projeto cita o endereço ou o repositório de outro (README, configuração, código);
@@ -76,17 +100,20 @@ Proponha ligações entre projetos com evidência, por exemplo:
 - mesmo serviço externo (o mesmo projeto Supabase, Firebase ou API própria), pelo nome no código ou
   na configuração, nunca pelos segredos;
 - mesma organização no GitHub ou mesmo prefixo de nome.
+- cópias do mesmo projeto em lugares diferentes (`C:\`, `D:\`, Google Drive, pastas `backup`): agrupe
+  como um projeto só, aponte qual parece ser a cópia principal (a alterada mais recentemente ou com
+  git) e liste as outras como cópias.
 Mostre cada ligação com o motivo e peça para a pessoa confirmar, corrigir e acrescentar as que só
 ela sabe ("o site X manda clientes para o sistema Y").
 
-## 5. Situação de cada projeto
+## 6. Situação de cada projeto
 - **Publicado:** tem endereço que responde (`curl -sI <url>` com 200 ou 30x).
 - **Em andamento:** alteração nos últimos 30 dias.
 - **Pausado:** sem alteração há mais de 30 dias.
 - **Arquivado:** arquivado no GitHub.
 Pergunte à pessoa só sobre os que ficaram em dúvida.
 
-## 6. Entregar
+## 7. Entregar
 1. Uma tabela curta, em linguagem simples: projeto, o que é, situação, onde está publicado, onde está
    no computador. Agrupe por rede ou tema se houver muitos.
 2. Um desenho das conexões em texto (ou Mermaid, se a pessoa preferir), por exemplo:
