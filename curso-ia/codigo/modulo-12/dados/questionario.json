@@ -1,0 +1,17 @@
+{
+  "nome": "Assistente de Crédito",
+  "finalidade": "Pré-analisar pedidos de crediário na loja e sugerir aprovação, limite ou recusa",
+  "dono": "Gerência de Crédito (responsável: a definir)",
+  "modelos": ["claude-opus-5-5 (via gateway interno)", "modelo de score próprio"],
+  "usuarios": "Analistas de crédito internos; decisão comunicada ao cliente",
+  "area_de_aplicacao": "credito",
+  "pratica_proibida": false,
+  "trata_dados_pessoais": true,
+  "dados_sensiveis": false,
+  "decisao_automatizada_com_efeito_juridico": true,
+  "interage_com_pessoas": false,
+  "gera_conteudo_sintetico": false,
+  "usuarios_na_ue": false,
+  "age_no_mundo": false,
+  "supervisao_humana": "Toda recusa é revisada por um analista antes de ser comunicada; o cliente pode pedir revisão."
+}

@@ -264,18 +264,18 @@
       "slug": "modulo-12",
       "titulo": "Segurança, Privacidade e Governança de IA",
       "horas": 28,
-      "status": "planejado",
+      "status": "pronto",
       "resumo": "Ataques reais contra aplicações com LLM e como se defender, mais governança: OWASP Top 10 para LLMs, prompt injection, red teaming, LGPD, AI Act e ISO 42001.",
       "unidades": [
-        "OWASP Top 10 para aplicações com LLM e agentes",
-        "Prompt injection direta e indireta (documentos, e-mails, páginas web)",
-        "Segurança de ferramentas e agentes: menor privilégio, sandbox, aprovação",
-        "Vazamento de dados, PII e segredos no contexto",
-        "Red teaming e testes adversariais automatizados",
+        "OWASP Top 10 para aplicações com LLM",
+        "Prompt injection direta e indireta",
+        "Segurança de ferramentas e agentes (tríade letal)",
+        "Dados pessoais e segredos no contexto",
+        "Red teaming automatizado",
         "Vieses, explicabilidade e uso responsável",
-        "Regulação e normas: LGPD, EU AI Act, PL 2338 (Brasil), ISO/IEC 42001"
+        "Regulação, normas e governança: LGPD, AI Act, PL 2338, ISO/IEC 42001"
       ],
-      "projeto": "Red team de um app do curso: relatório de vulnerabilidades e correções aplicadas",
+      "projeto": "Red team automatizado contra um app do curso, com guardrails em camadas, comparação antes e depois e ficha de governança",
       "melhorias": [
         "Substitui a lista genérica de 7 tópicos por conteúdo técnico prático"
       ]

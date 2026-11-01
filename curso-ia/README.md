@@ -31,6 +31,7 @@ curso-ia/
 ├── modulo-09/index.html  aulas do módulo 9
 ├── modulo-10/index.html  aulas do módulo 10
 ├── modulo-11/index.html  aulas do módulo 11
+├── modulo-12/index.html  aulas do módulo 12
 └── codigo/
     ├── modulo-01/
     │   ├── python/       labs e projeto (NumPy + SDK anthropic)
@@ -69,9 +70,13 @@ curso-ia/
     │   ├── python/       labs: policy-as-code em plano Terraform, anomalias e linha do tempo
     │   ├── dados/        plano Terraform gerado por IA e métricas de um incidente
     │   └── projeto/      bot de ChatOps: agente SRE sobre cluster simulado, aprovação com RBAC, auditoria
-    └── modulo-11/
-        ├── python/       labs: preparar dataset, LoRA do zero, destilação com cascata, LoRA com PEFT (Colab)
-        └── dados/        chamados brutos, chamados novos escritos à mão, dataset preparado
+    ├── modulo-11/
+    │   ├── python/       labs: preparar dataset, LoRA do zero, destilação com cascata, LoRA com PEFT (Colab)
+    │   └── dados/        chamados brutos, chamados novos escritos à mão, dataset preparado
+    └── modulo-12/
+        ├── python/       labs: injeção indireta numa página, ficha do sistema de IA (LGPD/AI Act)
+        ├── dados/        página envenenada e questionário de governança
+        └── projeto/      guardrails (PII com validação, saída, tríade letal) e red team automatizado
 ```
 
 ## Status
@@ -89,7 +94,8 @@ curso-ia/
 | 09 · Arquitetura e LLMOps | ✅ pronto |
 | 10 · IA para DevOps e SRE | ✅ pronto |
 | 11 · Modelos Abertos, Fine-Tuning e Destilação | ✅ pronto |
-| 12 – 15 | planejados (ver `curriculo.json`) |
+| 12 · Segurança, Privacidade e Governança | ✅ pronto |
+| 13 – 15 | planejados (ver `curriculo.json`) |
 
 ## Rodando os labs do Módulo 1
 
