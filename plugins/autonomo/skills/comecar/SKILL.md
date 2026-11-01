@@ -47,6 +47,10 @@ Para cada item necessário que falta, um por vez:
 
 Configure a identidade do git se faltar: pergunte o nome e o e-mail que ela quer que apareçam no
 histórico (pode ser o e-mail do GitHub) e rode `git config --global user.name` e `user.email`.
+Faça essa pergunta em texto normal, não com AskUserQuestion: nome e e-mail são texto livre, e o menu
+de opções obriga a pessoa a achar "Other", o que confunde. Escreva, por exemplo: "Digite abaixo o
+nome e o e-mail que vão aparecer no histórico, assim: Meu nome é Ana Souza, e-mail ana@exemplo.com".
+Se você já sabe um e-mail provável, sugira-o na frase.
 
 **GitHub:** se ela não tem conta, mande o link https://github.com/signup e espere. Depois rode
 `gh auth login --web`, e explique antes: vai aparecer um código de 8 letras no terminal; ela copia,

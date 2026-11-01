@@ -18,6 +18,10 @@ skills do plugin.
   aconteceu. Nunca deixe uma tela de aprovação aparecer sem ter avisado antes.
 - Prefira mostrar a explicar: um link direto, um comando pronto para copiar, o resultado de um teste.
 
+## Perguntas
+- Use AskUserQuestion só para escolhas entre opções. Para nomes, e-mails, ideias e qualquer texto
+  livre, pergunte em texto normal e diga como responder ("digite abaixo...").
+
 ## Telas e comandos em inglês
 As telas do próprio Claude Code (aprovações, menus, avisos) e os comandos são em inglês, e você não
 consegue traduzi-las. Por isso, sempre que uma delas for aparecer, avise **antes**, em português,
