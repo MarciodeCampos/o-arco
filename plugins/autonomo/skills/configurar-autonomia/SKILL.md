@@ -80,8 +80,14 @@ Rode `claude doctor` e confira que não há "Invalid settings". Se houver, corri
 novo. Mostre à pessoa a linha que confirma.
 
 ## 9. Aplicar e provar
-- Explique que o novo modo vale a partir da próxima sessão. Peça para ela digitar `/exit` e abrir de
-  novo com `claude --continue` (retoma esta conversa) na mesma pasta.
+- Explique que o novo modo vale a partir da próxima sessão. Dê os passos separados, deixando claro
+  onde cada um é digitado:
+  1. Aqui, no Claude: `/exit` (fecha o Claude Code e volta para o terminal).
+  2. No terminal (PowerShell no Windows), na mesma pasta: `claude --continue` (abre o Claude de novo
+     e retoma esta conversa). Avise que escrever só "continue" dentro do Claude não funciona: abre
+     uma conversa nova, sem o que fizemos até aqui.
+  Se mesmo assim ela voltar numa conversa nova, retome pelo comando `/autonomo:verificar-barreiras`
+  e depois `/autonomo:novo-projeto`.
 - Na sessão nova, confira o modo no rodapé da tela. No Nível 2 deve aparecer **auto mode**. Se
   aparecer Manual, o modo auto não está disponível para a conta ou o modelo; ofereça o Nível 1 e
   explique a diferença.
