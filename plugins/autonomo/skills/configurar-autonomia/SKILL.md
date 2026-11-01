@@ -27,6 +27,16 @@ Os arquivos de configuração do Claude ficam numa pasta protegida. Diga antes:
 **Yes, and allow Claude to edit files in its ~/.claude folder for this session**."
 Isso é esperado e é uma proteção: o Claude não pode mudar as próprias regras sem você.
 
+Antes disso, ainda pode aparecer outra tela, porque `~/.claude/settings.json` fica fora da pasta do
+projeto. Avise em português, no formato da skill `autonomo:como-ensinar`:
+"Vai aparecer **Allow this read outside the working directories?** ('Permitir esta leitura fora da
+pasta do projeto?'). Escolha **4, 'Yes, but ask again next time'**: libera só esta leitura." Não
+recomende a opção 1 (libera leituras fora da pasta para sempre) nem a 2 (bloqueia de vez e impede
+este passo).
+
+Leia cada arquivo (`settings.json`, `CLAUDE.md`) com Read antes de gravá-lo: o Write recusa um arquivo
+existente que não foi lido, e o erro "Error writing file" assusta a pessoa.
+
 ## 4. Backup
 Se `~/.claude/settings.json` existir, copie para `~/.claude/settings.json.backup-AAAAMMDD-HHMM` (data e
 hora atuais) e diga o caminho à pessoa. Faça o mesmo com `~/.claude/CLAUDE.md`.
