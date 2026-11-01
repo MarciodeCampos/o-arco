@@ -82,7 +82,8 @@ Faça um resumo com:
 - três próximos pedidos que ela pode fazer, escritos como ela diria, por exemplo:
   "Adicione uma página de contato ao meu site e publique".
 
-Ofereça, numa frase, a skill `autonomo:skills-recomendadas`: uma seleção de plugins oficiais que
+Se ela tem vários projetos, ofereça a skill `autonomo:central` (cuidar de todos a partir de uma
+pasta, pedindo pelo nome). Ofereça, numa frase, a skill `autonomo:skills-recomendadas`: uma seleção de plugins oficiais que
 ampliam o que você sabe fazer para o tipo de projeto dela.
 
 Lembre que, a partir de agora, o `~/.claude/CLAUDE.md` faz você trabalhar assim em toda sessão, e

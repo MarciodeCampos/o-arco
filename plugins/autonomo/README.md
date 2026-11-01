@@ -33,6 +33,7 @@ Depois abra o Claude Code (`claude`) e digite:
 | `/autonomo:verificar-barreiras` | Prova com testes inofensivos que segredos e ações destrutivas estão bloqueados |
 | `/autonomo:novo-projeto` | Cria um projeto com git, testes, proteção de segredos, GitHub e CI, e desenvolve a primeira versão |
 | `/autonomo:mapear-projetos` | Encontra os projetos que você já tem no computador e no GitHub, onde estão publicados e como se conectam, e gera o `projetos.json` |
+| `/autonomo:central` | Transforma a pasta do `projetos.json` numa central: painel de todos os projetos, trabalhar em qualquer um pelo nome e preparar cada um para trabalho quase autônomo |
 | `/autonomo:skills-recomendadas` | Sugere e instala plugins oficiais úteis para o seu tipo de projeto |
 | `/autonomo:implantar` | Publica o projeto: prévia automática, produção com aprovação, caminho de volta |
 
@@ -57,7 +58,7 @@ autonomo/
 ├── .claude-plugin/plugin.json
 └── skills/
     ├── comecar, diagnostico, configurar-autonomia, verificar-barreiras, novo-projeto, implantar,
-    │   mapear-projetos, skills-recomendadas
+    │   mapear-projetos, central, skills-recomendadas
     │                comandos que a pessoa usa (/autonomo:...)
     └── como-ensinar, links, niveis, modelos
                      referências que o Claude carrega pela ferramenta Skill (não aparecem no menu)

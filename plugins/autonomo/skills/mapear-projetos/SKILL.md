@@ -195,5 +195,8 @@ e nunca caminhos locais.
    mostra esse mapa" (skill `autonomo:novo-projeto`, usando o `projetos.json` como dados), "coloque
    proteção de segredos e testes no projeto X", "publique o projeto Y" (skill `autonomo:implantar`).
 
+Ofereça também a skill `autonomo:central`: transforma esta pasta numa central para acompanhar e
+alterar todos os projetos pelo nome.
+
 Termine dizendo que nada foi alterado nos projetos e que basta pedir "atualize o mapa dos meus
 projetos" para rodar de novo.
