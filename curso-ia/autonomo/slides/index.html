@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050508">
+<meta name="description" content="Slides com o passo a passo para instalar o Claude Code no Windows, Mac ou Linux, entrar na conta, instalar o plugin autonomo e começar. Feito para quem nunca abriu um terminal.">
+<title>Instalação passo a passo — Claude autônomo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #c9a84c; --gold-light: #e8c97a; --gold-dim: #7a5f2a;
+  --ink: #050508; --surface: #13131c; --surface2: #1b1b27;
+  --border: rgba(201,168,76,.15); --border-soft: rgba(255,255,255,.07);
+  --text: #e6e6ee; --text-dim: #9a9ab0;
+  --cyan: #4ac9c9; --green: #5fc98a; --red: #e06c6c; --orange: #d97757;
+  --term: #0c0c0c; --radius: 12px;
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  background: var(--ink); color: var(--text);
+  font-family: "Inter", system-ui, sans-serif; font-size: 16px; line-height: 1.6;
+  overflow: hidden; display: flex; flex-direction: column;
+}
+body::before {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1;
+  background:
+    radial-gradient(ellipse 60% 40% at 15% 20%, rgba(201,168,76,.06) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 40% at 85% 70%, rgba(74,201,201,.04) 0%, transparent 70%);
+}
+a { color: var(--gold-light); }
+a:hover { color: var(--gold); }
+:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; border-radius: 4px; }
+
+/* barra superior */
+.topbar {
+  display: flex; align-items: center; gap: 14px; padding: 10px 20px;
+  background: rgba(5,5,8,.85); border-bottom: 1px solid var(--border); flex: none;
+}
+.topbar a { text-decoration: none; }
+.brand { font-family: "Cinzel", serif; font-weight: 700; letter-spacing: .12em; color: var(--gold); font-size: 14px; white-space: nowrap; }
+.crumbs { font-size: 13px; color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 0; }
+.crumbs a { color: var(--text-dim); }
+.os-switch { display: flex; gap: 4px; flex: none; }
+.os-switch button {
+  font: 500 12px "Inter", sans-serif; color: var(--text-dim); background: transparent;
+  border: 1px solid var(--border-soft); border-radius: 20px; padding: 3px 10px; cursor: pointer;
+}
+.os-switch button[aria-pressed="true"] { color: var(--ink); background: var(--gold); border-color: var(--gold); }
+
+/* palco */
+.stage { flex: 1; min-height: 0; position: relative; }
+.slide {
+  position: absolute; inset: 0; display: none; overflow-y: auto;
+  padding: 36px 20px 28px;
+}
+.slide.on { display: block; animation: entra .25s ease; }
+@keyframes entra { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.inner { max-width: 1040px; margin: 0 auto; min-height: 100%; display: flex; flex-direction: column; justify-content: center; }
+.eyebrow { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 8px; }
+h1, h2 { font-family: "Cinzel", serif; font-weight: 700; color: #fff; line-height: 1.2; }
+h1 { font-size: clamp(30px, 5vw, 52px); margin-bottom: 18px; }
+h1 span, h2 span { color: var(--gold); }
+h2 { font-size: clamp(24px, 3.4vw, 36px); margin-bottom: 16px; }
+h3 { font-size: 17px; color: #fff; margin-bottom: 6px; }
+.lede { font-size: clamp(17px, 2vw, 20px); color: var(--text-dim); max-width: 760px; }
+p + p { margin-top: 10px; }
+.dim { color: var(--text-dim); }
+.small { font-size: 14px; }
+ol.steps, ul.plain { padding-left: 22px; }
+ol.steps li, ul.plain li { margin: 6px 0; }
+ol.steps li::marker { color: var(--gold); font-weight: 600; }
+code { font-family: var(--mono); font-size: .9em; background: var(--surface2); padding: 1px 6px; border-radius: 5px; }
+kbd {
+  font-family: var(--mono); font-size: .85em; background: var(--surface2); color: #fff;
+  border: 1px solid var(--border-soft); border-bottom-width: 2px; border-radius: 5px; padding: 0 6px;
+}
+
+/* grade de duas colunas */
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
+.cols.wide-left { grid-template-columns: 1.15fr .85fr; }
+.card {
+  background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 18px 20px;
+}
+.card.gold { border-color: var(--border); border-top: 3px solid var(--gold); }
+.card.cyan { border-top: 3px solid var(--cyan); }
+.card ul { padding-left: 18px; }
+.card li { margin: 4px 0; }
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.callout {
+  margin-top: 18px; padding: 12px 16px; border-left: 3px solid var(--cyan);
+  background: rgba(74,201,201,.06); border-radius: 0 8px 8px 0; font-size: 15px;
+}
+.callout.warn { border-left-color: var(--gold); background: rgba(201,168,76,.07); }
+.callout.bad { border-left-color: var(--red); background: rgba(224,108,108,.07); }
+.callout b:first-child { color: #fff; }
+
+/* caixa de comando com botão copiar */
+.cmd {
+  display: flex; align-items: center; gap: 10px; margin: 10px 0;
+  background: #0d0d14; border: 1px solid var(--border); border-radius: 10px; padding: 10px 10px 10px 14px;
+}
+.cmd code { background: none; padding: 0; font-size: 15px; color: #fff; flex: 1; overflow-x: auto; white-space: nowrap; }
+.cmd .where { font: 600 10px "Inter", sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-dim); flex: none; }
+.copy {
+  flex: none; font: 600 12px "Inter", sans-serif; color: var(--ink); background: var(--gold);
+  border: 0; border-radius: 6px; padding: 6px 10px; cursor: pointer;
+}
+.copy.ok { background: var(--green); }
+
+/* terminal desenhado */
+.term {
+  background: var(--term); border: 1px solid #2a2a2a; border-radius: 10px; overflow: hidden;
+  font-family: var(--mono); font-size: 13px; line-height: 1.55; box-shadow: 0 10px 40px rgba(0,0,0,.5);
+}
+.term .bar {
+  display: flex; align-items: center; gap: 8px; padding: 7px 12px; background: #1f1f1f;
+  font-family: "Inter", sans-serif; font-size: 12px; color: #bbb;
+}
+.term .dots { display: flex; gap: 6px; }
+.term .dots i { width: 10px; height: 10px; border-radius: 50%; background: #444; display: block; }
+.term .dots i:nth-child(1) { background: #ff5f57; } .term .dots i:nth-child(2) { background: #febc2e; } .term .dots i:nth-child(3) { background: #28c840; }
+.term .body { padding: 12px 14px; white-space: pre-wrap; word-break: break-word; color: #ccc; }
+.t-ps { color: #ccc; } .t-cmd { color: #f9f1a5; } .t-arg { color: #ccc; }
+.t-err { color: #f14c4c; } .t-ok { color: #16c60c; } .t-org { color: var(--orange); }
+.t-dim { color: #767676; } .t-sel { color: #16c60c; } .t-blue { color: #b4a7ff; } .t-b { color: #fff; font-weight: 600; }
+.t-cursor { display: inline-block; width: 8px; height: 15px; background: #ccc; vertical-align: -2px; animation: pisca 1s steps(1) infinite; }
+@keyframes pisca { 50% { opacity: 0; } }
+.caption { font-size: 13px; color: var(--text-dim); margin-top: 8px; }
+
+/* tradução lado a lado */
+.trad { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; font-size: 15px; }
+.trad dt { font-family: var(--mono); font-size: 13px; color: #fff; white-space: nowrap; }
+.trad dd { color: var(--text-dim); }
+
+/* escolha do sistema */
+.os-pick { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 10px; }
+.os-pick button {
+  background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius);
+  padding: 22px 16px; color: var(--text); cursor: pointer; text-align: left; font: inherit;
+}
+.os-pick button b { display: block; font-family: "Cinzel", serif; font-size: 22px; color: #fff; margin-bottom: 4px; }
+.os-pick button span { font-size: 14px; color: var(--text-dim); }
+.os-pick button[aria-pressed="true"] { border-color: var(--gold); background: rgba(201,168,76,.08); }
+.os-pick button[aria-pressed="true"] b::after { content: " ✓"; color: var(--gold); }
+
+/* conteúdo por sistema */
+[data-os] { display: none; }
+body.os-windows [data-os~="windows"], body.os-mac [data-os~="mac"], body.os-linux [data-os~="linux"] { display: revert; }
+body.os-windows div[data-os~="windows"], body.os-mac div[data-os~="mac"], body.os-linux div[data-os~="linux"] { display: block; }
+
+/* linha do tempo das 5 etapas */
+.timeline { list-style: none; display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; counter-reset: et; }
+.timeline li { counter-increment: et; background: var(--surface); border: 1px solid var(--border-soft); border-radius: 10px; padding: 14px 12px; font-size: 14px; color: var(--text-dim); }
+.timeline li::before { content: counter(et); display: block; font-family: "Cinzel", serif; font-size: 26px; color: var(--gold); line-height: 1; margin-bottom: 6px; }
+.timeline li b { display: block; color: #fff; font-size: 15px; margin-bottom: 2px; }
+
+/* rodapé de navegação */
+.nav {
+  flex: none; display: flex; align-items: center; gap: 12px; padding: 10px 20px;
+  border-top: 1px solid var(--border); background: rgba(5,5,8,.85);
+}
+.nav button {
+  font: 600 14px "Inter", sans-serif; color: var(--ink); background: var(--gold);
+  border: 0; border-radius: 8px; padding: 8px 16px; cursor: pointer; white-space: nowrap;
+}
+.nav button.prev { background: transparent; color: var(--gold-light); border: 1px solid var(--border); }
+.nav button:disabled { opacity: .35; cursor: default; }
+.bar-wrap { flex: 1; display: flex; align-items: center; gap: 12px; min-width: 0; }
+.progress { flex: 1; height: 4px; background: var(--surface2); border-radius: 4px; overflow: hidden; }
+.progress i { display: block; height: 100%; background: var(--gold); width: 0; transition: width .25s; }
+.count { font: 500 13px var(--mono); color: var(--text-dim); white-space: nowrap; }
+.hint { font-size: 12px; color: var(--text-dim); white-space: nowrap; }
+
+@media (max-width: 820px) {
+  .cols, .cols.wide-left, .grid3, .grid2, .os-pick { grid-template-columns: 1fr; gap: 16px; }
+  .timeline { grid-template-columns: 1fr; }
+  .timeline li { display: grid; grid-template-columns: 34px 1fr; align-items: start; }
+  .timeline li::before { grid-row: span 2; margin: 0; }
+  .slide { padding: 22px 16px 20px; }
+  .inner { justify-content: flex-start; }
+  .hint, .crumbs { display: none; }
+  .topbar { padding: 10px 16px; }
+  .nav { padding: 10px 16px; }
+  .term { font-size: 12px; }
+  .cmd code { font-size: 13px; white-space: normal; overflow-wrap: anywhere; }
+  .trad { grid-template-columns: 1fr; gap: 0; }
+  .trad dd { margin-bottom: 8px; }
+}
+@media (prefers-reduced-motion: reduce) { .slide.on { animation: none; } .t-cursor { animation: none; } }
+</style>
+</head>
+<body class="os-windows">
+<header class="topbar">
+  <a class="brand" href="/">◈ TRIADIC.LIFE</a>
+  <span class="crumbs">/ <a href="../../">Engenharia de IA</a> / <a href="../">Claude autônomo</a> / Passo a passo</span>
+  <div class="os-switch" role="group" aria-label="Seu sistema">
+    <button type="button" data-set-os="windows">Windows</button>
+    <button type="button" data-set-os="mac">Mac</button>
+    <button type="button" data-set-os="linux">Linux</button>
+  </div>
+</header>
+
+<main class="stage" id="stage">
+
+<!-- 1 · capa -->
+<section class="slide" data-title="Início"><div class="inner">
+  <div class="eyebrow">Passo a passo · nenhuma experiência necessária · cerca de 15 minutos</div>
+  <h1>Do zero ao <span>Claude trabalhando</span> no seu computador</h1>
+  <p class="lede">Você vai instalar o Claude Code, entrar na sua conta e instalar o plugin <code>autonomo</code>. Depois disso, o próprio Claude conduz o resto e explica cada passo.</p>
+  <div class="grid3" style="margin-top:28px">
+    <div class="card gold"><h3>1 · Instalar</h3><p class="dim small">Abrir o terminal e colar um comando.</p></div>
+    <div class="card gold"><h3>2 · Entrar</h3><p class="dim small">Abrir o Claude Code e fazer login pelo navegador.</p></div>
+    <div class="card gold"><h3>3 · Começar</h3><p class="dim small">Instalar o plugin e digitar <code>/autonomo:comecar</code>.</p></div>
+  </div>
+  <p class="dim small" style="margin-top:22px">Avance com o botão abaixo, com as setas <kbd>←</kbd> <kbd>→</kbd> do teclado ou deslizando o dedo no celular.</p>
+</div></section>
+
+<!-- 2 · app x terminal -->
+<section class="slide" data-title="App ou terminal"><div class="inner">
+  <div class="eyebrow">Antes de começar</div>
+  <h2>O Claude que você conhece e o <span>Claude no seu computador</span></h2>
+  <p class="lede" style="margin-bottom:22px">Se você só usou o Claude pelo app ou pelo site, ele trabalhava em computadores da Anthropic. O Claude Code no terminal trabalha no <em>seu</em> computador.</p>
+  <div class="cols">
+    <div class="card cyan">
+      <h3>App e site (claude.ai)</h3>
+      <ul class="dim">
+        <li>Conversa, escreve e analisa o que você envia.</li>
+        <li>Roda na nuvem: não enxerga seus arquivos nem instala programas no seu computador.</li>
+        <li>O Claude Code na web (claude.ai/code) também roda na nuvem, ligado a um repositório do GitHub.</li>
+      </ul>
+    </div>
+    <div class="card gold">
+      <h3>Terminal (Claude Code no seu computador)</h3>
+      <ul class="dim">
+        <li>Lê e cria arquivos dentro da pasta que você abrir.</li>
+        <li>Instala programas, roda testes, publica sites.</li>
+        <li>Usa a mesma conta e o mesmo plano do app.</li>
+        <li>Pede sua aprovação antes de mudanças importantes.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout"><b>Por que o terminal?</b> Para o Claude preparar o seu computador, ele precisa estar nele. É isso que o plugin <code>autonomo</code> faz, com barreiras de segurança testadas.</div>
+</div></section>
+
+<!-- 3 · o que você precisa -->
+<section class="slide" data-title="O que você precisa"><div class="inner">
+  <div class="eyebrow">Checklist</div>
+  <h2>O que você <span>precisa</span></h2>
+  <div class="grid2">
+    <div class="card"><h3>Uma conta Claude com o Claude Code</h3><p class="dim small">Os planos pagos (Pro, Max, Team ou Enterprise) incluem o Claude Code. <a href="https://claude.com/pricing" target="_blank" rel="noopener">Ver planos</a>.</p></div>
+    <div class="card"><h3>Um computador</h3><p class="dim small">Windows 10 ou 11, macOS ou Linux. Não precisa ser potente: o trabalho pesado acontece na nuvem da Anthropic.</p></div>
+    <div class="card"><h3>Internet</h3><p class="dim small">Para baixar o programa e para o Claude responder.</p></div>
+    <div class="card"><h3>Uns 15 minutos</h3><p class="dim small">Depois, o Claude continua sozinho, e você só aprova as decisões.</p></div>
+  </div>
+</div></section>
+
+<!-- 4 · escolher sistema -->
+<section class="slide" data-title="Seu sistema"><div class="inner">
+  <div class="eyebrow">Escolha uma vez</div>
+  <h2>Qual é o <span>seu computador</span>?</h2>
+  <p class="lede">Os próximos slides mostram os comandos do sistema escolhido. Dá para trocar a qualquer momento, no canto de cima.</p>
+  <div class="os-pick" role="group" aria-label="Escolha o sistema">
+    <button type="button" data-set-os="windows"><b>Windows</b><span>Windows 10 ou 11. Usa o PowerShell.</span></button>
+    <button type="button" data-set-os="mac"><b>Mac</b><span>macOS. Usa o app Terminal.</span></button>
+    <button type="button" data-set-os="linux"><b>Linux</b><span>Ubuntu, Debian, Fedora e outros.</span></button>
+  </div>
+</div></section>
+
+<!-- 5 · abrir o terminal -->
+<section class="slide" data-title="Abrir o terminal"><div class="inner">
+  <div class="eyebrow">Passo 1 de 9</div>
+  <h2>Abra o <span>terminal</span></h2>
+  <div class="cols wide-left">
+    <div>
+      <div data-os="windows">
+        <ol class="steps">
+          <li>Clique no menu <b>Iniciar</b> (ou aperte a tecla <kbd>⊞ Win</kbd>).</li>
+          <li>Digite <b>PowerShell</b>.</li>
+          <li>Clique em <b>Windows PowerShell</b>.</li>
+        </ol>
+        <div class="callout">Não precisa abrir como administrador. Se o Windows abrir o app <b>Terminal</b>, tudo bem: é o mesmo PowerShell, numa janela com abas.</div>
+      </div>
+      <div data-os="mac">
+        <ol class="steps">
+          <li>Aperte <kbd>⌘</kbd> + <kbd>espaço</kbd> para abrir o Spotlight.</li>
+          <li>Digite <b>Terminal</b>.</li>
+          <li>Aperte <kbd>Enter</kbd>.</li>
+        </ol>
+      </div>
+      <div data-os="linux">
+        <ol class="steps">
+          <li>Aperte <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd> (Ubuntu e a maioria das distribuições).</li>
+          <li>Ou procure <b>Terminal</b> no menu de aplicativos.</li>
+        </ol>
+      </div>
+      <h3 style="margin-top:20px">Como o terminal funciona</h3>
+      <p class="dim">Você digita um comando e aperta <kbd>Enter</kbd>. Ele responde com texto. Quando aparece de novo a linha que termina em
+        <span data-os="windows"><code>&gt;</code></span><span data-os="mac"><code>%</code></span><span data-os="linux"><code>$</code></span>,
+        ele está pronto para o próximo comando.</p>
+      <p class="dim">Para colar: <span data-os="windows"><kbd>Ctrl</kbd> + <kbd>V</kbd> ou clique com o botão direito.</span><span data-os="mac"><kbd>⌘</kbd> + <kbd>V</kbd>.</span><span data-os="linux"><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>V</kbd>.</span></p>
+    </div>
+    <div>
+      <div class="term" data-os="windows"><div class="bar">Windows PowerShell</div><div class="body">Windows PowerShell
+Copyright (C) Microsoft Corporation. Todos os direitos reservados.
+
+<span class="t-ps">PS C:\Users\voce&gt; </span><span class="t-cursor"></span></div></div>
+      <div class="term" data-os="mac"><div class="bar"><span class="dots"><i></i><i></i><i></i></span>Terminal</div><div class="body">Last login: Sun Nov  1 15:40:12 on ttys000
+<span class="t-ps">voce@Mac ~ % </span><span class="t-cursor"></span></div></div>
+      <div class="term" data-os="linux"><div class="bar">Terminal</div><div class="body"><span class="t-ok">voce@computador</span>:<span class="t-blue">~</span>$ <span class="t-cursor"></span></div></div>
+      <p class="caption">O terminal esperando um comando. O seu nome aparece no lugar de "voce".</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- 6 · instalar -->
+<section class="slide" data-title="Instalar o Claude Code"><div class="inner">
+  <div class="eyebrow">Passo 2 de 9</div>
+  <h2>Instale o <span>Claude Code</span></h2>
+  <p class="lede">Copie o comando, cole no terminal e aperte <kbd>Enter</kbd>. Ele baixa e instala o programa oficial da Anthropic.</p>
+  <div data-os="windows"><div class="cmd"><span class="where">PowerShell</span><code>irm https://claude.ai/install.ps1 | iex</code><button class="copy" type="button">Copiar</button></div></div>
+  <div data-os="mac linux"><div class="cmd"><span class="where">Terminal</span><code>curl -fsSL https://claude.ai/install.sh | bash</code><button class="copy" type="button">Copiar</button></div></div>
+  <div class="cols" style="margin-top:14px">
+    <div>
+      <ol class="steps">
+        <li>Espere até aparecer a mensagem de instalação concluída (<em>successfully installed</em>).</li>
+        <li><b>Feche o terminal e abra de novo.</b> Assim ele passa a reconhecer o comando <code>claude</code>.</li>
+        <li>Para conferir, digite <code>claude --version</code>. Deve aparecer um número de versão.</li>
+      </ol>
+    </div>
+    <div>
+      <div class="callout warn" style="margin-top:0"><b>Apareceu "claude não é reconhecido" ou "command not found"?</b> Feche e abra o terminal. Se continuar, o final da instalação mostra um comando para acrescentar o Claude ao <em>PATH</em> (a lista de lugares onde o terminal procura programas): copie e rode esse comando. O <a href="https://code.claude.com/docs/pt/quickstart" target="_blank" rel="noopener">guia oficial</a> tem as outras soluções.</div>
+    </div>
+  </div>
+</div></section>
+
+<!-- 7 · pasta -->
+<section class="slide" data-title="Criar a pasta"><div class="inner">
+  <div class="eyebrow">Passo 3 de 9</div>
+  <h2>Crie uma <span>pasta</span> para o projeto</h2>
+  <p class="lede">O Claude trabalha dentro da pasta em que você o abrir. Crie uma e entre nela, com <b>um comando de cada vez</b>:</p>
+  <div class="cmd"><span class="where">1º</span><code>mkdir ~/meu-primeiro-projeto</code><button class="copy" type="button">Copiar</button></div>
+  <div class="cmd"><span class="where">2º</span><code>cd ~/meu-primeiro-projeto</code><button class="copy" type="button">Copiar</button></div>
+  <div class="cols" style="margin-top:12px">
+    <div>
+      <dl class="trad">
+        <dt>mkdir</dt><dd>"make directory": cria a pasta.</dd>
+        <dt>cd</dt><dd>"change directory": entra na pasta.</dd>
+        <dt>~</dt><dd>a sua pasta pessoal<span data-os="windows"> (C:\Users\seu-nome)</span><span data-os="mac"> (/Users/seu-nome)</span><span data-os="linux"> (/home/seu-nome)</span>.</dd>
+      </dl>
+      <p class="dim small" style="margin-top:10px">Depois do <code>cd</code>, a linha do terminal passa a mostrar <code>meu-primeiro-projeto</code>. É assim que você sabe que está dentro dela.</p>
+    </div>
+    <div data-os="windows">
+      <div class="term"><div class="bar">Windows PowerShell 5.1</div><div class="body"><span class="t-ps">PS C:\Users\voce&gt; </span><span class="t-cmd">mkdir</span> ~/meu-primeiro-projeto <span class="t-dim">&amp;&amp;</span> <span class="t-cmd">cd</span> ~/meu-primeiro-projeto
+<span class="t-err">O token '&amp;&amp;' não é um separador de instruções
+válido nesta versão.</span></div></div>
+      <div class="callout bad" style="margin-top:10px"><b>Por que um de cada vez?</b> O PowerShell que vem no Windows (versão 5.1) não aceita <code>&amp;&amp;</code> para juntar dois comandos. Se aparecer esse erro vermelho, nada quebrou: rode os dois separadamente.</div>
+    </div>
+    <div data-os="mac linux">
+      <div class="term"><div class="bar">Terminal</div><div class="body"><span class="t-ps">~ $ </span><span class="t-cmd">mkdir</span> ~/meu-primeiro-projeto
+<span class="t-ps">~ $ </span><span class="t-cmd">cd</span> ~/meu-primeiro-projeto
+<span class="t-ps">~/meu-primeiro-projeto $ </span><span class="t-cursor"></span></div></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- 8 · abrir claude -->
+<section class="slide" data-title="Abrir o Claude"><div class="inner">
+  <div class="eyebrow">Passo 4 de 9</div>
+  <h2>Abra o <span>Claude Code</span></h2>
+  <div class="cols wide-left">
+    <div>
+      <p>Ainda dentro da pasta, digite:</p>
+      <div class="cmd"><code>claude</code><button class="copy" type="button">Copiar</button></div>
+      <p class="dim">Na primeira vez, aparece uma tela de boas-vindas com avisos de segurança. Em português:</p>
+      <dl class="trad" style="margin-top:10px">
+        <dt>Claude can make mistakes</dt><dd>O Claude pode errar: confira o que ele faz, principalmente quando roda código.</dd>
+        <dt>prompt injection</dt><dd>Textos maliciosos escondidos em arquivos podem tentar enganá-lo. Use com código em que você confia.</dd>
+        <dt>Press Enter to continue</dt><dd>Aperte <kbd>Enter</kbd> para continuar.</dd>
+      </dl>
+    </div>
+    <div>
+      <div class="term"><div class="bar">claude</div><div class="body"><span class="t-org">Welcome to Claude Code</span>
+
+<span class="t-b">Security notes:</span>
+
+1. <span class="t-b">Claude can make mistakes</span>
+   <span class="t-dim">You should always review Claude's
+   responses, especially when running code.</span>
+
+2. <span class="t-b">Due to prompt injection risks, only
+   use it with code you trust</span>
+
+<span class="t-blue">Press Enter to continue…</span></div></div>
+      <p class="caption">Tela real da primeira abertura, no Windows.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- 9 · tema -->
+<section class="slide" data-title="Escolher o tema"><div class="inner">
+  <div class="eyebrow">Passo 5 de 9</div>
+  <h2>Escolha as <span>cores</span></h2>
+  <div class="cols wide-left">
+    <div>
+      <p>O Claude pergunta qual estilo de texto fica melhor no seu terminal. Use as setas <kbd>↑</kbd> <kbd>↓</kbd> e aperte <kbd>Enter</kbd>.</p>
+      <dl class="trad" style="margin-top:12px">
+        <dt>Auto</dt><dd>acompanha as cores do terminal</dd>
+        <dt>Dark mode</dt><dd>fundo escuro (o mais comum)</dd>
+        <dt>Light mode</dt><dd>fundo claro</dd>
+        <dt>colorblind-friendly</dt><dd>cores pensadas para daltonismo</dd>
+        <dt>ANSI colors only</dt><dd>só as cores básicas, para terminais antigos</dd>
+      </dl>
+      <p class="dim small" style="margin-top:12px">Na dúvida, escolha <b>Dark mode</b>. Dá para mudar depois com o comando <code>/theme</code>.</p>
+    </div>
+    <div>
+      <div class="term"><div class="bar">claude</div><div class="body">Let's get started.
+
+<span class="t-b">Choose the text style that looks best
+with your terminal</span>
+<span class="t-dim">To change this later, run /theme</span>
+
+  1. Auto (match terminal)
+<span class="t-sel">❯ 2. Dark mode ✔</span>
+  3. Light mode
+  4. Dark mode (colorblind-friendly)
+  5. Light mode (colorblind-friendly)
+  6. Dark mode (ANSI colors only)
+  7. Light mode (ANSI colors only)</div></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- 10 · login -->
+<section class="slide" data-title="Entrar na conta"><div class="inner">
+  <div class="eyebrow">Passo 6 de 9</div>
+  <h2>Entre na sua <span>conta</span></h2>
+  <div class="cols wide-left">
+    <div>
+      <ol class="steps">
+        <li>Quando ele perguntar o tipo de conta, escolha <b>Claude account with subscription</b> (a conta do seu plano, a mesma do app).</li>
+        <li>O navegador abre na página do Claude. Entre na conta, se pedir, e clique em <b>Autorizar</b>.</li>
+        <li>Volte ao terminal. Deve aparecer <b>Login successful</b>. Aperte <kbd>Enter</kbd>.</li>
+      </ol>
+      <div class="callout"><b>O navegador não abriu?</b> O terminal mostra um endereço. Copie, cole no navegador e faça o login. Se a página mostrar um código, copie o código e cole no terminal, onde ele pede <em>Paste code here</em>.</div>
+      <p class="dim small" style="margin-top:12px">Você nunca digita sua senha no terminal: o login acontece no navegador.</p>
+    </div>
+    <div>
+      <div class="term"><div class="bar">claude</div><div class="body"><span class="t-b">Select login method:</span>
+
+<span class="t-sel">❯ 1. Claude account with subscription</span>
+     <span class="t-dim">Pro, Max, Team, or Enterprise</span>
+  2. Anthropic Console account
+     <span class="t-dim">API usage billing</span></div></div>
+      <div class="term" style="margin-top:12px"><div class="bar">claude</div><div class="body"><span class="t-dim">Logged in as voce@email.com</span>
+<span class="t-ok">Login successful. Press Enter to continue…</span></div></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- 11 · confiar na pasta -->
+<section class="slide" data-title="Confiar na pasta"><div class="inner">
+  <div class="eyebrow">Passo 7 de 9</div>
+  <h2>Autorize a <span>pasta</span></h2>
+  <div class="cols wide-left">
+    <div>
+      <p>O Claude pergunta se você confia nos arquivos desta pasta. Como foi você quem acabou de criá-la, escolha <b>Yes</b> e aperte <kbd>Enter</kbd>.</p>
+      <div class="callout warn"><b>Regra para o futuro:</b> só confirme em pastas suas ou de fontes em que você confia. Arquivos de terceiros podem trazer instruções escondidas para enganar o Claude.</div>
+      <p style="margin-top:16px">Pronto: o Claude Code está aberto. A caixa embaixo, com o sinal <code>&gt;</code>, é onde você escreve, em português mesmo.</p>
+    </div>
+    <div>
+      <div class="term"><div class="bar">claude</div><div class="body"><span class="t-b">Do you trust the files in this folder?</span>
+
+<span class="t-dim">C:\Users\voce\meu-primeiro-projeto</span>
+
+<span class="t-dim">Claude Code may read, write, or execute
+files contained in this directory.</span>
+
+<span class="t-sel">❯ 1. Yes, proceed</span>
+  2. No, exit</div></div>
+      <p class="caption">O texto exato pode variar um pouco conforme a versão.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- 12 · atualizar -->
+<section class="slide" data-title="Atualizar"><div class="inner">
+  <div class="eyebrow">Passo 8 de 9</div>
+  <h2>Deixe o Claude Code <span>atualizado</span></h2>
+  <p class="lede">O plugin usa recursos recentes. Antes de instalá-lo, confira se você tem a versão mais nova.</p>
+  <div class="cols" style="margin-top:16px">
+    <div>
+      <ol class="steps">
+        <li>Saia do Claude Code digitando <code>/exit</code> (ou aperte <kbd>Ctrl</kbd> + <kbd>C</kbd> duas vezes).</li>
+        <li>No terminal, rode:
+          <div class="cmd"><code>claude update</code><button class="copy" type="button">Copiar</button></div></li>
+        <li>Abra de novo, ainda dentro da pasta:
+          <div class="cmd"><code>claude</code><button class="copy" type="button">Copiar</button></div></li>
+      </ol>
+    </div>
+    <div>
+      <div class="term"><div class="bar">terminal</div><div class="body"><span class="t-ps">meu-primeiro-projeto&gt; </span><span class="t-cmd">claude</span> update
+Current version: 2.1.143
+Checking for updates...
+<span class="t-ok">Successfully updated to version 2.1.316</span>
+<span class="t-ps">meu-primeiro-projeto&gt; </span><span class="t-cmd">claude</span></div></div>
+      <p class="caption">Os números de versão são um exemplo. O Claude Code também se atualiza sozinho com o tempo.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- 13 · plugin -->
+<section class="slide" data-title="Instalar o plugin"><div class="inner">
+  <div class="eyebrow">Passo 9 de 9</div>
+  <h2>Instale o plugin <span>autonomo</span></h2>
+  <p class="lede">Agora dentro do Claude Code (na caixa com <code>&gt;</code>), digite um comando de cada vez:</p>
+  <div class="cmd"><span class="where">1º · catálogo</span><code>/plugin marketplace add MarciodeCampos/o-arco</code><button class="copy" type="button">Copiar</button></div>
+  <div class="cmd"><span class="where">2º · plugin</span><code>/plugin install autonomo@o-arco</code><button class="copy" type="button">Copiar</button></div>
+  <div class="cmd"><span class="where">3º · ativar</span><code>/reload-plugins</code><button class="copy" type="button">Copiar</button></div>
+  <div class="cols" style="margin-top:12px">
+    <dl class="trad">
+      <dt>marketplace add</dt><dd>adiciona o catálogo de plugins do curso, que fica no GitHub.</dd>
+      <dt>install</dt><dd>instala o plugin. Abre um painel com os detalhes: confirme.</dd>
+      <dt>reload-plugins</dt><dd>ativa o plugin sem precisar fechar o Claude.</dd>
+    </dl>
+    <div class="callout warn" style="margin-top:0"><b>Apareceu "Unknown command"?</b> O Claude Code está desatualizado. Volte ao slide anterior e rode <code>claude update</code>.</div>
+  </div>
+  <p class="dim small" style="margin-top:14px">O plugin fica instalado no computador todo. Nos próximos projetos, você não precisa repetir este passo.</p>
+</div></section>
+
+<!-- 14 · começar -->
+<section class="slide" data-title="Começar"><div class="inner">
+  <div class="eyebrow">A partir daqui, o Claude conduz</div>
+  <h2>Digite e <span>comece</span></h2>
+  <div class="cmd" style="max-width:520px"><code>/autonomo:comecar</code><button class="copy" type="button">Copiar</button></div>
+  <p class="dim" style="margin:6px 0 18px">Ou peça com suas palavras: "quero preparar meu computador para criar um site".</p>
+  <ol class="timeline">
+    <li><b>Objetivo</b>Pergunta o que você quer construir e quanta experiência tem.</li>
+    <li><b>Diagnóstico</b>Confere o computador, sem mudar nada.</li>
+    <li><b>Instalação</b>Instala o que falta e conecta o GitHub pelo navegador.</li>
+    <li><b>Autonomia</b>Configura o que pode fazer sozinho e prova que as barreiras funcionam.</li>
+    <li><b>Primeiro projeto</b>Cria o projeto com testes, GitHub e verificação automática.</li>
+  </ol>
+  <div class="callout"><b>Você continua no comando.</b> O Claude pede aprovação antes de mudar as próprias permissões, antes de gastar dinheiro e antes de publicar na internet. Uma tela de aprovação vai aparecer quando ele for mudar as configurações: ele avisa antes.</div>
+</div></section>
+
+<!-- 15 · problemas -->
+<section class="slide" data-title="Se algo der errado"><div class="inner">
+  <div class="eyebrow">Problemas comuns</div>
+  <h2>Se algo <span>der errado</span></h2>
+  <div class="grid2">
+    <div class="card"><h3>Erro vermelho com <code>&amp;&amp;</code></h3><p class="dim small">É o PowerShell 5.1 do Windows. Rode os comandos um de cada vez.</p></div>
+    <div class="card"><h3>"claude não é reconhecido"</h3><p class="dim small">Feche e abra o terminal. Se continuar, rode o comando de <em>PATH</em> que a instalação mostrou.</p></div>
+    <div class="card"><h3>O navegador não abriu no login</h3><p class="dim small">Copie o endereço que o terminal mostra e cole no navegador. Se a página der um código, cole no terminal.</p></div>
+    <div class="card"><h3>"Unknown command: /plugin"</h3><p class="dim small">Saia com <code>/exit</code>, rode <code>claude update</code> e abra de novo.</p></div>
+    <div class="card"><h3>Fechei o terminal. E agora?</h3><p class="dim small">Abra o terminal, entre na pasta com <code>cd ~/meu-primeiro-projeto</code> e digite <code>claude</code>. Tudo continua instalado.</p></div>
+    <div class="card"><h3>Travou ou não entendi</h3><p class="dim small">Pergunte ao próprio Claude, em português: "o que aconteceu?" ou "explique o que você está fazendo".</p></div>
+  </div>
+</div></section>
+
+<!-- 16 · resumo -->
+<section class="slide" data-title="Resumo"><div class="inner">
+  <div class="eyebrow">Cola · todos os comandos em ordem</div>
+  <h2>Resumo para <span>guardar</span></h2>
+  <div class="cols">
+    <div>
+      <h3>No terminal<span data-os="windows"> (PowerShell)</span></h3>
+      <div data-os="windows"><div class="cmd"><code>irm https://claude.ai/install.ps1 | iex</code><button class="copy" type="button">Copiar</button></div></div>
+      <div data-os="mac linux"><div class="cmd"><code>curl -fsSL https://claude.ai/install.sh | bash</code><button class="copy" type="button">Copiar</button></div></div>
+      <p class="dim small">Feche e abra o terminal. Depois:</p>
+      <div class="cmd"><code>mkdir ~/meu-primeiro-projeto</code><button class="copy" type="button">Copiar</button></div>
+      <div class="cmd"><code>cd ~/meu-primeiro-projeto</code><button class="copy" type="button">Copiar</button></div>
+      <div class="cmd"><code>claude update</code><button class="copy" type="button">Copiar</button></div>
+      <div class="cmd"><code>claude</code><button class="copy" type="button">Copiar</button></div>
+    </div>
+    <div>
+      <h3>Dentro do Claude Code</h3>
+      <div class="cmd"><code>/plugin marketplace add MarciodeCampos/o-arco</code><button class="copy" type="button">Copiar</button></div>
+      <div class="cmd"><code>/plugin install autonomo@o-arco</code><button class="copy" type="button">Copiar</button></div>
+      <div class="cmd"><code>/reload-plugins</code><button class="copy" type="button">Copiar</button></div>
+      <div class="cmd"><code>/autonomo:comecar</code><button class="copy" type="button">Copiar</button></div>
+      <p class="dim small" style="margin-top:14px">Mais detalhes, segurança e perguntas frequentes na <a href="../">página do Claude autônomo</a>.</p>
+    </div>
+  </div>
+</div></section>
+
+</main>
+
+<nav class="nav" aria-label="Navegação dos slides">
+  <button class="prev" type="button" id="prev">← Voltar</button>
+  <div class="bar-wrap">
+    <div class="progress"><i id="prog"></i></div>
+    <span class="count" id="count">1 / 16</span>
+    <span class="hint">setas ← → para navegar</span>
+  </div>
+  <button type="button" id="next">Avançar →</button>
+</nav>
+
+<script>
+(function () {
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var prev = document.getElementById('prev'), next = document.getElementById('next');
+  var prog = document.getElementById('prog'), count = document.getElementById('count');
+  var cur = 0;
+
+  function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
+
+  /* sistema: ?so=, depois o escolhido antes, depois o detectado */
+  function detect() {
+    var p = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || navigator.userAgent;
+    if (/win/i.test(p)) return 'windows';
+    if (/mac|iphone|ipad/i.test(p)) return 'mac';
+    if (/linux|x11/i.test(p) && !/android/i.test(navigator.userAgent)) return 'linux';
+    return 'windows';
+  }
+  function setOS(os) {
+    document.body.className = 'os-' + os;
+    document.querySelectorAll('[data-set-os]').forEach(function (b) {
+      b.setAttribute('aria-pressed', b.getAttribute('data-set-os') === os ? 'true' : 'false');
+    });
+    store('slides-os', os);
+  }
+  var q = (location.search.match(/[?&]so=(windows|mac|linux)/) || [])[1];
+  setOS(q || store('slides-os') || detect());
+  document.querySelectorAll('[data-set-os]').forEach(function (b) {
+    b.addEventListener('click', function () { setOS(b.getAttribute('data-set-os')); });
+  });
+
+  function show(i, push) {
+    cur = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach(function (s, n) { s.classList.toggle('on', n === cur); });
+    slides[cur].scrollTop = 0;
+    prev.disabled = cur === 0;
+    next.textContent = cur === slides.length - 1 ? 'Recomeçar ↺' : 'Avançar →';
+    prog.style.width = ((cur + 1) / slides.length * 100) + '%';
+    count.textContent = (cur + 1) + ' / ' + slides.length;
+    document.title = slides[cur].getAttribute('data-title') + ' · Instalação passo a passo';
+    if (push !== false) history.replaceState(null, '', location.pathname + location.search + '#' + (cur + 1));
+  }
+  function go(d) { show(cur === slides.length - 1 && d > 0 ? 0 : cur + d); }
+  prev.addEventListener('click', function () { go(-1); });
+  next.addEventListener('click', function () { go(1); });
+  document.addEventListener('keydown', function (e) {
+    if (e.target.closest && e.target.closest('button') && (e.key === ' ' || e.key === 'Enter')) return;
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); go(1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(-1); }
+    else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(slides.length - 1);
+  });
+
+  /* deslizar no celular */
+  var sx = null, sy = null;
+  var stage = document.getElementById('stage');
+  stage.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+  stage.addEventListener('touchend', function (e) {
+    if (sx === null) return;
+    var dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5 && !(e.target.closest && e.target.closest('.cmd, .term'))) go(dx < 0 ? 1 : -1);
+    sx = null;
+  });
+
+  /* copiar */
+  document.querySelectorAll('.copy').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var text = b.parentNode.querySelector('code').textContent;
+      function ok() { b.textContent = 'Copiado'; b.classList.add('ok'); setTimeout(function () { b.textContent = 'Copiar'; b.classList.remove('ok'); }, 1500); }
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(ok, function () {});
+      else { var t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); ok(); } catch (e) {} t.remove(); }
+    });
+  });
+
+  var start = parseInt((location.hash || '').slice(1), 10);
+  show(isNaN(start) ? 0 : start - 1, false);
+  window.addEventListener('hashchange', function () { var n = parseInt(location.hash.slice(1), 10); if (!isNaN(n)) show(n - 1, false); });
+})();
+</script>
+</body>
+</html>

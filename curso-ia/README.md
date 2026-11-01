@@ -21,6 +21,7 @@ curso-ia/
 │   ├── curso.css         estilos (paleta do portal triadic.life)
 │   └── curso.js          currículo, quiz, copiar código, progresso local
 ├── autonomo/index.html   comece aqui: como instalar o plugin autonomo
+├── autonomo/slides/     passo a passo da instalação em slides (Windows, Mac, Linux)
 ├── glossario/           mapa de componentes e glossário do Claude (gerado por gerar.py)
 ├── pre-01/index.html     introdução P1 · IA sem mistério (calculadora de custo em calculadora.js)
 ├── modulo-01/index.html  aulas do módulo 1
