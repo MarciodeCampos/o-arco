@@ -1,0 +1,12 @@
+{
+  "name": "o-arco",
+  "description": "Plugins do curso Engenharia de IA Aplicada (triadic.life)",
+  "owner": { "name": "Marcio de Campos", "url": "https://triadic.life" },
+  "plugins": [
+    {
+      "name": "autonomo",
+      "source": "./plugins/autonomo",
+      "description": "O Claude prepara seu ambiente, configura autonomia com barreiras testadas e cria e publica projetos com você, em linguagem simples."
+    }
+  ]
+}

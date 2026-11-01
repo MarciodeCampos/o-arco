@@ -236,9 +236,17 @@ PRONTOS = {m["numero"] for m in __import__("json").loads(
     if m["status"] == "pronto"}
 
 
+# Onde cada tema aparece: o módulo P1 (introdução) ou a skill do plugin autonomo que o aplica.
+SKILL_DO_TEMA = {2: "comecar", 3: "configurar-autonomia", 4: "configurar-autonomia", 7: "implantar"}
+
+
 def pre(n):
-    """Liga para o módulo só quando ele já está publicado; rode de novo ao publicar um módulo."""
-    return f'<a href="../pre-{n:02d}/">P{n}</a>' if n in PRONTOS else f"P{n}"
+    """Referência para o termo: P1 com link, a skill do plugin que usa o tema, ou nada."""
+    if n in PRONTOS:
+        return f'<a href="../pre-{n:02d}/">Módulo P{n}</a>'
+    if n in SKILL_DO_TEMA:
+        return f'<a href="../autonomo/#comandos"><code>/autonomo:{SKILL_DO_TEMA[n]}</code></a>'
+    return ""
 
 
 termos = sorted(TERMOS, key=lambda x: unicodedata.normalize("NFD", x[0].lstrip("/.").lower()))
@@ -250,13 +258,13 @@ gloss = []
 for L, ts in grupos.items():
     itens = "\n".join(
         f'<dt id="{slug(t)}">{e(t)}{f" <small>({e(en)})</small>" if en else ""}</dt>'
-        f"<dd>{e(d)} <small>Módulo {pre(m)}.{link(pg)}</small></dd>"
+        f"<dd>{e(d)} <small>{(pre(m) + '.') if pre(m) else ''}{link(pg)}</small></dd>"
         for t, en, d, m, pg in ts
     )
     gloss.append(f"<h3>{L}</h3>\n<dl>\n{itens}\n</dl>")
 
 mapa = "\n".join(
-    f"<h3>{e(camada)}</h3>\n" + tabela(["Componente", "Para que serve", "Onde fica / como usar", "Módulo"],
+    f"<h3>{e(camada)}</h3>\n" + tabela(["Componente", "Para que serve", "Onde fica / como usar", "Veja"],
                                         [[f"<strong>{e(c)}</strong>", e(p), f"<code>{e(o)}</code>", pre(m)] for c, p, o, m in itens])
     for camada, itens in MAPA
 )
@@ -297,9 +305,9 @@ pagina = f"""<!DOCTYPE html>
   </aside>
   <main class="content">
     <section id="inicio">
-      <header><div class="eyebrow">Trilha preliminar · referência</div><h1>Mapa de componentes e glossário do Claude</h1></header>
+      <header><div class="eyebrow">Referência</div><h1>Mapa de componentes e glossário do Claude</h1></header>
       <p class="lede">
-        Tudo o que aparece na trilha preliminar, num lugar só: as peças que compõem um ambiente produtivo com
+        Tudo o que o Claude usa para trabalhar com autonomia, num lugar só: as peças que compõem um ambiente produtivo com
         o Claude, quando vale adicionar cada uma, os arquivos onde ficam e o significado de cada termo.
         Volte aqui sempre que uma palavra nova aparecer.
       </p>
@@ -326,7 +334,7 @@ pagina = f"""<!DOCTYPE html>
 
     <section id="comandos">
       <h2>Comandos essenciais</h2>
-      <p>Digite <code>/</code> no Claude Code para ver todos. Estes são os que a trilha usa:</p>
+      <p>Digite <code>/</code> no Claude Code para ver todos. Estes são os essenciais:</p>
 {tabela(["Comando", "O que faz"], [[f"<code>{e(a)}</code>", e(b)] for a, b in COMANDOS])}
     </section>
 
@@ -348,7 +356,7 @@ pagina = f"""<!DOCTYPE html>
 {chr(10).join(gloss)}
       <nav class="pager">
         <a href="../"><small>← Voltar</small>Todos os módulos</a>
-        <a class="next" href="../pre-01/"><small>Começar a trilha →</small>P1 · IA sem mistério</a>
+        <a class="next" href="../autonomo/"><small>Começar →</small>Claude autônomo</a>
       </nav>
     </section>
   </main>

@@ -417,3 +417,15 @@ input[type="search"] { width: 280px; }
 input:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
 .calc label { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; max-width: 460px; }
 .calc input { width: 120px; }
+a.btn {
+  display: inline-block; padding: 8px 16px; border-radius: 8px; background: var(--gold); color: var(--ink);
+  font-weight: 600; text-decoration: none; margin: 4px 0;
+}
+a.btn:hover { background: var(--gold-light); }
+a.btn:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 2px; }
+.comece {
+  border: 1px solid var(--gold-dim); border-radius: 12px; padding: 20px 22px; margin: 18px 0 8px;
+  background: linear-gradient(135deg, rgba(201,168,76,.10), transparent 60%);
+}
+.comece h3 { margin: 0 0 8px; color: var(--gold-light); }
+.comece p { margin: 6px 0; }

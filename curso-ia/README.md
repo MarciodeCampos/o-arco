@@ -20,8 +20,9 @@ curso-ia/
 ├── assets/
 │   ├── curso.css         estilos (paleta do portal triadic.life)
 │   └── curso.js          currículo, quiz, copiar código, progresso local
+├── autonomo/index.html   comece aqui: como instalar o plugin autonomo
 ├── glossario/           mapa de componentes e glossário do Claude (gerado por gerar.py)
-├── pre-01/index.html     trilha preliminar: módulo P1 (calculadora de custo em calculadora.js)
+├── pre-01/index.html     introdução P1 · IA sem mistério (calculadora de custo em calculadora.js)
 ├── modulo-01/index.html  aulas do módulo 1
 ├── modulo-02/index.html  aulas do módulo 2
 ├── modulo-03/index.html  aulas do módulo 3
@@ -92,20 +93,22 @@ curso-ia/
         └── dados/        questões de system design com pontos esperados, autoavaliação de exemplo
 ```
 
-## Trilha preliminar: Claude do zero à autonomia
+## Comece aqui: plugin `autonomo`
 
-Oito módulos (P1 a P8, 70h) para quem ainda não trabalha com IA, do primeiro uso a um ambiente em
-que o Claude Code testa e implanta com autonomia, com as barreiras certas. O currículo fica em
-`curriculo.json`, na chave `preliminares`.
+Para quem nunca usou IA: em vez de um curso sobre como configurar o Claude, um plugin que ensina o
+**próprio Claude** a preparar o computador da pessoa, configurar a autonomia com barreiras de
+segurança testadas, criar projetos e publicá-los, explicando cada passo em linguagem simples.
 
-| Módulo | Status |
-|---|---|
-| P1 · IA sem mistério e o ecossistema Claude | ✅ pronto |
-| P2 – P8 | planejados (ver `curriculo.json`) |
+- Plugin: [`plugins/autonomo/`](../plugins/autonomo/) (marketplace em `.claude-plugin/marketplace.json`
+  na raiz do repositório). Instalação: `claude plugin marketplace add MarciodeCampos/o-arco` e
+  `claude plugin install autonomo@o-arco`.
+- Página para pessoas: `autonomo/index.html`.
+- Introdução conceitual: `pre-01/` (P1 · IA sem mistério) e `glossario/` (gerado por
+  `python3 glossario/gerar.py`, a partir da documentação oficial do Claude Code consultada em
+  novembro de 2026 com a versão 2.1.316).
 
-O glossário é gerado: edite os dados em `glossario/gerar.py` e rode `python3 glossario/gerar.py`
-(também ao publicar um módulo P, para os links dele aparecerem). As informações vêm da documentação
-oficial do Claude Code (code.claude.com/docs), consultada em novembro de 2026 com a versão 2.1.316.
+Antes de alterar os modelos de configuração do plugin, rode `claude plugin validate ./plugins/autonomo`
+e valide cada modelo com `claude doctor` num HOME temporário.
 
 ## Status
 

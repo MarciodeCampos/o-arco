@@ -14,7 +14,7 @@
 <body>
 <header class="topbar">
   <a class="brand" href="/">◈ TRIADIC.LIFE</a>
-  <span class="crumbs">/ <a href="../">Engenharia de IA</a> / Trilha preliminar / P1</span>
+  <span class="crumbs">/ <a href="../">Engenharia de IA</a> / P1</span>
   <span class="spacer"></span>
   <span class="progress-pill">0/8 aulas</span>
 </header>
@@ -36,7 +36,7 @@
   </aside>
   <main class="content" data-modulo="pre-01">
     <section id="inicio">
-      <header><div class="eyebrow">Trilha preliminar · Módulo P1 · 8h estimadas</div><h1>IA sem mistério e o ecossistema Claude</h1></header>
+      <header><div class="eyebrow">Introdução · Módulo P1 · 8h estimadas</div><h1>IA sem mistério e o ecossistema Claude</h1></header>
       <p class="lede">
         Para quem nunca trabalhou com IA. Antes de dar autonomia a um agente, é preciso entender o que ele
         é: um programa muito bom em linguagem, que erra com confiança quando não tem como verificar o que
@@ -44,7 +44,7 @@
         e ensina a pedir de um jeito que dá para conferir.
       </p>
       <div class="meta"><span class="tag">6 aulas</span><span class="tag">sem pré-requisito</span><span class="tag">sem programação</span></div>
-      <div class="callout"><b>Palavra nova?</b>Todo termo da trilha está no <a href="../glossario/">mapa de componentes e glossário</a>, com link para a documentação oficial.</div>
+      <div class="callout"><b>Palavra nova?</b>Todo termo que o Claude usa está no <a href="../glossario/">mapa de componentes e glossário</a>, com link para a documentação oficial.</div>
     </section>
 
     <section class="lesson" id="aula-1">
@@ -58,7 +58,7 @@
       </p>
       <ul>
         <li><strong>Ele não consulta um banco de fatos.</strong> Gera o texto mais plausível. Na maioria das vezes plausível é correto; às vezes é uma invenção bem escrita, a chamada alucinação.</li>
-        <li><strong>Ele não lembra de você entre conversas</strong>, a menos que alguém guarde e devolva essa informação (Módulo P3).</li>
+        <li><strong>Ele não lembra de você entre conversas</strong>, a menos que alguém guarde e devolva essa informação, como o <code>CLAUDE.md</code> que o plugin <a href="../autonomo/">autonomo</a> configura.</li>
         <li><strong>Com ferramentas, ele age.</strong> Se pode ler arquivos, rodar comandos e ver o resultado, deixa de só falar e passa a fazer. Isso é um agente, e o Claude Code é um.</li>
         <li><strong>Com um jeito de conferir, ele se corrige.</strong> Um agente que roda os testes depois de mudar o código vê o erro e conserta. Esse ciclo de verificação é a base de toda autonomia segura.</li>
       </ul>
@@ -113,7 +113,7 @@
         <tr><td>Claude Code na nuvem (claude.ai/code e celular)</td><td>Sessões que rodam em um contêiner da Anthropic e continuam com o computador desligado</td><td>No clone do repositório, dentro do contêiner</td></tr>
         <tr><td>GitHub Actions, Slack, Chrome</td><td>Integrações para pipelines, conversas do time e navegador</td><td>Dentro do que cada integração permite</td></tr>
       </table>
-      <p>A trilha usa principalmente o Claude Code, porque é nele que estão a autonomia, os testes e as implantações. Todas as superfícies usam o mesmo motor: o que você aprende no terminal vale no editor e na nuvem.</p>
+      <p>O plugin <a href="../autonomo/">autonomo</a> usa principalmente o Claude Code, porque é nele que estão a autonomia, os testes e as implantações. Todas as superfícies usam o mesmo motor: o que você aprende no terminal vale no editor e na nuvem.</p>
       <div class="quiz">
         <h4>Quiz rápido</h4>
         <div class="q">
@@ -161,7 +161,7 @@
       <p>Além disso, o Claude Code guarda as transcrições das sessões no seu computador, em texto, por 30 dias por padrão, para permitir retomar conversas.</p>
       <h3>Nunca cole numa conversa</h3>
       <ul>
-        <li>Senhas, chaves de API, tokens de acesso. Use variáveis de ambiente e cofres de segredos (Módulo P4).</li>
+        <li>Senhas, chaves de API, tokens de acesso. Use variáveis de ambiente e cofres de segredos; o plugin <a href="../autonomo/">autonomo</a> bloqueia o Claude de ler esses arquivos.</li>
         <li>Dados pessoais de clientes sem base legal e contrato adequado (Módulo 12 do curso principal).</li>
         <li>Informação sigilosa de terceiros que você não tem autorização para compartilhar.</li>
       </ul>
@@ -183,7 +183,7 @@
         <tr><td>"Melhora o site."</td><td>"A página inicial leva 6 segundos para carregar no celular. Descubra o que mais pesa, proponha 3 mudanças e implemente a de maior ganho. Pronto quando o Lighthouse mobile passar de 85. Não mude o visual."</td></tr>
         <tr><td>"Arruma esse bug."</td><td>"Ao salvar um pedido sem CEP, o sistema dá erro 500. Escreva primeiro um teste que reproduz o erro, depois corrija até o teste passar, sem quebrar os outros."</td></tr>
       </table>
-      <p>O critério de pronto é o que torna a autonomia possível: com ele, o Claude pode trabalhar sozinho até atingir a meta, e você confere uma coisa só no final. Os Módulos P2 e P6 mostram como transformar isso em <code>/goal</code> e em testes.</p>
+      <p>O critério de pronto é o que torna a autonomia possível: com ele, o Claude pode trabalhar sozinho até atingir a meta, e você confere uma coisa só no final. Com o plugin <a href="../autonomo/">autonomo</a>, o Claude transforma esse critério em testes automáticos em todo projeto novo; no Claude Code, <code>/goal</code> faz ele trabalhar até a condição ser verdadeira.</p>
     </section>
 
     <section class="lesson" id="projeto">
@@ -199,7 +199,7 @@
         <tr><td>Nível de autonomia desejado</td><td>Trabalhar sozinho numa branch; eu reviso antes do merge</td></tr>
         <tr><td>Superfície</td><td>Claude Code na nuvem</td></tr>
       </table>
-      <p>Guarde esse diagnóstico: ele é a entrada do Módulo P4, onde cada nível de autonomia vira uma configuração.</p>
+      <p>Guarde esse diagnóstico e use-o com o plugin <a href="../autonomo/">autonomo</a>: o comando <code>/autonomo:comecar</code> pergunta exatamente isso e transforma o nível de autonomia em configuração.</p>
     </section>
 
     <section class="lesson" id="recursos">
@@ -213,7 +213,7 @@
       </ul>
       <nav class="pager">
         <a href="../glossario/"><small>← Referência</small>Mapa e glossário</a>
-        <a class="next" href="../"><small>Próximo módulo (em produção)</small>P2 · Primeiros passos no Claude Code</a>
+        <a class="next" href="../autonomo/"><small>Próximo passo →</small>Claude autônomo</a>
       </nav>
     </section>
   </main>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050508">
+<meta name="description" content="Instale o plugin autonomo e deixe o Claude preparar seu computador, configurar autonomia com barreiras de segurança testadas, criar e publicar projetos, explicando cada passo.">
+<title>Claude autônomo — Engenharia de IA Aplicada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/curso.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/">◈ TRIADIC.LIFE</a>
+  <span class="crumbs">/ <a href="../">Engenharia de IA</a> / Claude autônomo</span>
+  <span class="spacer"></span>
+</header>
+<div class="layout">
+  <aside class="toc">
+    <button class="toc-toggle" type="button">☰ Nesta página</button>
+    <h2>Claude autônomo</h2>
+    <nav><ol>
+      <li><a href="#inicio">O que é</a></li>
+      <li><a href="#passo-1">1 · Instalar o Claude Code</a></li>
+      <li><a href="#passo-2">2 · Instalar o plugin</a></li>
+      <li><a href="#passo-3">3 · Pedir para começar</a></li>
+      <li><a href="#o-que-acontece">O que o Claude vai fazer</a></li>
+      <li><a href="#seguranca">Segurança, com testes</a></li>
+      <li><a href="#comandos">Comandos do plugin</a></li>
+      <li><a href="#nuvem">Sem instalar nada</a></li>
+      <li><a href="#perguntas">Perguntas frequentes</a></li>
+    </ol></nav>
+  </aside>
+  <main class="content">
+    <section id="inicio">
+      <header><div class="eyebrow">Comece aqui · nenhuma experiência necessária</div><h1>Deixe o Claude preparar tudo</h1></header>
+      <p class="lede">
+        Em vez de você estudar como configurar um ambiente de desenvolvimento, o Claude faz isso por você
+        e explica cada passo. Você instala um programa, digita um comando, e ele cuida do resto: confere
+        seu computador, instala o que falta, se dá a autonomia que você autorizar, prova que as barreiras
+        de segurança funcionam, cria seu primeiro projeto e o coloca na internet.
+      </p>
+      <div class="callout"><b>Você continua no comando</b>O Claude pede sua aprovação antes de mudar as próprias permissões, antes de gastar dinheiro e antes de publicar em produção. Suas senhas e chaves ficam fora do alcance dele.</div>
+    </section>
+
+    <section id="passo-1">
+      <h2>1 · Instalar o Claude Code</h2>
+      <p>Você precisa de uma conta Claude com acesso ao Claude Code (<a href="https://claude.com/pricing" target="_blank" rel="noopener">ver planos</a>). Abra o terminal do seu computador:</p>
+      <ul>
+        <li><strong>Mac:</strong> abra o app <em>Terminal</em> (procure "Terminal" no Spotlight, com ⌘ + espaço).</li>
+        <li><strong>Windows:</strong> abra o <em>PowerShell</em> (menu Iniciar, digite "PowerShell").</li>
+        <li><strong>Linux:</strong> abra o terminal da sua distribuição (Ctrl + Alt + T no Ubuntu).</li>
+      </ul>
+      <p>Copie e cole o comando do seu sistema e aperte Enter:</p>
+      <h3>Mac, Linux ou WSL</h3>
+<pre data-lang="bash"><code>curl -fsSL https://claude.ai/install.sh | bash</code></pre>
+      <h3>Windows (PowerShell)</h3>
+<pre data-lang="powershell"><code>irm https://claude.ai/install.ps1 | iex</code></pre>
+      <p>Depois, digite <code>claude</code> e aperte Enter. Na primeira vez, ele abre o navegador para você entrar na sua conta. Se algo der errado, o <a href="https://code.claude.com/docs/pt/quickstart" target="_blank" rel="noopener">guia oficial de instalação</a> tem as alternativas (Homebrew, WinGet) e as soluções para erros comuns.</p>
+    </section>
+
+    <section id="passo-2">
+      <h2>2 · Instalar o plugin <code>autonomo</code></h2>
+      <p>Com o Claude Code aberto, digite estes dois comandos, um de cada vez:</p>
+<pre data-lang="claude"><code>/plugin marketplace add MarciodeCampos/o-arco</code></pre>
+<pre data-lang="claude"><code>/plugin install autonomo@o-arco</code></pre>
+      <p>O segundo abre um painel com os detalhes do plugin: confirme a instalação. Depois digite <code>/reload-plugins</code> para ativar.</p>
+      <details>
+        <summary>Prefere instalar pelo terminal, fora do Claude Code?</summary>
+<pre data-lang="bash"><code>claude plugin marketplace add MarciodeCampos/o-arco</code></pre>
+<pre data-lang="bash"><code>claude plugin install autonomo@o-arco</code></pre>
+        <p>Depois abra o Claude Code com <code>claude</code>.</p>
+      </details>
+    </section>
+
+    <section id="passo-3">
+      <h2>3 · Pedir para começar</h2>
+      <p>No Claude Code, digite:</p>
+<pre data-lang="claude"><code>/autonomo:comecar</code></pre>
+      <p>Ou, se você já usou o Claude Code pelo menos uma vez neste computador, clique: <a class="btn" href="claude-cli://open?q=%2Fautonomo%3Acomecar">Abrir o Claude Code e começar</a>. O link só preenche o comando; nada acontece até você apertar Enter.</p>
+      <p>Também funciona pedir com suas palavras: "quero preparar meu computador para criar um site".</p>
+    </section>
+
+    <section id="o-que-acontece">
+      <h2>O que o Claude vai fazer</h2>
+      <table>
+        <tr><th>Etapa</th><th>O Claude faz</th><th>Você faz</th></tr>
+        <tr><td>1 · Objetivo</td><td>Pergunta o que você quer construir e quanta experiência você tem</td><td>Escolhe entre opções</td></tr>
+        <tr><td>2 · Diagnóstico</td><td>Confere o que já está instalado, sem mudar nada</td><td>Nada</td></tr>
+        <tr><td>3 · Instalação</td><td>Instala git, Node.js, Python e o GitHub CLI se faltarem; configura seu nome no git</td><td>Aprova as instalações; cria a conta no GitHub e entra nela pelo navegador</td></tr>
+        <tr><td>4 · Autonomia</td><td>Explica os níveis, faz backup, aplica o nível escolhido, valida e prova as barreiras</td><td>Escolhe o nível e aprova a edição das configurações do Claude</td></tr>
+        <tr><td>5 · Primeiro projeto</td><td>Cria o projeto com testes, proteção de segredos, GitHub e integração contínua, e desenvolve a primeira versão</td><td>Descreve a ideia e confere o resultado</td></tr>
+      </table>
+      <p>Daí em diante, o Claude lembra como trabalhar com você: explica em linguagem simples, trabalha sozinho dentro das barreiras, testa antes de dizer que terminou e pede sua aprovação para publicar.</p>
+    </section>
+
+    <section id="seguranca">
+      <h2>Segurança, com testes</h2>
+      <p>O nível recomendado liga o <strong>modo auto</strong>, em que um segundo modelo revisa cada ação, e acrescenta barreiras fixas. Cada linha abaixo foi testada no Claude Code 2.1.316, <strong>inclusive no modo que pula todas as checagens</strong>, com um arquivo de segredo falso:</p>
+      <table>
+        <tr><th>Tentativa</th><th>Sem barreiras</th><th>Com o plugin</th></tr>
+        <tr><td>Ler o arquivo <code>.env</code> com a ferramenta de leitura</td><td>Lê o segredo</td><td>Bloqueado</td></tr>
+        <tr><td>Ler <code>.env</code> com <code>cat</code>, <code>grep -r</code> ou um script Python</td><td>Lê o segredo</td><td>Bloqueado (com sandbox ativo)</td></tr>
+        <tr><td>Ler uma chave em <code>~/.ssh</code> por um script</td><td>Lê</td><td>Bloqueado (com sandbox ativo)</td></tr>
+        <tr><td><code>git push --force</code>, escrito de cinco formas diferentes</td><td>Executa</td><td>Bloqueado</td></tr>
+        <tr><td>Apagar um repositório do GitHub</td><td>Executa</td><td>Bloqueado</td></tr>
+        <tr><td>Criar arquivo fora da pasta do projeto</td><td>Cria</td><td>Bloqueado pelo sandbox</td></tr>
+        <tr><td>Criar arquivos, rodar código, fazer commit e push normal</td><td>Funciona</td><td>Funciona</td></tr>
+      </table>
+      <p>Depois de configurar, o próprio Claude repete esses testes no seu computador (<code>/autonomo:verificar-barreiras</code>) e mostra o resultado.</p>
+      <details>
+        <summary>Limites que você deve conhecer</summary>
+        <ul>
+          <li>No Linux, o sandbox precisa de dois programas (<code>bubblewrap</code> e <code>socat</code>). Sem eles, o Claude Code roda sem sandbox, em silêncio. O plugin confere e instala.</li>
+          <li>Regras de texto podem ser contornadas escrevendo um comando de um jeito incomum. Por isso há três camadas: regras, o classificador do modo auto e, nos seus projetos do GitHub, a proteção da branch principal.</li>
+          <li>O modo "autonomia total, sem nenhuma checagem" só é configurado dentro de um contêiner ou na nuvem, nunca direto no seu computador.</li>
+        </ul>
+      </details>
+    </section>
+
+    <section id="comandos">
+      <h2>Comandos do plugin</h2>
+      <table>
+        <tr><th>Comando</th><th>Para quê</th></tr>
+        <tr><td><code>/autonomo:comecar</code></td><td>Do zero ao primeiro projeto</td></tr>
+        <tr><td><code>/autonomo:diagnostico</code></td><td>Ver o que está instalado e o que falta</td></tr>
+        <tr><td><code>/autonomo:configurar-autonomia</code></td><td>Escolher ou mudar o nível de autonomia</td></tr>
+        <tr><td><code>/autonomo:verificar-barreiras</code></td><td>Provar que as proteções funcionam</td></tr>
+        <tr><td><code>/autonomo:novo-projeto</code></td><td>Começar um projeto novo</td></tr>
+        <tr><td><code>/autonomo:implantar</code></td><td>Publicar na internet, com prévia e aprovação</td></tr>
+      </table>
+      <p>O código do plugin é aberto: <a href="https://github.com/MarciodeCampos/o-arco/tree/main/plugins/autonomo" target="_blank" rel="noopener">plugins/autonomo</a>.</p>
+    </section>
+
+    <section id="nuvem">
+      <h2>Sem instalar nada no computador</h2>
+      <p>Em <a href="https://claude.ai/code" target="_blank" rel="noopener">claude.ai/code</a> o Claude Code roda num contêiner na nuvem, ligado a um repositório do seu GitHub, e continua trabalhando com o computador desligado. É o ambiente isolado em que a autonomia total faz sentido. Você acompanha pelo navegador ou pelo app do celular.</p>
+    </section>
+
+    <section id="perguntas">
+      <h2>Perguntas frequentes</h2>
+      <details><summary>Quanto custa?</summary><p>O plugin é gratuito. O uso do Claude depende do seu plano; dentro do Claude Code, <code>/usage</code> mostra o consumo. Plataformas de publicação têm planos gratuitos; o Claude avisa antes de qualquer coisa que possa gerar cobrança.</p></details>
+      <details><summary>Posso desfazer?</summary><p>Sim. O Claude faz backup das configurações antes de mudar e explica como restaurar. Para remover o plugin: <code>claude plugin uninstall autonomo@o-arco</code>.</p></details>
+      <details><summary>Funciona no Windows?</summary><p>Sim, com uma ressalva: o sandbox não existe no Windows nativo. As regras de proteção funcionam; para a proteção completa, o Claude recomenda o WSL ou um contêiner.</p></details>
+      <details><summary>O Claude vê minhas senhas?</summary><p>Ele nunca pede senhas na conversa. Logins acontecem no navegador, senhas do computador são digitadas por você no terminal, e chaves de serviços vão para arquivos e painéis que o Claude é bloqueado de ler.</p></details>
+      <details><summary>Quero entender os termos</summary><p>Veja o <a href="../glossario/">mapa de componentes e glossário</a> e o módulo <a href="../pre-01/">P1 · IA sem mistério</a>.</p></details>
+      <nav class="pager">
+        <a href="../"><small>← Voltar</small>Engenharia de IA Aplicada</a>
+        <a class="next" href="../glossario/"><small>Referência →</small>Mapa e glossário</a>
+      </nav>
+    </section>
+  </main>
+</div>
+<footer class="foot"><a href="/">triadic.life</a> · <a href="../">Engenharia de IA Aplicada</a> · <a href="https://github.com/MarciodeCampos/o-arco/tree/main/plugins/autonomo" target="_blank" rel="noopener">código do plugin</a></footer>
+<script src="../assets/curso.js"></script>
+</body>
+</html>

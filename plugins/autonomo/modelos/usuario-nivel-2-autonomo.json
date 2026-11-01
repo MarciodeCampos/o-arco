@@ -1,0 +1,55 @@
+{
+  "permissions": {
+    "defaultMode": "auto",
+    "deny": [
+      "Read(//**/.env)",
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.gnupg/**)",
+      "Read(~/.config/gcloud/**)",
+      "Read(~/.azure/**)",
+      "Read(~/.kube/**)",
+      "Read(~/.docker/config.json)",
+      "Read(~/.npmrc)",
+      "Read(~/.netrc)",
+      "Read(~/.config/gh/hosts.yml)",
+      "Bash(git push *--force*)",
+      "Bash(git push * -f)",
+      "Bash(git push * -f *)",
+      "Bash(git push -f *)",
+      "Bash(git push *+*)",
+      "Bash(git -C * push *--force*)",
+      "Bash(gh repo delete *)",
+      "Bash(terraform destroy *)"
+    ],
+    "ask": [
+      "Bash(npm publish *)",
+      "Bash(vercel --prod *)",
+      "Bash(vercel deploy --prod *)",
+      "Bash(netlify deploy --prod *)",
+      "Bash(fly deploy *)",
+      "Bash(terraform apply *)",
+      "Bash(kubectl delete *)",
+      "Bash(gh release create *)",
+      "Bash(gh repo edit *)"
+    ]
+  },
+  "sandbox": {
+    "enabled": true,
+    "allowUnsandboxedCommands": false,
+    "excludedCommands": [
+      "git *",
+      "docker *"
+    ],
+    "network": {
+      "allowedDomains": [
+        "registry.npmjs.org",
+        "pypi.org",
+        "files.pythonhosted.org",
+        "github.com",
+        "*.github.com",
+        "*.githubusercontent.com"
+      ]
+    }
+  }
+}
