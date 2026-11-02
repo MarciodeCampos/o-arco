@@ -1,0 +1,73 @@
+{"texto": "Onde encontro o número de série para cadastrar a garantia estendida?", "categoria": "duvida", "tom": "educado", "canal": "email"}
+{"texto": "O aparelho consome muita energia? Fica ligado o tempo todo?", "categoria": "duvida", "tom": "educado", "canal": "whatsapp"}
+{"texto": "Existe programa de recolhimento dos refis usados para reciclagem?", "categoria": "duvida", "tom": "educado", "canal": "email"}
+{"texto": "O produto chegou sem o adaptador da tomada que aparece na foto do anúncio.", "categoria": "defeito", "tom": "educado", "canal": "email"}
+{"texto": "A garantia é de quanto tempo e cobre o quê exatamente?", "categoria": "duvida", "tom": "educado", "canal": "chat"}
+{"texto": "pedido parado em 'em separação' faz uma semana, vão mandar ou não?", "categoria": "entrega", "tom": "irritado", "canal": "whatsapp"}
+{"texto": "o código de rastreio que vocês mandaram não funciona no site da transportadora", "categoria": "entrega", "tom": "confuso", "canal": "chat"}
+{"texto": "como eu sei se o filtro ainda tá bom ou se tá na hora de trocar?", "categoria": "duvida", "tom": "confuso", "canal": "whatsapp"}
+{"texto": "Depois de uma queda de energia o equipamento não liga mais. Está na garantia ainda.", "categoria": "defeito", "tom": "educado", "canal": "whatsapp"}
+{"texto": "Troquei o filtro e agora a água sai com gosto de plástico. Paguei caro por isso.", "categoria": "defeito", "tom": "irritado", "canal": "email"}
+{"texto": "precisa de encanador pra instalar ou eu mesmo consigo?", "categoria": "duvida", "tom": "confuso", "canal": "chat"}
+{"texto": "o vidro da jarra veio estilhaçado dentro da caixa", "categoria": "defeito", "tom": "irritado", "canal": "chat"}
+{"texto": "O controle remoto não funciona, já troquei as pilhas duas vezes.", "categoria": "defeito", "tom": "educado", "canal": "chat"}
+{"texto": "o cupom de desconto nao foi aplicado e paguei o preço cheio, da pra arrumar?", "categoria": "cobranca", "tom": "confuso", "canal": "whatsapp"}
+{"texto": "Vocês têm assistência técnica autorizada em Uberlândia?", "categoria": "duvida", "tom": "educado", "canal": "email"}
+{"texto": "parcelaram em 6x sendo que escolhi 3x sem juros, isso tá errado", "categoria": "cobranca", "tom": "irritado", "canal": "chat"}
+{"texto": "Comprei como presente: consigo mandar entregar no endereço da minha mãe sem refazer o pedido?", "categoria": "entrega", "tom": "educado", "canal": "email"}
+{"texto": "Gostaria de alterar a forma de pagamento da assinatura do cartão para débito automático.", "categoria": "cobranca", "tom": "educado", "canal": "email"}
+{"texto": "esse modelo tira o cloro da água?", "categoria": "duvida", "tom": "confuso", "canal": "chat"}
+{"texto": "Qual o prazo de entrega para Recife?", "categoria": "entrega", "tom": "educado", "canal": "chat", "plantado": "contaminação do teste"}
+{"texto": "fiz a compra no domingo, conta como dia útil pro prazo?", "categoria": "entrega", "tom": "confuso", "canal": "whatsapp"}
+{"texto": "O purificador funciona com água de poço artesiano?", "categoria": "duvida", "tom": "educado", "canal": "chat"}
+{"texto": "Terceira tentativa de entrega frustrada e eu estava em casa nas três. Que transportadora é essa?", "categoria": "entrega", "tom": "irritado", "canal": "email"}
+{"texto": "O valor do produto baixou dois dias depois que comprei. Vocês devolvem a diferença?", "categoria": "cobranca", "tom": "educado", "canal": "chat"}
+{"texto": "dá pra retirar na loja em vez de receber em casa? moro perto do shopping", "categoria": "entrega", "tom": "confuso", "canal": "whatsapp"}
+{"texto": "o aparelho faz um barulho alto de motor desde o primeiro dia, isso não é normal", "categoria": "defeito", "tom": "irritado", "canal": "whatsapp"}
+{"texto": "Solicito a segunda via da nota fiscal da minha última compra, pois a primeira não chegou.", "categoria": "cobranca", "tom": "educado", "canal": "email"}
+{"texto": "pq meu pagamento ta em analise faz 3 dias?", "categoria": "cobranca", "tom": "confuso", "canal": "whatsapp"}
+{"texto": "Recebi o modelo de 110V mas pedi 220V. Posso ligar com transformador ou é melhor trocar?", "categoria": "defeito", "tom": "confuso", "canal": "email"}
+{"texto": "esquenta demais na parte de trás, fiquei com medo de pegar fogo", "categoria": "defeito", "tom": "irritado", "canal": "chat"}
+{"texto": "Paguei pelo Pix ontem e o pedido ainda aparece como aguardando pagamento.", "categoria": "cobranca", "tom": "educado", "canal": "chat"}
+{"texto": "a caixa chegou toda amassada e molhada, o entregador largou no portão na chuva", "categoria": "entrega", "tom": "irritado", "canal": "chat"}
+{"texto": "O purificador parou de ligar depois de 5 dias", "categoria": "defeito", "tom": "educado", "canal": "chat", "plantado": "cópia do treino"}
+{"texto": "O aplicativo mostra dois endereços diferentes no meu pedido. Para qual deles vai?", "categoria": "entrega", "tom": "confuso", "canal": "email"}
+{"texto": "Posso usar o refil de outra marca no meu aparelho?", "categoria": "duvida", "tom": "educado", "canal": "whatsapp"}
+{"texto": "Qual transportadora vocês usam para o interior de Minas e quanto tempo costuma levar?", "categoria": "entrega", "tom": "educado", "canal": "chat"}
+{"texto": "Com que frequência devo trocar o refil se moro numa cidade com água muito dura?", "categoria": "duvida", "tom": "educado", "canal": "email"}
+{"texto": "Comprei agora e não sei se preciso deixar a água correr antes de beber. Tem alguma recomendação?", "categoria": "duvida", "tom": "confuso", "canal": "email"}
+{"texto": "Bom dia. O rastreio indica 'entregue', mas eu não recebi nada e ninguém aqui em casa assinou.", "categoria": "entrega", "tom": "educado", "canal": "email"}
+{"texto": "o código de rastreio que vocês mandaram não funciona no site da transportadora!!", "categoria": "entrega", "tom": "confuso", "canal": "chat", "plantado": "quase duplicata"}
+{"texto": "Vou viajar semana que vem. É possível agendar a entrega para depois do dia 20?", "categoria": "entrega", "tom": "educado", "canal": "chat"}
+{"texto": "não entendi esse débito de 39,90 no meu cartão, eu nem lembro de ter assinado nada", "categoria": "cobranca", "tom": "confuso", "canal": "chat"}
+{"texto": "a luz vermelha fica piscando sem parar, o manual não fala nada disso", "categoria": "defeito", "tom": "confuso", "canal": "whatsapp"}
+{"texto": "meu cartão foi recusado 3x mas a cobrança apareceu 3x na fatura!!", "categoria": "cobranca", "tom": "irritado", "canal": "whatsapp"}
+{"texto": "Cancelei o plano há dois meses e vocês continuam descontando do meu cartão. Exijo o reembolso.", "categoria": "cobranca", "tom": "irritado", "canal": "email"}
+{"texto": "a tampa não encaixa de jeito nenhum, veio com a trava quebrada", "categoria": "defeito", "tom": "irritado", "canal": "whatsapp"}
+{"texto": "gente??? me cobraram o frete e na compra tava escrito frete grátis, quero meu dinheiro de volta", "categoria": "cobranca", "tom": "irritado", "canal": "whatsapp"}
+{"texto": "Vi duas transações iguais no extrato do banco referentes à mesma compra", "categoria": "cobranca", "tom": "educado", "canal": "chat", "plantado": "contaminação dos chamados novos"}
+{"texto": "recebi só uma das duas caixas, a outra vem depois ou se perdeu?", "categoria": "entrega", "tom": "confuso", "canal": "chat"}
+{"texto": "gente??? me cobraram o frete e na compra tava escrito frete grátis, quero meu dinheiro de volta", "categoria": "cobranca", "tom": "irritado", "canal": "whatsapp", "plantado": "duplicata exata"}
+{"texto": "tem como desligar o bipe que toca toda vez que eu pego água?", "categoria": "duvida", "tom": "confuso", "canal": "whatsapp"}
+{"texto": "o certificado do inmetro vem junto ou tem que pedir?", "categoria": "duvida", "tom": "confuso", "canal": "chat"}
+{"texto": "nao aceito pagar juros de atraso, o boleto chegou depois do vencimento", "categoria": "cobranca", "tom": "irritado", "canal": "chat"}
+{"texto": "Oi! O reembolso da devolução já foi aprovado há 15 dias e ainda não caiu no meu cartão.", "categoria": "cobranca", "tom": "educado", "canal": "whatsapp"}
+{"texto": "a água tá saindo bem mais devagar que antes, entupiu?", "categoria": "defeito", "tom": "confuso", "canal": "chat"}
+{"texto": "Vocês entregam em zona rural? Meu CEP não é aceito no site.", "categoria": "entrega", "tom": "educado", "canal": "whatsapp"}
+{"texto": "A torneira do equipamento veio rachada. Tenho as fotos, para onde envio?", "categoria": "defeito", "tom": "educado", "canal": "chat", "plantado": "quase duplicata"}
+{"texto": "A torneira do equipamento veio rachada. Tenho fotos, para onde envio?", "categoria": "defeito", "tom": "educado", "canal": "chat"}
+{"texto": "Qual a diferença entre o modelo compacto e o modelo com água gelada?", "categoria": "duvida", "tom": "educado", "canal": "chat"}
+{"texto": "tá vazando água por baixo, é defeito ou eu montei errado?", "categoria": "defeito", "tom": "confuso", "canal": "chat"}
+{"texto": "o produto chegou quebrado", "categoria": "entrega", "tom": "confuso", "canal": "chat", "plantado": "rótulo errado"}
+{"texto": "A água gelada deixou de gelar depois de um mês de uso.", "categoria": "defeito", "tom": "educado", "canal": "email"}
+{"texto": "Recebi um e-mail de cobrança de um pedido que eu cancelei antes do envio. Ainda preciso pagar?", "categoria": "cobranca", "tom": "confuso", "canal": "email"}
+{"texto": "Preciso de entrega expressa para sexta-feira. Existe essa opção e quanto custa?", "categoria": "entrega", "tom": "educado", "canal": "email"}
+{"texto": "O display do purificador acende, mas os botões não respondem ao toque. Como proceder com a garantia?", "categoria": "defeito", "tom": "educado", "canal": "email"}
+{"texto": "Quero o estorno da cobrança de R$ 88,10", "categoria": "cobranca", "tom": "educado", "canal": "chat", "plantado": "cópia do treino"}
+{"texto": "Boa tarde. Percebi que o boleto deste mês veio com um valor maior do que o combinado na assinatura. Poderiam conferir, por favor?", "categoria": "cobranca", "tom": "educado", "canal": "email"}
+{"texto": "apareceu uma taxa de serviço que eu não sabia que existia, o que é isso?", "categoria": "cobranca", "tom": "confuso", "canal": "chat"}
+{"texto": "dá pra instalar na parede ou só em cima da bancada?", "categoria": "duvida", "tom": "confuso", "canal": "chat"}
+{"texto": "sai uma espuma branca da água no começo, é normal ou o filtro tá com problema?", "categoria": "defeito", "tom": "confuso", "canal": "whatsapp"}
+{"texto": "já passou do prazo e a encomenda não saiu de Cajamar, alguém me explica?", "categoria": "entrega", "tom": "irritado", "canal": "whatsapp"}
+{"texto": "Quero mudar o endereço de entrega do pedido 12345", "categoria": "entrega", "tom": "educado", "canal": "chat", "plantado": "contaminação do teste"}
+{"texto": "o motoboy disse que não achou o número da casa, mas o endereço tá completo no pedido", "categoria": "entrega", "tom": "irritado", "canal": "chat"}

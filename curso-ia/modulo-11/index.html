@@ -16,7 +16,7 @@
   <a class="brand" href="/">◈ TRIADIC.LIFE</a>
   <span class="crumbs">/ <a href="../">Engenharia de IA</a> / Módulo 11</span>
   <span class="spacer"></span>
-  <span class="progress-pill">0/9 aulas</span>
+  <span class="progress-pill">0/11 aulas</span>
 </header>
 <div class="layout">
   <aside class="toc">
@@ -31,6 +31,8 @@
       <li><a href="#aula-5"><span class="chk"></span>11.5 LoRA e QLoRA</a></li>
       <li><a href="#aula-6"><span class="chk"></span>11.6 Destilação e cascata</a></li>
       <li><a href="#aula-7"><span class="chk"></span>11.7 Avaliar e versionar modelos</a></li>
+      <li><a href="#aula-8"><span class="chk"></span>11.8 Dados sintéticos</a></li>
+      <li><a href="#aula-9"><span class="chk"></span>11.9 Servir em produção</a></li>
       <li><a href="#projeto"><span class="chk"></span>Projeto do módulo</a></li>
       <li><a href="#recursos"><span class="chk"></span>Recursos</a></li>
     </ol></nav>
@@ -91,7 +93,7 @@ python 01_preparar_dataset.py &amp;&amp; python 02_lora_do_zero.py &amp;&amp; py
         <li><strong>Famílias de pesos abertos:</strong> Llama, Qwen, Mistral, Gemma, DeepSeek e outras, de menos de 1 bilhão a centenas de bilhões de parâmetros. Compare pelo seu eval, não pelo ranking.</li>
         <li><strong>Licenças:</strong> "aberto" nem sempre é livre para uso comercial; algumas licenças limitam escala de usuários ou usos. Leia antes de construir em cima.</li>
         <li><strong>Quantização:</strong> guardar pesos em 8 ou 4 bits em vez de 16 reduz memória (um modelo de 7B cai de ~14 GB para ~4 GB) com perda pequena de qualidade, a ser medida.</li>
-        <li><strong>Para rodar:</strong> Ollama e llama.cpp (notebook e desenvolvimento), vLLM e servidores de inferência (produção, alto volume, GPUs).</li>
+        <li><strong>Para rodar:</strong> Ollama e llama.cpp (notebook e desenvolvimento), vLLM e servidores de inferência (produção, alto volume, GPUs; veja a aula 11.9).</li>
       </ul>
 <pre data-lang="bash"><code># Ollama: baixar e rodar um modelo pequeno localmente
 ollama pull qwen2.5:3b
@@ -245,6 +247,101 @@ CASCATA nos chamados novos: o aluno responde se estiver confiante; senão, o pro
         <li><strong>Regressões em outras capacidades:</strong> o ajuste pode piorar o que o modelo fazia bem (esquecimento). Mantenha alguns casos gerais no eval.</li>
         <li><strong>Versione tudo junto:</strong> dataset (com hash), código de preparação, hiperparâmetros, modelo base, adaptador e resultado do eval. Sem isso, não dá para reproduzir nem fazer rollback.</li>
         <li><strong>Lance como qualquer mudança de modelo:</strong> canário pelo gateway (Módulo 9), monitoramento e caminho de volta.</li>
+      </ul>
+    </section>
+
+    <section class="lesson" id="aula-8">
+      <h2>11.8 Dados sintéticos: gerar, filtrar e provar</h2>
+      <div class="lesson-meta">Leitura + lab · 4h</div>
+      <p>
+        Faltam exemplos? Um modelo grande pode escrever milhares. O risco não é a falta de volume, é o lixo:
+        duplicatas, cópias do treino, rótulos errados e, o pior, exemplos parecidos com a avaliação, que fazem
+        a nota subir sem o modelo melhorar. O lab gera, filtra e mede o efeito no aluno do Lab 11.6, que cai de
+        100% para 40% nos chamados escritos de outro jeito.
+      </p>
+<pre data-lang="bash"><code>python 05_dados_sinteticos.py          # usa um conjunto pronto, com problemas plantados
+python 05_dados_sinteticos.py --api    # o claude-opus-5-5 gera (36 lotes: categoria × tom × canal) e julga</code></pre>
+<pre data-lang="saída · trecho"><code>Filtros:
+  ✗ duplicata                       sim=1.00  «gente??? me cobraram o frete…»   [plantado: duplicata exata]
+  ✗ cópia do treino                 sim=1.00  «O purificador parou de ligar…»   [plantado: cópia do treino]
+  ✗ contaminação                    sim=0.69  «o código de rastreio que vocês mandaram não f…»
+  ✗ contaminação                    sim=1.00  «Vi duas transações iguais no extrato…»  [plantado]
+  ? rótulo contestado pelo aluno (revisar): 2
+Problemas plantados pegos pelos filtros: 8/9
+Diversidade (bigramas distintos / total): treino 0.12 · sintéticos 0.92
+
+  treino usado                               teste  chamados novos
+  só reais                                    100%             40%
+  reais + sintéticos filtrados                100%             50%
+  reais + sintéticos SEM filtro               100%             55%</code></pre>
+      <ul>
+        <li><strong>Sem filtro parece melhor, e é mentira.</strong> O script mostra de onde vem cada ganho: o ponto extra sem filtro é exatamente o chamado da avaliação que vazou para o treino.</li>
+        <li><strong>Contaminação acontece sem querer.</strong> O conjunto pronto foi escrito pelo Claude que montou este curso, sem consultar os chamados novos. Mesmo assim, uma das frases dele ("o código de rastreio que vocês mandaram não funciona…") era quase igual a um chamado da avaliação. Geradores escrevem frases naturais, e avaliações também: o filtro é obrigatório.</li>
+        <li><strong>Filtro por palavras tem limite.</strong> Um dos ganhos ("O controle remoto não funciona de jeito nenhum") tem um sintético parecido em sentido, mas não em palavras (similaridade 0,25), que o filtro deixou passar; e uma quase duplicata plantada escapou. Em produção, combine palavras com embeddings (Módulo 4) e revise uma amostra à mão.</li>
+        <li><strong>O ganho real é pequeno e precisa ser lido caso a caso</strong>: com 20 chamados de avaliação, cada um vale 5 pontos. Os outros três ganhos não têm sintético parecido: o aluno aprendeu vocabulário novo. Um chamado que ele acertava passou a errar.</li>
+      </ul>
+      <h3>Receita</h3>
+      <ol>
+        <li>Varie de propósito: categorias × tom × canal × tamanho, com sementes reais mostradas como tema, nunca para copiar.</li>
+        <li>Deduplique dentro do lote e contra o treino; números e nomes viram marcadores antes de comparar.</li>
+        <li>Separe a avaliação <em>antes</em> de gerar e remova tudo que se pareça com ela.</li>
+        <li>Revise rótulos: um juiz (outro modelo ou o mesmo com outra instrução) e amostra humana.</li>
+        <li>Meça o efeito numa avaliação fora da distribuição, caso a caso.</li>
+      </ol>
+      <p>Licenças: confira se os termos do provedor permitem usar as saídas para treinar o modelo que você vai usar.</p>
+    </section>
+
+    <section class="lesson" id="aula-9">
+      <h2>11.9 Servir modelos abertos em produção</h2>
+      <div class="lesson-meta">Leitura + lab · 4h</div>
+      <p>
+        Rodar um modelo no notebook com o Ollama é um passo; servir para muitos usuários é outro. Servidores
+        de inferência como <strong>vLLM</strong>, <strong>TGI</strong> e <strong>llama.cpp</strong> (llama-server)
+        usam <em>lote contínuo</em>: a cada passo, geram um token para todas as conversas ativas juntas. Isso
+        multiplica a vazão e muda as contas de capacidade.
+      </p>
+      <h3>Parte 1 · Quanto de GPU</h3>
+<pre data-lang="saída · trecho"><code>KV cache por token (16 bits):
+  Qwen2.5 7B           56 KiB/token · uma conversa de 8.000 tokens = 0.43 GiB
+  Llama 3.1 8B        128 KiB/token · uma conversa de 8.000 tokens = 0.98 GiB
+  Llama 3.1 70B       320 KiB/token · uma conversa de 8.000 tokens = 2.44 GiB
+
+Conversas simultâneas com 8.000 tokens (— = não cabe):
+  modelo          precisão           L4 24 GB       L40S 48 GB  A100/H100 80 GB
+  Qwen2.5 7B      16 bits                   8               50              106
+  Llama 3.1 8B    16 bits                   3               21               45
+  Llama 3.1 8B    4 bits                   14               32               57
+  Llama 3.1 70B   4 bits                    —                1               10</code></pre>
+      <ul>
+        <li>Os pesos definem se o modelo cabe; o <strong>KV cache</strong> define quantas conversas cabem. Ele cresce com o contexto e com o número de usuários.</li>
+        <li>O Qwen2.5 7B guarda metade das cabeças de atenção no cache em relação ao Llama 3.1 8B (4 contra 8, atenção agrupada) e, por isso, comporta mais que o dobro de conversas na mesma GPU.</li>
+        <li>É uma estimativa de ordem de grandeza: confira a arquitetura no <code>config.json</code> do modelo e meça no servidor real.</li>
+      </ul>
+      <h3>Parte 2 · Teste de carga</h3>
+<pre data-lang="bash"><code>python servidor_simulado.py &amp;                           # sem GPU: imita o lote contínuo
+python 07_teste_de_carga.py
+# servidor real (vLLM, llama-server ou Ollama):
+python 07_teste_de_carga.py --url http://localhost:8000/v1 --modelo Qwen/Qwen2.5-7B-Instruct</code></pre>
+<pre data-lang="saída · servidor simulado"><code> simult.  TTFT p50  TTFT p95  ITL p50  lat p50  lat p95  vazão tok/s  erros
+       1      19ms      22ms     13ms     1.6s     1.7s           78      0
+       4      34ms      37ms     15ms     1.9s     1.9s          270      0
+      16      84ms      90ms     22ms     2.9s     2.9s          712      0
+      32     154ms     164ms     32ms     4.2s     4.2s          975      0
+      64    4329ms    4339ms     32ms     8.4s     8.4s          978      0</code></pre>
+      <p>
+        Os números vêm de um servidor <strong>simulado</strong> (lote máximo de 32), não de uma GPU, mas a forma
+        das curvas é a de um servidor real: a vazão total sobe até o lote encher (78 → 975 tokens/s), enquanto
+        cada usuário vê o texto sair mais devagar (ITL de 13 para 32 ms). Passando do limite, a vazão para de
+        crescer e as conversas esperam na fila: o TTFT salta para mais de 4 segundos. O ponto de operação é a
+        maior concorrência em que o p95 ainda cumpre o seu SLO.
+      </p>
+      <div class="callout"><b>O teste de carga achou um bug</b>Na primeira rodada, o servidor simulado recusava conexões a partir de 16 usuários e o TTFT p95 saltava para 1 segundo: a fila de conexões padrão do servidor HTTP do Python tem só 5 lugares, e o cliente esperava a retransmissão do TCP. Problemas assim só aparecem sob carga, e é por isso que se testa antes de lançar.</div>
+      <h3>Escolhas de produção</h3>
+      <ul>
+        <li><strong>vLLM</strong> para vazão em GPU NVIDIA ou AMD, com API compatível com a da OpenAI; <strong>TGI</strong> e <strong>SGLang</strong> são alternativas a comparar com o seu modelo e hardware; <strong>llama.cpp</strong> para CPU, Apple Silicon e GPUs pequenas; <strong>Ollama</strong> para desenvolvimento.</li>
+        <li>Quantização (AWQ, GPTQ, FP8) libera memória para mais conversas; meça a qualidade com as evals do Módulo 3 antes de adotar.</li>
+        <li>Coloque o servidor atrás do gateway do Módulo 9: limites, reserva para outro provedor e custo por requisição continuam valendo.</li>
+        <li>Compare o custo por milhão de tokens da GPU (preço da hora ÷ vazão medida no seu SLO) com o de uma API antes de decidir hospedar.</li>
       </ul>
     </section>
 

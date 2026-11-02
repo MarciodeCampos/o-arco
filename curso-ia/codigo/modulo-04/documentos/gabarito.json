@@ -1,0 +1,59 @@
+{
+  "relatorio_tabela.pdf": {
+    "tipo": "tabela",
+    "linhas": [
+      [
+        "Plano Básico",
+        "1.240",
+        "1.315",
+        "1.402"
+      ],
+      [
+        "Plano Família (até 4 telas)",
+        "2.875",
+        "2.910",
+        "3.064"
+      ],
+      [
+        "Plano Empresas",
+        "418",
+        "455",
+        "497"
+      ],
+      [
+        "Cancelamentos",
+        "-96",
+        "-120",
+        "-88"
+      ],
+      [
+        "Total",
+        "4.437",
+        "4.560",
+        "4.875"
+      ]
+    ]
+  },
+  "boletim_duas_colunas.pdf": {
+    "tipo": "ordem",
+    "frases": [
+      "A nova central de atendimento passou a funcionar em março, com horário estendido até as 22 horas nos dias úteis.",
+      "O tempo médio de espera caiu de onze para quatro minutos depois da mudança, segundo a equipe de operações.",
+      "Clientes do plano empresarial agora têm um canal exclusivo, com retorno garantido em até duas horas.",
+      "A manutenção da rede no bairro Jardim Botânico está prevista para o dia 14, entre uma e cinco da manhã.",
+      "Durante a janela, a conexão pode oscilar, mas não haverá cobrança proporcional pela interrupção.",
+      "Quem trabalha em turno noturno pode pedir um modem reserva pelo aplicativo até o dia 12."
+    ]
+  },
+  "contrato_escaneado.pdf": {
+    "tipo": "campos",
+    "campos": {
+      "numero": "2026/0417",
+      "contratante": "Fernanda Ribeiro Duarte",
+      "cpf": "123.456.789-09",
+      "valor_mensal": "R$ 149,90",
+      "inicio_fidelidade": "05/03/2026",
+      "cidade": "Belo Horizonte"
+    }
+  }
+}
