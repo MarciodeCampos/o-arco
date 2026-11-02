@@ -31,6 +31,7 @@ Depois abra o Claude Code (`claude`) e digite:
 | `/autonomo:diagnostico` | Mostra o que está instalado e o que falta, sem alterar nada |
 | `/autonomo:configurar-autonomia` | Escolhe e aplica o nível de autonomia (0 a 3), com backup e validação |
 | `/autonomo:verificar-barreiras` | Prova com testes inofensivos que segredos e ações destrutivas estão bloqueados |
+| `/autonomo:ideias` | Conversa sobre o seu ramo de atividade, sugere ferramentas e sistemas que podem melhorar o negócio e transforma a ideia escolhida em requisitos |
 | `/autonomo:novo-projeto` | Cria um projeto com git, testes, proteção de segredos, GitHub e CI, e desenvolve a primeira versão |
 | `/autonomo:mapear-projetos` | Encontra os projetos que você já tem no computador e no GitHub, onde estão publicados e como se conectam, e gera o `projetos.json` |
 | `/autonomo:central` | Transforma a pasta do `projetos.json` numa central: painel de todos os projetos, trabalhar em qualquer um pelo nome e preparar cada um para trabalho quase autônomo |
@@ -57,10 +58,10 @@ Os limites conhecidos estão em [`skills/niveis/SKILL.md`](skills/niveis/SKILL.m
 autonomo/
 ├── .claude-plugin/plugin.json
 └── skills/
-    ├── comecar, diagnostico, configurar-autonomia, verificar-barreiras, novo-projeto, implantar,
-    │   mapear-projetos, central, skills-recomendadas
+    ├── comecar, diagnostico, configurar-autonomia, verificar-barreiras, ideias, novo-projeto,
+    │   implantar, mapear-projetos, central, skills-recomendadas
     │                comandos que a pessoa usa (/autonomo:...)
-    └── como-ensinar, links, niveis, modelos
+    └── como-ensinar, links, niveis, modelos, ideias-por-segmento
                      referências que o Claude carrega pela ferramenta Skill (não aparecem no menu)
 ```
 

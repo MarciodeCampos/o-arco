@@ -21,7 +21,8 @@ Explique em até quatro frases:
 
 Pergunte (AskUserQuestion) o que ela quer fazer primeiro, com opções como: **organizar e evoluir
 projetos que já tenho**; um site ou página pessoal; um aplicativo web; automatizar uma tarefa
-repetitiva (planilhas, arquivos, e-mails); ainda não sei, quero aprender. Pergunte também, em outra questão, quanta experiência ela tem: nunca
+repetitiva (planilhas, arquivos, e-mails); **descobrir o que a tecnologia pode fazer pelo meu
+negócio**; ainda não sei, quero aprender. Pergunte também, em outra questão, quanta experiência ela tem: nunca
 programei; já programei um pouco; sou desenvolvedor. Guarde as respostas: elas definem o
 {{PERFIL}} do CLAUDE.md e o projeto da etapa 5.
 
@@ -67,6 +68,10 @@ Se na etapa 1 ela disse que já tem projetos, comece pela skill `autonomo:mapear
 (ferramenta Skill): ela encontra os projetos no computador e no GitHub e gera o `projetos.json`.
 Depois, pergunte o que ela quer fazer com eles (por exemplo, uma página que mostra o mapa, ou
 colocar testes e proteção de segredos num deles) e siga a skill adequada.
+
+Se ela escolheu descobrir o que a tecnologia pode fazer pelo negócio, ou não sabe o que construir,
+carregue e siga a skill `autonomo:ideias` (ferramenta Skill): ela conversa sobre o ramo, sugere
+ideias e termina com os requisitos de uma delas, que viram o primeiro projeto.
 
 Caso contrário, carregue e siga a skill `autonomo:novo-projeto` (ferramenta Skill) com o objetivo
 escolhido na etapa 1. Para quem nunca programou, escolha algo que dá para ver funcionando no

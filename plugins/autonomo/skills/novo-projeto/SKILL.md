@@ -11,6 +11,9 @@ Nunca leia arquivos do plugin com Read.
 Ideia recebida (pode estar vazia): $ARGUMENTS
 
 ## 1. Entender a ideia
+Se já existem requisitos escritos pela skill `autonomo:ideias` (um arquivo `requisitos-*.md` indicado
+pela pessoa ou mostrado nesta conversa), use a "Primeira versão" e o "Critério de pronto" deles e não
+pergunte de novo. Se a pessoa não sabe o que construir, ofereça a skill `autonomo:ideias`.
 Se a ideia não veio, pergunte em linguagem simples: o que ela quer que exista, para quem, e como vai
 saber que funcionou. Transforme a resposta em:
 - **Primeira versão** (o mínimo que já é útil), em até 5 itens;
