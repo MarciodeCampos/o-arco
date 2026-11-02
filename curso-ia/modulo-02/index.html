@@ -708,7 +708,7 @@ class ExtratorModeloLocal implements ExtratorDeRecibos { /* servidor local */ }<
     <!-- ============================================================ PROJETO -->
     <section class="lesson" id="projeto">
       <h2>Projeto do módulo: extrator de recibos</h2>
-      <div class="lesson-meta">Projeto · 8–10h · TypeScript</div>
+      <div class="lesson-meta">Projeto · com código 8–10h · com agentes 5–6h</div>
 
       <p>
         Um sistema que lê notas e cupons fiscais em texto (como os que saem de um OCR), devolve dados
@@ -716,12 +716,49 @@ class ExtratorModeloLocal implements ExtratorDeRecibos { /* servidor local */ }<
         validação falha e gera um relatório de qualidade e custo. É o padrão de quase toda automação
         séria com LLM: <em>extrair → validar → corrigir → revisar humano quando necessário</em>.
       </p>
+      <p>
+        Este projeto existe nas duas trilhas. O objetivo, o critério de pronto e os recibos são os mesmos; muda
+        quem escreve o código. Na trilha <strong>com código</strong>, você escreve. Na trilha <strong>com agentes</strong>,
+        o Claude escreve e você decide, confere e aprende como o problema se resolve (veja o
+        <a href="../pre-03/">P3</a>).
+      </p>
 
+      <div class="objetivo-comum">
+        <b>Objetivo e critério de pronto (iguais nas duas trilhas)</b>
+        <p>Para cada recibo da pasta <code>recibos/</code>, devolver emitente e CNPJ, data, itens, desconto, acréscimo, total e forma de pagamento. Está pronto quando:</p>
+        <ol>
+          <li>Padaria, farmácia e restaurante passam em todas as regras: CNPJ válido, data válida e não futura, quantidade × preço de cada item e soma dos itens − desconto + acréscimo = total.</li>
+          <li>O recibo do mercado, cuja soma não fecha na própria nota, sai com os valores <em>impressos</em> e <code>confianca: "baixa"</code>, para revisão humana. Ajustar os números para a conta fechar é erro.</li>
+          <li>As regras de conferência têm testes automáticos, e eles passam sem chamar a API.</li>
+          <li>O custo por recibo é conhecido, e há uma recomendação de modelo para 10 mil recibos por mês, justificada com números.</li>
+        </ol>
+      </div>
+
+      <h3>Os recibos de exemplo</h3>
+      <ul>
+        <li><code>01-padaria.txt</code> e <code>02-farmacia.txt</code>: limpos; o segundo tem desconto.</li>
+        <li><code>03-mercado-foto.txt</code>: simula OCR de foto, com letras trocadas por números (<code>OOO1</code>, <code>1O/2026</code>), e <strong>uma soma que não fecha</strong> na própria nota.</li>
+        <li><code>04-restaurante.txt</code>: tem taxa de serviço (acréscimo).</li>
+      </ul>
+      <p>
+        <strong>Por que o mercado importa:</strong> padaria, farmácia e restaurante devem passar na validação. No recibo do
+        mercado, a regra de soma deve disparar; o modelo recebe o problema, relê a nota e, seguindo as
+        instruções, mantém os valores impressos com <code>confianca: "baixa"</code>, em vez de "ajeitar" os
+        números para a conta fechar. É exatamente o comportamento que você quer num sistema contábil: o caso
+        vai para revisão humana.
+      </p>
+
+
+      <div class="seletor-trilha"></div>
+
+      <div class="trilha-bloco" data-trilha="codigo">
+      <h3>Trilha com código</h3>
 <pre data-lang="bash"><code>cd projeto
 npm install
 npm test                      # testes das regras de validação e custo (não chamam a API)
 npm run extrair               # processa recibos/*.txt
 npm run extrair -- --modelo claude-haiku-5-5</code></pre>
+
 
       <h3>Arquitetura</h3>
       <table>
@@ -733,20 +770,6 @@ npm run extrair -- --modelo claude-haiku-5-5</code></pre>
         <tr><td><code>src/cli.ts</code></td><td>Processa a pasta, grava <code>saida/*.json</code> e imprime o relatório</td></tr>
         <tr><td><code>test/</code></td><td>14 testes com <code>node:test</code>, que rodam sem chave de API</td></tr>
       </table>
-
-      <h3>Os recibos de exemplo</h3>
-      <ul>
-        <li><code>01-padaria.txt</code> e <code>02-farmacia.txt</code>: limpos; o segundo tem desconto.</li>
-        <li><code>03-mercado-foto.txt</code>: simula OCR de foto, com letras trocadas por números (<code>OOO1</code>, <code>1O/2026</code>), e <strong>uma soma que não fecha</strong> na própria nota.</li>
-        <li><code>04-restaurante.txt</code>: tem taxa de serviço (acréscimo).</li>
-      </ul>
-      <p>
-        <strong>O que esperar:</strong> padaria, farmácia e restaurante devem passar na validação. No recibo do
-        mercado, a regra de soma deve disparar; o modelo recebe o problema, relê a nota e, seguindo as
-        instruções, mantém os valores impressos com <code>confianca: "baixa"</code>, em vez de "ajeitar" os
-        números para a conta fechar. É exatamente o comportamento que você quer num sistema contábil: o caso
-        vai para revisão humana.
-      </p>
 
       <h3>Entregáveis</h3>
       <ol>
@@ -766,6 +789,99 @@ npm run extrair -- --modelo claude-haiku-5-5</code></pre>
         <tr><td>Comparação de modelos com números reais</td><td>20%</td></tr>
         <tr><td>README e recomendação justificada</td><td>15%</td></tr>
       </table>
+      </div>
+
+      <div class="trilha-bloco" data-trilha="agentes">
+      <h3>Trilha com agentes</h3>
+      <p>
+        Você vai conduzir o Claude Code até o mesmo resultado, sem escrever código, em cinco momentos (P3.7).
+        Antes de começar: Claude Code configurado com o plugin <a href="../autonomo/">autonomo</a> e a variável
+        <code>ANTHROPIC_API_KEY</code> definida (Módulo 1, Passo 1).
+      </p>
+
+      <h4>Momento 1 · O problema, antes de ver a solução</h4>
+      <p>Leia o objetivo e os recibos acima. Escreva, em cinco linhas, como você acha que um programa resolveria isso. Onde ele pode errar? Guarde: você vai comparar no fim.</p>
+
+      <h4>Momento 2 · A resolução comentada</h4>
+      <p>Crie o projeto e entregue o pedido. No Claude Code:</p>
+<pre data-lang="pedido"><code>/autonomo:novo-projeto extrator-de-recibos
+
+Copie os 4 recibos de curso-ia/codigo/modulo-02/projeto/recibos do repositório
+MarciodeCampos/o-arco para a pasta recibos/ deste projeto.
+
+Quero: um programa que leia cada recibo da pasta recibos/ e devolva emitente com CNPJ,
+data, itens (quantidade, preço unitário, total), desconto, acréscimo, total e pagamento.
+Para: conferir recibos sem digitar nada à mão.
+Pronto quando:
+  1. Padaria, farmácia e restaurante passam nas regras: CNPJ válido, data válida e não
+     futura, quantidade × preço de cada item, e itens − desconto + acréscimo = total.
+  2. O recibo do mercado, cuja soma não fecha na própria nota, sai com os valores
+     impressos e confiança baixa, para revisão humana. Não ajuste os números.
+  3. As regras de conferência têm testes automáticos que rodam sem chamar a API.
+  4. Você me mostra o custo por recibo.
+Não pode: ler ou mostrar a chave de API (ela já está em ANTHROPIC_API_KEY).
+Antes de cada etapa importante, me mostre o que propõe, por quê, as alternativas e o
+risco, e espere minha autorização. Narre cada decisão; eu estou aprendendo como se resolve.</code></pre>
+      <p>
+        A seguir, o roteiro do que costuma acontecer, com os <strong>pontos de previsão</strong> (◆). Em cada um,
+        pare e escreva o que você acha que vem a seguir antes de autorizar. O Claude pode propor em outra ordem
+        ou com outros nomes; o que importa são as decisões.
+      </p>
+      <ol>
+        <li><strong>Linguagem e estrutura.</strong> O Claude propõe TypeScript ou Python e uma pasta com o código, os testes e os recibos. Decisão de baixo risco: autorize.</li>
+        <li><strong>◆ Como garantir que a resposta venha no formato certo?</strong> Ele deve propor <em>saída estruturada</em>: um esquema com os campos e os tipos, que a API obriga o modelo a seguir. A alternativa ingênua é pedir "responda em JSON" e torcer.</li>
+        <li><strong>◆ Onde ficam as regras da conta?</strong> Esta é a decisão central do projeto. O Claude deve propor conferir CNPJ, data e somas <em>no código</em>, depois da resposta do modelo, e não só pedir ao modelo para conferir. O modelo pode devolver um JSON perfeito com a conta errada; o código não erra uma soma.</li>
+        <li><strong>Os testes das regras.</strong> Antes de chamar a API, ele escreve testes com recibos inventados: um certo, um com CNPJ inválido, um com soma errada. Peça para ver um teste falhando de propósito (P3.4).</li>
+        <li><strong>◆ O que fazer quando a regra falha?</strong> Ele deve propor devolver os problemas ao modelo <em>uma vez</em>, para que releia a nota. Se ainda não fechar, o recibo vai para revisão humana com confiança baixa. Tentar indefinidamente gasta dinheiro e pode empurrar o modelo a inventar números.</li>
+        <li><strong>A primeira execução.</strong> Aqui o programa chama a API: o Claude pede autorização, porque gasta créditos (centavos). Peça o resultado em tabela: recibo, passou nas regras, confiança, observações.</li>
+        <li><strong>◆ Qual modelo usar em produção?</strong> Ele propõe rodar com dois modelos (um maior e um menor) e comparar taxa de aprovação, tempo e custo por recibo. Bom momento para pedir uma segunda opinião (P3.6) sobre a recomendação.</li>
+      </ol>
+
+      <h4>Momento 3 · Por quê</h4>
+      <p>Responda com as suas palavras, sem consultar o Claude. Depois peça a ele para corrigir as suas respostas.</p>
+      <ol>
+        <li>Por que as regras da conta ficam no código e não no pedido ao modelo?</li>
+        <li>Por que o recibo do mercado <em>deve</em> sair com confiança baixa, mesmo que o modelo consiga "consertar" o total?</li>
+        <li>Por que os testes das regras não chamam a API?</li>
+        <li>Por que devolver o problema ao modelo só uma vez?</li>
+      </ol>
+
+      <h4>Momento 4 · Ache o erro</h4>
+      <p>Outra pessoa conduziu o mesmo projeto e entregou este relatório, com todos os testes passando. Há um erro grave. Qual é, e como você percebeu?</p>
+<pre data-lang="saída"><code>recibo               regras   confiança   observações
+01-padaria           ok       alta
+02-farmacia          ok       alta        desconto de 10% aplicado
+03-mercado-foto      ok       alta        total corrigido de 89,11 para 82,11 para fechar a soma
+04-restaurante       ok       alta        taxa de serviço de 10%
+
+4 de 4 aprovados · custo médio US$ 0,0031 por recibo</code></pre>
+      <details class="units"><summary>Ver a resposta</summary>
+        <p>O mercado foi "aprovado" porque o total impresso foi trocado para a conta fechar. Num sistema contábil isso esconde um problema da nota original: o recibo deveria ir para revisão humana com confiança baixa e os valores impressos. Pistas: a observação "corrigido para fechar a soma" e um 4 de 4 num conjunto que tem, de propósito, um recibo com erro. Testes passando não provam nada se nenhum teste confere esse caso: o que faltou foi um teste com um recibo cuja soma não fecha.</p>
+      </details>
+
+      <h4>Momento 5 · Variação</h4>
+      <p>Agora é você quem conduz, só com pedidos e autorizações. A mudança: <strong>recibos com data de mais de 5 anos são suspeitos e devem ir para revisão</strong>. Crie um quinto recibo com data antiga (copie um dos quatro e mude a data). Pronto quando o recibo antigo sai com confiança baixa, os outros quatro continuam como antes, e existe um teste novo para a regra que você viu falhar e depois passar. Registre as decisões no <code>DECISOES.md</code>.</p>
+
+      <h3>Entregáveis</h3>
+      <ol>
+        <li>O projeto no seu GitHub, feito pelo Claude, com os testes passando.</li>
+        <li>Seis recibos seus (anonimizados), incluindo pelo menos um com erro proposital.</li>
+        <li>O <code>DECISOES.md</code> com pelo menos cinco decisões, cada uma com o seu porquê, e uma delas com segunda opinião.</li>
+        <li>Suas respostas dos momentos 1, 3 e 4, e o que mudou entre o que você previu no momento 1 e o que viu.</li>
+        <li>A tabela com dois modelos (taxa de aprovação, tempo e custo por recibo) e, escrita por você, a recomendação para 10 mil recibos por mês.</li>
+      </ol>
+
+      <h3>Critérios de avaliação</h3>
+      <table>
+        <tr><th>Critério</th><th>Peso</th></tr>
+        <tr><td>Resultado correto nos recibos de exemplo e nos seus, incluindo o mercado em revisão</td><td>25%</td></tr>
+        <tr><td>Registro de decisões: porquês claros, alternativas consideradas, segunda opinião usada com critério</td><td>25%</td></tr>
+        <tr><td>Explicações do momento 3 e o erro encontrado no momento 4</td><td>20%</td></tr>
+        <tr><td>Variação conduzida até o fim, com teste novo</td><td>15%</td></tr>
+        <tr><td>Recomendação de modelo justificada com os seus números</td><td>15%</td></tr>
+      </table>
+      </div>
+
       <div class="callout">
         <b>Ponte para o Módulo 3</b>
         Você vai perceber que comparar modelos olhando a saída no terminal não escala. No próximo módulo,

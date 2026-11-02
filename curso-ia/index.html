@@ -47,35 +47,31 @@
   </div>
 
   <h2>Escolha sua trilha</h2>
-  <p class="sub">O curso atende públicos diferentes. Comece pela trilha que corresponde ao que você já sabe.</p>
+  <p class="sub">Duas trilhas resolvem os mesmos problemas, com o mesmo objetivo e a mesma forma de medir o resultado. Muda quem escreve o código. Você segue uma; a outra fica disponível em cada laboratório, como opcional.</p>
   <div class="trilhas">
-    <div class="trilha">
-      <h3>Estou começando</h3>
-      <p>Nunca programou ou nunca usou o terminal.</p>
+    <div class="trilha" data-escolher-trilha="codigo">
+      <h3>Com código</h3>
+      <p><b>Para quem programa</b> ou quer aprender a programar: usa terminal, Git e uma linguagem.</p>
+      <p><b>O que você aprende:</b> a construir os sistemas com as próprias mãos, em TypeScript e Python, e a medir, proteger e operar o que construiu.</p>
+      <ol>
+        <li>Preparação: rode a do <a href="modulo-01/">Módulo 1</a> e o primeiro lab. Se travar, faça antes o <a href="pre-02/">P2</a></li>
+        <li>Módulos 1 a 4 em ordem: são a base do resto</li>
+        <li>Depois, os módulos técnicos que o seu trabalho pede, e o <a href="modulo-14/">projeto integrador</a></li>
+      </ol>
+      <p><small>Já constrói com LLMs? Faça os projetos que cobrem lacunas suas, mas não pule o <a href="modulo-03/">Módulo 3</a>: as decisões dos outros dependem dele.</small></p>
+      <a class="btn" href="#curriculo">Seguir com código</a>
+    </div>
+    <div class="trilha" data-escolher-trilha="agentes">
+      <h3>Com agentes</h3>
+      <p><b>Para quem não programa</b> e quer construir ferramentas para o próprio trabalho.</p>
+      <p><b>O que você aprende:</b> o necessário para desenvolver sem escrever código. Definir o objetivo e o que é "pronto", decidir sobre as propostas do Claude, conferir o resultado com testes e registrar por que decidiu.</p>
       <ol>
         <li><a href="pre-01/">P1 · IA sem mistério</a></li>
-        <li><a href="pre-02/">P2 · Preparação: terminal, arquivos e Git</a>, ou o plugin <a href="autonomo/">autonomo</a>, que faz isso com você</li>
-        <li>Primeiro projeto publicado (P2.6)</li>
-        <li>Só então o Módulo 1. Ele pede programação: reserve tempo para aprender o básico de Python ou TypeScript</li>
+        <li><a href="pre-02/">P2 · Preparação</a>, ou o plugin <a href="autonomo/">autonomo</a>, que faz isso com você</li>
+        <li><a href="pre-03/">P3 · Desenvolver com agentes</a>: o essencial desta trilha</li>
+        <li>Os módulos, fazendo os laboratórios na versão <em>com agentes</em>. A primeira pronta é o <a href="modulo-02/#projeto">projeto do Módulo 2</a>; as outras estão em construção</li>
       </ol>
-    </div>
-    <div class="trilha">
-      <h3>Já programo</h3>
-      <p>Usa terminal, Git e uma linguagem no dia a dia.</p>
-      <ol>
-        <li>Diagnóstico rápido: rode a preparação do <a href="modulo-01/">Módulo 1</a> e o primeiro lab</li>
-        <li>Módulos 1 a 4 em ordem: são a base do resto</li>
-        <li>Depois, os módulos técnicos que o seu trabalho pede</li>
-      </ol>
-    </div>
-    <div class="trilha">
-      <h3>Profissional experiente</h3>
-      <p>Já constrói com LLMs e quer aprofundar ou formalizar.</p>
-      <ol>
-        <li>Leia os projetos de cada módulo e faça os que cobrem lacunas suas</li>
-        <li>Não pule o <a href="modulo-03/">Módulo 3 (avaliação)</a>: as decisões dos outros dependem dele</li>
-        <li>Vá para o <a href="modulo-15/">projeto integrador</a></li>
-      </ol>
+      <a class="btn" href="pre-03/">Seguir com agentes</a>
     </div>
   </div>
   <p class="sub">No Windows, os blocos de comando dos módulos têm a versão PowerShell logo abaixo. As diferenças estão na <a href="pre-02/#aula-5">tabela de equivalências</a>.</p>
@@ -97,7 +93,7 @@
 
   <h2>Como estudar</h2>
   <ul class="sub" style="padding-left:20px">
-    <li>Siga a sua trilha (acima). Em todas, os módulos 1 a 4 são a base do resto.</li>
+    <li>Siga a sua trilha (acima). Nas duas, os módulos 1 a 4 são a base do resto.</li>
     <li>Rode cada laboratório. O código fica em <a href="https://github.com/MarciodeCampos/o-arco/tree/main/curso-ia/codigo" target="_blank" rel="noopener">curso-ia/codigo</a>.</li>
     <li>Marque as aulas como concluídas. O progresso fica salvo só neste navegador.</li>
     <li>Publique os projetos no seu GitHub: eles são o seu portfólio.</li>

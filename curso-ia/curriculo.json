@@ -393,7 +393,27 @@
       "projeto": "Computador pronto para o Módulo 1: versões conferidas, preparação do Módulo 1 rodando e um repositório seu no GitHub",
       "melhorias": [],
       "aulas": 8
+    },
+    {
+      "numero": 3,
+      "slug": "pre-03",
+      "titulo": "Desenvolver com agentes",
+      "horas": 10,
+      "status": "pronto",
+      "resumo": "O essencial da trilha com agentes, para quem não programa: o ciclo objetivo, proposta, autorização e conferência; critérios de pronto verificáveis; cartões de decisão e registro de decisões; conferir resultados sem ler código; segunda opinião com Gemini e GPT; como funcionam os laboratórios com agentes.",
+      "unidades": [
+        "O ciclo de trabalho: objetivo, proposta, autorização, conferência",
+        "Dizer aonde quer chegar e o que é \"pronto\"",
+        "Decidir sobre as propostas do Claude",
+        "Conferir o resultado sem ler código",
+        "Quando travar",
+        "Segunda opinião: Gemini e GPT na decisão",
+        "Como funcionam os laboratórios com agentes"
+      ],
+      "projeto": "O projeto do Módulo 2 (extrator de recibos) na versão com agentes, com registro de decisões",
+      "melhorias": [],
+      "aulas": 9
     }
   ],
-  "cargaHorariaPreliminares": 16
+  "cargaHorariaPreliminares": 26
 }
