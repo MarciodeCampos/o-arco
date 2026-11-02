@@ -53,7 +53,8 @@ curso-ia/
     │   ├── dados/        dataset com problemas plantados, resumos rotulados por humanos
     │   └── projeto/      suíte de evals do extrator (TypeScript, com testes e exemplo de CI)
     ├── modulo-04/
-    │   ├── python/       labs: BM25 do zero, vetores e escala
+    │   ├── python/       labs: BM25 do zero, vetores e escala, extração de documentos difíceis com nota
+    │   ├── documentos/   PDFs difíceis (tabela, duas colunas, escaneado) e gabarito
     │   └── projeto/      RAG com PGlite + pgvector, busca híbrida, citações e evals
     ├── modulo-05/
     │   ├── python/       servidor e cliente MCP, testes, servidor envenenado e verificador
@@ -77,8 +78,9 @@ curso-ia/
     │   ├── dados/        plano Terraform gerado por IA e métricas de um incidente
     │   └── projeto/      bot de ChatOps: agente SRE sobre cluster simulado, aprovação com RBAC, auditoria
     ├── modulo-11/
-    │   ├── python/       labs: preparar dataset, LoRA do zero, destilação com cascata, LoRA com PEFT (Colab)
-    │   └── dados/        chamados brutos, chamados novos escritos à mão, dataset preparado
+    │   ├── python/       labs: preparar dataset, LoRA do zero, destilação com cascata, LoRA com PEFT (Colab),
+    │   │                 dados sintéticos com filtros, capacidade de GPU, teste de carga e servidor simulado
+    │   └── dados/        chamados brutos, chamados novos escritos à mão, dataset preparado, sintéticos de exemplo
     ├── modulo-12/
     │   ├── python/       labs: injeção indireta numa página, ficha do sistema de IA (LGPD/AI Act)
     │   ├── dados/        página envenenada e questionário de governança

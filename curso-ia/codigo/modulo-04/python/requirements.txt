@@ -1,1 +1,6 @@
 numpy>=2.0
+pypdf>=5.0
+pdfplumber>=0.11
+reportlab>=4.0
+pillow>=10.0
+anthropic>=2.3   # só para --claude

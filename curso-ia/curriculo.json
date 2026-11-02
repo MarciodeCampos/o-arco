@@ -95,14 +95,15 @@
         "Ingestão e chunking, com cabeçalho de contexto",
         "Postgres + pgvector, busca híbrida (RRF) e reranking",
         "Geração com citações e o direito de dizer \"não sei\"",
-        "Avaliando RAG: recuperação e respostas; RAG agêntico"
+        "Avaliando RAG: recuperação e respostas; RAG agêntico",
+        "Extração de documentos difíceis: tabelas, colunas e páginas escaneadas, com nota"
       ],
       "projeto": "Assistente de documentação com PGlite + pgvector, busca híbrida, reranking, citações e evals de recuperação e de respostas",
       "melhorias": [
         "Unifica o RAG que aparecia em 5 módulos diferentes",
         "Inclui busca híbrida, reranking e avaliação"
       ],
-      "aulas": 9
+      "aulas": 10
     },
     {
       "numero": 5,
@@ -260,7 +261,9 @@
         "Fine-tuning gerenciado por API",
         "LoRA e QLoRA, por dentro",
         "Destilação e cascata",
-        "Avaliar, comparar e versionar modelos"
+        "Avaliar, comparar e versionar modelos",
+        "Dados sintéticos: gerar, filtrar e provar sem contaminar a avaliação",
+        "Servir modelos abertos: capacidade de GPU e teste de carga"
       ],
       "projeto": "Modelo pequeno especializado: dataset limpo, aluno destilado, adaptador LoRA e cascata, comparados com o modelo grande dentro e fora da distribuição do treino",
       "melhorias": [
@@ -268,7 +271,7 @@
         "LoRA em Python, onde o ecossistema realmente está",
         "Destilação e inferência local"
       ],
-      "aulas": 9
+      "aulas": 11
     },
     {
       "numero": 12,
