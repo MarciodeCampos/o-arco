@@ -26,6 +26,11 @@ Acrescente (sem apagar o que já existe) uma seção `## Central de projetos` co
    ferramenta que têm pasta ou repositório: nome, `id`, pasta local, repositório, endereço, e uma
    coluna **Preparo** com cinco marcas: git · GitHub · CLAUDE.md · testes · publicação automática
    (✓ feito, ✗ falta, ? não verificado).
+   - Deixe de fora programas de terceiros que a pessoa só usa e cópias instaladas (como o cache de
+     plugins em `~/.claude/plugins`).
+   - Itens que moram no mesmo repositório (vários módulos de um site, por exemplo) dividem as marcas
+     do repositório. Se não houver cópia no computador, confira pelo GitHub sem clonar:
+     `gh api repos/<dono>/<repo>/contents/CLAUDE.md` e a pasta `.github/workflows`, em vez de deixar "?".
 2. **A rotina abaixo, copiada como está**, para que qualquer sessão futura nesta pasta a siga:
 
 ```
@@ -56,10 +61,15 @@ Quando a pessoa perguntar "como estão meus projetos", sem alterar nada:
 Sugira começar pelos projetos **publicados que ainda não têm repositório no GitHub**: são os que mais
 correm risco de perder trabalho. Para o projeto escolhido, mostre o plano e peça ok antes de começar:
 
+0. **Liberar a pasta**: antes de tudo, peça para a pessoa digitar `/add-dir <pasta do projeto>`.
+   Sem isso, cada leitura ali dispara a pergunta "Read outside the working directories".
+
 1. **Git**: se não tem, `git init` na pasta e primeiro commit. Antes, crie o `.gitignore` com `.env`,
    `.env.*`, `node_modules/`, `.venv/`, chaves (`*.pem`) e **pastas de dados grandes ou com dados
    pessoais** (CSV de clientes, bases da Receita Federal, backups). Rode `git status` e mostre à
    pessoa a lista do que vai entrar antes do commit. Se aparecer algo suspeito, pare e pergunte.
+   No Windows, crie também um `.gitattributes` com `* text=auto eol=lf`, para o git não marcar
+   arquivos como alterados só por causa da quebra de linha.
 2. **GitHub privado**: `gh repo create <nome> --private --source . --push`. Criar repositório é
    visível fora do computador: confirme o nome com a pessoa antes.
 3. **CLAUDE.md do projeto**: o que é, como rodar, como testar, como publicar, onde estão os
