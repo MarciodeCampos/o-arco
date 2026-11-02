@@ -442,3 +442,26 @@ details.pwsh pre { margin-top: 8px; }
 .trilha h3 { margin: 0 0 6px; color: var(--gold-light); font-size: 17px; }
 .trilha p { margin: 6px 0; color: var(--text-dim); }
 .trilha ol { margin: 8px 0 0; padding-left: 20px; }
+
+/* trilhas com código e com agentes (curso.js: iniciarTrilhas) */
+.seletor-trilha { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 18px 0; }
+.seletor-trilha span { color: var(--text-dim); font-size: 14px; }
+.seletor-trilha button {
+  font: inherit; font-size: 14px; padding: 6px 14px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--gold-dim); background: transparent; color: var(--text);
+}
+.seletor-trilha button[aria-pressed="true"] { background: var(--gold); color: var(--ink); border-color: var(--gold); font-weight: 600; }
+.trilha-bloco { display: none; }
+.trilha-bloco.ativo, .trilha-bloco.aberto { display: block; }
+.trilha-bloco.aberto:not(.ativo) { border-left: 3px solid var(--gold-dim); padding-left: 14px; opacity: .92; }
+button.trilha-opcional {
+  font: inherit; font-size: 14px; cursor: pointer; background: none; border: 1px dashed var(--gold-dim);
+  color: var(--gold-light); border-radius: 8px; padding: 6px 12px; margin: 10px 0;
+}
+.objetivo-comum { border: 1px solid var(--gold-dim); border-radius: var(--radius); padding: 14px 18px; margin: 16px 0; background: var(--surface); }
+.objetivo-comum > b:first-child { display: block; color: var(--gold-light); margin-bottom: 6px; }
+.trilha.escolhida { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold) inset; }
+.trilha .btn { margin-top: 10px; }
+.cartao-decisao { border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 16px; margin: 12px 0; background: var(--surface2); }
+.cartao-decisao dt { color: var(--gold-light); font-weight: 600; margin-top: 6px; }
+.cartao-decisao dd { margin: 2px 0 0; }

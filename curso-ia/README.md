@@ -25,6 +25,7 @@ curso-ia/
 ├── glossario/           mapa de componentes e glossário do Claude (gerado por gerar.py)
 ├── pre-01/index.html     introdução P1 · IA sem mistério (calculadora de custo em calculadora.js)
 ├── pre-02/index.html     P2 · Preparação: terminal, arquivos, Git (PowerShell e bash)
+├── pre-03/index.html     P3 · Desenvolver com agentes (trilha sem código)
 ├── modulo-01/index.html  aulas do módulo 1
 ├── modulo-02/index.html  aulas do módulo 2
 ├── modulo-03/index.html  aulas do módulo 3
@@ -109,6 +110,11 @@ segurança testadas, criar projetos e publicá-los, explicando cada passo em lin
 - Página para pessoas: `autonomo/index.html`.
 - Preparação para iniciantes: `pre-02/` (terminal, arquivos, Git, tabela PowerShell × bash). Os blocos
   `bash` dos módulos ganham uma versão PowerShell gerada por `assets/curso.js` (`iniciarPowerShell`).
+- Duas trilhas sobre os mesmos problemas: **com código** e **com agentes**. Num laboratório, o conteúdo
+  de cada trilha vai em `<div class="trilha-bloco" data-trilha="codigo|agentes">`, com
+  `<div class="seletor-trilha"></div>` acima; `assets/curso.js` (`iniciarTrilhas`) mostra a trilha
+  escolhida e deixa a outra recolhida, como opcional. Primeiro laboratório nas duas versões: projeto do
+  Módulo 2. O essencial da trilha com agentes está em `pre-03/`.
 - Introdução conceitual: `pre-01/` (P1 · IA sem mistério) e `glossario/` (gerado por
   `python3 glossario/gerar.py`, a partir da documentação oficial do Claude Code consultada em
   novembro de 2026 com a versão 2.1.316).

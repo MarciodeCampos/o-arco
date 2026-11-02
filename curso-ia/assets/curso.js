@@ -154,6 +154,90 @@
     });
   }
 
+
+  /* ---------------- trilhas: com código e com agentes ----------------
+   * Dois públicos resolvem os mesmos problemas: desenvolvedores escrevendo código,
+   * e quem não programa conduzindo agentes. A trilha escolhida fica salva neste
+   * navegador. Em cada laboratório, a versão da outra trilha aparece recolhida,
+   * como opcional.
+   *   <div class="seletor-trilha"></div>                 → botões de escolha
+   *   <div class="trilha-bloco" data-trilha="codigo">     → só na trilha com código
+   *   <div class="trilha-bloco" data-trilha="agentes">    → só na trilha com agentes
+   *   <a data-escolher-trilha="agentes">                  → escolhe a trilha ao clicar
+   */
+  const CHAVE_TRILHA = "curso-ia:trilha";
+  const NOMES_TRILHA = { codigo: "com código", agentes: "com agentes" };
+
+  function lerTrilha() {
+    try {
+      const t = localStorage.getItem(CHAVE_TRILHA);
+      return t === "agentes" || t === "codigo" ? t : null;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function salvarTrilha(t) {
+    try {
+      localStorage.setItem(CHAVE_TRILHA, t);
+    } catch (_) {
+      /* sem armazenamento: vale só para esta visita */
+    }
+  }
+
+  function iniciarTrilhas() {
+    let atual = lerTrilha() || "codigo";
+
+    // cada bloco ganha um botão para abrir a versão da outra trilha, como opcional
+    document.querySelectorAll(".trilha-bloco").forEach((bloco) => {
+      const abrir = document.createElement("button");
+      abrir.type = "button";
+      abrir.className = "trilha-opcional";
+      abrir.addEventListener("click", () => bloco.classList.toggle("aberto"));
+      bloco.insertAdjacentElement("beforebegin", abrir);
+      bloco._abrir = abrir;
+    });
+
+    function aplicar() {
+      document.body.dataset.trilha = atual;
+      document.querySelectorAll(".seletor-trilha button").forEach((b) => {
+        b.setAttribute("aria-pressed", String(b.dataset.valor === atual));
+      });
+      document.querySelectorAll(".trilha-bloco").forEach((bloco) => {
+        const daTrilha = bloco.dataset.trilha === atual;
+        bloco.classList.toggle("ativo", daTrilha);
+        if (daTrilha) bloco.classList.remove("aberto");
+        bloco._abrir.hidden = daTrilha;
+        bloco._abrir.textContent = `Opcional: ver a versão ${NOMES_TRILHA[bloco.dataset.trilha]}`;
+      });
+      document.querySelectorAll("[data-escolher-trilha]").forEach((el) => {
+        el.classList.toggle("escolhida", el.dataset.escolherTrilha === atual && !!lerTrilha());
+      });
+    }
+
+    document.querySelectorAll(".seletor-trilha").forEach((sel) => {
+      sel.innerHTML =
+        '<span>Sua trilha:</span>' +
+        '<button type="button" data-valor="codigo">Com código</button>' +
+        '<button type="button" data-valor="agentes">Com agentes</button>';
+      sel.addEventListener("click", (e) => {
+        const b = e.target.closest("button[data-valor]");
+        if (!b) return;
+        atual = b.dataset.valor;
+        salvarTrilha(atual);
+        aplicar();
+      });
+    });
+    document.querySelectorAll("[data-escolher-trilha]").forEach((el) => {
+      el.addEventListener("click", () => {
+        atual = el.dataset.escolherTrilha;
+        salvarTrilha(atual);
+        aplicar();
+      });
+    });
+    aplicar();
+  }
+
   /* ---------------- copiar código ---------------- */
   function iniciarCopiar() {
     document.querySelectorAll("pre").forEach((pre) => {
@@ -238,6 +322,7 @@
   document.addEventListener("DOMContentLoaded", () => {
     renderizarCurriculo();
     iniciarQuiz();
+    iniciarTrilhas();
     iniciarPowerShell();
     iniciarCopiar();
     iniciarModulo();

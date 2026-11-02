@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050508">
+<meta name="description" content="Módulo P3 — Desenvolver com agentes: o essencial para quem não programa construir ferramentas com o Claude. Objetivo e critério de pronto, cartões de decisão, conferir com testes, segunda opinião e registro de decisões.">
+<title>P3 · Desenvolver com agentes — Engenharia de IA Aplicada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/curso.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/">◈ TRIADIC.LIFE</a>
+  <span class="crumbs">/ <a href="../">Engenharia de IA</a> / P3</span>
+  <span class="spacer"></span>
+  <span class="progress-pill">0/9 aulas</span>
+</header>
+<div class="layout">
+  <aside class="toc">
+    <button class="toc-toggle" type="button">☰ Aulas do módulo</button>
+    <h2>Módulo P3</h2>
+    <nav><ol>
+      <li><a href="#inicio"><span class="chk"></span>Visão geral</a></li>
+      <li><a href="#aula-1"><span class="chk"></span>P3.1 O ciclo de trabalho</a></li>
+      <li><a href="#aula-2"><span class="chk"></span>P3.2 Objetivo e "pronto"</a></li>
+      <li><a href="#aula-3"><span class="chk"></span>P3.3 Decidir sobre propostas</a></li>
+      <li><a href="#aula-4"><span class="chk"></span>P3.4 Conferir o resultado</a></li>
+      <li><a href="#aula-5"><span class="chk"></span>P3.5 Quando travar</a></li>
+      <li><a href="#aula-6"><span class="chk"></span>P3.6 Segunda opinião</a></li>
+      <li><a href="#aula-7"><span class="chk"></span>P3.7 Laboratórios com agentes</a></li>
+      <li><a href="#projeto"><span class="chk"></span>Projeto do módulo</a></li>
+      <li><a href="#recursos"><span class="chk"></span>Recursos</a></li>
+    </ol></nav>
+  </aside>
+  <main class="content" data-modulo="pre-03">
+    <section id="inicio">
+      <header><div class="eyebrow">Trilha com agentes · Módulo P3 · 10h estimadas</div><h1>Desenvolver com agentes</h1></header>
+      <p class="lede">
+        Na trilha com agentes você não escreve código: o Claude escreve. O seu trabalho é outro, e não é
+        menor. Você diz aonde quer chegar e como saber que chegou, decide sobre cada proposta importante,
+        confere o resultado e registra por que decidiu. Este módulo ensina essas quatro coisas. Com elas,
+        você faz os laboratórios do curso resolvendo os mesmos problemas que a trilha com código.
+      </p>
+      <div class="meta"><span class="tag">7 aulas</span><span class="tag">pré-requisito: P1 e P2</span><span class="tag">sem programação</span></div>
+      <div class="callout"><b>Antes de começar</b>
+        Você precisa do Claude Code instalado e configurado. O plugin <a href="../autonomo/">autonomo</a> faz isso
+        com você, e o <a href="../pre-02/">P2</a> explica o que ele está fazendo.</div>
+    </section>
+
+    <section class="lesson" id="aula-1">
+      <h2>P3.1 O ciclo de trabalho: objetivo, proposta, autorização, conferência</h2>
+      <div class="lesson-meta">Leitura · 1h</div>
+      <p>Todo trabalho nesta trilha segue o mesmo ciclo:</p>
+      <ol>
+        <li><strong>Objetivo:</strong> você diz o que quer e como vai saber que está pronto (P3.2).</li>
+        <li><strong>Proposta:</strong> o Claude estuda o problema e propõe o próximo passo, explicando por quê.</li>
+        <li><strong>Autorização:</strong> você autoriza, pede outro caminho ou pede uma segunda opinião (P3.3 e P3.6).</li>
+        <li><strong>Conferência:</strong> o Claude executa e mostra a evidência de que funcionou; você confere (P3.4).</li>
+      </ol>
+      <p>O ciclo se repete até o critério de pronto ser atingido. Nem todo passo precisa da sua autorização. O que decide é o risco, não o tamanho da tarefa:</p>
+      <table>
+        <tr><th>O Claude…</th><th>Exemplos</th></tr>
+        <tr><td><strong>Sempre pede autorização</strong></td><td>Publicar na internet, gastar dinheiro, apagar dados, enviar algo para fora (e-mail, outra empresa, outro provedor de IA), mudar as próprias permissões</td></tr>
+        <tr><td><strong>Pede conforme o nível de autonomia</strong> que você escolheu no plugin</td><td>Instalar programas, criar repositórios, mudar a estrutura do projeto</td></tr>
+        <tr><td><strong>Faz e conta depois</strong></td><td>Editar arquivos do projeto, rodar testes, criar uma branch. Tudo isso se desfaz</td></tr>
+      </table>
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>O Claude quer publicar a primeira versão do seu site. O que deve acontecer?</p>
+          <button type="button">Ele publica e avisa depois, porque é um passo pequeno</button>
+          <button type="button" data-certa>Ele mostra uma prévia e pede sua autorização, porque publicar é visível para outras pessoas</button>
+          <button type="button">Ele não pode publicar nunca</button>
+          <p class="why">Publicar não se desfaz por completo: alguém pode ter visto. Por isso sempre passa por você, com prévia.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="lesson" id="aula-2">
+      <h2>P3.2 Dizer aonde quer chegar e o que é "pronto"</h2>
+      <div class="lesson-meta">Leitura + prática · 1h30</div>
+      <p>
+        Um agente trabalha bem sozinho quando sabe conferir o próprio trabalho. Para isso, o pedido precisa
+        de um <strong>critério de pronto verificável</strong>: algo que um teste, uma conta ou uma pessoa consiga
+        dizer se está certo ou não. Use este modelo:
+      </p>
+<pre data-lang="pedido"><code>Quero: [o resultado, com um verbo]
+Para: [quem vai usar e para quê]
+Pronto quando:
+  1. [algo que dá para conferir]
+  2. [outro]
+Não pode: [o que não deve mudar ou acontecer]
+Antes de cada etapa importante, me mostre o que propõe, por quê, as alternativas e o risco.</code></pre>
+      <table>
+        <tr><th>Critério vago</th><th>Critério verificável</th></tr>
+        <tr><td>"Que funcione bem."</td><td>"Os 4 recibos de exemplo saem com o total igual à soma dos itens."</td></tr>
+        <tr><td>"Que seja rápido."</td><td>"Responde em menos de 3 segundos em 9 de cada 10 pedidos."</td></tr>
+        <tr><td>"Que não gaste muito."</td><td>"Custa menos de R$ 0,05 por recibo, e você me mostra a conta."</td></tr>
+      </table>
+      <p>O plugin <a href="../autonomo/">autonomo</a> transforma esses critérios em testes automáticos. Quando todos passam, o trabalho está pronto; quando um falha, o Claude sabe o que corrigir sem precisar perguntar a você.</p>
+    </section>
+
+    <section class="lesson" id="aula-3">
+      <h2>P3.3 Decidir sobre as propostas do Claude</h2>
+      <div class="lesson-meta">Leitura + prática · 1h30</div>
+      <p>Cada decisão importante chega num formato fixo, o <strong>cartão de decisão</strong>. Se o Claude esquecer algum campo, peça.</p>
+      <dl class="cartao-decisao">
+        <dt>O que proponho</dt><dd>Guardar os cadastros numa planilha do Google em vez de um banco de dados.</dd>
+        <dt>Por quê</dt><dd>São menos de 500 linhas, você já usa o Drive e consegue conferir os dados sem mim.</dd>
+        <dt>Alternativas</dt><dd>Um banco de dados gratuito: mais trabalho agora, aguenta crescer.</dd>
+        <dt>Risco e como desfazer</dt><dd>Baixo. Migrar depois leva cerca de uma hora.</dd>
+        <dt>O que preciso de você</dt><dd>Autorizar, escolher a alternativa ou pedir uma segunda opinião.</dd>
+      </dl>
+      <p>Quatro perguntas para não autorizar no automático:</p>
+      <ol>
+        <li><strong>Eu entendi o porquê?</strong> Se não, peça: "explique como se eu nunca tivesse programado".</li>
+        <li><strong>Dá para desfazer?</strong> Se não dá, leia com mais calma e peça uma prévia.</li>
+        <li><strong>Isso aproxima do critério de pronto?</strong> Se o passo não tem relação com o objetivo, pergunte por que ele é necessário.</li>
+        <li><strong>O que eu perco com a alternativa?</strong> Toda escolha tem um custo; saber qual é faz parte da decisão.</li>
+      </ol>
+      <p>Registre cada decisão importante num arquivo <code>DECISOES.md</code> no projeto. Peça ao Claude para criar e manter, mas o motivo da decisão é seu:</p>
+<pre data-lang="markdown"><code>## 2026-11-02 · Onde guardar os cadastros
+Proposta: planilha do Google (alternativa: banco de dados gratuito)
+Segunda opinião: não pedi
+Decidi: planilha
+Por quê: são poucos dados e eu preciso conferir sem depender de ninguém.
+Rever quando: passar de 2 mil cadastros</code></pre>
+    </section>
+
+    <section class="lesson" id="aula-4">
+      <h2>P3.4 Conferir o resultado sem ler código</h2>
+      <div class="lesson-meta">Leitura + prática · 1h30</div>
+      <p>Você não precisa ler o código para saber se ele funciona. Precisa ler a <strong>evidência</strong>:</p>
+      <table>
+        <tr><th>Evidência</th><th>Como ler</th><th>O que pedir ao Claude</th></tr>
+        <tr><td>Resultado dos testes</td><td><code>pass</code> ou <code>✓</code> é aprovado; <code>fail</code> ou <code>✗</code> é reprovado. Olhe o total no fim: "14 pass, 0 fail"</td><td>"Rode os testes e me mostre o resultado, um por linha, com o que cada um confere"</td></tr>
+        <tr><td>A saída com os seus exemplos</td><td>Compare com o que você esperava, caso a caso</td><td>"Rode com os 4 recibos e me mostre uma tabela: esperado, obtido, certo ou errado"</td></tr>
+        <tr><td>A prévia</td><td>Abra o endereço e use como um usuário usaria</td><td>"Publique uma prévia e me dê o link"</td></tr>
+        <tr><td>O resumo da mudança (diff)</td><td>Verde é o que entrou, vermelho o que saiu</td><td>"Explique em linguagem simples o que mudou e por quê, arquivo por arquivo"</td></tr>
+      </table>
+      <div class="callout warn"><b>Desconfie de teste que nunca falha</b>
+        Um teste que só confere "o programa rodou" passa mesmo com o resultado errado. Peça ao Claude para
+        mostrar um teste falhando de propósito (com um valor errado) e depois passando. Se ele não consegue
+        fazer o teste falhar, o teste não confere nada.</div>
+    </section>
+
+    <section class="lesson" id="aula-5">
+      <h2>P3.5 Quando travar</h2>
+      <div class="lesson-meta">Leitura · 30min</div>
+      <ul>
+        <li><strong>Erro que você não entende:</strong> "Explique este erro em linguagem simples e proponha duas saídas, com o risco de cada uma."</li>
+        <li><strong>O Claude anda em círculos</strong> (tenta a mesma correção várias vezes): peça para ele parar, resumir o que tentou e o que aprendeu, e propor uma abordagem diferente.</li>
+        <li><strong>Algo que funcionava quebrou:</strong> "Volte para a última versão em que os testes passavam e me mostre o que mudou desde então." O Git guarda todas as versões.</li>
+        <li><strong>Você não sabe se a proposta é boa:</strong> peça uma segunda opinião (P3.6).</li>
+      </ul>
+    </section>
+
+    <section class="lesson" id="aula-6">
+      <h2>P3.6 Segunda opinião: Gemini e GPT na decisão</h2>
+      <div class="lesson-meta">Leitura + prática · 1h</div>
+      <p>
+        Antes de uma decisão importante, você pode ouvir outros modelos. O jeito mais simples não custa
+        nada a mais: peça ao Claude a pergunta pronta, cole no ChatGPT ou no Gemini que você já usa e traga
+        a resposta de volta.
+      </p>
+<pre data-lang="pedido"><code>Prepare uma pergunta para eu levar ao GPT e ao Gemini sobre esta decisão.
+Inclua só o contexto necessário, sem dados pessoais, senhas ou documentos sigilosos.
+Depois que eu colar as respostas, me diga onde vocês concordam, onde divergem
+e o que você recomenda agora, avisando se mudou de ideia.</code></pre>
+      <ul>
+        <li><strong>Opinião informa, teste decide.</strong> Três modelos podem concordar e estar errados, porque aprenderam de textos parecidos. Perguntas de fato (funciona? a conta está certa?) se resolvem com teste, não com votação.</li>
+        <li><strong>Vale para decisões de julgamento:</strong> escolher entre duas soluções, revisar um texto para cliente, avaliar um risco.</li>
+        <li><strong>Privacidade:</strong> mandar contexto para outro modelo é enviar dados para outra empresa. Confira o que vai na pergunta antes de colar.</li>
+        <li>Registre as opiniões e a sua decisão no <code>DECISOES.md</code>.</li>
+      </ul>
+    </section>
+
+    <section class="lesson" id="aula-7">
+      <h2>P3.7 Como funcionam os laboratórios com agentes</h2>
+      <div class="lesson-meta">Leitura · 30min</div>
+      <p>
+        Os laboratórios das duas trilhas têm o mesmo problema, o mesmo objetivo e o mesmo critério de pronto.
+        Na trilha com agentes, você aprende <strong>como o problema se resolve</strong> vendo o Claude resolver,
+        e depois resolve uma variação conduzindo o Claude. Saber como se resolve vale tanto quanto ter resolvido.
+        Só assistir dá a sensação de ter entendido sem ter entendido; por isso cada laboratório tem cinco momentos:
+      </p>
+      <table>
+        <tr><th>Momento</th><th>O que você faz</th></tr>
+        <tr><td>1. O problema</td><td>Escreve como acha que resolveria, antes de ver</td></tr>
+        <tr><td>2. A resolução comentada</td><td>Acompanha o Claude resolvendo e, nos pontos marcados, prevê o próximo passo</td></tr>
+        <tr><td>3. Por quê</td><td>Explica com as suas palavras por que um passo foi necessário</td></tr>
+        <tr><td>4. Ache o erro</td><td>Encontra o erro numa resolução parecida e diz como percebeu</td></tr>
+        <tr><td>5. Variação</td><td>Conduz o Claude até resolver o problema com uma mudança, só com pedidos e autorizações</td></tr>
+      </table>
+      <p>Nas páginas dos módulos, o seletor <em>Sua trilha</em> mostra a versão de cada laboratório. A versão da outra trilha fica recolhida, como opcional: abrir para ver como um desenvolvedor resolve o mesmo problema ajuda a entender o que o Claude fez.</p>
+      <div class="seletor-trilha"></div>
+    </section>
+
+    <section class="lesson" id="projeto">
+      <h2>Projeto do módulo: o primeiro laboratório com agentes</h2>
+      <div class="lesson-meta">Projeto · 1h30 (mais o laboratório)</div>
+      <p>
+        Faça o <a href="../modulo-02/#projeto">projeto do Módulo 2, o extrator de recibos</a>, na versão com agentes.
+        É o mesmo problema que a trilha com código resolve escrevendo o programa. Este módulo está concluído quando você tem:
+      </p>
+      <ol>
+        <li>O pedido inicial com critério de pronto verificável (P3.2).</li>
+        <li>Um <code>DECISOES.md</code> com pelo menos cinco decisões, cada uma com o seu porquê (P3.3).</li>
+        <li>Os testes passando, e um teste que você viu falhar de propósito (P3.4).</li>
+        <li>Uma decisão tomada com segunda opinião (P3.6).</li>
+      </ol>
+    </section>
+
+    <section class="lesson" id="recursos">
+      <h2>Recursos para aprofundar</h2>
+      <div class="lesson-meta">Gratuitos</div>
+      <ul class="resources">
+        <li><a href="https://code.claude.com/docs/pt/overview" target="_blank" rel="noopener">Visão geral do Claude Code</a> <small>· documentação oficial em português</small></li>
+        <li><a href="https://code.claude.com/docs/pt/how-claude-code-works" target="_blank" rel="noopener">Como o Claude Code funciona</a> <small>· o ciclo de trabalho do agente</small></li>
+        <li><a href="../autonomo/">Plugin autonomo</a> <small>· prepara o computador e configura a autonomia com barreiras</small></li>
+      </ul>
+      <nav class="pager">
+        <a href="../pre-02/"><small>← Anterior</small>P2 · Preparação</a>
+        <a class="next" href="../modulo-02/#projeto"><small>Primeiro laboratório →</small>Extrator de recibos</a>
+      </nav>
+    </section>
+  </main>
+</div>
+<footer class="foot"><a href="/">triadic.life</a> · <a href="../">Engenharia de IA Aplicada</a> · <a href="../glossario/">Mapa e glossário</a></footer>
+<script src="../assets/curso.js"></script>
+</body>
+</html>
