@@ -17,7 +17,7 @@
   <a class="brand" href="/">◈ TRIADIC.LIFE</a>
   <span class="crumbs">/ <a href="../">Engenharia de IA</a> / Módulo 4</span>
   <span class="spacer"></span>
-  <span class="progress-pill">0/9 aulas</span>
+  <span class="progress-pill">0/10 aulas</span>
 </header>
 
 <div class="layout">
@@ -35,6 +35,7 @@
         <li><a href="#aula-5"><span class="chk"></span>4.5 pgvector, híbrida e rerank</a></li>
         <li><a href="#aula-6"><span class="chk"></span>4.6 Respostas com citações</a></li>
         <li><a href="#aula-7"><span class="chk"></span>4.7 Avaliando RAG</a></li>
+        <li><a href="#aula-8"><span class="chk"></span>4.8 Extração de documentos</a></li>
         <li><a href="#projeto"><span class="chk"></span>Projeto do módulo</a></li>
         <li><a href="#recursos"><span class="chk"></span>Recursos</a></li>
       </ol>
@@ -462,6 +463,53 @@ hibrida               0.86      0.79   0.64    0.65</code></pre>
     </section>
 
     <!-- ============================================================ PROJETO -->
+    <section class="lesson" id="aula-8">
+      <h2>4.8 Extração de documentos difíceis</h2>
+      <div class="lesson-meta">Leitura + lab · 3h</div>
+      <p>
+        O RAG só é tão bom quanto o texto que entra nele. Se a tabela vira uma lista solta de números, nenhuma
+        busca encontra "quantos assinantes o Plano Família tinha em fevereiro". Na prática, a extração é o
+        primeiro lugar onde um RAG falha, antes do embedding e antes do modelo.
+      </p>
+      <div class="exercise">
+        <h4>LAB 4.8 — Cinco métodos, três PDFs difíceis, uma nota</h4>
+        <p>O lab gera três PDFs com gabarito: uma tabela com célula de duas linhas, um boletim em duas colunas e um contrato escaneado (só imagem, levemente torto). A nota confere se cada valor da tabela ficou na sua linha, se cada frase saiu inteira na ordem de leitura e se cada campo do contrato foi lido.</p>
+<pre data-lang="bash"><code>cd codigo/modulo-04/python
+pip install -r requirements.txt          # OCR: apt install tesseract-ocr tesseract-ocr-por poppler-utils
+python ../documentos/gerar_pdfs.py
+python 03_extracao_de_documentos.py      # --claude inclui o modelo lendo o PDF</code></pre>
+<pre data-lang="saída"><code>método        relatorio     boletim    contrato    total    tempo
+pypdf           15/15        6/6         0/6         78%     0.0s
+pdfplumber      15/15        0/6         0/6         56%     0.1s
+ocr             12/15        6/6         6/6         89%     7.2s
+hibrido         15/15        6/6         6/6        100%     3.5s</code></pre>
+        <ul>
+          <li><strong>pypdf</strong> acertou as colunas por sorte: o PDF foi gravado coluna por coluna. Em outro gerador, a ordem muda.</li>
+          <li><strong>pdfplumber</strong> extrai a tabela perfeita, mas lê o boletim linha a linha, atravessando as colunas: "A nova central de atendimento passou a A manutenção da rede no bairro Jardim". Nenhuma frase sobrevive.</li>
+          <li><strong>OCR</strong> lê a página escaneada sem erro, mas perde o rótulo de duas linhas da tabela ("Plano Família (até 4 telas)" virou "(até colas)"), e os três números daquela linha ficam sem dono.</li>
+          <li><strong>Híbrido</strong> decide por página: OCR só onde não há camada de texto, tabelas detectadas viram markdown, e um vão vertical no meio da página indica duas colunas lidas separadamente. É o que ferramentas como Unstructured e LlamaParse fazem em escala, com mais heurísticas.</li>
+        </ul>
+        <p><strong>Com o Claude</strong> (<code>--claude</code>): o modelo recebe cada página como texto e imagem e transcreve em markdown. Nesta versão do curso essa linha não foi medida contra a API real; rode com a sua chave e compare custo e nota. Em documentos variados, um modelo de visão costuma resolver os casos que quebram heurísticas, a um custo por página muito maior: use-o onde o híbrido falha, não em tudo.</p>
+      </div>
+      <h3>Regras para produção</h3>
+      <ul>
+        <li><strong>Tenha um gabarito da sua base</strong>, mesmo pequeno: 20 páginas representativas com o que deveria sair. Sem nota, a troca de ferramenta é palpite.</li>
+        <li><strong>Escolha por página, não por documento</strong>: uma mesma proposta tem páginas digitadas, tabelas e um anexo escaneado.</li>
+        <li><strong>Tabelas viram markdown ou linhas autocontidas</strong> ("Plano Família, fev/2026: 2.910 assinaturas") antes do chunking: um chunk com só números não é recuperável.</li>
+        <li><strong>Guarde a origem</strong> (arquivo, página, método) em cada chunk, para citar e para reprocessar quando o extrator melhorar.</li>
+      </ul>
+      <div class="quiz">
+        <h4>Quiz rápido</h4>
+        <div class="q">
+          <p>Um PDF tem páginas digitadas, uma tabela de preços e um anexo escaneado. Qual estratégia?</p>
+          <button type="button">Passar tudo por OCR, para ficar uniforme</button>
+          <button type="button" data-certa>Escolher o método por página e medir contra um gabarito</button>
+          <button type="button">Usar só a camada de texto, que é a mais rápida</button>
+          <p class="why">No lab, nenhum método único acertou tudo: o OCR perdeu um rótulo da tabela que a camada de texto lia perfeitamente, e a camada de texto não tem nada na página escaneada.</p>
+        </div>
+      </div>
+    </section>
+
     <section class="lesson" id="projeto">
       <h2>Projeto do módulo: assistente de documentação com RAG</h2>
       <div class="lesson-meta">Projeto · 10–12h · TypeScript</div>
